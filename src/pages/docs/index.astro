@@ -1,0 +1,48 @@
+---
+import { getEntry, render } from "astro:content";
+import Card from "../../components/ui/Card.astro";
+import DocsLayout from "../../layouts/DocsLayout.astro";
+
+const introduction = await getEntry("docs", "index");
+if (!introduction) throw new Error("Dokumen pengantar tidak ditemukan.");
+const { Content } = await render(introduction);
+const links = [
+  {
+    href: "/docs/quickstart",
+    title: "Quickstart",
+    text: "Alur awal dari Git menuju URL aplikasi.",
+  },
+  {
+    href: "/docs/concepts",
+    title: "Konsep dasar",
+    text: "Peran control plane, agent, dan infra.",
+  },
+  {
+    href: "/docs/deployment-flow",
+    title: "Alur deployment",
+    text: "Siklus command dan routing aplikasi.",
+  },
+];
+---
+
+<DocsLayout
+  title="Dokumentasi — Sakala"
+  description={introduction.data.description}
+  currentPath={Astro.url.pathname}
+>
+  <article class="prose-sakala">
+    <Content />
+  </article>
+  <div class="mt-10 grid gap-3 sm:grid-cols-3">
+    {
+      links.map((link) => (
+        <a href={link.href}>
+          <Card class="h-full hover:border-primary">
+            <h2 class="font-semibold text-ink">{link.title}</h2>
+            <p class="mt-2 text-sm leading-6 text-muted">{link.text}</p>
+          </Card>
+        </a>
+      ))
+    }
+  </div>
+</DocsLayout>

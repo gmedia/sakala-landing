@@ -1,0 +1,36 @@
+---
+import Container from "../ui/Container.astro";
+---
+
+<section class="pb-20 sm:pb-24">
+  <Container>
+    <div
+      class="rounded-3xl bg-primary p-8 text-white sm:p-12 lg:flex lg:items-center lg:justify-between"
+    >
+      <div class="max-w-xl">
+        <p
+          class="text-sm font-semibold uppercase tracking-[0.18em] text-primary-soft"
+        >
+          Mulai mengikuti Sakala
+        </p>
+        <h2 class="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
+          Pelajari foundation dan ikut membentuk arah deployment yang sederhana.
+        </h2>
+      </div>
+      <div class="mt-8 flex flex-wrap gap-3 lg:mt-0">
+        <a
+          href="/docs"
+          class="rounded-xl bg-white px-5 py-3 text-sm font-semibold text-primary-dark hover:bg-primary-soft"
+          >Baca Dokumentasi</a
+        >
+        <a
+          href="https://github.com/gmedia"
+          target="_blank"
+          rel="noreferrer"
+          class="rounded-xl border border-primary-soft px-5 py-3 text-sm font-semibold text-white hover:bg-primary-dark"
+          >GitHub</a
+        >
+      </div>
+    </div>
+  </Container>
+</section>

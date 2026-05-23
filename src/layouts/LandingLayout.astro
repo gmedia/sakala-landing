@@ -1,0 +1,13 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import SiteFooter from "../components/layout/SiteFooter.astro";
+import SiteHeader from "../components/layout/SiteHeader.astro";
+---
+
+<BaseLayout {...Astro.props}>
+  <SiteHeader />
+  <main>
+    <slot />
+  </main>
+  <SiteFooter />
+</BaseLayout>

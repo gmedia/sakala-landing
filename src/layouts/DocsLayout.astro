@@ -1,0 +1,28 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import DocsNav from "../components/docs/DocsNav.astro";
+import DocsSidebar from "../components/docs/DocsSidebar.astro";
+import SiteFooter from "../components/layout/SiteFooter.astro";
+import SiteHeader from "../components/layout/SiteHeader.astro";
+import Container from "../components/ui/Container.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  currentPath: string;
+}
+
+const { title, description, currentPath } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <SiteHeader />
+  <Container className="flex gap-12 py-12 lg:py-16">
+    <DocsSidebar currentPath={currentPath} />
+    <div class="min-w-0 max-w-3xl flex-1">
+      <slot />
+      <DocsNav currentPath={currentPath} />
+    </div>
+  </Container>
+  <SiteFooter />
+</BaseLayout>

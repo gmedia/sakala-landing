@@ -1,0 +1,39 @@
+---
+import Button from "../ui/Button.astro";
+import Container from "../ui/Container.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
+
+const repositories = [
+  ["sakala-dashboard", "Control plane untuk project dan deployment."],
+  ["sakala-agent", "Runtime executor yang berjalan pada compute node."],
+  ["sakala-infra", "Playground lokal dan referensi infrastruktur."],
+  ["sakala-landing", "Website publik serta pusat konten."],
+];
+---
+
+<section id="open-source" class="py-20 sm:py-24">
+  <Container className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+    <div>
+      <SectionHeader
+        eyebrow="Open source"
+        title="Dibangun secara terbuka bersama komunitas."
+        description="Sakala menggunakan Apache License 2.0. Arsitektur, dokumentasi, dan kemajuan implementasi dapat ditinjau serta dikembangkan bersama."
+      />
+      <div class="mt-8">
+        <Button href="https://github.com/gmedia" external
+          >Lihat repository</Button
+        >
+      </div>
+    </div>
+    <div class="grid gap-3 sm:grid-cols-2">
+      {
+        repositories.map(([name, text]) => (
+          <div class="rounded-xl border border-border bg-surface p-5">
+            <p class="font-mono text-sm font-semibold text-primary">{name}</p>
+            <p class="mt-3 text-sm leading-6 text-muted">{text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </Container>
+</section>

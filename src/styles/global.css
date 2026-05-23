@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #f8faf7;
+  --color-background-soft: #f1f5f2;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #fbfdfb;
+  --color-ink: #17211b;
+  --color-muted: #66736b;
+  --color-muted-2: #89958d;
+  --color-border: #dde5df;
+  --color-border-strong: #cfdad2;
+  --color-primary: #0f766e;
+  --color-primary-dark: #115e59;
+  --color-primary-soft: #ccfbf1;
+  --color-primary-soft-2: #e7fffa;
+  --color-warm: #d97706;
+  --color-accent-soft: #fef3c7;
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+  --color-error: #dc2626;
+  --color-info: #2563eb;
+  --color-terminal: #0f172a;
+  --color-terminal-soft: #111c33;
+  --color-terminal-text: #e2e8f0;
+  --font-sans: "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+:root {
+  color: var(--color-ink);
+  background: var(--color-background);
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background:
+    radial-gradient(circle at top right, #e7fffa 0, transparent 31rem),
+    var(--color-background);
+}
+
+::selection {
+  color: var(--color-primary-dark);
+  background: var(--color-primary-soft);
+}
+
+a {
+  transition:
+    color 150ms ease,
+    background-color 150ms ease,
+    border-color 150ms ease;
+}
+
+.prose-sakala {
+  color: var(--color-muted);
+  line-height: 1.75;
+}
+
+.prose-sakala h1,
+.prose-sakala h2,
+.prose-sakala h3 {
+  color: var(--color-ink);
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.prose-sakala h1 {
+  margin-bottom: 1.25rem;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+}
+
+.prose-sakala h2 {
+  margin-top: 2.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
+}
+
+.prose-sakala p,
+.prose-sakala ul,
+.prose-sakala ol,
+.prose-sakala pre {
+  margin-block: 1rem;
+}
+
+.prose-sakala ul {
+  list-style: disc;
+  padding-left: 1.4rem;
+}
+
+.prose-sakala code {
+  border-radius: 0.35rem;
+  background: var(--color-background-soft);
+  padding: 0.14rem 0.35rem;
+  color: var(--color-primary-dark);
+  font-size: 0.92em;
+}
+
+.prose-sakala pre {
+  overflow-x: auto;
+  border-radius: 1rem;
+  background: var(--color-terminal);
+  padding: 1.25rem;
+  color: var(--color-terminal-text);
+}
+
+.prose-sakala pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}

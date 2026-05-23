@@ -1,0 +1,31 @@
+---
+import { mainNavigation } from "../../data/navigation";
+---
+
+<details class="relative md:hidden">
+  <summary
+    class="cursor-pointer list-none rounded-lg border border-border px-3 py-2 text-sm font-medium text-ink"
+  >
+    Menu
+  </summary>
+  <nav
+    class="absolute right-0 top-12 z-20 flex w-60 flex-col gap-1 rounded-xl border border-border bg-surface p-2 shadow-lg"
+  >
+    {
+      mainNavigation.map((item) => (
+        <a
+          href={item.href}
+          class="rounded-lg px-3 py-2 text-sm text-muted hover:bg-background-soft hover:text-primary"
+        >
+          {item.label}
+        </a>
+      ))
+    }
+    <a
+      href="https://app.sakala.dev"
+      class="mt-2 rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-white"
+    >
+      Dashboard
+    </a>
+  </nav>
+</details>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 160">
+  <defs>
+    <style>
+      .sakala-title {
+        font-family: "Montserrat", Arial, sans-serif;
+        font-weight: 700;
+        font-size: 64px;
+        fill: #17211b;
+      }
+      .sakala-subtitle {
+        font-family: "Montserrat", Arial, sans-serif;
+        font-weight: 500;
+        font-size: 21px;
+        fill: #007b75;
+        letter-spacing: 0.28em;
+      }
+    </style>
+  </defs>
+
+  <g id="sakala-icon" transform="translate(10, 0)">
+    <path d="M 44 92 C 58 140, 95 125, 110 87" fill="none" stroke="#007B75" stroke-width="11" stroke-linecap="round" />
+    <path d="M 115 80 Q 125 76 140 76" fill="none" stroke="#007B75" stroke-width="11" stroke-linecap="round" />
+    <circle cx="35" cy="80" r="16" fill="#FFFFFF" stroke="#007B75" stroke-width="11" />
+    <circle cx="58" cy="80" r="4.5" fill="#8AE0D2" />
+    <circle cx="71" cy="80" r="4.5" fill="#8AE0D2" />
+    <circle cx="84" cy="80" r="4.5" fill="#8AE0D2" />
+    <circle cx="97" cy="80" r="4.5" fill="#8AE0D2" />
+    <circle cx="115" cy="80" r="13" fill="#8AE0D2" />
+    <circle cx="115" cy="80" r="5" fill="#007B75" />
+    <g id="browser-window">
+      <rect x="140" y="30" width="95" height="95" rx="15" fill="#FFFFFF" />
+      <path d="M 140 45 C 140 36.7 146.7 30 155 30 L 220 30 C 228.3 30 235 36.7 235 45 L 235 55 L 140 55 Z" fill="#007B75" />
+      <rect x="140" y="30" width="95" height="95" rx="15" fill="none" stroke="#007B75" stroke-width="11" />
+      <circle cx="155" cy="42.5" r="3.5" fill="#FFFFFF" />
+      <circle cx="168" cy="42.5" r="3.5" fill="#FFFFFF" />
+      <circle cx="181" cy="42.5" r="3.5" fill="#FFFFFF" />
+      <rect x="155" y="68" width="60" height="16" rx="6" fill="#8AE0D2" />
+      <rect x="180" y="90" width="35" height="18" rx="6" fill="#8AE0D2" />
+    </g>
+  </g>
+
+  <text x="275" y="98" class="sakala-title">Sakala</text>
+  <text x="279" y="130" class="sakala-subtitle">sakala.dev</text>
+</svg>

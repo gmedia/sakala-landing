@@ -1,0 +1,26 @@
+---
+import Container from "../ui/Container.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
+import { faqItems } from "../../data/faq";
+---
+
+<section id="faq" class="py-20 sm:py-24">
+  <Container className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+    <SectionHeader
+      eyebrow="FAQ"
+      title="Pertanyaan yang wajar sebelum mencoba."
+    />
+    <div class="space-y-3">
+      {
+        faqItems.map((item) => (
+          <details class="group rounded-xl border border-border bg-surface p-5">
+            <summary class="cursor-pointer list-none font-semibold text-ink">
+              {item.question}
+            </summary>
+            <p class="mt-4 leading-7 text-muted">{item.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </Container>
+</section>

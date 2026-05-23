@@ -1,0 +1,59 @@
+---
+import Container from "../ui/Container.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
+
+const steps = [
+  {
+    title: "Hubungkan Git",
+    text: "Pilih repository project yang ingin kamu jalankan.",
+  },
+  {
+    title: "Sakala menjalankan alur deploy",
+    text: "Control plane dan runtime executor menangani proses secara transparan.",
+  },
+  {
+    title: "Bagikan URL publik",
+    text: "Aplikasi tersedia melalui domain yang mudah dibuka dan diuji.",
+  },
+];
+---
+
+<section id="cara-kerja" class="py-20 sm:py-24">
+  <Container>
+    <SectionHeader
+      centered
+      eyebrow="Cara kerja"
+      title="Dari source code menuju aplikasi yang bisa dibuka."
+      description="Alur sederhana untuk belajar, membuat demo, dan berkolaborasi."
+    />
+    <div class="mt-14 grid gap-8 md:grid-cols-3">
+      {
+        steps.map((step, index) => (
+          <article class="relative rounded-2xl border border-border bg-surface-elevated p-7">
+            <p class="text-sm font-semibold text-primary">0{index + 1}</p>
+            <h3 class="mt-4 text-xl font-semibold text-ink">{step.title}</h3>
+            <p class="mt-3 leading-7 text-muted">{step.text}</p>
+          </article>
+        ))
+      }
+    </div>
+    <div
+      class="mt-16 rounded-2xl border border-primary-soft bg-primary-soft-2 p-8 md:flex md:items-center md:justify-between"
+    >
+      <div class="max-w-2xl">
+        <p
+          class="text-sm font-semibold uppercase tracking-[0.18em] text-primary"
+        >
+          Mengapa Sakala?
+        </p>
+        <h3 class="mt-3 text-2xl font-semibold text-ink">
+          Deployment yang dapat dipelajari, bukan kotak hitam.
+        </h3>
+      </div>
+      <p class="mt-5 max-w-md leading-7 text-muted md:mt-0">
+        Sakala memprioritaskan pengalaman developer yang sederhana sambil
+        mempertahankan batas arsitektur dan proses yang jelas.
+      </p>
+    </div>
+  </Container>
+</section>

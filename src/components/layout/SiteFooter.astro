@@ -1,0 +1,43 @@
+---
+import SakalaLogo from "../brand/SakalaLogo.astro";
+import Container from "../ui/Container.astro";
+---
+
+<footer class="border-t border-border bg-surface">
+  <Container className="grid gap-10 py-12 sm:grid-cols-[1fr_auto_auto]">
+    <div>
+      <SakalaLogo />
+      <p class="mt-4 max-w-sm text-sm leading-7 text-muted">
+        Platform deployment open-source dari PT Media Sarana Data / GMEDIA untuk
+        project yang perlu menjadi aplikasi nyata.
+      </p>
+    </div>
+    <div class="space-y-3 text-sm">
+      <p class="font-semibold text-ink">Produk</p>
+      <a class="block text-muted hover:text-primary" href="/docs">Dokumentasi</a
+      >
+      <a class="block text-muted hover:text-primary" href="/changelog"
+        >Changelog</a
+      >
+      <a
+        class="block text-muted hover:text-primary"
+        href="https://app.sakala.dev">Dashboard</a
+      >
+    </div>
+    <div class="space-y-3 text-sm">
+      <p class="font-semibold text-ink">Open source</p>
+      <a
+        class="block text-muted hover:text-primary"
+        href="https://github.com/gmedia">GitHub GMEDIA</a
+      >
+      <a class="block text-muted hover:text-primary" href="/docs/concepts"
+        >Konsep</a
+      >
+      <a class="block text-muted hover:text-primary" href="/docs/faq">FAQ</a>
+    </div>
+  </Container>
+  <div class="border-t border-border py-5 text-center text-sm text-muted">
+    &copy; {new Date().getFullYear()} PT Media Sarana Data (GMEDIA). Licensed under
+    Apache-2.0.
+  </div>
+</footer>

@@ -1,0 +1,48 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonical?: URL | string;
+}
+
+const defaultTitle = "Sakala — Deploy Project dari Git Tanpa Ribet Server";
+const defaultDescription =
+  "Sakala adalah platform deployment open-source dari GMEDIA untuk membantu mahasiswa, developer pemula, dan tim kecil menjalankan project dari Git ke URL publik dengan workflow yang sederhana.";
+const {
+  title = defaultTitle,
+  description = defaultDescription,
+  image = "/og/default.png",
+  canonical = new URL(Astro.url.pathname, Astro.site),
+} = Astro.props;
+const canonicalUrl = canonical.toString();
+const imageUrl = new URL(image, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:site_name" content="Sakala" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+  </head>
+  <body class="text-ink antialiased">
+    <slot />
+  </body>
+</html>

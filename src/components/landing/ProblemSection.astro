@@ -1,0 +1,33 @@
+---
+import Card from "../ui/Card.astro";
+import Container from "../ui/Container.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
+
+const problems = [
+  "Setup VPS, SSL, dan reverse proxy sering menjadi langkah pertama yang terlalu besar.",
+  "Project yang sudah berjalan lokal belum mudah dibagikan lewat URL publik.",
+  "Materi deployment menjadi sulit dipelajari bila infrastruktur menutupi konsep dasarnya.",
+];
+---
+
+<section id="mengapa" class="bg-background-soft py-20 sm:py-24">
+  <Container>
+    <SectionHeader
+      eyebrow="Masalah"
+      title="Aplikasi selesai dibuat, tetapi deployment masih terasa berat."
+      description="Sakala dimulai dari kebutuhan praktis: membuat project dapat dilihat dan diuji tanpa memaksa setiap developer menjadi administrator server."
+    />
+    <div class="mt-12 grid gap-4 md:grid-cols-3">
+      {
+        problems.map((problem, index) => (
+          <Card>
+            <span class="flex size-9 items-center justify-center rounded-full bg-primary-soft text-sm font-semibold text-primary">
+              {index + 1}
+            </span>
+            <p class="mt-5 leading-7 text-muted">{problem}</p>
+          </Card>
+        ))
+      }
+    </div>
+  </Container>
+</section>

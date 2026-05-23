@@ -1,0 +1,34 @@
+---
+import { docsNavigation } from "../../data/navigation";
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+---
+
+<aside class="hidden w-56 shrink-0 lg:block">
+  <p
+    class="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-muted-2"
+  >
+    Dokumentasi
+  </p>
+  <nav class="space-y-1" aria-label="Dokumentasi">
+    {
+      docsNavigation.map((item) => (
+        <a
+          href={item.href}
+          class:list={[
+            "block rounded-lg px-3 py-2 text-sm",
+            currentPath === item.href
+              ? "bg-primary-soft-2 font-semibold text-primary-dark"
+              : "text-muted hover:bg-background-soft hover:text-primary",
+          ]}
+        >
+          {item.label}
+        </a>
+      ))
+    }
+  </nav>
+</aside>

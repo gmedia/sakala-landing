@@ -1,0 +1,61 @@
+---
+import Badge from "../ui/Badge.astro";
+import Button from "../ui/Button.astro";
+import Container from "../ui/Container.astro";
+---
+
+<section class="overflow-hidden pb-18 pt-16 sm:pb-24 sm:pt-20">
+  <Container className="grid items-center gap-12 lg:grid-cols-[1.04fr_0.96fr]">
+    <div>
+      <Badge>Open-source deployment platform in active development</Badge>
+      <h1
+        class="mt-7 text-4xl font-semibold leading-tight tracking-tight text-ink sm:text-6xl"
+      >
+        Deploy project dari Git ke URL publik tanpa ribet server.
+      </h1>
+      <p class="mt-6 max-w-xl text-lg leading-8 text-muted">
+        Sakala membantu mahasiswa, developer pemula, dan tim kecil menjalankan
+        aplikasi tanpa harus memahami VPS, SSL, reverse proxy, dan setup
+        infrastruktur manual sejak hari pertama.
+      </p>
+      <div class="mt-9 flex flex-wrap gap-3">
+        <Button href="https://github.com/gmedia" external>Lihat GitHub</Button>
+        <Button href="/docs" variant="secondary">Baca Dokumentasi</Button>
+        <Button href="https://app.sakala.dev" variant="ghost"
+          >Masuk ke Dashboard</Button
+        >
+      </div>
+    </div>
+    <div
+      class="rounded-3xl border border-border bg-surface p-4 shadow-[0_24px_64px_-40px_rgba(15,118,110,.4)] sm:p-6"
+    >
+      <div
+        class="rounded-2xl bg-terminal px-5 py-5 text-sm text-terminal-text sm:p-7"
+      >
+        <div class="mb-6 flex gap-2">
+          <span class="size-3 rounded-full bg-error/80"></span>
+          <span class="size-3 rounded-full bg-warning/80"></span>
+          <span class="size-3 rounded-full bg-success/80"></span>
+        </div>
+        <div class="space-y-4 font-mono text-[13px] leading-6 sm:text-sm">
+          <p><span class="text-primary-soft">$</span> git push origin main</p>
+          <p><span class="text-success">✓</span> Repository diterima</p>
+          <p>
+            <span class="text-primary-soft">→</span> Menyiapkan deployment aplikasi...
+          </p>
+          <p><span class="text-success">✓</span> Routing publik siap</p>
+          <p class="rounded-lg bg-terminal-soft px-4 py-3 text-primary-soft">
+            demo.run.sakala.dev
+          </p>
+        </div>
+      </div>
+      <p
+        class="mt-4 rounded-xl bg-accent-soft px-4 py-3 text-sm leading-6 text-ink"
+      >
+        Sakala masih dalam tahap pengembangan aktif. Saat ini fokus kami adalah
+        membangun pengalaman deployment yang sederhana, transparan, dan ramah
+        untuk pembelajaran.
+      </p>
+    </div>
+  </Container>
+</section>

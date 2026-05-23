@@ -1,0 +1,41 @@
+---
+import Container from "../ui/Container.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
+import { roadmapItems } from "../../data/roadmap";
+---
+
+<section id="roadmap" class="bg-background-soft py-20 sm:py-24">
+  <Container>
+    <SectionHeader
+      centered
+      eyebrow="Roadmap"
+      title="Berjalan bertahap dan dapat ditinjau."
+      description="Kami menjaga scope tetap realistis: fondasi lebih dulu, lalu deployment yang dapat diuji."
+    />
+    <div class="mt-12 grid gap-4 lg:grid-cols-3">
+      {
+        roadmapItems.map((item) => (
+          <article
+            class:list={[
+              "rounded-2xl border p-6",
+              item.active
+                ? "border-primary bg-primary-soft-2"
+                : "border-border bg-surface",
+            ]}
+          >
+            <span
+              class:list={[
+                "text-xs font-semibold uppercase tracking-[0.18em]",
+                item.active ? "text-primary" : "text-muted-2",
+              ]}
+            >
+              {item.stage}
+            </span>
+            <h3 class="mt-4 text-xl font-semibold text-ink">{item.title}</h3>
+            <p class="mt-3 leading-7 text-muted">{item.description}</p>
+          </article>
+        ))
+      }
+    </div>
+  </Container>
+</section>
