@@ -4,56 +4,65 @@ import SectionHeader from "../ui/SectionHeader.astro";
 
 const steps = [
   {
-    title: "Hubungkan Git",
-    text: "Pilih repository project yang ingin kamu jalankan.",
+    title: "Hubungkan repo",
+    text: "Pilih project Git yang mau kamu keluarkan dari laptop.",
+    chip: "repo connected",
   },
   {
-    title: "Sakala menjalankan alur deploy",
-    text: "Control plane dan runtime executor menangani proses secara transparan.",
+    title: "Sakala membaca project",
+    text: "Alur deploy dibuat terlihat, bukan disembunyikan dalam magic button.",
+    chip: "build queued",
   },
   {
-    title: "Bagikan URL publik",
-    text: "Aplikasi tersedia melalui domain yang mudah dibuka dan diuji.",
+    title: "URL publik siap dibagikan",
+    text: "Kirim link ke dosen, teman, komunitas, atau calon pengguna.",
+    chip: "live",
   },
 ];
 ---
 
-<section id="cara-kerja" class="py-20 sm:py-24">
+<section id="cara-kerja" class="relative overflow-hidden py-20 sm:py-28">
   <Container>
     <SectionHeader
-      centered
       eyebrow="Cara kerja"
-      title="Dari source code menuju aplikasi yang bisa dibuka."
-      description="Alur sederhana untuk belajar, membuat demo, dan berkolaborasi."
+      title="Deploy dulu. Pahami infrastrukturnya pelan-pelan."
+      description="Tiga langkah yang terasa familiar untuk developer, dengan proses yang tetap transparan."
     />
-    <div class="mt-14 grid gap-8 md:grid-cols-3">
+    <div class="relative mt-14 grid gap-5 lg:grid-cols-3">
+      <div
+        class="absolute left-10 right-10 top-9 hidden border-t border-dashed border-primary-soft lg:block"
+      >
+      </div>
       {
         steps.map((step, index) => (
-          <article class="relative rounded-2xl border border-border bg-surface-elevated p-7">
-            <p class="text-sm font-semibold text-primary">0{index + 1}</p>
-            <h3 class="mt-4 text-xl font-semibold text-ink">{step.title}</h3>
+          <article class="paper-card relative rounded-2xl border border-border bg-surface p-6 pt-7">
+            <div class="relative flex items-center justify-between">
+              <span class="flex size-10 items-center justify-center rounded-full border-4 border-primary-soft-2 bg-primary text-sm font-semibold text-white">
+                {index + 1}
+              </span>
+              <span class="rounded-full bg-primary-soft-2 px-3 py-1 font-mono text-[11px] text-primary-dark">
+                {step.chip}
+              </span>
+            </div>
+            <h3 class="mt-8 text-xl font-semibold tracking-tight text-ink">
+              {step.title}
+            </h3>
             <p class="mt-3 leading-7 text-muted">{step.text}</p>
           </article>
         ))
       }
     </div>
     <div
-      class="mt-16 rounded-2xl border border-primary-soft bg-primary-soft-2 p-8 md:flex md:items-center md:justify-between"
+      class="mt-14 flex flex-col gap-5 border-l-2 border-primary pl-6 sm:flex-row sm:items-center sm:justify-between"
     >
-      <div class="max-w-2xl">
-        <p
-          class="text-sm font-semibold uppercase tracking-[0.18em] text-primary"
-        >
-          Mengapa Sakala?
-        </p>
-        <h3 class="mt-3 text-2xl font-semibold text-ink">
-          Deployment yang dapat dipelajari, bukan kotak hitam.
-        </h3>
-      </div>
-      <p class="mt-5 max-w-md leading-7 text-muted md:mt-0">
-        Sakala memprioritaskan pengalaman developer yang sederhana sambil
-        mempertahankan batas arsitektur dan proses yang jelas.
+      <p class="max-w-2xl text-2xl font-semibold tracking-tight text-ink">
+        Dosen tinggal buka link. Mahasiswa belajar deployment beneran.
       </p>
+      <span
+        class="shrink-0 rounded-full border border-border bg-surface px-5 py-3 font-mono text-xs text-primary"
+      >
+        source -&gt; deploy -&gt; live
+      </span>
     </div>
   </Container>
 </section>

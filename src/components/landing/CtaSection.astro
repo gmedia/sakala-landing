@@ -2,34 +2,45 @@
 import Container from "../ui/Container.astro";
 ---
 
-<section class="pb-20 sm:pb-24">
+<section class="pb-20 sm:pb-28">
   <Container>
     <div
-      class="rounded-3xl bg-primary p-8 text-white sm:p-12 lg:flex lg:items-center lg:justify-between"
+      class="editorial-grid relative overflow-hidden rounded-[2rem] border border-primary-soft bg-primary-soft-2 px-7 py-10 sm:px-12 sm:py-14"
     >
-      <div class="max-w-xl">
-        <p
-          class="text-sm font-semibold uppercase tracking-[0.18em] text-primary-soft"
-        >
-          Mulai mengikuti Sakala
-        </p>
-        <h2 class="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
-          Pelajari foundation dan ikut membentuk arah deployment yang sederhana.
-        </h2>
-      </div>
-      <div class="mt-8 flex flex-wrap gap-3 lg:mt-0">
+      <span
+        class="absolute right-10 top-8 hidden rotate-3 rounded-lg bg-surface px-4 py-2 font-mono text-xs text-primary sm:block"
+      >
+        git push origin main
+      </span>
+      <p
+        class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-primary"
+      >
+        Ikut dari awal
+      </p>
+      <h2
+        class="mt-5 max-w-3xl text-3xl font-semibold tracking-tight text-ink sm:text-5xl"
+      >
+        Project bagus jangan berhenti di laptop sendiri.
+      </h2>
+      <p class="mt-5 max-w-xl text-lg leading-8 text-muted">
+        Baca arahnya, lihat kodenya, dan bantu Sakala menjadi jalur deploy yang
+        berguna untuk belajar dan berkarya.
+      </p>
+      <div class="mt-9 flex flex-wrap gap-3">
         <a
           href="/docs"
-          class="rounded-xl bg-white px-5 py-3 text-sm font-semibold text-primary-dark hover:bg-primary-soft"
-          >Baca Dokumentasi</a
+          class="rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white hover:bg-primary-dark"
         >
+          Baca Dokumentasi
+        </a>
         <a
           href="https://github.com/gmedia"
           target="_blank"
           rel="noreferrer"
-          class="rounded-xl border border-primary-soft px-5 py-3 text-sm font-semibold text-white hover:bg-primary-dark"
-          >GitHub</a
+          class="rounded-xl border border-primary bg-surface px-5 py-3 text-sm font-semibold text-primary hover:bg-background"
         >
+          Lihat GitHub
+        </a>
       </div>
     </div>
   </Container>

@@ -42,8 +42,20 @@ body {
   min-width: 320px;
   margin: 0;
   background:
-    radial-gradient(circle at top right, #e7fffa 0, transparent 31rem),
+    radial-gradient(circle at 88% 8%, #e7fffa 0, transparent 34rem),
+    radial-gradient(circle at 4% 42%, #fef3c7 0, transparent 18rem),
     var(--color-background);
+}
+
+body::before {
+  position: fixed;
+  z-index: 50;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  content: "";
+  background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence baseFrequency='.72' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23paper)' opacity='.18'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
 }
 
 ::selection {
@@ -56,6 +68,100 @@ a {
     color 150ms ease,
     background-color 150ms ease,
     border-color 150ms ease;
+}
+
+.editorial-grid {
+  background-image:
+    radial-gradient(circle, rgba(15, 118, 110, 0.13) 1px, transparent 1px),
+    linear-gradient(rgba(207, 218, 210, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(207, 218, 210, 0.18) 1px, transparent 1px);
+  background-position:
+    0 0,
+    0 0,
+    0 0;
+  background-size:
+    20px 20px,
+    80px 80px,
+    80px 80px;
+}
+
+.paper-card {
+  box-shadow:
+    0 2px 0 rgba(23, 33, 27, 0.04),
+    0 14px 36px -28px rgba(17, 94, 89, 0.3);
+}
+
+.receipt-edge {
+  background-image: radial-gradient(
+    circle,
+    var(--color-background) 6px,
+    transparent 6.5px
+  );
+  background-position: center -6px;
+  background-size: 18px 13px;
+  background-repeat: repeat-x;
+}
+
+.hand-underline {
+  position: relative;
+  white-space: nowrap;
+}
+
+.hand-underline::after {
+  position: absolute;
+  left: -0.08em;
+  right: -0.08em;
+  bottom: 0.02em;
+  height: 0.16em;
+  border-radius: 999px;
+  content: "";
+  background: var(--color-primary-soft);
+  transform: rotate(-1.5deg);
+  z-index: -1;
+}
+
+.float-note {
+  animation: float-note 5.2s ease-in-out infinite;
+}
+
+.path-dot {
+  animation: path-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes float-note {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--note-rotate, -2deg));
+  }
+
+  50% {
+    transform: translateY(-5px) rotate(var(--note-rotate, -2deg));
+  }
+}
+
+@keyframes path-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
 }
 
 .prose-sakala {

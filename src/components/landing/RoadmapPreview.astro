@@ -4,38 +4,50 @@ import SectionHeader from "../ui/SectionHeader.astro";
 import { roadmapItems } from "../../data/roadmap";
 ---
 
-<section id="roadmap" class="bg-background-soft py-20 sm:py-24">
+<section id="roadmap" class="bg-background-soft py-20 sm:py-28">
   <Container>
-    <SectionHeader
-      centered
-      eyebrow="Roadmap"
-      title="Berjalan bertahap dan dapat ditinjau."
-      description="Kami menjaga scope tetap realistis: fondasi lebih dulu, lalu deployment yang dapat diuji."
-    />
-    <div class="mt-12 grid gap-4 lg:grid-cols-3">
-      {
-        roadmapItems.map((item) => (
-          <article
-            class:list={[
-              "rounded-2xl border p-6",
-              item.active
-                ? "border-primary bg-primary-soft-2"
-                : "border-border bg-surface",
-            ]}
-          >
-            <span
-              class:list={[
-                "text-xs font-semibold uppercase tracking-[0.18em]",
-                item.active ? "text-primary" : "text-muted-2",
-              ]}
-            >
-              {item.stage}
-            </span>
-            <h3 class="mt-4 text-xl font-semibold text-ink">{item.title}</h3>
-            <p class="mt-3 leading-7 text-muted">{item.description}</p>
-          </article>
-        ))
-      }
+    <div class="grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
+      <SectionHeader
+        eyebrow="Roadmap, bukan janji sales"
+        title="Sedikit demi sedikit, bisa diuji."
+        description="Kami lebih memilih menunjukkan yang sedang dikerjakan daripada membuat klaim sebelum waktunya."
+      />
+      <ol
+        class="relative space-y-4 before:absolute before:bottom-8 before:left-[1.2rem] before:top-8 before:border-l before:border-dashed before:border-primary-soft"
+      >
+        {
+          roadmapItems.map((item, index) => (
+            <li class="paper-card relative flex gap-5 rounded-2xl border border-border bg-surface p-5 sm:p-6">
+              <span
+                class:list={[
+                  "relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full border text-sm font-semibold",
+                  item.active
+                    ? "border-primary bg-primary text-white"
+                    : "border-primary-soft bg-primary-soft-2 text-primary",
+                ]}
+              >
+                {index + 1}
+              </span>
+              <div>
+                <p
+                  class:list={[
+                    "font-mono text-[11px] uppercase tracking-[0.18em]",
+                    item.active ? "text-success" : "text-muted-2",
+                  ]}
+                >
+                  {item.stage} {item.active && "/ sedang jalan"}
+                </p>
+                <h3 class="mt-2 text-xl font-semibold tracking-tight text-ink">
+                  {item.title}
+                </h3>
+                <p class="mt-2 text-sm leading-7 text-muted">
+                  {item.description}
+                </p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
     </div>
   </Container>
 </section>
