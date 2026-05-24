@@ -1,22 +1,37 @@
 export const useCases = [
   {
     title: "Mahasiswa",
+    label: "tugas akhir pekan",
     description:
-      "Bagikan hasil tugas atau portofolio sebagai URL yang bisa dibuka dosen dan rekan.",
+      "Kumpulkan project sebagai link yang bisa langsung dibuka, bukan ZIP yang masih harus disiapkan ulang.",
+    size: "large",
   },
   {
-    title: "Developer pemula",
+    title: "Dosen / Kampus",
+    label: "review lebih cepat",
     description:
-      "Pelajari alur deploy dari Git tanpa harus memulai dari konfigurasi server manual.",
+      "Buka hasil kerja mahasiswa lewat browser tanpa clone repository satu per satu.",
+    size: "small",
   },
   {
-    title: "Pengajar & komunitas",
+    title: "Portfolio",
+    label: "show your work",
     description:
-      "Berikan jalur deployment yang konsisten untuk kelas, workshop, dan proyek kolaboratif.",
+      "Project latihan yang bagus tidak harus berakhir sebagai screenshot di README.",
+    size: "small",
   },
   {
-    title: "Tim kecil",
+    title: "Komunitas",
+    label: "build together",
     description:
-      "Uji aplikasi internal atau prototype dengan proses yang ringan dan transparan.",
+      "Workshop dan hack night punya alur share demo yang lebih seragam.",
+    size: "medium",
+  },
+  {
+    title: "Demo / Prototype",
+    label: "ship kecil dulu",
+    description:
+      "Validasi ide dan tunjukkan progress tanpa memulai dari ritual konfigurasi server.",
+    size: "wide",
   },
 ];

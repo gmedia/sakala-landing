@@ -7,7 +7,7 @@ import { mainNavigation } from "../../data/navigation";
 ---
 
 <header
-  class="sticky top-0 z-30 border-b border-border/80 bg-background/90 backdrop-blur"
+  class="sticky top-0 z-30 border-b border-border/70 bg-background/85 backdrop-blur"
 >
   <Container className="flex h-18 items-center justify-between">
     <SakalaLogo />
@@ -23,7 +23,12 @@ import { mainNavigation } from "../../data/navigation";
         ))
       }
     </nav>
-    <div class="hidden md:block">
+    <div class="hidden items-center gap-3 md:flex">
+      <span
+        class="hidden rounded-full bg-primary-soft-2 px-3 py-1 font-mono text-[10px] text-primary lg:inline-flex"
+      >
+        active build
+      </span>
       <Button href="https://app.sakala.dev" variant="secondary">Masuk</Button>
     </div>
     <MobileNav />

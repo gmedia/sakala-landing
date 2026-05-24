@@ -11,3 +11,4 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) dan pr
 - Foundation website Astro static-first untuk `sakala.dev`.
 - Landing page Bahasa Indonesia, dokumentasi, changelog, sitemap, dan metadata SEO.
 - Identitas visual light-first serta aset logo Sakala.
+- Art direction editorial dengan deployment receipt, status strip, bento use cases, dan tekstur CSS-only.

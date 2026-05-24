@@ -1,33 +1,70 @@
 ---
-import Card from "../ui/Card.astro";
 import Container from "../ui/Container.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
 
 const problems = [
-  "Setup VPS, SSL, dan reverse proxy sering menjadi langkah pertama yang terlalu besar.",
-  "Project yang sudah berjalan lokal belum mudah dibagikan lewat URL publik.",
-  "Materi deployment menjadi sulit dipelajari bila infrastruktur menutupi konsep dasarnya.",
+  {
+    label: "localhost problem",
+    title: "Project cuma jalan di localhost",
+    text: "Sudah bagus di laptop sendiri, tetapi belum punya link untuk dibagikan.",
+    class: "md:col-span-2 md:translate-y-7",
+  },
+  {
+    label: "assignment.zip",
+    title: "Tugas dikumpulkan sebagai screenshot atau ZIP",
+    text: "Yang dinilai akhirnya file kiriman, bukan pengalaman membuka aplikasinya.",
+    class: "md:col-span-1",
+  },
+  {
+    label: "review manual",
+    title: "Dosen harus clone dan setup sendiri",
+    text: "Setiap project membawa instruksi install dan kemungkinan gagal yang berbeda.",
+    class: "md:col-span-1 md:mt-7",
+  },
+  {
+    label: "too soon",
+    title: "VPS datang terlalu cepat",
+    text: "Belajar deploy seharusnya tidak langsung dimulai dari SSL dan konfigurasi jaringan.",
+    class: "md:col-span-2",
+  },
 ];
 ---
 
-<section id="mengapa" class="bg-background-soft py-20 sm:py-24">
+<section id="mengapa" class="relative bg-background-soft py-20 sm:py-28">
   <Container>
-    <SectionHeader
-      eyebrow="Masalah"
-      title="Aplikasi selesai dibuat, tetapi deployment masih terasa berat."
-      description="Sakala dimulai dari kebutuhan praktis: membuat project dapat dilihat dan diuji tanpa memaksa setiap developer menjadi administrator server."
-    />
-    <div class="mt-12 grid gap-4 md:grid-cols-3">
-      {
-        problems.map((problem, index) => (
-          <Card>
-            <span class="flex size-9 items-center justify-center rounded-full bg-primary-soft text-sm font-semibold text-primary">
-              {index + 1}
-            </span>
-            <p class="mt-5 leading-7 text-muted">{problem}</p>
-          </Card>
-        ))
-      }
+    <div class="grid gap-12 lg:grid-cols-[0.82fr_1.18fr]">
+      <div class="lg:sticky lg:top-30 lg:self-start">
+        <SectionHeader
+          eyebrow="Yang sering kejadian"
+          title="Project sudah jadi. Yang susah: bikin orang lain bisa buka."
+          description="Biar tugas, portfolio, dan demo nggak berhenti di laptop sendiri."
+        />
+        <p
+          class="mt-8 inline-flex -rotate-2 rounded-lg bg-accent-soft px-4 py-3 text-sm font-medium text-warm"
+        >
+          “jalan kok, di laptop aku”
+        </p>
+      </div>
+      <div class="grid gap-4 md:grid-cols-3">
+        {
+          problems.map((problem) => (
+            <article
+              class:list={[
+                "paper-card rounded-2xl border border-border bg-surface p-6",
+                problem.class,
+              ]}
+            >
+              <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-primary">
+                {problem.label}
+              </p>
+              <h3 class="mt-5 text-xl font-semibold leading-snug tracking-tight text-ink">
+                {problem.title}
+              </h3>
+              <p class="mt-3 text-sm leading-7 text-muted">{problem.text}</p>
+            </article>
+          ))
+        }
+      </div>
     </div>
   </Container>
 </section>

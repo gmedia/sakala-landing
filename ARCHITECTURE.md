@@ -21,6 +21,12 @@ Astro sesuai untuk halaman marketing dan dokumentasi yang sebagian besar berupa 
 - `DocsLayout.astro` memberi navigasi dokumentasi konsisten.
 - Komponen pada `landing/` dan `ui/` tetap presentasional dan statis.
 
+## Arah Visual Landing
+
+Landing menggunakan pendekatan editorial untuk developer muda: headline ekspresif, ritme bento yang tidak seragam, tekstur kertas dan grid berbasis CSS, serta copy Bahasa Indonesia yang lebih conversational. Visual khas produk berada pada komponen `DeploymentReceipt`, `FlowPath`, dan `StatusStrip`; semuanya berupa HTML/SVG statis tanpa island atau runtime JavaScript.
+
+Animasi kecil pada catatan dan titik alur hanya menggunakan CSS dan menghormati `prefers-reduced-motion`.
+
 ## Content Collections
 
 Koleksi `docs` menghasilkan route dokumentasi dan validasi frontmatter. Koleksi `changelog` menyediakan pembaruan publik yang terstruktur. Blog atau tutorial dapat ditambahkan sebagai collection baru setelah kebutuhan editorial jelas.

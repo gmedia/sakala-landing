@@ -1,0 +1,52 @@
+<div
+  class="paper-card relative overflow-hidden rounded-[1.75rem] border border-border-strong bg-surface"
+>
+  <div
+    class="flex items-center justify-between border-b border-dashed border-border px-5 py-4"
+  >
+    <div
+      class="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted"
+    >
+      <span class="size-2 rounded-full bg-success"></span>
+      deployment receipt
+    </div>
+    <span
+      class="-rotate-2 rounded-full bg-primary-soft-2 px-3 py-1 font-mono text-[11px] font-semibold text-primary-dark"
+    >
+      LIVE
+    </span>
+  </div>
+
+  <dl class="space-y-4 px-5 py-6 font-mono text-xs sm:px-6 sm:text-[13px]">
+    <div class="grid grid-cols-[4.5rem_1fr] items-start gap-3">
+      <dt class="text-muted-2">repo</dt>
+      <dd class="font-semibold text-ink">kelas-web/portfolio</dd>
+    </div>
+    <div class="grid grid-cols-[4.5rem_1fr] items-start gap-3">
+      <dt class="text-muted-2">status</dt>
+      <dd class="flex items-center gap-2 text-success">
+        <span class="size-1.5 rounded-full bg-success"></span>
+        live
+      </dd>
+    </div>
+    <div class="grid grid-cols-[4.5rem_1fr] items-start gap-3">
+      <dt class="text-muted-2">url</dt>
+      <dd
+        class="break-all rounded-lg bg-primary-soft-2 px-3 py-2 text-primary-dark"
+      >
+        portfolio.run.sakala.dev
+      </dd>
+    </div>
+    <div class="grid grid-cols-2 gap-3 pt-1">
+      <div class="rounded-xl bg-background-soft px-3 py-3">
+        <dt class="text-muted-2">build</dt>
+        <dd class="mt-1 font-semibold text-ink">42s</dd>
+      </div>
+      <div class="rounded-xl bg-background-soft px-3 py-3">
+        <dt class="text-muted-2">mode</dt>
+        <dd class="mt-1 text-ink">sleeps when idle</dd>
+      </div>
+    </div>
+  </dl>
+  <div class="receipt-edge h-3 border-t border-dashed border-border"></div>
+</div>
