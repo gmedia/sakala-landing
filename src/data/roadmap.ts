@@ -1,23 +1,23 @@
 export const roadmapItems = [
   {
     stage: "Sekarang",
-    title: "Pondasi sudah ditaruh",
+    title: "Pondasi sudah disiapkan",
     description:
-      "Landing, dashboard foundation, agent foundation, dan local runtime playground.",
+      "Landing, pondasi dashboard, pondasi agent, dan runtime lokal untuk pengujian.",
     active: true,
   },
   {
     stage: "Berikutnya",
-    title: "Coba flow pertama",
+    title: "Menguji alur pertama",
     description:
-      "GitHub login, project creation, dan simulasi deployment yang bisa diikuti.",
+      "Login GitHub, pembuatan project, dan simulasi deployment yang bisa diikuti.",
     active: false,
   },
   {
     stage: "Nanti",
-    title: "Runtime sungguhan",
+    title: "Runtime deployment awal",
     description:
-      "Docker build, Caddy route, sleep/wake, dan pilot kecil bersama kampus.",
+      "Build Docker, routing Caddy, sleep/wake, dan pilot kecil bersama kampus.",
     active: false,
   },
 ];

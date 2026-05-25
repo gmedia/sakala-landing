@@ -1,9 +1,7 @@
 export const mainNavigation = [
-  { label: "Cara kerja", href: "/#cara-kerja" },
-  { label: "Untuk siapa", href: "/#use-cases" },
-  { label: "Roadmap", href: "/#roadmap" },
   { label: "Dokumentasi", href: "/docs" },
   { label: "Changelog", href: "/changelog" },
+  { label: "GitHub", href: "https://github.com/gmedia" },
 ];
 
 export const docsNavigation = [
