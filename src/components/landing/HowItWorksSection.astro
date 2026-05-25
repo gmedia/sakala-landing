@@ -6,26 +6,26 @@ const steps = [
   {
     title: "Hubungkan repo",
     text: "Pilih project Git yang mau kamu keluarkan dari laptop.",
-    chip: "repo connected",
+    chip: "repo terhubung",
   },
   {
-    title: "Sakala membaca project",
-    text: "Alur deploy dibuat terlihat, bukan disembunyikan dalam magic button.",
-    chip: "build queued",
+    title: "Sakala menyiapkan deployment",
+    text: "Proses deploy dibuat terbaca, bukan sekadar tombol ajaib.",
+    chip: "build masuk",
   },
   {
     title: "URL publik siap dibagikan",
     text: "Kirim link ke dosen, teman, komunitas, atau calon pengguna.",
-    chip: "live",
+    chip: "link siap",
   },
 ];
 ---
 
-<section id="cara-kerja" class="relative overflow-hidden py-20 sm:py-28">
+<section id="cara-kerja" class="relative overflow-hidden py-20 sm:py-24">
   <Container>
     <SectionHeader
       eyebrow="Cara kerja"
-      title="Deploy dulu. Pahami infrastrukturnya pelan-pelan."
+      title="Mulai dari deploy. Pahami infrastrukturnya pelan-pelan."
       description="Tiga langkah yang terasa familiar untuk developer, dengan proses yang tetap transparan."
     />
     <div class="relative mt-14 grid gap-5 lg:grid-cols-3">
@@ -55,13 +55,15 @@ const steps = [
     <div
       class="mt-14 flex flex-col gap-5 border-l-2 border-primary pl-6 sm:flex-row sm:items-center sm:justify-between"
     >
-      <p class="max-w-2xl text-2xl font-semibold tracking-tight text-ink">
+      <p
+        class="max-w-2xl text-xl font-semibold tracking-tight text-ink sm:text-2xl"
+      >
         Dosen tinggal buka link. Mahasiswa belajar deployment beneran.
       </p>
       <span
         class="shrink-0 rounded-full border border-border bg-surface px-5 py-3 font-mono text-xs text-primary"
       >
-        source -&gt; deploy -&gt; live
+        repo -&gt; deploy -&gt; link
       </span>
     </div>
   </Container>

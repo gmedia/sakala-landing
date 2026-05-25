@@ -5,20 +5,85 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
   canonical?: URL | string;
+  noindex?: boolean;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const defaultTitle = "Sakala — Deploy Project dari Git Tanpa Ribet Server";
 const defaultDescription =
-  "Sakala adalah platform deployment open-source dari GMEDIA untuk membantu mahasiswa, developer pemula, dan tim kecil menjalankan project dari Git ke URL publik dengan workflow yang sederhana.";
+  "Sakala membantu mahasiswa, developer pemula, dan tim kecil deploy project dari Git ke URL publik tanpa ribet VPS, SSL, reverse proxy, atau setup server manual.";
 const {
   title = defaultTitle,
   description = defaultDescription,
   image = "/og/default.png",
+  imageAlt = "Ilustrasi brand Sakala dengan alur dari source node menuju app window",
   canonical = new URL(Astro.url.pathname, Astro.site),
+  noindex = false,
+  structuredData,
 } = Astro.props;
 const canonicalUrl = canonical.toString();
 const imageUrl = new URL(image, Astro.site).toString();
+const robotsContent = noindex ? "noindex, follow" : "index, follow";
+const defaultStructuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://sakala.dev/#organization",
+      name: "PT Media Sarana Data",
+      alternateName: "GMEDIA",
+      url: "https://sakala.dev",
+      logo: "https://sakala.dev/logo.svg",
+      sameAs: ["https://github.com/gmedia"],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://sakala.dev/#website",
+      name: "Sakala",
+      url: "https://sakala.dev",
+      inLanguage: "id-ID",
+      publisher: {
+        "@id": "https://sakala.dev/#organization",
+      },
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://sakala.dev/#software",
+      name: "Sakala",
+      applicationCategory: "DeveloperApplication",
+      operatingSystem: "Web",
+      url: "https://sakala.dev",
+      description: defaultDescription,
+      isAccessibleForFree: true,
+      license: "https://www.apache.org/licenses/LICENSE-2.0",
+      creator: {
+        "@id": "https://sakala.dev/#organization",
+      },
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "IDR",
+      },
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${canonicalUrl}#webpage`,
+      url: canonicalUrl,
+      name: title,
+      description,
+      inLanguage: "id-ID",
+      isPartOf: {
+        "@id": "https://sakala.dev/#website",
+      },
+      publisher: {
+        "@id": "https://sakala.dev/#organization",
+      },
+    },
+  ],
+};
+const jsonLd = JSON.stringify(structuredData ?? defaultStructuredData);
 ---
 
 <!doctype html>
@@ -27,20 +92,28 @@ const imageUrl = new URL(image, Astro.site).toString();
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#F8FAF7" />
+    <meta name="robots" content={robotsContent} />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:site_name" content="Sakala" />
+    <meta property="og:locale" content="id_ID" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+    <script type="application/ld+json" is:inline set:html={jsonLd} />
   </head>
   <body class="text-ink antialiased">
     <slot />

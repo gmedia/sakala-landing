@@ -2,10 +2,10 @@
 import Container from "../ui/Container.astro";
 
 const statuses = [
-  { name: "Dashboard foundation", state: "ready", ready: true },
-  { name: "Agent foundation", state: "ready", ready: true },
-  { name: "Infra playground", state: "ready", ready: true },
-  { name: "First deployment flow", state: "in progress", ready: false },
+  { name: "Landing & dokumentasi", state: "siap", ready: true },
+  { name: "Dashboard pondasi", state: "siap", ready: true },
+  { name: "Runtime lokal", state: "siap", ready: true },
+  { name: "Deploy pertama", state: "dibangun", ready: false },
 ];
 ---
 
@@ -13,16 +13,16 @@ const statuses = [
   aria-label="Status pengembangan Sakala"
   class="border-y border-border bg-surface/80"
 >
-  <Container className="flex flex-col gap-4 py-5 lg:flex-row lg:items-center">
+  <Container className="flex flex-col gap-4 py-4 lg:flex-row lg:items-center">
     <p
       class="shrink-0 font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-muted"
     >
-      build log / now
+      status singkat
     </p>
     <div class="grid flex-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
       {
         statuses.map((status) => (
-          <div class="flex items-center justify-between gap-3 rounded-lg border border-border bg-background px-3 py-2 font-mono text-[11px]">
+          <div class="flex items-center justify-between gap-3 rounded-lg border border-border bg-background px-3 py-2 text-xs">
             <span class="text-muted">{status.name}</span>
             <span
               class:list={[

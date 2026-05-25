@@ -8,26 +8,21 @@ import FlowPath from "./FlowPath.astro";
 
 <section class="relative isolate overflow-hidden pb-18 pt-9 sm:pb-24 sm:pt-14">
   <div
-    class="editorial-grid absolute inset-x-0 top-0 -z-10 h-[34rem] opacity-55 [mask-image:linear-gradient(to_bottom,black,transparent)]"
+    class="editorial-grid absolute inset-x-0 top-0 -z-10 h-[34rem] opacity-45 [mask-image:linear-gradient(to_bottom,black,transparent)]"
   >
   </div>
   <Container>
     <div class="relative">
-      <div class="mb-8 flex flex-wrap items-center gap-3">
+      <div class="mb-8">
         <Badge>Open-source deployment platform in active development</Badge>
-        <span
-          class="float-note hidden -rotate-2 rounded-full border border-warm/30 bg-accent-soft px-4 py-2 text-xs font-medium text-warm sm:inline-flex"
-        >
-          bukan cuma screenshot
-        </span>
       </div>
 
       <div
-        class="grid gap-12 lg:grid-cols-[minmax(0,1.06fr)_24rem] lg:items-start"
+        class="grid gap-12 lg:grid-cols-[minmax(0,1.08fr)_23rem] lg:items-start"
       >
         <div class="relative">
           <h1
-            class="max-w-[13ch] text-[clamp(3.5rem,8.7vw,7.15rem)] font-semibold leading-[0.93] tracking-[-0.065em] text-ink"
+            class="max-w-[13ch] text-[clamp(3.5rem,8.4vw,6.9rem)] font-semibold leading-[0.94] tracking-[-0.06em] text-ink"
           >
             Dari repo<br />
             ke URL <span class="hand-underline text-primary-dark">publik.</span
@@ -35,49 +30,47 @@ import FlowPath from "./FlowPath.astro";
             Tanpa ritual<br class="hidden sm:block" /> server.
           </h1>
           <p class="mt-8 max-w-xl text-lg leading-8 text-muted sm:text-xl">
-            Sakala membantu project tugas, portfolio, dan demo kecil keluar dari
-            localhost tanpa harus mulai dari VPS, SSL, reverse proxy, atau
-            Docker networking.
+            Biar tugas, portfolio, dan demo kecil nggak berhenti di localhost.
+            Mulai dari link yang bisa dibuka, sambil memahami infrastrukturnya
+            pelan-pelan.
           </p>
-          <div class="mt-9 flex flex-wrap gap-3">
-            <Button href="https://github.com/gmedia" external
-              >Lihat GitHub</Button
+          <div class="mt-9 flex flex-wrap items-center gap-3">
+            <Button href="/docs">Baca Dokumentasi</Button>
+            <Button
+              href="https://github.com/gmedia"
+              variant="secondary"
+              external>Lihat GitHub</Button
             >
-            <Button href="/docs" variant="secondary">Baca Dokumentasi</Button>
-            <Button href="https://app.sakala.dev" variant="ghost"
-              >Masuk ke Dashboard</Button
+            <a
+              href="https://app.sakala.dev"
+              class="px-2 text-sm font-semibold text-primary hover:text-primary-dark"
             >
+              Masuk ke Dashboard
+            </a>
           </div>
         </div>
 
-        <div class="relative pt-3 lg:pt-16">
+        <div class="relative pt-3 lg:pt-12">
           <span
-            style="--note-rotate: 3deg"
-            class="float-note absolute -right-2 -top-6 z-10 rotate-3 rounded-lg border border-primary-soft bg-primary-soft-2 px-3 py-2 text-xs font-semibold text-primary-dark sm:right-5 lg:-top-1"
+            class="absolute -right-2 -top-6 z-10 rotate-2 rounded-lg border border-primary-soft bg-primary-soft-2 px-3 py-2 text-xs font-semibold text-primary-dark sm:right-5 lg:top-0"
           >
-            git push, terus live
+            dari push ke link
           </span>
           <DeploymentReceipt />
           <div
-            class="-ml-5 mt-5 rounded-2xl border border-border bg-surface/90 p-3 sm:-ml-14"
+            class="-ml-4 mt-5 rounded-2xl border border-border bg-surface/90 p-3 sm:-ml-10"
           >
             <FlowPath />
           </div>
-          <span
-            style="--note-rotate: -3deg"
-            class="float-note absolute -bottom-9 left-5 -rotate-3 rounded-lg border border-border-strong bg-surface px-3 py-2 text-[11px] font-medium text-muted"
-          >
-            localhost is not a submission
-          </span>
         </div>
       </div>
 
       <p
-        class="mt-20 max-w-3xl border-l-2 border-warm pl-4 text-sm leading-7 text-muted sm:mt-14"
+        class="mt-16 max-w-3xl border-l-2 border-warm pl-4 text-sm leading-7 text-muted"
       >
         <span class="font-semibold text-ink">Masih dibangun.</span>
         Sakala sedang menyusun pengalaman deployment yang sederhana, transparan, dan
-        ramah untuk pembelajaran. Justru itu: kamu bisa ikut membentuk arahnya.
+        ramah untuk pembelajaran.
       </p>
     </div>
   </Container>

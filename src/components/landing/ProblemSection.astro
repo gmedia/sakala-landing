@@ -4,15 +4,15 @@ import SectionHeader from "../ui/SectionHeader.astro";
 
 const problems = [
   {
-    label: "localhost problem",
+    label: "masalah localhost",
     title: "Project cuma jalan di localhost",
     text: "Sudah bagus di laptop sendiri, tetapi belum punya link untuk dibagikan.",
     class: "md:col-span-2 md:translate-y-7",
   },
   {
-    label: "assignment.zip",
+    label: "tugas.zip",
     title: "Tugas dikumpulkan sebagai screenshot atau ZIP",
-    text: "Yang dinilai akhirnya file kiriman, bukan pengalaman membuka aplikasinya.",
+    text: "Dosen melihat file, bukan aplikasi yang benar-benar berjalan.",
     class: "md:col-span-1",
   },
   {
@@ -22,7 +22,7 @@ const problems = [
     class: "md:col-span-1 md:mt-7",
   },
   {
-    label: "too soon",
+    label: "terlalu cepat",
     title: "VPS datang terlalu cepat",
     text: "Belajar deploy seharusnya tidak langsung dimulai dari SSL dan konfigurasi jaringan.",
     class: "md:col-span-2",
@@ -30,17 +30,17 @@ const problems = [
 ];
 ---
 
-<section id="mengapa" class="relative bg-background-soft py-20 sm:py-28">
+<section id="mengapa" class="relative bg-background-soft py-20 sm:py-24">
   <Container>
     <div class="grid gap-12 lg:grid-cols-[0.82fr_1.18fr]">
       <div class="lg:sticky lg:top-30 lg:self-start">
         <SectionHeader
           eyebrow="Yang sering kejadian"
-          title="Project sudah jadi. Yang susah: bikin orang lain bisa buka."
+          title="Project sudah jadi. Sekarang tinggal bikin orang lain bisa buka."
           description="Biar tugas, portfolio, dan demo nggak berhenti di laptop sendiri."
         />
         <p
-          class="mt-8 inline-flex -rotate-2 rounded-lg bg-accent-soft px-4 py-3 text-sm font-medium text-warm"
+          class="mt-8 inline-flex rounded-lg bg-accent-soft px-4 py-3 text-sm font-medium text-warm"
         >
           “jalan kok, di laptop aku”
         </p>

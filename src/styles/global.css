@@ -52,7 +52,7 @@ body::before {
   z-index: 50;
   inset: 0;
   pointer-events: none;
-  opacity: 0.18;
+  opacity: 0.1;
   content: "";
   background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence baseFrequency='.72' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23paper)' opacity='.18'/%3E%3C/svg%3E");
   mix-blend-mode: multiply;
@@ -120,23 +120,8 @@ a {
   z-index: -1;
 }
 
-.float-note {
-  animation: float-note 5.2s ease-in-out infinite;
-}
-
 .path-dot {
   animation: path-pulse 2.2s ease-in-out infinite;
-}
-
-@keyframes float-note {
-  0%,
-  100% {
-    transform: translateY(0) rotate(var(--note-rotate, -2deg));
-  }
-
-  50% {
-    transform: translateY(-5px) rotate(var(--note-rotate, -2deg));
-  }
 }
 
 @keyframes path-pulse {

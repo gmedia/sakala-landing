@@ -11,12 +11,12 @@ const sizeClass = {
 };
 ---
 
-<section id="use-cases" class="bg-surface py-20 sm:py-28">
+<section id="use-cases" class="bg-surface py-20 sm:py-24">
   <Container>
     <SectionHeader
       eyebrow="Untuk kelas dan project kecil"
       title="Yang kamu buat layak dilihat sebagai aplikasi."
-      description="Bukan untuk jargon enterprise. Untuk tugas, portfolio, workshop, dan demo yang ingin segera dibuka orang lain."
+      description="Bukan untuk jargon enterprise. Untuk tugas, portfolio, workshop, dan demo yang perlu segera dibuka orang lain."
     />
     <div class="mt-12 grid gap-4 md:grid-cols-12 md:auto-rows-[10.5rem]">
       {
@@ -52,8 +52,8 @@ const sizeClass = {
               {item.description}
             </p>
             {item.size === "large" && (
-              <p class="absolute bottom-6 right-6 hidden -rotate-3 rounded-lg bg-white px-3 py-2 text-xs font-medium text-primary-dark sm:block">
-                link &gt; screenshot
+              <p class="absolute bottom-6 right-6 hidden rounded-lg bg-white px-3 py-2 text-xs font-medium text-primary-dark sm:block">
+                link lebih jelas
               </p>
             )}
           </article>
