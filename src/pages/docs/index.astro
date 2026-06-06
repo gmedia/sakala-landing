@@ -22,6 +22,11 @@ const links = [
     title: "Alur deployment",
     text: "Siklus command dan routing aplikasi.",
   },
+  {
+    href: "/docs/keluar-dari-localhost",
+    title: "Keluar dari localhost",
+    text: "Memahami pilihan untuk membagikan project sebagai URL publik.",
+  },
 ];
 ---
 
@@ -33,10 +38,10 @@ const links = [
   <article class="prose-sakala">
     <Content />
   </article>
-  <div class="mt-10 grid gap-3 sm:grid-cols-3">
+  <div class="mt-10 grid gap-3 sm:grid-cols-2">
     {
       links.map((link) => (
-        <a href={link.href}>
+        <a href={link.href} data-astro-prefetch="hover">
           <Card class="h-full hover:border-primary">
             <h2 class="font-semibold text-ink">{link.title}</h2>
             <p class="mt-2 text-sm leading-6 text-muted">{link.text}</p>

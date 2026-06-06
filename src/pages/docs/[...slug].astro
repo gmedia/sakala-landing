@@ -24,6 +24,7 @@ const { Content } = await render(doc);
   title={`${doc.data.title} — Dokumentasi Sakala`}
   description={doc.data.description}
   currentPath={Astro.url.pathname}
+  breadcrumbLabel={doc.data.title}
 >
   <article class="prose-sakala">
     <Content />

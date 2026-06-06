@@ -7,6 +7,10 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
   site: "https://sakala.dev",
   output: "static",
+  prefetch: {
+    prefetchAll: false,
+    defaultStrategy: "hover",
+  },
   integrations: [mdx(), sitemap()],
   vite: {
     plugins: [tailwindcss()],

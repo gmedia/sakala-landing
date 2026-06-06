@@ -1,5 +1,7 @@
 ---
 import Container from "../ui/Container.astro";
+import Button from "../ui/Button.astro";
+import { links } from "../../data/links";
 ---
 
 <section class="pb-20 sm:pb-24">
@@ -27,20 +29,10 @@ import Container from "../ui/Container.astro";
         yang jelas untuk project kecil.
       </p>
       <div class="mt-9 flex flex-wrap gap-3">
-        <a
-          href="/docs"
-          class="rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white hover:bg-primary-dark"
+        <Button href="/docs" prefetch="hover">Baca Dokumentasi</Button>
+        <Button href={links.githubRepository} variant="secondary" external
+          >Lihat Repository</Button
         >
-          Baca Dokumentasi
-        </a>
-        <a
-          href="https://github.com/gmedia"
-          target="_blank"
-          rel="noreferrer"
-          class="rounded-xl border border-primary bg-surface px-5 py-3 text-sm font-semibold text-primary hover:bg-background"
-        >
-          Lihat GitHub
-        </a>
       </div>
     </div>
   </Container>

@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import Breadcrumbs from "../../components/ui/Breadcrumbs.astro";
 import Container from "../../components/ui/Container.astro";
 import LandingLayout from "../../layouts/LandingLayout.astro";
 
@@ -7,13 +8,17 @@ const entries = (await getCollection("changelog")).sort(
   (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
 );
 const date = new Intl.DateTimeFormat("id-ID", { dateStyle: "long" });
+const breadcrumbs = [{ label: "Beranda", href: "/" }, { label: "Changelog" }];
 ---
 
 <LandingLayout
   title="Changelog — Sakala"
   description="Ikuti pembaruan publik Sakala, termasuk landing page, dokumentasi, dashboard, agent, dan fondasi deployment open-source."
+  pageType="CollectionPage"
+  {breadcrumbs}
 >
   <Container className="py-16 sm:py-20">
+    <Breadcrumbs items={breadcrumbs} />
     <p class="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
       Changelog
     </p>
@@ -27,7 +32,10 @@ const date = new Intl.DateTimeFormat("id-ID", { dateStyle: "long" });
     <div class="mt-14 space-y-6">
       {
         entries.map((entry) => (
-          <article class="grid gap-5 rounded-2xl border border-border bg-surface p-7 md:grid-cols-[12rem_1fr]">
+          <article
+            id={`v-${entry.data.version}`}
+            class="grid scroll-mt-28 gap-5 rounded-2xl border border-border bg-surface p-7 md:grid-cols-[12rem_1fr]"
+          >
             <div>
               <p class="font-mono text-sm font-semibold text-primary">
                 v{entry.data.version}

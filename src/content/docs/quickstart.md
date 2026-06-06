@@ -9,12 +9,12 @@ section: Mulai
 
 Sakala sedang dalam tahap foundation. Alur berikut adalah pengalaman yang sedang dibangun.
 
-## Alur pengguna
+## Alur yang sedang dituju
 
-1. Masuk ke dashboard pada `app.sakala.dev`.
-2. Hubungkan repository Git untuk project yang ingin dijalankan.
-3. Pilih deployment dan ikuti log proses secara transparan.
-4. Buka URL aplikasi pada pola `nama-project.run.sakala.dev`.
+1. Pengguna masuk ke dashboard pada `app.sakala.dev`.
+2. Pengguna menghubungkan repository Git untuk project yang ingin dijalankan.
+3. Sakala menampilkan proses deployment dan log secara transparan.
+4. Aplikasi yang berhasil dijalankan akan tersedia pada pola `nama-project.run.sakala.dev`.
 
 ## Pengembangan lokal
 

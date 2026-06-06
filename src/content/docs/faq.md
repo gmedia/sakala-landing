@@ -1,7 +1,7 @@
 ---
 title: Pertanyaan Umum
 description: Jawaban ringkas tentang status, sasaran, dan kontribusi Sakala.
-order: 5
+order: 6
 section: Dukungan
 ---
 
@@ -21,4 +21,4 @@ Deployment lebih bermanfaat untuk pembelajaran bila alur, kontrak, dan trade-off
 
 ## Di mana saya melaporkan masalah?
 
-Gunakan issue pada repository terkait di organisasi GitHub GMEDIA. Untuk isu keamanan, ikuti petunjuk pelaporan pada dokumen `SECURITY.md`.
+Gunakan [issue pada repository Sakala Landing](https://github.com/gmedia/sakala-landing/issues) untuk masalah website dan dokumentasi. Untuk isu keamanan, ikuti [kebijakan keamanan repository](https://github.com/gmedia/sakala-landing/security/policy).

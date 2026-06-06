@@ -9,9 +9,7 @@ const { currentPath } = Astro.props;
 ---
 
 <aside class="hidden w-56 shrink-0 lg:block">
-  <p
-    class="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-muted-2"
-  >
+  <p class="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-muted">
     Dokumentasi
   </p>
   <nav class="space-y-1" aria-label="Dokumentasi">
@@ -19,8 +17,10 @@ const { currentPath } = Astro.props;
       docsNavigation.map((item) => (
         <a
           href={item.href}
+          data-astro-prefetch="hover"
+          aria-current={currentPath === item.href ? "page" : undefined}
           class:list={[
-            "block rounded-lg px-3 py-2 text-sm",
+            "flex min-h-11 items-center rounded-lg px-3 py-2 text-sm",
             currentPath === item.href
               ? "bg-primary-soft-2 font-semibold text-primary-dark"
               : "text-muted hover:bg-background-soft hover:text-primary",
