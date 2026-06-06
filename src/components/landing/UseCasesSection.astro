@@ -18,12 +18,12 @@ const sizeClass = {
       title="Yang kamu buat layak dilihat sebagai aplikasi."
       description="Bukan untuk jargon enterprise. Untuk tugas, portfolio, workshop, dan demo yang perlu segera dibuka orang lain."
     />
-    <div class="mt-12 grid gap-4 md:grid-cols-12 md:auto-rows-[10.5rem]">
+    <div class="mt-12 grid gap-4 md:grid-cols-12">
       {
         useCases.map((item) => (
           <article
             class:list={[
-              "paper-card group relative overflow-hidden rounded-2xl border border-border p-6",
+              "paper-card group relative min-h-44 rounded-2xl border border-border p-6",
               sizeClass[item.size as keyof typeof sizeClass],
             ]}
           >

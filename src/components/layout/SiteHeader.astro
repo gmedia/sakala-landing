@@ -3,7 +3,13 @@ import SakalaLogo from "../brand/SakalaLogo.astro";
 import Button from "../ui/Button.astro";
 import Container from "../ui/Container.astro";
 import MobileNav from "./MobileNav.astro";
+import { links } from "../../data/links";
 import { mainNavigation } from "../../data/navigation";
+
+const currentPath =
+  Astro.url.pathname.length > 1
+    ? Astro.url.pathname.replace(/\/$/, "")
+    : Astro.url.pathname;
 ---
 
 <header
@@ -16,7 +22,16 @@ import { mainNavigation } from "../../data/navigation";
         mainNavigation.map((item) => (
           <a
             href={item.href}
-            class="text-sm font-medium text-muted hover:text-primary"
+            target={item.external ? "_blank" : undefined}
+            rel={item.external ? "noreferrer" : undefined}
+            data-astro-prefetch={item.external ? undefined : "hover"}
+            aria-current={currentPath === item.href ? "page" : undefined}
+            class:list={[
+              "inline-flex min-h-11 items-center border-b-2 text-sm font-medium hover:text-primary",
+              currentPath === item.href
+                ? "border-primary text-primary-dark"
+                : "border-transparent text-muted",
+            ]}
           >
             {item.label}
           </a>
@@ -24,7 +39,7 @@ import { mainNavigation } from "../../data/navigation";
       }
     </nav>
     <div class="hidden items-center gap-3 md:flex">
-      <Button href="https://app.sakala.dev" variant="secondary">Masuk</Button>
+      <Button href={links.dashboard} variant="secondary">Masuk</Button>
     </div>
     <MobileNav />
   </Container>

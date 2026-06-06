@@ -7,17 +7,17 @@
   --color-surface-elevated: #fbfdfb;
   --color-ink: #17211b;
   --color-muted: #66736b;
-  --color-muted-2: #89958d;
+  --color-muted-2: #68766d;
   --color-border: #dde5df;
   --color-border-strong: #cfdad2;
   --color-primary: #0f766e;
   --color-primary-dark: #115e59;
   --color-primary-soft: #ccfbf1;
   --color-primary-soft-2: #e7fffa;
-  --color-warm: #d97706;
+  --color-warm: #9a4d06;
   --color-accent-soft: #fef3c7;
-  --color-success: #16a34a;
-  --color-warning: #d97706;
+  --color-success: #15803d;
+  --color-warning: #9a4d06;
   --color-error: #dc2626;
   --color-info: #2563eb;
   --color-terminal: #0f172a;
@@ -68,6 +68,29 @@ a {
     color 150ms ease,
     background-color 150ms ease,
     border-color 150ms ease;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 0.75rem;
+  left: 0.75rem;
+  transform: translateY(-160%);
+  border-radius: 0.75rem;
+  background: var(--color-ink);
+  padding: 0.75rem 1rem;
+  color: var(--color-surface);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 .editorial-grid {
@@ -174,6 +197,12 @@ a {
   font-size: 1.5rem;
 }
 
+.prose-sakala h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.6rem;
+  font-size: 1.2rem;
+}
+
 .prose-sakala p,
 .prose-sakala ul,
 .prose-sakala ol,
@@ -184,6 +213,62 @@ a {
 .prose-sakala ul {
   list-style: disc;
   padding-left: 1.4rem;
+}
+
+.prose-sakala ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+}
+
+.prose-sakala li {
+  padding-left: 0.2rem;
+}
+
+.prose-sakala li + li {
+  margin-top: 0.45rem;
+}
+
+.prose-sakala a {
+  color: var(--color-primary-dark);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--color-primary-soft);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.prose-sakala a:hover {
+  text-decoration-color: var(--color-primary);
+}
+
+.prose-sakala table {
+  width: min(100%, 32rem);
+  margin-block: 1.5rem;
+  border-collapse: collapse;
+  border-radius: 0.75rem;
+  font-size: 0.925rem;
+  table-layout: fixed;
+}
+
+.prose-sakala th,
+.prose-sakala td {
+  border: 1px solid var(--color-border);
+  padding: 0.75rem 0.9rem;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.prose-sakala th {
+  background: var(--color-background-soft);
+  color: var(--color-ink);
+  font-weight: 650;
+}
+
+.prose-sakala blockquote {
+  margin-block: 1.5rem;
+  border-left: 3px solid var(--color-primary);
+  padding-left: 1rem;
+  color: var(--color-ink);
 }
 
 .prose-sakala code {

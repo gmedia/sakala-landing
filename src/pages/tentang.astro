@@ -1,0 +1,166 @@
+---
+import Breadcrumbs from "../components/ui/Breadcrumbs.astro";
+import Card from "../components/ui/Card.astro";
+import Container from "../components/ui/Container.astro";
+import { links } from "../data/links";
+import LandingLayout from "../layouts/LandingLayout.astro";
+
+const breadcrumbs = [
+  { label: "Beranda", href: "/" },
+  { label: "Tentang Sakala" },
+];
+const ecosystem = [
+  {
+    name: "sakala-dashboard",
+    role: "Control plane untuk project, command, status, dan pengalaman pengguna.",
+    href: links.repositories.dashboard,
+  },
+  {
+    name: "sakala-agent",
+    role: "Runtime executor yang menangani pekerjaan deployment pada node.",
+    href: links.repositories.agent,
+  },
+  {
+    name: "sakala-infra",
+    role: "Playground runtime lokal serta referensi networking dan routing.",
+    href: links.repositories.infra,
+  },
+  {
+    name: "sakala-landing",
+    role: "Website publik, dokumentasi, dan pintu masuk informasi Sakala.",
+    href: links.repositories.landing,
+  },
+];
+---
+
+<LandingLayout
+  title="Tentang Sakala — Platform Deployment Open-Source dari GMEDIA"
+  description="Kenali tujuan, status pengembangan, ownership, dan ekosistem repository Sakala dari PT Media Sarana Data atau GMEDIA."
+  pageType="AboutPage"
+  {breadcrumbs}
+>
+  <Container className="py-16 sm:py-20">
+    <Breadcrumbs items={breadcrumbs} />
+    <div class="max-w-3xl">
+      <p class="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+        Tentang Sakala
+      </p>
+      <h1
+        class="mt-4 text-4xl font-semibold tracking-tight text-ink sm:text-5xl"
+      >
+        Deployment yang lebih mudah dipelajari.
+      </h1>
+      <p class="mt-6 text-lg leading-8 text-muted">
+        Sakala adalah platform deployment open-source yang sedang dibangun oleh
+        PT Media Sarana Data atau GMEDIA untuk membantu project kecil bergerak
+        dari repository Git menuju URL publik melalui alur yang mudah dipahami.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-5 lg:grid-cols-2">
+      <Card>
+        <p
+          class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary"
+        >
+          Tujuan
+        </p>
+        <h2 class="mt-3 text-2xl font-semibold text-ink">
+          Ramah untuk belajar dan berbagi
+        </h2>
+        <p class="mt-4 leading-7 text-muted">
+          Fokus awal Sakala adalah tugas, portfolio, demo, kelas, komunitas, dan
+          tim kecil. Sakala tidak diarahkan menjadi pengganti cloud enterprise.
+        </p>
+      </Card>
+      <Card>
+        <p
+          class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary"
+        >
+          Status
+        </p>
+        <h2 class="mt-3 text-2xl font-semibold text-ink">
+          Masih dalam pengembangan aktif
+        </h2>
+        <p class="mt-4 leading-7 text-muted">
+          Foundation produk dan runtime masih disusun. Dokumentasi dan changelog
+          menjelaskan perkembangan nyata tanpa mengklaim layanan siap
+          production.
+        </p>
+      </Card>
+    </div>
+
+    <section class="mt-16" aria-labelledby="ownership-title">
+      <div class="max-w-3xl">
+        <p
+          class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary"
+        >
+          Ownership
+        </p>
+        <h2 id="ownership-title" class="mt-3 text-3xl font-semibold text-ink">
+          Dikembangkan secara terbuka oleh GMEDIA
+        </h2>
+        <p class="mt-5 text-lg leading-8 text-muted">
+          Sakala merupakan project dari PT Media Sarana Data atau GMEDIA. Source
+          code tersedia melalui organisasi GitHub GMEDIA dan menggunakan Apache
+          License 2.0.
+        </p>
+        <a
+          href={links.githubOrganization}
+          target="_blank"
+          rel="noreferrer"
+          class="mt-6 inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
+        >
+          Lihat organisasi GitHub GMEDIA &rarr;
+        </a>
+      </div>
+    </section>
+
+    <section class="mt-16" aria-labelledby="ecosystem-title">
+      <p
+        class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary"
+      >
+        Ekosistem repository
+      </p>
+      <h2 id="ecosystem-title" class="mt-3 text-3xl font-semibold text-ink">
+        Tanggung jawab yang dipisahkan dengan jelas
+      </h2>
+      <div class="mt-8 grid gap-4 sm:grid-cols-2">
+        {
+          ecosystem.map((repository) => (
+            <a
+              href={repository.href}
+              target="_blank"
+              rel="noreferrer"
+              class="group rounded-2xl border border-border bg-surface p-6 hover:border-primary"
+            >
+              <h3 class="font-mono font-semibold text-primary-dark group-hover:underline">
+                {repository.name}
+              </h3>
+              <p class="mt-3 leading-7 text-muted">{repository.role}</p>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section
+      class="mt-16 rounded-2xl border border-border-strong bg-primary-soft-2 p-7 sm:p-9"
+      aria-labelledby="next-step-title"
+    >
+      <h2 id="next-step-title" class="text-2xl font-semibold text-ink">
+        Pelajari arah teknis Sakala
+      </h2>
+      <p class="mt-3 max-w-2xl leading-7 text-muted">
+        Dokumentasi menjelaskan peran dashboard, agent, infra, serta alur
+        deployment yang sedang dibangun.
+      </p>
+      <a
+        href="/docs"
+        data-astro-prefetch="hover"
+        class="mt-6 inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
+      >
+        Baca dokumentasi Sakala &rarr;
+      </a>
+    </section>
+  </Container>
+</LandingLayout>

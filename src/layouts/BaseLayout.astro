@@ -8,12 +8,17 @@ interface Props {
   imageAlt?: string;
   canonical?: URL | string;
   noindex?: boolean;
+  pageType?: "WebPage" | "AboutPage" | "CollectionPage";
+  breadcrumbs?: {
+    label: string;
+    href?: string;
+  }[];
   structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const defaultTitle = "Sakala — Deploy Project dari Git Tanpa Ribet Server";
 const defaultDescription =
-  "Sakala membantu mahasiswa, developer pemula, dan tim kecil deploy project dari Git ke URL publik tanpa ribet VPS, SSL, reverse proxy, atau setup server manual.";
+  "Sakala sedang membangun pengalaman deployment open-source yang membantu project kecil bergerak dari Git menuju URL publik dengan alur yang mudah dipahami.";
 const {
   title = defaultTitle,
   description = defaultDescription,
@@ -21,54 +26,68 @@ const {
   imageAlt = "Ilustrasi brand Sakala dengan alur dari source node menuju app window",
   canonical = new URL(Astro.url.pathname, Astro.site),
   noindex = false,
+  pageType = "WebPage",
+  breadcrumbs = [],
   structuredData,
 } = Astro.props;
 const canonicalUrl = canonical.toString();
 const imageUrl = new URL(image, Astro.site).toString();
 const robotsContent = noindex ? "noindex, follow" : "index, follow";
+const isHomePage = canonicalUrl === new URL("/", Astro.site).toString();
+const breadcrumbStructuredData =
+  breadcrumbs.length > 1
+    ? {
+        "@type": "BreadcrumbList",
+        "@id": `${canonicalUrl}#breadcrumb`,
+        itemListElement: breadcrumbs.map((item, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: item.label,
+          item: new URL(item.href ?? canonicalUrl, Astro.site).toString(),
+        })),
+      }
+    : undefined;
+const siteEntities = [
+  {
+    "@type": "Organization",
+    "@id": "https://sakala.dev/#organization",
+    name: "PT Media Sarana Data",
+    alternateName: "GMEDIA",
+    url: "https://sakala.dev",
+    logo: "https://sakala.dev/logo.svg",
+    sameAs: ["https://github.com/gmedia"],
+  },
+  {
+    "@type": "WebSite",
+    "@id": "https://sakala.dev/#website",
+    name: "Sakala",
+    alternateName: ["sakala.dev"],
+    url: "https://sakala.dev",
+    inLanguage: "id-ID",
+    publisher: {
+      "@id": "https://sakala.dev/#organization",
+    },
+  },
+  {
+    "@type": "SoftwareApplication",
+    "@id": "https://sakala.dev/#software",
+    name: "Sakala",
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Web",
+    url: "https://sakala.dev",
+    description: defaultDescription,
+    license: "https://www.apache.org/licenses/LICENSE-2.0",
+    creator: {
+      "@id": "https://sakala.dev/#organization",
+    },
+  },
+];
 const defaultStructuredData = {
   "@context": "https://schema.org",
   "@graph": [
+    ...(isHomePage ? siteEntities : []),
     {
-      "@type": "Organization",
-      "@id": "https://sakala.dev/#organization",
-      name: "PT Media Sarana Data",
-      alternateName: "GMEDIA",
-      url: "https://sakala.dev",
-      logo: "https://sakala.dev/logo.svg",
-      sameAs: ["https://github.com/gmedia"],
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://sakala.dev/#website",
-      name: "Sakala",
-      url: "https://sakala.dev",
-      inLanguage: "id-ID",
-      publisher: {
-        "@id": "https://sakala.dev/#organization",
-      },
-    },
-    {
-      "@type": "SoftwareApplication",
-      "@id": "https://sakala.dev/#software",
-      name: "Sakala",
-      applicationCategory: "DeveloperApplication",
-      operatingSystem: "Web",
-      url: "https://sakala.dev",
-      description: defaultDescription,
-      isAccessibleForFree: true,
-      license: "https://www.apache.org/licenses/LICENSE-2.0",
-      creator: {
-        "@id": "https://sakala.dev/#organization",
-      },
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "IDR",
-      },
-    },
-    {
-      "@type": "WebPage",
+      "@type": pageType,
       "@id": `${canonicalUrl}#webpage`,
       url: canonicalUrl,
       name: title,
@@ -81,6 +100,7 @@ const defaultStructuredData = {
         "@id": "https://sakala.dev/#organization",
       },
     },
+    ...(breadcrumbStructuredData ? [breadcrumbStructuredData] : []),
   ],
 };
 const jsonLd = JSON.stringify(structuredData ?? defaultStructuredData);
@@ -98,6 +118,12 @@ const jsonLd = JSON.stringify(structuredData ?? defaultStructuredData);
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Changelog Sakala"
+      href={new URL("/rss.xml", Astro.site)}
+    />
     <meta property="og:site_name" content="Sakala" />
     <meta property="og:locale" content="id_ID" />
     <meta property="og:type" content="website" />
@@ -116,6 +142,7 @@ const jsonLd = JSON.stringify(structuredData ?? defaultStructuredData);
     <script type="application/ld+json" is:inline set:html={jsonLd} />
   </head>
   <body class="text-ink antialiased">
+    <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
     <slot />
   </body>
 </html>

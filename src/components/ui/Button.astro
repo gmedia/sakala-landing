@@ -3,9 +3,10 @@ interface Props {
   href: string;
   variant?: "primary" | "secondary" | "ghost";
   external?: boolean;
+  prefetch?: "hover" | "tap" | "viewport" | "load";
 }
 
-const { href, variant = "primary", external = false } = Astro.props;
+const { href, variant = "primary", external = false, prefetch } = Astro.props;
 const styles = {
   primary:
     "border-primary bg-primary text-white hover:border-primary-dark hover:bg-primary-dark",
@@ -20,8 +21,9 @@ const styles = {
   href={href}
   target={external ? "_blank" : undefined}
   rel={external ? "noreferrer" : undefined}
+  data-astro-prefetch={!external ? prefetch : undefined}
   class:list={[
-    "inline-flex items-center justify-center rounded-xl border px-5 py-3 text-sm font-semibold",
+    "inline-flex min-h-11 items-center justify-center rounded-xl border px-5 py-3 text-sm font-semibold",
     styles[variant],
   ]}
 >

@@ -1,31 +1,107 @@
 ---
 import { mainNavigation } from "../../data/navigation";
+import { links } from "../../data/links";
+
+const currentPath =
+  Astro.url.pathname.length > 1
+    ? Astro.url.pathname.replace(/\/$/, "")
+    : Astro.url.pathname;
+
+const descriptions = {
+  Dokumentasi: "Panduan, konsep, dan arah penggunaan",
+  Tentang: "Tujuan, ownership, dan ekosistem Sakala",
+  Changelog: "Perkembangan terbaru Sakala",
+  GitHub: "Kode sumber dan ruang kontribusi",
+};
 ---
 
-<details class="relative md:hidden">
+<details class="group relative md:hidden">
   <summary
-    class="cursor-pointer list-none rounded-lg border border-border px-3 py-2 text-sm font-medium text-ink"
+    class="inline-flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-xl border border-border bg-surface px-3 py-2 text-sm font-semibold text-ink shadow-sm hover:border-primary"
   >
-    Menu
+    <svg
+      aria-hidden="true"
+      class="size-4 text-primary group-open:hidden"
+      viewBox="0 0 20 20"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+    >
+      <path d="M3 5h14M3 10h14M3 15h14"></path>
+    </svg>
+    <svg
+      aria-hidden="true"
+      class="hidden size-4 text-primary group-open:block"
+      viewBox="0 0 20 20"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+    >
+      <path d="M5 5l10 10M15 5 5 15"></path>
+    </svg>
+    <span class="group-open:hidden">Menu</span>
+    <span class="hidden group-open:inline">Tutup</span>
   </summary>
   <nav
-    class="absolute right-0 top-12 z-20 flex w-60 flex-col gap-1 rounded-xl border border-border bg-surface p-2 shadow-lg"
+    class="paper-card fixed inset-x-4 top-20 z-40 max-h-[calc(100dvh-6rem)] overflow-y-auto rounded-2xl border border-border-strong bg-surface p-3 shadow-xl"
+    aria-label="Navigasi utama mobile"
   >
-    {
-      mainNavigation.map((item) => (
-        <a
-          href={item.href}
-          class="rounded-lg px-3 py-2 text-sm text-muted hover:bg-background-soft hover:text-primary"
-        >
-          {item.label}
-        </a>
-      ))
-    }
+    <div class="border-b border-dashed border-border px-2 pb-3 pt-1">
+      <p
+        class="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-primary"
+      >
+        Jelajahi Sakala
+      </p>
+      <p class="mt-1 text-xs leading-5 text-muted">
+        Pelajari arah produk dan ikuti perkembangannya.
+      </p>
+    </div>
+    <div class="mt-2 grid gap-1">
+      {
+        mainNavigation.map((item, index) => (
+          <a
+            href={item.href}
+            target={item.external ? "_blank" : undefined}
+            rel={item.external ? "noreferrer" : undefined}
+            data-astro-prefetch={item.external ? undefined : "tap"}
+            aria-current={currentPath === item.href ? "page" : undefined}
+            class:list={[
+              "group/item flex min-h-16 items-center gap-3 rounded-xl px-3 py-2",
+              currentPath === item.href
+                ? "bg-primary-soft-2 text-primary-dark"
+                : "text-ink hover:bg-background-soft",
+            ]}
+          >
+            <span class="flex size-8 shrink-0 items-center justify-center rounded-lg border border-border bg-surface font-mono text-[11px] font-semibold text-primary">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <span class="min-w-0 flex-1">
+              <span class="block text-sm font-semibold">{item.label}</span>
+              <span class="mt-0.5 block text-xs leading-5 text-muted">
+                {descriptions[item.label as keyof typeof descriptions]}
+              </span>
+            </span>
+            <span
+              aria-hidden="true"
+              class="text-sm text-muted group-hover/item:text-primary"
+            >
+              {item.external ? "↗" : "→"}
+            </span>
+          </a>
+        ))
+      }
+    </div>
     <a
-      href="https://app.sakala.dev"
-      class="mt-2 rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-white"
+      href={links.dashboard}
+      class="mt-3 flex min-h-14 items-center justify-between gap-3 rounded-xl border border-border bg-background-soft px-4 py-3 text-sm text-ink hover:border-primary hover:text-primary"
     >
-      Dashboard
+      <span>
+        <span class="block font-semibold">Masuk ke dashboard</span>
+        <span class="mt-0.5 block text-xs font-normal text-muted"
+          >Pondasi aplikasi Sakala</span
+        >
+      </span>
+      <span aria-hidden="true" class="text-primary">→</span>
     </a>
   </nav>
 </details>

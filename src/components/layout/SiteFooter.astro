@@ -1,6 +1,7 @@
 ---
 import SakalaLogo from "../brand/SakalaLogo.astro";
 import Container from "../ui/Container.astro";
+import { links } from "../../data/links";
 ---
 
 <footer class="border-t border-border bg-surface">
@@ -16,24 +17,32 @@ import Container from "../ui/Container.astro";
       <p class="font-semibold text-ink">Navigasi</p>
       <a class="block text-muted hover:text-primary" href="/docs">Dokumentasi</a
       >
+      <a class="block text-muted hover:text-primary" href="/tentang">Tentang</a>
       <a class="block text-muted hover:text-primary" href="/changelog"
         >Changelog</a
       >
       <a
         class="block text-muted hover:text-primary"
-        href="https://github.com/gmedia">GitHub</a
+        href={links.githubRepository}
+        target="_blank"
+        rel="noreferrer">Repository</a
       >
     </div>
     <div class="space-y-3 text-sm">
       <p class="font-semibold text-ink">Open source</p>
       <a
         class="block text-muted hover:text-primary"
-        href="https://github.com/gmedia">GitHub GMEDIA</a
+        href={links.githubOrganization}
+        target="_blank"
+        rel="noreferrer">GitHub GMEDIA</a
       >
       <a class="block text-muted hover:text-primary" href="/docs/concepts"
         >Konsep</a
       >
       <a class="block text-muted hover:text-primary" href="/docs/faq">FAQ</a>
+      <a class="block text-muted hover:text-primary" href="/rss.xml"
+        >RSS Changelog</a
+      >
     </div>
   </Container>
   <div class="border-t border-border py-5 text-center text-sm text-muted">

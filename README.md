@@ -8,7 +8,8 @@ Website publik dan pusat dokumentasi awal untuk **Sakala**, platform deployment 
 - TypeScript
 - Tailwind CSS v4 melalui Vite plugin
 - MDX dan Astro Content Collections
-- Sitemap, Open Graph metadata, serta canonical URL
+- Selective prefetch untuk navigasi internal penting
+- Sitemap, RSS changelog, Open Graph metadata, serta canonical URL
 - Prettier, Husky, dan lint-staged
 
 ## Quickstart
@@ -40,9 +41,13 @@ Setelah `npm install`, script `prepare` mengaktifkan hook Husky. Commit akan men
 - `src/components/landing/`: bagian-bagian landing page.
 - `src/content/docs/`: dokumentasi publik berbasis content collection.
 - `src/layouts/`: layout SEO, landing, dan dokumentasi.
-- `src/pages/`: route statis `/`, `/docs`, `/changelog`, serta `/404`.
+- `src/pages/`: route statis `/`, `/tentang`, `/docs`, `/changelog`, `/rss.xml`,
+  serta `/404`.
 - `public/`: logo, favicon, robots, dan Open Graph image.
 
 ## Kontribusi
 
-Sakala Landing menggunakan Apache License 2.0. Baca [CONTRIBUTING.md](CONTRIBUTING.md) sebelum membuat pull request dan ikuti Conventional Commits.
+Sakala Landing menggunakan Apache License 2.0. Baca
+[CONTRIBUTING.md](CONTRIBUTING.md) dan
+[keputusan fitur Astro](docs/PROJECT_ASTRO_FEATURES.md) sebelum membuat pull
+request, lalu ikuti Conventional Commits.

@@ -2,6 +2,7 @@
 import Button from "../ui/Button.astro";
 import Container from "../ui/Container.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
+import { links } from "../../data/links";
 
 const principles = [
   [
@@ -19,10 +20,10 @@ const principles = [
 ];
 
 const repositories = [
-  ["sakala-dashboard", "panel kontrol"],
-  ["sakala-agent", "eksekutor runtime"],
-  ["sakala-infra", "playground lokal"],
-  ["sakala-landing", "website & dokumentasi"],
+  ["sakala-dashboard", "panel kontrol", links.repositories.dashboard],
+  ["sakala-agent", "eksekutor runtime", links.repositories.agent],
+  ["sakala-infra", "playground lokal", links.repositories.infra],
+  ["sakala-landing", "website & dokumentasi", links.repositories.landing],
 ];
 ---
 
@@ -36,7 +37,8 @@ const repositories = [
           description="Sakala masih dibangun. Versi yang stabil perlu tumbuh dari kebutuhan kelas, komunitas, dan pengguna awal."
         />
         <div class="mt-8">
-          <Button href="https://github.com/gmedia" external>Lihat GitHub</Button
+          <Button href={links.githubRepository} external
+            >Lihat Repository</Button
           >
         </div>
       </div>
@@ -58,11 +60,16 @@ const repositories = [
           <p class="mb-4 text-primary">$ lihat ekosistem/</p>
           <div class="grid gap-3 sm:grid-cols-2">
             {
-              repositories.map(([repo, role]) => (
-                <p class="flex items-center justify-between gap-3 rounded-lg bg-background px-3 py-2">
+              repositories.map(([repo, role, href]) => (
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  class="flex min-h-11 items-center justify-between gap-3 rounded-lg bg-background px-3 py-2 hover:bg-primary-soft-2"
+                >
                   <span class="text-ink">{repo}</span>
                   <span class="text-muted-2">{role}</span>
-                </p>
+                </a>
               ))
             }
           </div>

@@ -1,28 +1,48 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 import DocsNav from "../components/docs/DocsNav.astro";
+import DocsMobileNav from "../components/docs/DocsMobileNav.astro";
 import DocsSidebar from "../components/docs/DocsSidebar.astro";
 import SiteFooter from "../components/layout/SiteFooter.astro";
 import SiteHeader from "../components/layout/SiteHeader.astro";
+import Breadcrumbs from "../components/ui/Breadcrumbs.astro";
 import Container from "../components/ui/Container.astro";
 
 interface Props {
   title: string;
   description: string;
   currentPath: string;
+  breadcrumbLabel?: string;
 }
 
-const { title, description, currentPath } = Astro.props;
+const {
+  title,
+  description,
+  currentPath,
+  breadcrumbLabel = title,
+} = Astro.props;
+const normalizedCurrentPath =
+  currentPath.length > 1 ? currentPath.replace(/\/$/, "") : currentPath;
+const breadcrumbs = [
+  { label: "Beranda", href: "/" },
+  ...(normalizedCurrentPath === "/docs"
+    ? [{ label: "Dokumentasi" }]
+    : [{ label: "Dokumentasi", href: "/docs" }, { label: breadcrumbLabel }]),
+];
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} {breadcrumbs}>
   <SiteHeader />
-  <Container className="flex gap-12 py-12 lg:py-16">
-    <DocsSidebar currentPath={currentPath} />
-    <div class="min-w-0 max-w-3xl flex-1">
-      <slot />
-      <DocsNav currentPath={currentPath} />
-    </div>
-  </Container>
+  <main id="main-content">
+    <Container className="flex gap-12 py-8 lg:py-16">
+      <DocsSidebar currentPath={normalizedCurrentPath} />
+      <div class="min-w-0 max-w-3xl flex-1">
+        <DocsMobileNav currentPath={normalizedCurrentPath} />
+        <Breadcrumbs items={breadcrumbs} />
+        <slot />
+        <DocsNav currentPath={normalizedCurrentPath} />
+      </div>
+    </Container>
+  </main>
   <SiteFooter />
 </BaseLayout>

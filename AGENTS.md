@@ -17,6 +17,9 @@ Dokumen ini berlaku bagi AI agents, Codex CLI, automation tools, dan contributor
 - Jangan memakai gaya dark cyberpunk, AI glow, atau template SaaS generik.
 - Copy yang dilihat pengguna harus dalam Bahasa Indonesia, kecuali nama teknis atau badge yang sudah ditetapkan.
 - Jangan membuat klaim layanan production atau enterprise yang belum tersedia.
+- Untuk pekerjaan UI/UX, baca guideline `docs/PROJECT_DESIGN_CONTEXT.md`.
+- Untuk pekerjaan SEO, metadata, structured data, sitemap, atau konten publik, baca dan ikuti `docs/PROJECT_SEO_AUDIT.md`.
+- Untuk menambah atau mengubah fitur Astro, baca keputusan `docs/PROJECT_ASTRO_FEATURES.md`.
 
 ## Architecture Rules
 
@@ -26,6 +29,8 @@ Dokumen ini berlaku bagi AI agents, Codex CLI, automation tools, dan contributor
 - Jangan menambahkan React, Vue, atau Svelte islands kecuali kebutuhan interaksi telah disetujui.
 - Utamakan Astro components untuk section statis.
 - Gunakan Tailwind CSS v4 melalui Vite plugin, bukan integrasi Tailwind lama.
+- Gunakan prefetch secara selektif pada navigasi internal berintensi tinggi; jangan mengaktifkan `prefetchAll`.
+- Pertahankan RSS changelog sebagai static endpoint yang bersumber dari content collection.
 - Perbarui dokumentasi bila mengubah struktur situs, navigasi, atau content collections.
 
 ## Verification

@@ -1,0 +1,78 @@
+---
+import { docsNavigation } from "../../data/navigation";
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+const current = docsNavigation.find((item) => item.href === currentPath);
+const currentIndex = docsNavigation.findIndex(
+  (item) => item.href === currentPath,
+);
+---
+
+<details
+  class="paper-card group mb-8 rounded-2xl border border-border-strong bg-surface p-2 lg:hidden"
+>
+  <summary
+    class="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 rounded-xl px-3 py-2 font-semibold text-ink hover:bg-background-soft"
+  >
+    <span class="min-w-0">
+      <span
+        class="block font-mono text-[11px] uppercase tracking-[0.16em] text-muted"
+        >Dokumentasi</span
+      >
+      <span class="mt-1 block truncate text-sm text-primary-dark"
+        >{current?.label}</span
+      >
+    </span>
+    <span class="flex shrink-0 items-center gap-2">
+      <span class="font-mono text-[11px] text-muted"
+        >{currentIndex + 1}/{docsNavigation.length}</span
+      >
+      <span
+        aria-hidden="true"
+        class="flex size-8 items-center justify-center rounded-full bg-primary-soft-2 text-lg text-primary transition-transform group-open:rotate-45"
+        >+</span
+      >
+    </span>
+  </summary>
+  <nav
+    class="mt-2 grid gap-1 border-t border-dashed border-border px-1 pt-2"
+    aria-label="Dokumentasi"
+  >
+    {
+      docsNavigation.map((item, index) => (
+        <a
+          href={item.href}
+          data-astro-prefetch="tap"
+          aria-current={currentPath === item.href ? "page" : undefined}
+          class:list={[
+            "flex min-h-12 items-center gap-3 rounded-xl px-3 py-2 text-sm",
+            currentPath === item.href
+              ? "bg-primary-soft-2 font-semibold text-primary-dark"
+              : "text-muted hover:bg-background-soft hover:text-primary",
+          ]}
+        >
+          <span
+            class:list={[
+              "flex size-7 shrink-0 items-center justify-center rounded-lg border font-mono text-[10px] font-semibold",
+              currentPath === item.href
+                ? "border-primary-soft bg-surface text-primary-dark"
+                : "border-border bg-background text-muted",
+            ]}
+          >
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <span class="flex-1">{item.label}</span>
+          {currentPath === item.href && (
+            <span class="font-mono text-[10px] uppercase tracking-[0.12em] text-primary">
+              aktif
+            </span>
+          )}
+        </a>
+      ))
+    }
+  </nav>
+</details>

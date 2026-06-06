@@ -21,3 +21,10 @@ export const roadmapItems = [
     active: false,
   },
 ];
+
+export const developmentStatuses = [
+  { name: "Website & dokumentasi", state: "tersedia", tone: "ready" },
+  { name: "Dashboard & agent", state: "pondasi", tone: "progress" },
+  { name: "Alur deployment", state: "berikutnya", tone: "progress" },
+  { name: "Runtime publik", state: "belum tersedia", tone: "later" },
+] as const;
