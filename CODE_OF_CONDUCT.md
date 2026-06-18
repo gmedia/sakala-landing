@@ -12,7 +12,7 @@ Perilaku yang tidak dapat diterima meliputi pelecehan, penghinaan, serangan prib
 
 ## Enforcement
 
-Maintainer bertanggung jawab menjelaskan dan menegakkan standar perilaku ini. Insiden dapat dilaporkan secara privat kepada maintainer PT Media Sarana Data / GMEDIA. Seluruh laporan akan ditinjau secara adil dan menjaga privasi pelapor sejauh mungkin.
+Maintainer Sakala bertanggung jawab menjelaskan dan menegakkan standar perilaku ini. Insiden dapat dilaporkan secara privat kepada maintainer melalui kanal repository yang tersedia. Seluruh laporan akan ditinjau secara adil dan menjaga privasi pelapor sejauh mungkin.
 
 ## Attribution
 

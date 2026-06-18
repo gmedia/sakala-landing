@@ -2,7 +2,7 @@
 
 ## Pelaporan
 
-Jangan membuka public issue untuk kerentanan keamanan. Laporkan secara privat kepada maintainer PT Media Sarana Data / GMEDIA dengan langkah reproduksi dan dampak yang diketahui.
+Jangan membuka public issue untuk kerentanan keamanan. Laporkan secara privat kepada maintainer Sakala melalui security policy repository dengan langkah reproduksi dan dampak yang diketahui. Pada fase MVP, GMEDIA dapat membantu triage keamanan sebagai sponsor pendiri dan infrastructure supporter.
 
 ## Boundary Foundation
 

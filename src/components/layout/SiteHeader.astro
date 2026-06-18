@@ -2,6 +2,7 @@
 import SakalaLogo from "../brand/SakalaLogo.astro";
 import Button from "../ui/Button.astro";
 import Container from "../ui/Container.astro";
+import DocsMegaMenu from "./DocsMegaMenu.astro";
 import MobileNav from "./MobileNav.astro";
 import { links } from "../../data/links";
 import { mainNavigation } from "../../data/navigation";
@@ -18,24 +19,27 @@ const currentPath =
   <Container className="flex h-18 items-center justify-between">
     <SakalaLogo />
     <nav class="hidden items-center gap-7 md:flex" aria-label="Navigasi utama">
+      <DocsMegaMenu currentPath={currentPath} />
       {
-        mainNavigation.map((item) => (
-          <a
-            href={item.href}
-            target={item.external ? "_blank" : undefined}
-            rel={item.external ? "noreferrer" : undefined}
-            data-astro-prefetch={item.external ? undefined : "hover"}
-            aria-current={currentPath === item.href ? "page" : undefined}
-            class:list={[
-              "inline-flex min-h-11 items-center border-b-2 text-sm font-medium hover:text-primary",
-              currentPath === item.href
-                ? "border-primary text-primary-dark"
-                : "border-transparent text-muted",
-            ]}
-          >
-            {item.label}
-          </a>
-        ))
+        mainNavigation
+          .filter((item) => item.label !== "Dokumentasi")
+          .map((item) => (
+            <a
+              href={item.href}
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noreferrer" : undefined}
+              data-astro-prefetch={item.external ? undefined : "hover"}
+              aria-current={currentPath === item.href ? "page" : undefined}
+              class:list={[
+                "inline-flex min-h-11 items-center border-b-2 text-sm font-medium hover:text-primary",
+                currentPath === item.href
+                  ? "border-primary text-primary-dark"
+                  : "border-transparent text-muted",
+              ]}
+            >
+              {item.label}
+            </a>
+          ))
       }
     </nav>
     <div class="hidden items-center gap-3 md:flex">

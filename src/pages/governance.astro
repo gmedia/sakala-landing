@@ -1,0 +1,104 @@
+---
+import Breadcrumbs from "../components/ui/Breadcrumbs.astro";
+import Card from "../components/ui/Card.astro";
+import Container from "../components/ui/Container.astro";
+import LandingLayout from "../layouts/LandingLayout.astro";
+
+const breadcrumbs = [{ label: "Beranda", href: "/" }, { label: "Governance" }];
+
+const principles = [
+  {
+    title: "Roadmap terbuka",
+    text: "Arah project dibahas melalui dokumentasi, issue, pull request, dan catatan perubahan yang dapat diikuti publik.",
+  },
+  {
+    title: "Keputusan teknis oleh maintainer",
+    text: "Sponsor dapat memberi dukungan dan masukan, tetapi keputusan teknis tetap dijaga oleh maintainer Sakala.",
+  },
+  {
+    title: "Lisensi jelas",
+    text: "Sakala menggunakan Apache License 2.0 agar source code tetap dapat dipelajari, digunakan, dan dikontribusi secara terbuka.",
+  },
+];
+---
+
+<LandingLayout
+  title="Governance Sakala — Project Open-Source"
+  description="Prinsip governance Sakala, peran maintainer, batas peran sponsor, dan arah komunitas project deployment open-source Sakala."
+  {breadcrumbs}
+>
+  <Container className="py-16 sm:py-20">
+    <Breadcrumbs items={breadcrumbs} />
+    <div class="max-w-3xl">
+      <p class="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+        Governance
+      </p>
+      <h1
+        class="mt-4 text-4xl font-semibold tracking-tight text-ink sm:text-5xl"
+      >
+        Sakala dibangun terbuka, dengan batas peran yang jelas.
+      </h1>
+      <p class="mt-6 text-lg leading-8 text-muted">
+        Sakala adalah project open-source yang dikembangkan melalui roadmap,
+        dokumentasi, issue, pull request, dan kontribusi publik. Pada tahap MVP,
+        project ini dikelola oleh maintainer awal dengan dukungan GMEDIA sebagai
+        sponsor pendiri.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-5 lg:grid-cols-3">
+      {
+        principles.map((principle) => (
+          <Card>
+            <h2 class="text-xl font-semibold text-ink">{principle.title}</h2>
+            <p class="mt-4 leading-7 text-muted">{principle.text}</p>
+          </Card>
+        ))
+      }
+    </div>
+
+    <section class="mt-16 grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <p
+          class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary"
+        >
+          Peran sponsor
+        </p>
+        <h2 class="mt-3 text-3xl font-semibold text-ink">
+          Sponsor mendukung keberlanjutan, bukan mengambil alih project.
+        </h2>
+      </div>
+      <div class="space-y-5 text-lg leading-8 text-muted">
+        <p>
+          Sponsor dapat membantu Sakala melalui infrastruktur, domain, dukungan
+          pengembangan, dokumentasi, program komunitas, atau kebutuhan
+          operasional lain.
+        </p>
+        <p>
+          Sponsor tidak otomatis mengontrol keputusan teknis, prioritas roadmap,
+          perubahan lisensi, hak contributor, atau arah komunitas. Masukan dari
+          sponsor tetap diperlakukan sebagai bagian dari diskusi terbuka.
+        </p>
+      </div>
+    </section>
+
+    <section
+      class="mt-16 rounded-2xl border border-border-strong bg-primary-soft-2 p-7 sm:p-9"
+    >
+      <p
+        class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary"
+      >
+        Arah berikutnya
+      </p>
+      <h2 class="mt-3 text-2xl font-semibold text-ink">
+        Governance akan ikut tumbuh bersama komunitas.
+      </h2>
+      <p class="mt-4 max-w-3xl leading-7 text-muted">
+        Saat Sakala melewati fase MVP, mendapat pengguna nyata, dan mulai
+        menerima kontribusi eksternal yang lebih luas, project ini dapat
+        bergerak menuju organisasi komunitas yang lebih independen dan model
+        maintainer yang lebih formal.
+      </p>
+    </section>
+  </Container>
+</LandingLayout>

@@ -6,7 +6,8 @@ Dokumen ini berlaku bagi AI agents, Codex CLI, automation tools, dan contributor
 
 - Project: **Sakala Landing**
 - Product: **Sakala**
-- Organization: **PT Media Sarana Data / GMEDIA**
+- Stewardship: **Sakala Maintainers**
+- Founding Sponsor: **PT Media Sarana Data / GMEDIA**
 - License: **Apache License 2.0**
 - Bahasa copy pengguna: **Bahasa Indonesia**
 
@@ -17,6 +18,7 @@ Dokumen ini berlaku bagi AI agents, Codex CLI, automation tools, dan contributor
 - Jangan memakai gaya dark cyberpunk, AI glow, atau template SaaS generik.
 - Copy yang dilihat pengguna harus dalam Bahasa Indonesia, kecuali nama teknis atau badge yang sudah ditetapkan.
 - Jangan membuat klaim layanan production atau enterprise yang belum tersedia.
+- Jangan memosisikan Sakala sebagai produk tertutup milik GMEDIA. Gunakan framing: Sakala adalah project open-source yang didukung GMEDIA sebagai sponsor pendiri.
 - Untuk pekerjaan UI/UX, baca guideline `docs/PROJECT_DESIGN_CONTEXT.md`.
 - Untuk pekerjaan SEO, metadata, structured data, sitemap, atau konten publik, baca dan ikuti `docs/PROJECT_SEO_AUDIT.md`.
 - Untuk menambah atau mengubah fitur Astro, baca keputusan `docs/PROJECT_ASTRO_FEATURES.md`.

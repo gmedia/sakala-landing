@@ -12,3 +12,9 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) dan pr
 - Landing page Bahasa Indonesia, dokumentasi, changelog, sitemap, dan metadata SEO.
 - Identitas visual light-first serta aset logo Sakala.
 - Art direction editorial dengan deployment receipt, status strip, bento use cases, dan tekstur CSS-only.
+- Halaman governance publik, dokumen `GOVERNANCE.md`, dan `SPONSORS.md`.
+- Framing sponsor pendiri untuk GMEDIA serta sponsor card pada halaman tentang.
+
+### Changed
+
+- Framing Sakala diperbarui dari corporate-first menjadi project open-source yang didukung GMEDIA sebagai founding sponsor.
