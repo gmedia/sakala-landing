@@ -1,6 +1,9 @@
 # Sakala Landing
 
-Website publik dan pusat dokumentasi awal untuk **Sakala**, platform deployment open-source dari PT Media Sarana Data / GMEDIA. Situs ini ditujukan untuk `https://sakala.dev`, sementara dashboard produk berada pada `https://app.sakala.dev`.
+Website publik dan pusat dokumentasi awal untuk **Sakala**, project deployment
+open-source yang diinisiasi oleh maintainer Sakala dan didukung oleh GMEDIA
+sebagai sponsor pendiri. Situs ini ditujukan untuk `https://sakala.dev`,
+sementara dashboard produk berada pada `https://app.sakala.dev`.
 
 ## Stack
 
@@ -41,9 +44,18 @@ Setelah `npm install`, script `prepare` mengaktifkan hook Husky. Commit akan men
 - `src/components/landing/`: bagian-bagian landing page.
 - `src/content/docs/`: dokumentasi publik berbasis content collection.
 - `src/layouts/`: layout SEO, landing, dan dokumentasi.
-- `src/pages/`: route statis `/`, `/tentang`, `/docs`, `/changelog`, `/rss.xml`,
-  serta `/404`.
+- `src/pages/`: route statis `/`, `/tentang`, `/governance`, `/docs`,
+  `/changelog`, `/rss.xml`, serta `/404`.
 - `public/`: logo, favicon, robots, dan Open Graph image.
+
+## Governance dan Sponsor
+
+Sakala menggunakan Apache License 2.0 dan dikembangkan dengan roadmap,
+dokumentasi, issue, serta kontribusi publik. GMEDIA berperan sebagai founding
+sponsor dan infrastructure supporter pada fase awal.
+
+Baca [GOVERNANCE.md](GOVERNANCE.md) dan [SPONSORS.md](SPONSORS.md) untuk
+memahami batas peran sponsor, maintainer, dan arah komunitas Sakala.
 
 ## Kontribusi
 

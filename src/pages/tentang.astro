@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import Breadcrumbs from "../components/ui/Breadcrumbs.astro";
 import Card from "../components/ui/Card.astro";
 import Container from "../components/ui/Container.astro";
@@ -34,8 +35,8 @@ const ecosystem = [
 ---
 
 <LandingLayout
-  title="Tentang Sakala — Platform Deployment Open-Source dari GMEDIA"
-  description="Kenali tujuan, status pengembangan, ownership, dan ekosistem repository Sakala dari PT Media Sarana Data atau GMEDIA."
+  title="Tentang Sakala — Project Deployment Open-Source"
+  description="Kenali tujuan Sakala, prinsip open-source, dukungan founding sponsor, dan arah komunitas project deployment Sakala."
   pageType="AboutPage"
   {breadcrumbs}
 >
@@ -51,9 +52,14 @@ const ecosystem = [
         Deployment yang lebih mudah dipelajari.
       </h1>
       <p class="mt-6 text-lg leading-8 text-muted">
-        Sakala adalah platform deployment open-source yang sedang dibangun oleh
-        PT Media Sarana Data atau GMEDIA untuk membantu project kecil bergerak
-        dari repository Git menuju URL publik melalui alur yang mudah dipahami.
+        Sakala adalah project deployment open-source yang membantu developer
+        membawa project dari repository Git menuju URL publik melalui alur yang
+        lebih sederhana dan mudah dipahami.
+      </p>
+      <p class="mt-4 text-lg leading-8 text-muted">
+        Fokus awalnya sederhana: membantu project keluar dari localhost, tanpa
+        harus langsung berhadapan dengan VPS, SSL, reverse proxy, Docker
+        networking, dan konfigurasi server manual.
       </p>
     </div>
 
@@ -89,28 +95,109 @@ const ecosystem = [
       </Card>
     </div>
 
-    <section class="mt-16" aria-labelledby="ownership-title">
+    <section class="mt-16" aria-labelledby="open-source-title">
+      <div class="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+        <div>
+          <p
+            class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary"
+          >
+            Open-source first
+          </p>
+          <h2
+            id="open-source-title"
+            class="mt-3 text-3xl font-semibold text-ink"
+          >
+            Terbuka agar bisa dipelajari, diaudit, dan dikembangkan bersama.
+          </h2>
+        </div>
+        <div class="space-y-5 text-lg leading-8 text-muted">
+          <p>
+            Kode, dokumentasi, issue, roadmap, dan proses pengembangan Sakala
+            dibuka supaya keputusan teknisnya dapat dibaca dan dikritisi secara
+            publik.
+          </p>
+          <p>
+            Sakala tidak dimulai sebagai cloud besar atau produk enterprise.
+            Sakala dimulai sebagai ruang belajar dan eksperimen deployment yang
+            praktis, lalu bertumbuh berdasarkan kebutuhan nyata pengguna dan
+            contributor.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-16" aria-labelledby="sponsor-title">
+      <div class="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+        <div>
+          <p
+            class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary"
+          >
+            Dukungan awal
+          </p>
+          <h2 id="sponsor-title" class="mt-3 text-3xl font-semibold text-ink">
+            Didukung oleh GMEDIA sebagai sponsor pendiri.
+          </h2>
+          <p class="mt-5 leading-7 text-muted">
+            GMEDIA membantu Sakala mencapai MVP dan pilot awal melalui dukungan
+            infrastruktur, domain, ruang eksperimen, dan dukungan teknis.
+          </p>
+        </div>
+        <div
+          class="rounded-3xl border border-border-strong bg-surface p-6 shadow-[0_18px_60px_rgba(15,118,110,0.08)]"
+        >
+          <p
+            class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary"
+          >
+            Founding Sponsor & Infrastructure Supporter
+          </p>
+          <div
+            class="mt-5 rounded-2xl border border-border bg-background px-5 py-6 flex items-center justify-center"
+          >
+            <Image
+              src="/sponsors/gmedia.png"
+              width="720"
+              height="259"
+              loading="lazy"
+              alt="GMEDIA - PT Media Sarana Data"
+              class="h-auto w-full max-w-sm"
+            />
+          </div>
+          <p class="mt-5 leading-7 text-muted">
+            Dukungan GMEDIA tidak mengubah prinsip dasar Sakala sebagai project
+            open-source. Roadmap, dokumentasi, issue, dan kontribusi tetap
+            dikembangkan secara terbuka.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-16" aria-labelledby="governance-title">
       <div class="max-w-3xl">
         <p
           class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary"
         >
-          Ownership
+          Governance
         </p>
-        <h2 id="ownership-title" class="mt-3 text-3xl font-semibold text-ink">
-          Dikembangkan secara terbuka oleh GMEDIA
+        <h2 id="governance-title" class="mt-3 text-3xl font-semibold text-ink">
+          Sponsor mendukung, maintainer menjaga arah project.
         </h2>
         <p class="mt-5 text-lg leading-8 text-muted">
-          Sakala merupakan project dari PT Media Sarana Data atau GMEDIA. Source
-          code tersedia melalui organisasi GitHub GMEDIA dan menggunakan Apache
-          License 2.0.
+          Pada tahap awal, Sakala masih dikembangkan di dalam ekosistem GitHub
+          GMEDIA untuk mempercepat setup, validasi, dan kolaborasi internal.
+          Saat MVP lebih stabil dan kontribusi publik mulai tumbuh, Sakala
+          diarahkan untuk bergerak menuju model governance komunitas yang lebih
+          terbuka.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-muted">
+          Sponsor tidak otomatis mengontrol keputusan teknis, prioritas roadmap,
+          perubahan lisensi, atau hak contributor. Sakala tetap menggunakan
+          Apache License 2.0.
         </p>
         <a
-          href={links.githubOrganization}
-          target="_blank"
-          rel="noreferrer"
+          href="/governance"
           class="mt-6 inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
         >
-          Lihat organisasi GitHub GMEDIA &rarr;
+          Baca governance project &rarr;
         </a>
       </div>
     </section>

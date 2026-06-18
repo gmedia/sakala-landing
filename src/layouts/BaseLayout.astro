@@ -33,7 +33,6 @@ const {
 const canonicalUrl = canonical.toString();
 const imageUrl = new URL(image, Astro.site).toString();
 const robotsContent = noindex ? "noindex, follow" : "index, follow";
-const isHomePage = canonicalUrl === new URL("/", Astro.site).toString();
 const breadcrumbStructuredData =
   breadcrumbs.length > 1
     ? {
@@ -51,11 +50,19 @@ const siteEntities = [
   {
     "@type": "Organization",
     "@id": "https://sakala.dev/#organization",
-    name: "PT Media Sarana Data",
-    alternateName: "GMEDIA",
+    name: "Sakala Project",
+    alternateName: ["Sakala", "sakala.dev"],
     url: "https://sakala.dev",
     logo: "https://sakala.dev/logo.svg",
     sameAs: ["https://github.com/gmedia"],
+  },
+  {
+    "@type": "Organization",
+    "@id": "https://sakala.dev/#gmedia",
+    name: "PT Media Sarana Data",
+    alternateName: "GMEDIA",
+    url: "https://www.gmedia.net.id",
+    logo: "https://sakala.dev/sponsors/gmedia.png",
   },
   {
     "@type": "WebSite",
@@ -80,12 +87,18 @@ const siteEntities = [
     creator: {
       "@id": "https://sakala.dev/#organization",
     },
+    funder: {
+      "@id": "https://sakala.dev/#gmedia",
+    },
+    sponsor: {
+      "@id": "https://sakala.dev/#gmedia",
+    },
   },
 ];
 const defaultStructuredData = {
   "@context": "https://schema.org",
   "@graph": [
-    ...(isHomePage ? siteEntities : []),
+    ...siteEntities,
     {
       "@type": pageType,
       "@id": `${canonicalUrl}#webpage`,

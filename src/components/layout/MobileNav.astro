@@ -1,6 +1,7 @@
 ---
 import { mainNavigation } from "../../data/navigation";
 import { links } from "../../data/links";
+import { docsMegaMenu } from "../../data/mega-menu";
 
 const currentPath =
   Astro.url.pathname.length > 1
@@ -8,11 +9,14 @@ const currentPath =
     : Astro.url.pathname;
 
 const descriptions = {
-  Dokumentasi: "Panduan, konsep, dan arah penggunaan",
   Tentang: "Tujuan, ownership, dan ekosistem Sakala",
   Changelog: "Perkembangan terbaru Sakala",
   GitHub: "Kode sumber dan ruang kontribusi",
 };
+
+const directNavigation = mainNavigation.filter(
+  (item) => item.label !== "Dokumentasi",
+);
 ---
 
 <details class="group relative md:hidden">
@@ -58,7 +62,93 @@ const descriptions = {
     </div>
     <div class="mt-2 grid gap-1">
       {
-        mainNavigation.map((item, index) => (
+        (
+          <details class="group/docs rounded-xl">
+            <summary
+              class:list={[
+                "flex min-h-16 cursor-pointer list-none items-center gap-3 rounded-xl px-3 py-2",
+                currentPath === "/docs" || currentPath.startsWith("/docs/")
+                  ? "bg-primary-soft-2 text-primary-dark"
+                  : "text-ink hover:bg-background-soft",
+              ]}
+            >
+              <span class="flex size-8 shrink-0 items-center justify-center rounded-lg border border-border bg-surface font-mono text-[11px] font-semibold text-primary">
+                01
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block text-sm font-semibold">Dokumentasi</span>
+                <span class="mt-0.5 block text-xs leading-5 text-muted">
+                  Panduan, konsep, governance, dan ekosistem
+                </span>
+              </span>
+              <span
+                aria-hidden="true"
+                class="text-sm text-muted transition-transform group-open/docs:rotate-90"
+              >
+                →
+              </span>
+            </summary>
+            <div class="mt-1 space-y-3 rounded-2xl border border-border bg-background-soft p-3">
+              {docsMegaMenu.sections.map((section) => (
+                <section>
+                  <p class="px-2 pb-1 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
+                    {section.title}
+                  </p>
+                  <div class="grid gap-1">
+                    {section.items.map((item) => (
+                      <a
+                        href={item.href}
+                        data-astro-prefetch="tap"
+                        aria-current={
+                          currentPath === item.href ? "page" : undefined
+                        }
+                        class:list={[
+                          "block rounded-xl px-3 py-2",
+                          currentPath === item.href
+                            ? "bg-surface text-primary-dark"
+                            : "text-ink hover:bg-surface",
+                        ]}
+                      >
+                        <span class="block text-xs font-semibold">
+                          {item.label}
+                        </span>
+                        <span class="mt-0.5 block text-[11px] leading-5 text-muted">
+                          {item.description}
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                </section>
+              ))}
+
+              <section class="border-t border-dashed border-border pt-3">
+                <p class="px-2 pb-1 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
+                  Ekosistem
+                </p>
+                <div class="grid grid-cols-2 gap-2">
+                  {docsMegaMenu.ecosystem.map((item) => (
+                    <a
+                      href={item.href}
+                      target={item.external ? "_blank" : undefined}
+                      rel={item.external ? "noreferrer" : undefined}
+                      class="rounded-xl border border-border bg-surface px-3 py-2 hover:border-primary"
+                    >
+                      <span class="block text-[11px] font-semibold text-ink">
+                        {item.label} ↗
+                      </span>
+                      <span class="mt-0.5 block text-[10px] text-muted">
+                        {item.description}
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </section>
+            </div>
+          </details>
+        )
+      }
+      {
+        directNavigation.map((item, index) => (
           <a
             href={item.href}
             target={item.external ? "_blank" : undefined}
@@ -73,7 +163,7 @@ const descriptions = {
             ]}
           >
             <span class="flex size-8 shrink-0 items-center justify-center rounded-lg border border-border bg-surface font-mono text-[11px] font-semibold text-primary">
-              {String(index + 1).padStart(2, "0")}
+              {String(index + 2).padStart(2, "0")}
             </span>
             <span class="min-w-0 flex-1">
               <span class="block text-sm font-semibold">{item.label}</span>

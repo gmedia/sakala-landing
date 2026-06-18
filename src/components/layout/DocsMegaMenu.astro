@@ -1,0 +1,167 @@
+---
+import { docsMegaMenu } from "../../data/mega-menu";
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+const isDocsActive =
+  currentPath === "/docs" || currentPath.startsWith("/docs/");
+
+const iconPaths = {
+  play: ["M7 5v10l8-5-8-5Z"],
+  link: [
+    "M8.5 11.5 11.5 8.5",
+    "M7.5 8.5 6.2 9.8a3 3 0 0 0 4.2 4.2l1.1-1.1",
+    "M12.5 11.5l1.3-1.3a3 3 0 0 0-4.2-4.2L8.5 7.1",
+  ],
+  nodes: [
+    "M5 6a2 2 0 1 0 0.01 0M15 6a2 2 0 1 0 0.01 0M10 14a2 2 0 1 0 0.01 0",
+    "M6.8 7.2 8.8 12M13.2 7.2 11.2 12",
+  ],
+  flow: ["M4 6h5M11 6h5M4 14h5M11 14h5", "M9 6h2M9 14h2M10 6v8"],
+  question: [
+    "M8.2 7.4a2.2 2.2 0 1 1 3.4 1.85c-.9.55-1.6 1.08-1.6 2.25",
+    "M10 15h.01",
+  ],
+  shield: [
+    "M10 4 5.5 5.8v3.6c0 3 1.8 5.3 4.5 6.6 2.7-1.3 4.5-3.6 4.5-6.6V5.8L10 4Z",
+    "M8.2 10.1 9.4 11.3l2.5-2.8",
+  ],
+} as const;
+
+type IconName = keyof typeof iconPaths;
+---
+
+<div class="group relative">
+  <a
+    href="/docs"
+    data-astro-prefetch="hover"
+    aria-current={isDocsActive ? "page" : undefined}
+    aria-haspopup="true"
+    class:list={[
+      "inline-flex min-h-11 items-center gap-1.5 border-b-2 text-sm font-medium hover:text-primary",
+      isDocsActive
+        ? "border-primary text-primary-dark"
+        : "border-transparent text-muted",
+    ]}
+  >
+    Dokumentasi
+    <svg
+      aria-hidden="true"
+      class="size-3.5 transition-transform duration-150 group-hover:rotate-180 group-focus-within:rotate-180"
+      viewBox="0 0 20 20"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="m5 8 5 5 5-5"></path>
+    </svg>
+  </a>
+
+  <div
+    class="invisible absolute left-1/2 top-full z-50 w-[min(44rem,calc(100vw-2rem))] -translate-x-1/2 pt-3 opacity-0 transition duration-150 ease-out group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
+  >
+    <div
+      class="paper-card overflow-hidden rounded-3xl border border-border-strong bg-surface shadow-xl"
+    >
+      <div class="grid gap-0 md:grid-cols-[1fr_1fr]">
+        {
+          docsMegaMenu.sections.map((section) => (
+            <section class="border-border p-4 md:border-r md:last:border-r-0">
+              <p class="px-2 pb-2 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
+                {section.title}
+              </p>
+              <div class="grid gap-1">
+                {section.items.map((item) => (
+                  <a
+                    href={item.href}
+                    data-astro-prefetch="hover"
+                    class:list={[
+                      "group/item flex gap-3 rounded-2xl px-3 py-3 hover:bg-primary-soft-2",
+                      currentPath === item.href
+                        ? "bg-primary-soft-2"
+                        : "bg-transparent",
+                    ]}
+                  >
+                    <span class="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-xl border border-border bg-background-soft text-primary group-hover/item:border-primary-soft group-hover/item:bg-surface">
+                      <svg
+                        aria-hidden="true"
+                        class="size-4"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        {iconPaths[item.icon as IconName].map((path) => (
+                          <path d={path} />
+                        ))}
+                      </svg>
+                    </span>
+                    <span class="min-w-0">
+                      <span class="block text-sm font-semibold text-ink">
+                        {item.label}
+                      </span>
+                      <span class="mt-1 block text-xs leading-5 text-muted">
+                        {item.description}
+                      </span>
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </section>
+          ))
+        }
+      </div>
+
+      <div class="border-t border-dashed border-border bg-background-soft p-4">
+        <a
+          href={docsMegaMenu.featured.href}
+          data-astro-prefetch="hover"
+          class="flex flex-col gap-3 rounded-2xl border border-primary-soft bg-primary-soft-2 p-4 hover:border-primary sm:flex-row sm:items-center sm:justify-between"
+        >
+          <span>
+            <span
+              class="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-primary"
+            >
+              {docsMegaMenu.featured.eyebrow}
+            </span>
+            <span class="mt-1 block text-sm font-semibold text-ink">
+              {docsMegaMenu.featured.label}
+            </span>
+            <span class="mt-1 block text-xs leading-5 text-muted">
+              {docsMegaMenu.featured.description}
+            </span>
+          </span>
+          <span class="shrink-0 text-sm font-semibold text-primary-dark">
+            Baca →
+          </span>
+        </a>
+
+        <div class="mt-3 grid gap-2 sm:grid-cols-4">
+          {
+            docsMegaMenu.ecosystem.map((item) => (
+              <a
+                href={item.href}
+                target={item.external ? "_blank" : undefined}
+                rel={item.external ? "noreferrer" : undefined}
+                class="rounded-xl border border-border bg-surface px-3 py-2 hover:border-primary"
+              >
+                <span class="block text-xs font-semibold text-ink">
+                  {item.label}
+                  {item.external ? " ↗" : ""}
+                </span>
+                <span class="mt-0.5 block text-[11px] text-muted">
+                  {item.description}
+                </span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
