@@ -33,6 +33,7 @@ const {
 const canonicalUrl = canonical.toString();
 const imageUrl = new URL(image, Astro.site).toString();
 const robotsContent = noindex ? "noindex, follow" : "index, follow";
+const isHomePage = canonicalUrl === new URL("/", Astro.site).toString();
 const breadcrumbStructuredData =
   breadcrumbs.length > 1
     ? {
@@ -98,7 +99,7 @@ const siteEntities = [
 const defaultStructuredData = {
   "@context": "https://schema.org",
   "@graph": [
-    ...siteEntities,
+    ...(isHomePage ? siteEntities : []),
     {
       "@type": pageType,
       "@id": `${canonicalUrl}#webpage`,
