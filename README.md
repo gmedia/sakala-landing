@@ -57,6 +57,10 @@ sponsor dan infrastructure supporter pada fase awal.
 Baca [GOVERNANCE.md](GOVERNANCE.md) dan [SPONSORS.md](SPONSORS.md) untuk
 memahami batas peran sponsor, maintainer, dan arah komunitas Sakala.
 
+Prinsip pencatatan contributor awal dijelaskan di
+[CONTRIBUTORS.md](CONTRIBUTORS.md). Nama baru dicantumkan setelah kontribusinya
+nyata dan contributor memberikan persetujuan.
+
 ## Kontribusi
 
 Sakala Landing menggunakan Apache License 2.0. Baca
