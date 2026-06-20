@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+
 interface Props {
   class?: string;
 }
@@ -6,48 +8,12 @@ interface Props {
 const { class: className = "h-10 w-auto" } = Astro.props;
 ---
 
-<svg class={className} viewBox="10 22 240 115" fill="none" aria-hidden="true">
-  <path
-    d="M 54 92 C 68 140, 105 125, 120 87"
-    fill="none"
-    stroke="#007B75"
-    stroke-width="11"
-    stroke-linecap="round"></path>
-  <path
-    d="M 125 80 Q 135 76 150 76"
-    fill="none"
-    stroke="#007B75"
-    stroke-width="11"
-    stroke-linecap="round"></path>
-  <circle
-    cx="45"
-    cy="80"
-    r="16"
-    fill="#FFFFFF"
-    stroke="#007B75"
-    stroke-width="11"></circle>
-  <circle cx="68" cy="80" r="4.5" fill="#8AE0D2"></circle>
-  <circle cx="81" cy="80" r="4.5" fill="#8AE0D2"></circle>
-  <circle cx="94" cy="80" r="4.5" fill="#8AE0D2"></circle>
-  <circle cx="107" cy="80" r="4.5" fill="#8AE0D2"></circle>
-  <circle cx="125" cy="80" r="13" fill="#8AE0D2"></circle>
-  <circle cx="125" cy="80" r="5" fill="#007B75"></circle>
-  <rect x="150" y="30" width="95" height="95" rx="15" fill="#FFFFFF"></rect>
-  <path
-    d="M 150 45 C 150 36.7 156.7 30 165 30 L 230 30 C 238.3 30 245 36.7 245 45 L 245 55 L 150 55 Z"
-    fill="#007B75"></path>
-  <rect
-    x="150"
-    y="30"
-    width="95"
-    height="95"
-    rx="15"
-    fill="none"
-    stroke="#007B75"
-    stroke-width="11"></rect>
-  <circle cx="165" cy="42.5" r="3.5" fill="#FFFFFF"></circle>
-  <circle cx="178" cy="42.5" r="3.5" fill="#FFFFFF"></circle>
-  <circle cx="191" cy="42.5" r="3.5" fill="#FFFFFF"></circle>
-  <rect x="165" y="68" width="60" height="16" rx="6" fill="#8AE0D2"></rect>
-  <rect x="190" y="90" width="35" height="18" rx="6" fill="#8AE0D2"></rect>
-</svg>
+<Image
+  src="/favicon.svg"
+  width="585"
+  height="300"
+  alt=""
+  class={className}
+  loading="eager"
+  aria-hidden="true"
+/>
