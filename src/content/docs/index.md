@@ -16,7 +16,7 @@ Pengembangan awal Sakala didukung oleh GMEDIA sebagai sponsor pendiri dan infras
 ## Mulai membaca
 
 - Buka **Quickstart** untuk memahami alur penggunaan yang sedang dituju.
-- Baca **Konsep dasar** untuk mengenal peran dashboard, agent, dan infrastruktur.
+- Baca **Konsep dasar** untuk mengenal peran console, API, agent, dan infrastruktur.
 - Lihat **Alur deployment** untuk kontrak komunikasi awal.
 - Baca [**Governance**](/governance) untuk memahami peran maintainer, sponsor, dan arah komunitas.
 
@@ -25,5 +25,6 @@ Pengembangan awal Sakala didukung oleh GMEDIA sebagai sponsor pendiri dan infras
 | Tujuan                    | Domain             |
 | ------------------------- | ------------------ |
 | Website dan dokumentasi   | `sakala.dev`       |
-| Control plane / dashboard | `app.sakala.dev`   |
+| Console                   | `app.sakala.dev`   |
+| API/control plane         | `api.sakala.dev`   |
 | Aplikasi hasil deployment | `*.run.sakala.dev` |

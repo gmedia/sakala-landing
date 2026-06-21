@@ -63,7 +63,7 @@ Jika project terdiri dari beberapa service, catat hubungan antara frontend, API,
 
 ## Arah yang sedang dibangun Sakala
 
-Sakala diarahkan untuk membantu project kecil bergerak dari repository Git menuju URL publik melalui alur yang mudah dipahami. Pengguna nantinya memilih repository melalui dashboard, sedangkan agent menangani pekerjaan runtime dan melaporkan status serta log.
+Sakala diarahkan untuk membantu project kecil bergerak dari repository Git menuju URL publik melalui alur yang mudah dipahami. Pengguna nantinya memilih repository melalui console, API mengelola state dan command deployment, sedangkan agent menangani pekerjaan runtime lalu melaporkan status serta log ke API.
 
 Targetnya bukan menyembunyikan seluruh proses deployment. Sakala ingin membuat proses tersebut lebih mudah dipelajari tanpa mengubahnya menjadi klaim satu klik atau pengganti cloud enterprise.
 

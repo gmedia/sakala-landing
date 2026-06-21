@@ -37,7 +37,7 @@ dipahami.
 2. Menjadi pintu masuk menuju dokumentasi dan perkembangan proyek.
 3. Menjadi entry point SEO publik untuk ekosistem Sakala.
 
-Situs ini bukan dashboard, control plane, atau runtime deployment. Situs harus
+Situs ini bukan console, control plane API, atau runtime deployment. Situs harus
 tetap ringan, statis, dan fokus pada komunikasi.
 
 Domain produk:
@@ -45,7 +45,8 @@ Domain produk:
 | Tujuan                    | Domain             |
 | ------------------------- | ------------------ |
 | Website dan dokumentasi   | `sakala.dev`       |
-| Control plane / dashboard | `app.sakala.dev`   |
+| Console                   | `app.sakala.dev`   |
+| API/control plane         | `api.sakala.dev`   |
 | Aplikasi hasil deployment | `*.run.sakala.dev` |
 
 ---
@@ -138,7 +139,7 @@ Prioritas CTA Sakala Landing saat produk masih dikembangkan:
 ```txt
 Primary   : Baca Dokumentasi
 Secondary : Lihat Repository
-Tertiary  : Masuk ke Dashboard
+Tertiary  : Masuk ke Console
 ```
 
 Aturan CTA:
@@ -146,7 +147,7 @@ Aturan CTA:
 - CTA harus menjelaskan tujuan, bukan memakai label generik seperti
   `Selengkapnya`, `Klik di sini`, atau `Mulai`.
 - Jangan membuat beberapa tombol terlihat sama dominan.
-- Jangan menonjolkan dashboard melebihi dokumentasi selama alur deployment
+- Jangan menonjolkan console melebihi dokumentasi selama alur deployment
   publik belum siap.
 - External link harus menggunakan perilaku dan atribut yang konsisten.
 - Final CTA harus mengajak tindakan yang tersedia dan relevan dengan isi
@@ -197,7 +198,7 @@ Istilah yang perlu konsisten:
 | deployment / deploy               | publish, release, launch      |
 | repository atau repo              | source acak                   |
 | URL publik atau link              | endpoint publik               |
-| dashboard                         | panel/admin bergantian        |
+| console                           | dashboard/panel bergantian    |
 | masih dibangun/pengembangan aktif | production-ready              |
 
 ---
@@ -258,7 +259,7 @@ Hindari:
 - neon atau AI glow;
 - glassmorphism berlebihan;
 - gradient warna-warni tanpa fungsi;
-- dashboard palsu yang kompleks;
+- console palsu yang kompleks;
 - ilustrasi stock generik;
 - layout template SaaS yang dapat dipakai produk apa pun tanpa perubahan;
 - dekorasi yang mengalahkan headline atau CTA;
@@ -545,7 +546,7 @@ Semua motion harus tetap masuk akal saat reduced motion aktif.
 - Gambar raster harus memiliki tujuan komunikasi yang jelas dan ukuran yang
   wajar.
 - Pertahankan motif brand dari source node menuju app/browser window.
-- Jangan memakai screenshot dashboard palsu untuk menutupi kematangan produk.
+- Jangan memakai screenshot console palsu untuk menutupi kematangan produk.
 - Jangan menggunakan ilustrasi generik yang tidak menjelaskan Sakala.
 - Social preview harus tetap terbaca pada ukuran kecil dan sesuai metadata alt.
 
@@ -576,7 +577,7 @@ UI yang lebih kompleks bukan otomatis UI yang lebih baik.
 
 - Copy landing yang digunakan ulang atau berupa daftar dapat ditempatkan di
   `src/data/`.
-- Gunakan `src/data/links.ts` sebagai sumber utama URL dashboard, organisasi,
+- Gunakan `src/data/links.ts` sebagai sumber utama URL console, API, organisasi,
   repository, issue, dan repository ekosistem.
 - Gunakan `developmentStatuses` pada `src/data/roadmap.ts` sebagai sumber utama
   status ringkas yang tampil pada landing.
@@ -602,7 +603,7 @@ Jangan:
 - menampilkan statistik, testimonial, logo pengguna, atau klaim trust yang
   belum nyata;
 - menyembunyikan status pengembangan;
-- membuat dashboard sebagai CTA utama sebelum alur produk tersedia;
+- membuat console sebagai CTA utama sebelum alur produk tersedia;
 - menggunakan jargon enterprise untuk memberi kesan matang;
 - menambahkan JavaScript client hanya untuk polish;
 - mengorbankan keterbacaan docs demi gaya editorial landing;
@@ -666,7 +667,7 @@ Gunakan checklist ini untuk review landing page dan perubahan UI berikutnya.
 
 - [ ] Setiap section memiliki satu fokus utama.
 - [ ] CTA utama mengarah ke tindakan yang benar-benar tersedia.
-- [ ] Dokumentasi lebih dominan daripada dashboard selama produk belum siap.
+- [ ] Dokumentasi lebih dominan daripada console selama produk belum siap.
 - [ ] Visual hierarchy ditentukan oleh posisi, ukuran, spacing, dan kontras
       sebelum dekorasi.
 - [ ] Tidak semua button atau link dibuat dominan.

@@ -18,3 +18,4 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) dan pr
 ### Changed
 
 - Framing Sakala diperbarui dari corporate-first menjadi project open-source yang didukung GMEDIA sebagai founding sponsor.
+- Navigasi, dokumentasi, roadmap, dan daftar repository diperbarui untuk arsitektur `sakala-console` dan `sakala-api` yang terpisah.

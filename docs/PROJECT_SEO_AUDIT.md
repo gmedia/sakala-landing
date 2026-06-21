@@ -140,7 +140,7 @@ Prioritas konten berikutnya harus menjawab kebutuhan nyata, misalnya:
 - cara membagikan project yang masih berjalan di localhost; panduan awal sudah
   tersedia pada `/docs/keluar-dari-localhost`;
 - pengantar deployment dari Git menuju URL publik;
-- perbedaan dashboard, agent, runtime, dan reverse proxy;
+- perbedaan console, API, agent, runtime, dan reverse proxy;
 - panduan deployment untuk tugas atau portfolio;
 - penjelasan log, build, route, sleep, dan wake ketika fitur tersedia;
 - studi proses pengembangan Sakala yang jujur dan dapat diverifikasi.

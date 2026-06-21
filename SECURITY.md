@@ -10,7 +10,7 @@ Jangan membuka public issue untuk kerentanan keamanan. Laporkan secara privat ke
 
 - Jangan memasukkan secret ke environment yang diekspos sebagai `PUBLIC_*`.
 - Jangan membuat koneksi langsung ke Docker socket atau agent.
-- Tautan dashboard mengarah ke `app.sakala.dev`; autentikasi tidak ditangani landing site.
+- Tautan console mengarah ke `app.sakala.dev`; autentikasi tidak ditangani landing site.
 - Dependency baru harus ditinjau dan lockfile harus diperbarui.
 
-Security untuk dashboard, agent, dan infra dikelola pada repository masing-masing.
+Security untuk console, API, agent, dan infra dikelola pada repository masing-masing.

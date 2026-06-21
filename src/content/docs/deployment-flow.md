@@ -1,21 +1,22 @@
 ---
 title: Alur Deployment
-description: Model komunikasi dashboard dan agent dalam fondasi Sakala.
+description: Model komunikasi console, API, dan agent dalam fondasi Sakala.
 order: 4
 section: Konsep
 ---
 
 # Alur Deployment
 
-Pada arah implementasi awal, dashboard membuat command dan agent mengambil pekerjaan secara outbound.
+Pada arah implementasi awal, console mengirim intent pengguna ke API. API membuat command dan agent mengambil pekerjaan secara outbound.
 
 ## Siklus command
 
-1. Dashboard menyimpan permintaan deployment sebagai command.
-2. Agent melakukan polling terhadap command yang tersedia.
-3. Agent melakukan claim sebelum menjalankan pekerjaan.
-4. Agent mengirim event dan log yang sudah melalui redaction.
-5. Agent melaporkan hasil sukses atau gagal.
+1. Console mengirim permintaan deployment ke API.
+2. API memvalidasi permintaan dan menyimpannya sebagai command.
+3. Agent melakukan polling terhadap command yang tersedia.
+4. Agent melakukan claim sebelum menjalankan pekerjaan.
+5. Agent mengirim event dan log yang sudah melalui redaction.
+6. Agent melaporkan hasil sukses atau gagal ke API.
 
 ## Routing aplikasi
 
