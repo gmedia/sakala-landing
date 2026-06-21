@@ -3,7 +3,8 @@
 Website publik dan pusat dokumentasi awal untuk **Sakala**, project deployment
 open-source yang diinisiasi oleh maintainer Sakala dan didukung oleh GMEDIA
 sebagai sponsor pendiri. Situs ini ditujukan untuk `https://sakala.dev`,
-sementara dashboard produk berada pada `https://app.sakala.dev`.
+sementara console produk berada pada `https://app.sakala.dev` dan control plane
+API berada pada `https://api.sakala.dev`.
 
 ## Stack
 

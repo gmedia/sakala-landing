@@ -12,7 +12,7 @@ Astro sesuai untuk halaman marketing dan dokumentasi yang sebagian besar berupa 
 
 - Semua halaman utama dirender saat build.
 - Interaksi sederhana menggunakan HTML native seperti `details`, bukan JavaScript client yang berat.
-- Tidak ada runtime server atau pemanggilan API dashboard dari browser pada foundation ini.
+- Tidak ada runtime server atau pemanggilan Sakala API dari browser pada foundation ini.
 
 ## Struktur Komponen
 
@@ -33,4 +33,4 @@ Koleksi `docs` menghasilkan route dokumentasi dan validasi frontmatter. Koleksi 
 
 ## SEO dan Domain
 
-Konfigurasi site menggunakan `https://sakala.dev`. Sitemap dan `robots.txt` dapat ditemukan crawler, sementara setiap halaman memperoleh metadata canonical dan default social preview. Dashboard tetap berada pada `app.sakala.dev`; URL aplikasi masa depan menggunakan `*.run.sakala.dev`.
+Konfigurasi site menggunakan `https://sakala.dev`. Sitemap dan `robots.txt` dapat ditemukan crawler, sementara setiap halaman memperoleh metadata canonical dan default social preview. Console berada pada `app.sakala.dev`, control plane API berada pada `api.sakala.dev`, dan URL aplikasi masa depan menggunakan `*.run.sakala.dev`.

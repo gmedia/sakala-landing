@@ -20,7 +20,7 @@ export const docsMegaMenu = {
         {
           label: "Konsep dasar",
           href: "/docs/concepts",
-          description: "Peran dashboard, agent, infra, dan runtime.",
+          description: "Peran console, API, agent, infra, dan runtime.",
           icon: "nodes",
         },
       ],
@@ -51,8 +51,14 @@ export const docsMegaMenu = {
   ],
   ecosystem: [
     {
-      label: "Dashboard",
-      href: links.repositories.dashboard,
+      label: "Console",
+      href: links.repositories.console,
+      description: "Antarmuka pengguna",
+      external: true,
+    },
+    {
+      label: "API",
+      href: links.repositories.api,
       description: "Control plane",
       external: true,
     },
