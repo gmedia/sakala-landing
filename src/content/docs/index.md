@@ -18,6 +18,7 @@ Pengembangan awal Sakala didukung oleh GMEDIA sebagai sponsor pendiri dan infras
 - Buka **Quickstart** untuk memahami alur penggunaan yang sedang dituju.
 - Baca **Konsep dasar** untuk mengenal peran console, API, agent, dan infrastruktur.
 - Lihat **Alur deployment** untuk kontrak komunikasi awal.
+- Pelajari **Cara kerja Sakala Agent** untuk memahami polling, claim, dan runtime node.
 - Baca [**Governance**](/governance) untuk memahami peran maintainer, sponsor, dan arah komunitas.
 
 ## Domain produk

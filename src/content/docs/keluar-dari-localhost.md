@@ -1,7 +1,7 @@
 ---
 title: Membagikan Project dari Localhost
 description: Memahami cara membawa project dari localhost menuju URL publik dengan aman dan bertahap.
-order: 5
+order: 6
 section: Panduan
 ---
 

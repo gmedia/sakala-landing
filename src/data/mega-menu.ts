@@ -35,6 +35,12 @@ export const docsMegaMenu = {
           icon: "flow",
         },
         {
+          label: "Cara kerja Agent",
+          href: "/docs/agent-runtime",
+          description: "Polling, claim, operating mode, dan executor.",
+          icon: "nodes",
+        },
+        {
           label: "FAQ",
           href: "/docs/faq",
           description: "Status project, target user, dan kontribusi.",
