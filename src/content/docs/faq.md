@@ -1,7 +1,7 @@
 ---
 title: Pertanyaan Umum
 description: Jawaban ringkas tentang status, sasaran, dan kontribusi Sakala.
-order: 6
+order: 7
 section: Dukungan
 ---
 

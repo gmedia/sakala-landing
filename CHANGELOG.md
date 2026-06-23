@@ -8,6 +8,7 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) dan pr
 
 ### Added
 
+- Dokumentasi publik cara kerja Sakala Agent, command claim, operating mode, dan status fondasi MVP.
 - Foundation website Astro static-first untuk `sakala.dev`.
 - Landing page Bahasa Indonesia, dokumentasi, changelog, sitemap, dan metadata SEO.
 - Identitas visual light-first serta aset logo Sakala.
