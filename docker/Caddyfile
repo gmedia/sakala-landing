@@ -1,0 +1,14 @@
+{
+	admin off
+	auto_https off
+}
+
+:8080 {
+	encode zstd gzip
+	root * /srv
+
+	@health path /healthz
+	respond @health "ok" 200
+
+	file_server
+}

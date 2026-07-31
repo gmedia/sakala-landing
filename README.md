@@ -27,6 +27,17 @@ npm run dev
 
 Server development Astro akan menampilkan alamat lokal pada terminal.
 
+## Container Image
+
+Landing tetap static-first. `Dockerfile` hanya membangun artefak Astro dan menyajikannya melalui Caddy internal pada port `8080`; ia tidak menambahkan server aplikasi atau secret runtime.
+
+```bash
+docker build -t sakala-landing:local .
+docker run --rm -p 8080:8080 sakala-landing:local
+```
+
+Untuk deployment Sakala, konfigurasi domain, TLS, reverse proxy host, dan path rilis dikelola di repository deployment terpisah. Image ini tidak membawa konfigurasi production tersebut.
+
 ## Scripts
 
 ```bash
