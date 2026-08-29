@@ -38,16 +38,25 @@ const breadcrumbs = [
 
 <BaseLayout title={title} description={description} {breadcrumbs}>
   <SiteHeader lang={lang} t={t} />
+
+  <!-- Pita tipis sebagai penyambung dari header gelap. Dokumentasi sengaja
+       lebih tenang daripada landing, jadi hanya breadcrumb yang dibawa. -->
+  <div class="surface-deep border-b border-deep-border">
+    <Container className="py-3.5">
+      <Breadcrumbs items={breadcrumbs} tone="deep" />
+    </Container>
+  </div>
+
   <main id="main-content">
-    <Container className="flex gap-12 py-8 lg:py-16">
+    <Container className="flex gap-12 py-10 lg:py-16">
       <DocsSidebar currentPath={normalizedCurrentPath} />
       <div class="min-w-0 max-w-3xl flex-1">
         <DocsMobileNav currentPath={normalizedCurrentPath} />
-        <Breadcrumbs items={breadcrumbs} />
         <slot />
         <DocsNav currentPath={normalizedCurrentPath} />
       </div>
     </Container>
   </main>
+
   <SiteFooter lang={lang} t={t} />
 </BaseLayout>

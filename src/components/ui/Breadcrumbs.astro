@@ -6,30 +6,58 @@ export interface BreadcrumbItem {
 
 interface Props {
   items: BreadcrumbItem[];
+  tone?: "light" | "deep";
+  class?: string;
 }
 
-const { items } = Astro.props;
+const { items, tone = "light", class: className = "" } = Astro.props;
+
+const style =
+  tone === "deep"
+    ? {
+        list: "text-on-deep-muted",
+        sep: "text-on-deep-subtle",
+        link: "hover:text-on-deep",
+        current: "text-on-deep",
+      }
+    : {
+        list: "text-muted",
+        sep: "text-border-strong",
+        link: "hover:text-primary-dark",
+        current: "text-ink",
+      };
 ---
 
-<nav aria-label="Breadcrumb" class="mb-6">
-  <ol class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted">
+<nav aria-label="Breadcrumb" class:list={[className]}>
+  <ol
+    class:list={[
+      "m-0 flex list-none flex-wrap items-center gap-x-2 gap-y-1 p-0 font-mono text-xs",
+      style.list,
+    ]}
+  >
     {
       items.map((item, index) => (
         <li class="flex min-w-0 items-center gap-2">
           {index > 0 && (
-            <span aria-hidden="true" class="font-mono text-border-strong">
+            <span aria-hidden="true" class={style.sep}>
               /
             </span>
           )}
           {item.href ? (
             <a
               href={item.href}
-              class="rounded-sm hover:text-primary-dark hover:underline hover:underline-offset-4"
+              class:list={[
+                "rounded-sm underline-offset-4 hover:underline",
+                style.link,
+              ]}
             >
               {item.label}
             </a>
           ) : (
-            <span aria-current="page" class="font-medium text-ink">
+            <span
+              aria-current="page"
+              class:list={["font-medium", style.current]}
+            >
               {item.label}
             </span>
           )}

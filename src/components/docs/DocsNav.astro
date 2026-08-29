@@ -14,40 +14,51 @@ const previous =
 const next = currentIndex >= 0 ? docsNavigation[currentIndex + 1] : undefined;
 ---
 
-<nav
-  class="mt-14 grid gap-3 border-t border-border pt-6 text-sm sm:grid-cols-2"
-  aria-label="Halaman dokumentasi"
->
-  <div class="min-w-0">
-    {
-      previous && (
-        <a
-          href={previous.href}
-          data-astro-prefetch="hover"
-          class="flex min-h-16 flex-col justify-center rounded-xl border border-border bg-surface px-4 py-3 text-primary hover:border-primary hover:text-primary-dark"
-        >
-          <span class="text-xs font-semibold uppercase tracking-[0.12em] text-muted">
-            Sebelumnya
-          </span>
-          <span class="mt-1 font-semibold">&larr; {previous.label}</span>
-        </a>
-      )
-    }
-  </div>
-  <div class="min-w-0">
-    {
-      next && (
-        <a
-          href={next.href}
-          data-astro-prefetch="hover"
-          class="flex min-h-16 flex-col items-end justify-center rounded-xl border border-border bg-surface px-4 py-3 text-right text-primary hover:border-primary hover:text-primary-dark"
-        >
-          <span class="text-xs font-semibold uppercase tracking-[0.12em] text-muted">
-            Berikutnya
-          </span>
-          <span class="mt-1 font-semibold">{next.label} &rarr;</span>
-        </a>
-      )
-    }
-  </div>
-</nav>
+{
+  (previous || next) && (
+    <nav
+      class="mt-16 grid gap-3 border-t border-border pt-8 sm:grid-cols-2"
+      aria-label="Halaman dokumentasi"
+    >
+      <div class="min-w-0">
+        {previous && (
+          <a
+            href={previous.href}
+            data-astro-prefetch="hover"
+            class="flex min-h-18 flex-col justify-center rounded-xl border border-border bg-surface px-5 py-4 hover:border-primary"
+          >
+            <span class="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-muted-2">
+              Sebelumnya
+            </span>
+            <span class="mt-1.5 font-display font-semibold text-ink">
+              <span aria-hidden="true" class="text-muted-2">
+                &larr;{" "}
+              </span>
+              {previous.label}
+            </span>
+          </a>
+        )}
+      </div>
+      <div class="min-w-0">
+        {next && (
+          <a
+            href={next.href}
+            data-astro-prefetch="hover"
+            class="flex min-h-18 flex-col items-end justify-center rounded-xl border border-border bg-surface px-5 py-4 text-right hover:border-primary"
+          >
+            <span class="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-muted-2">
+              Berikutnya
+            </span>
+            <span class="mt-1.5 font-display font-semibold text-ink">
+              {next.label}
+              <span aria-hidden="true" class="text-muted-2">
+                {" "}
+                &rarr;
+              </span>
+            </span>
+          </a>
+        )}
+      </div>
+    </nav>
+  )
+}

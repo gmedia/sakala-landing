@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
-import Breadcrumbs from "../../components/ui/Breadcrumbs.astro";
 import Container from "../../components/ui/Container.astro";
+import PageHeader from "../../components/ui/PageHeader.astro";
 import LandingLayout from "../../layouts/LandingLayout.astro";
 
 const entries = (await getCollection("changelog")).sort(
@@ -17,43 +17,58 @@ const breadcrumbs = [{ label: "Beranda", href: "/" }, { label: "Changelog" }];
   pageType="CollectionPage"
   {breadcrumbs}
 >
-  <Container className="py-16 sm:py-20">
-    <Breadcrumbs items={breadcrumbs} />
-    <p class="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
-      Changelog
-    </p>
-    <h1 class="mt-4 text-4xl font-semibold tracking-tight text-ink">
-      Perjalanan pengembangan Sakala.
-    </h1>
-    <p class="mt-5 max-w-2xl text-lg leading-8 text-muted">
-      Pembaruan penting website, dokumentasi, dan fondasi produk yang dapat
-      diikuti secara terbuka.
-    </p>
-    <div class="mt-14 space-y-6">
-      {
-        entries.map((entry) => (
-          <article
-            id={`v-${entry.data.version}`}
-            class="grid scroll-mt-28 gap-5 rounded-2xl border border-border bg-surface p-7 md:grid-cols-[12rem_1fr]"
-          >
-            <div>
-              <p class="font-mono text-sm font-semibold text-primary">
-                v{entry.data.version}
-              </p>
-              <time
-                class="mt-2 block text-sm text-muted"
-                datetime={entry.data.publishedAt.toISOString()}
-              >
-                {date.format(entry.data.publishedAt)}
-              </time>
-            </div>
-            <div>
-              <h2 class="text-xl font-semibold text-ink">{entry.data.title}</h2>
-              <p class="mt-3 leading-7 text-muted">{entry.data.description}</p>
-            </div>
-          </article>
-        ))
-      }
-    </div>
-  </Container>
+  <PageHeader
+    eyebrow="Changelog"
+    title="Perkembangan yang bisa diperiksa."
+    lead="Pembaruan penting website, dokumentasi, dan fondasi produk. Yang dicatat di sini adalah perubahan yang benar-benar sudah terlihat publik, bukan rencana."
+    {breadcrumbs}
+  >
+    <a
+      href="/rss.xml"
+      class="mt-8 inline-flex min-h-11 items-center gap-2 rounded-xl border border-on-deep-subtle px-4 py-2.5 font-mono text-xs text-on-deep hover:border-on-deep-label hover:text-on-deep-label"
+    >
+      <span aria-hidden="true">&#9673;</span>
+      Langganan RSS
+    </a>
+  </PageHeader>
+
+  <section class="py-20 sm:py-24">
+    <Container>
+      <!-- Urutan waktu membawa informasi, jadi daftar ini memang berurutan. -->
+      <ol
+        class="m-0 list-none space-y-px overflow-hidden rounded-2xl border border-border bg-border p-0"
+      >
+        {
+          entries.map((entry) => (
+            <li
+              id={`v-${entry.data.version}`}
+              class="scroll-mt-28 bg-surface p-6 sm:p-8"
+            >
+              <div class="grid gap-5 md:grid-cols-[10rem_1fr] md:gap-8">
+                <div>
+                  <p class="font-mono text-sm font-semibold text-primary-dark">
+                    v{entry.data.version}
+                  </p>
+                  <time
+                    class="mt-1.5 block font-mono text-xs text-muted-2"
+                    datetime={entry.data.publishedAt.toISOString()}
+                  >
+                    {date.format(entry.data.publishedAt)}
+                  </time>
+                </div>
+                <div>
+                  <h2 class="font-display text-xl font-semibold tracking-tight text-ink">
+                    {entry.data.title}
+                  </h2>
+                  <p class="mt-3 max-w-2xl leading-7 text-muted">
+                    {entry.data.description}
+                  </p>
+                </div>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </Container>
+  </section>
 </LandingLayout>

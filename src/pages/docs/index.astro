@@ -1,12 +1,12 @@
 ---
 import { getEntry, render } from "astro:content";
-import Card from "../../components/ui/Card.astro";
 import DocsLayout from "../../layouts/DocsLayout.astro";
 
 const introduction = await getEntry("docs", "index");
 if (!introduction) throw new Error("Dokumen pengantar tidak ditemukan.");
 const { Content } = await render(introduction);
-const links = [
+
+const tracks = [
   {
     href: "/docs/quickstart",
     title: "Quickstart",
@@ -20,17 +20,22 @@ const links = [
   {
     href: "/docs/deployment-flow",
     title: "Alur deployment",
-    text: "Siklus command dan routing aplikasi.",
+    text: "Siklus command, claim, dan routing aplikasi.",
   },
   {
     href: "/docs/agent-runtime",
-    title: "Cara kerja Sakala Agent",
+    title: "Cara kerja Agent",
     text: "Polling, claim, operating mode, dan runtime node.",
   },
   {
     href: "/docs/keluar-dari-localhost",
     title: "Keluar dari localhost",
-    text: "Memahami pilihan untuk membagikan project sebagai URL publik.",
+    text: "Pilihan membagikan project sebagai URL publik.",
+  },
+  {
+    href: "/docs/faq",
+    title: "Pertanyaan umum",
+    text: "Status project, sasaran pengguna, dan kontribusi.",
   },
 ];
 ---
@@ -43,16 +48,26 @@ const links = [
   <article class="prose-sakala">
     <Content />
   </article>
-  <div class="mt-10 grid gap-3 sm:grid-cols-2">
+
+  <h2 class="mt-14 font-display text-xl font-semibold tracking-tight text-ink">
+    Pilih titik masuk
+  </h2>
+  <ul class="m-0 mt-5 grid list-none gap-3 p-0 sm:grid-cols-2">
     {
-      links.map((link) => (
-        <a href={link.href} data-astro-prefetch="hover">
-          <Card class="h-full hover:border-primary">
-            <h2 class="font-semibold text-ink">{link.title}</h2>
-            <p class="mt-2 text-sm leading-6 text-muted">{link.text}</p>
-          </Card>
-        </a>
+      tracks.map((track) => (
+        <li>
+          <a
+            href={track.href}
+            data-astro-prefetch="hover"
+            class="flex h-full flex-col rounded-xl border border-border bg-surface p-5 hover:border-primary"
+          >
+            <span class="font-display font-semibold text-ink">
+              {track.title}
+            </span>
+            <span class="mt-2 text-sm leading-6 text-muted">{track.text}</span>
+          </a>
+        </li>
       ))
     }
-  </div>
+  </ul>
 </DocsLayout>

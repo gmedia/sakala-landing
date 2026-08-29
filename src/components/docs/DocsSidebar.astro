@@ -8,27 +8,45 @@ interface Props {
 const { currentPath } = Astro.props;
 ---
 
-<aside class="hidden w-56 shrink-0 lg:block">
-  <p class="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-muted">
-    Dokumentasi
-  </p>
-  <nav class="space-y-1" aria-label="Dokumentasi">
-    {
-      docsNavigation.map((item) => (
-        <a
-          href={item.href}
-          data-astro-prefetch="hover"
-          aria-current={currentPath === item.href ? "page" : undefined}
-          class:list={[
-            "flex min-h-11 items-center rounded-lg px-3 py-2 text-sm",
-            currentPath === item.href
-              ? "bg-primary-soft-2 font-semibold text-primary-dark"
-              : "text-muted hover:bg-background-soft hover:text-primary",
-          ]}
-        >
-          {item.label}
-        </a>
-      ))
-    }
-  </nav>
+<aside class="hidden w-60 shrink-0 lg:block">
+  <div class="sticky top-28">
+    <p class="font-mono text-xs uppercase tracking-[0.18em] text-muted-2">
+      Dokumentasi
+    </p>
+    <nav class="mt-4" aria-label="Dokumentasi">
+      <ol class="m-0 list-none space-y-0.5 p-0">
+        {
+          docsNavigation.map((item, index) => {
+            const isCurrent = currentPath === item.href;
+            return (
+              <li>
+                <a
+                  href={item.href}
+                  data-astro-prefetch="hover"
+                  aria-current={isCurrent ? "page" : undefined}
+                  class:list={[
+                    "flex min-h-11 items-center gap-3 rounded-lg border-l-2 px-3 py-2 text-sm",
+                    isCurrent
+                      ? "border-primary bg-primary-soft-2 font-semibold text-primary-dark"
+                      : "border-transparent text-muted hover:border-border-strong hover:bg-background-soft hover:text-ink",
+                  ]}
+                >
+                  <span
+                    aria-hidden="true"
+                    class:list={[
+                      "font-mono text-[0.65rem]",
+                      isCurrent ? "text-primary" : "text-muted-2",
+                    ]}
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  {item.label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </nav>
+  </div>
 </aside>

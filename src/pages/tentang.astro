@@ -1,42 +1,32 @@
 ---
 import { Image } from "astro:assets";
 import EarlyContributorsSection from "../components/about/EarlyContributorsSection.astro";
-import Breadcrumbs from "../components/ui/Breadcrumbs.astro";
-import Card from "../components/ui/Card.astro";
 import Container from "../components/ui/Container.astro";
-import { links } from "../data/links";
+import PageHeader from "../components/ui/PageHeader.astro";
+import SectionHeader from "../components/ui/SectionHeader.astro";
+import { ecosystemRepositories } from "../data/sections";
+import { domains } from "../data/links";
 import LandingLayout from "../layouts/LandingLayout.astro";
 
 const breadcrumbs = [
   { label: "Beranda", href: "/" },
   { label: "Tentang Sakala" },
 ];
-const ecosystem = [
-  {
-    name: "sakala-console",
-    role: "Antarmuka pengguna untuk mengelola project dan mengikuti deployment.",
-    href: links.repositories.console,
-  },
-  {
-    name: "sakala-api",
-    role: "Control plane untuk autentikasi, project, deployment, dan command agent.",
-    href: links.repositories.api,
-  },
-  {
-    name: "sakala-agent",
-    role: "Runtime executor yang menangani pekerjaan deployment pada node.",
-    href: links.repositories.agent,
-  },
-  {
-    name: "sakala-infra",
-    role: "Playground runtime lokal serta referensi networking dan routing.",
-    href: links.repositories.infra,
-  },
-  {
-    name: "sakala-landing",
-    role: "Website publik, dokumentasi, dan pintu masuk informasi Sakala.",
-    href: links.repositories.landing,
-  },
+
+const ecosystemRoles: Record<string, string> = {
+  console:
+    "Antarmuka pengguna untuk mengelola project dan mengikuti deployment.",
+  api: "Control plane untuk autentikasi, project, deployment, dan command agent.",
+  agent: "Runtime executor yang menjalankan pekerjaan deployment pada node.",
+  infra: "Playground runtime lokal serta referensi networking dan routing.",
+  landing: "Website publik, dokumentasi, dan pintu masuk informasi Sakala.",
+};
+
+const domainRows = [
+  { purpose: "Website dan dokumentasi", value: domains.site },
+  { purpose: "Console", value: domains.console },
+  { purpose: "API dan control plane", value: domains.api },
+  { purpose: "Aplikasi hasil deployment", value: domains.runtime },
 ];
 ---
 
@@ -46,118 +36,165 @@ const ecosystem = [
   pageType="AboutPage"
   {breadcrumbs}
 >
-  <Container className="py-16 sm:py-20">
-    <Breadcrumbs items={breadcrumbs} />
-    <div class="max-w-3xl">
-      <p class="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
-        Tentang Sakala
-      </p>
-      <h1
-        class="mt-4 text-4xl font-semibold tracking-tight text-ink sm:text-5xl"
-      >
-        Deployment yang lebih mudah dipelajari.
-      </h1>
-      <p class="mt-6 text-lg leading-8 text-muted">
-        Sakala adalah project deployment open-source yang membantu developer
-        membawa project dari repository Git menuju URL publik melalui alur yang
-        lebih sederhana dan mudah dipahami.
-      </p>
-      <p class="mt-4 text-lg leading-8 text-muted">
-        Fokus awalnya sederhana: membantu project keluar dari localhost, tanpa
-        harus langsung berhadapan dengan VPS, SSL, reverse proxy, Docker
-        networking, dan konfigurasi server manual.
-      </p>
-    </div>
+  <PageHeader
+    eyebrow="Tentang Sakala"
+    title="Deployment yang bisa dipelajari, bukan sekadar dipakai."
+    lead="Sakala membantu project berpindah dari repository Git menuju alamat publik melalui alur yang lebih sederhana, tanpa menyembunyikan apa yang sebenarnya terjadi."
+    {breadcrumbs}
+  />
 
-    <div class="mt-14 grid gap-5 lg:grid-cols-2">
-      <Card>
-        <p
-          class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary"
-        >
-          Tujuan
-        </p>
-        <h2 class="mt-3 text-2xl font-semibold text-ink">
-          Ramah untuk belajar dan berbagi
-        </h2>
-        <p class="mt-4 leading-7 text-muted">
-          Fokus awal Sakala adalah tugas, portfolio, demo, kelas, komunitas, dan
-          tim kecil. Sakala tidak diarahkan menjadi pengganti cloud enterprise.
-        </p>
-      </Card>
-      <Card>
-        <p
-          class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary"
-        >
-          Status
-        </p>
-        <h2 class="mt-3 text-2xl font-semibold text-ink">
-          Masih dalam pengembangan aktif
-        </h2>
-        <p class="mt-4 leading-7 text-muted">
-          Foundation produk dan runtime masih disusun. Dokumentasi dan changelog
-          menjelaskan perkembangan nyata tanpa mengklaim layanan siap
-          production.
-        </p>
-      </Card>
-    </div>
-
-    <section class="mt-16" aria-labelledby="open-source-title">
-      <div class="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
-        <div>
-          <p
-            class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary"
-          >
-            Open-source first
-          </p>
-          <h2
-            id="open-source-title"
-            class="mt-3 text-3xl font-semibold text-ink"
-          >
-            Terbuka agar bisa dipelajari, diaudit, dan dikembangkan bersama.
-          </h2>
-        </div>
+  <section class="border-b border-border py-20 sm:py-24">
+    <Container>
+      <div class="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+        <SectionHeader
+          eyebrow="Fokus"
+          title="Untuk yang terhalang infrastruktur, bukan untuk beban kerja enterprise."
+          class="lg:sticky lg:top-28 lg:self-start"
+        />
         <div class="space-y-5 text-lg leading-8 text-muted">
           <p>
-            Kode, dokumentasi, issue, roadmap, dan proses pengembangan Sakala
-            dibuka supaya keputusan teknisnya dapat dibaca dan dikritisi secara
-            publik.
+            Fokus awalnya sederhana: membantu project keluar dari localhost
+            tanpa harus langsung berhadapan dengan VPS, TLS, reverse proxy,
+            Docker networking, dan konfigurasi server manual.
           </p>
           <p>
-            Sakala tidak dimulai sebagai cloud besar atau produk enterprise.
-            Sakala dimulai sebagai ruang belajar dan eksperimen deployment yang
-            praktis, lalu bertumbuh berdasarkan kebutuhan nyata pengguna dan
-            contributor.
+            Sasarannya adalah tugas kuliah, portfolio, demo, kelas, komunitas,
+            dan tim kecil. Sakala tidak diarahkan menjadi pengganti cloud
+            enterprise, dan batasan itu dipegang secara sadar.
+          </p>
+          <p
+            class="rounded-xl border border-border bg-surface px-5 py-4 text-base leading-7"
+          >
+            Foundation produk dan runtime masih disusun. Dokumentasi dan
+            changelog menjelaskan perkembangan nyata tanpa mengklaim layanan
+            siap production.
           </p>
         </div>
       </div>
-    </section>
+    </Container>
+  </section>
 
-    <section class="mt-16" aria-labelledby="sponsor-title">
-      <div class="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+  <section class="border-b border-border bg-background-soft py-20 sm:py-24">
+    <Container>
+      <SectionHeader
+        eyebrow="Open source"
+        title="Terbuka agar bisa dipelajari, diaudit, dan dikembangkan bersama."
+        lead="Kode, dokumentasi, issue, roadmap, dan proses pengembangan dibuka supaya keputusan teknisnya dapat dibaca dan dikritisi secara publik."
+      />
+      <p class="mt-6 max-w-2xl leading-8 text-muted">
+        Sakala tidak dimulai sebagai cloud besar atau produk enterprise. Ia
+        dimulai sebagai ruang belajar dan eksperimen deployment yang praktis,
+        lalu bertumbuh berdasarkan kebutuhan nyata pengguna dan contributor.
+      </p>
+
+      <h2
+        class="mt-14 font-display text-2xl font-semibold tracking-tight text-ink"
+      >
+        Ekosistem repository
+      </h2>
+      <p class="mt-2 max-w-2xl leading-7 text-muted">
+        Tanggung jawab dipisahkan supaya batas keamanan dan ownership tetap
+        jelas.
+      </p>
+      <ul class="m-0 mt-8 grid list-none gap-3 p-0 sm:grid-cols-2">
+        {
+          ecosystemRepositories.map((repo) => (
+            <li>
+              <a
+                href={repo.href}
+                target="_blank"
+                rel="noreferrer"
+                class="flex h-full flex-col rounded-2xl border border-border bg-surface p-5 hover:border-primary"
+              >
+                <span class="font-mono text-sm font-semibold text-primary-dark">
+                  sakala-{repo.id}
+                  <span aria-hidden="true" class="ml-1.5 text-muted-2">
+                    &#8599;
+                  </span>
+                </span>
+                <span class="mt-2.5 text-sm leading-7 text-muted">
+                  {ecosystemRoles[repo.id]}
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <h2
+        class="mt-14 font-display text-2xl font-semibold tracking-tight text-ink"
+      >
+        Domain produk
+      </h2>
+      <div class="diagram mt-6 rounded-2xl border border-border bg-surface">
+        <table class="w-full min-w-md border-collapse text-sm">
+          <thead>
+            <tr class="border-b border-border">
+              <th
+                class="px-5 py-3 text-left font-mono text-xs uppercase tracking-[0.14em] text-muted-2"
+                >Tujuan</th
+              >
+              <th
+                class="px-5 py-3 text-left font-mono text-xs uppercase tracking-[0.14em] text-muted-2"
+                >Domain</th
+              >
+            </tr>
+          </thead>
+          <tbody>
+            {
+              domainRows.map((row) => (
+                <tr class="border-b border-border last:border-b-0">
+                  <td class="px-5 py-3 text-muted">{row.purpose}</td>
+                  <td class="px-5 py-3 font-mono text-primary-dark">
+                    {row.value}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </Container>
+  </section>
+
+  <section class="border-b border-border py-20 sm:py-24">
+    <Container>
+      <div
+        class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-start"
+      >
         <div>
-          <p
-            class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary"
+          <SectionHeader
+            eyebrow="Dukungan awal"
+            title="Didukung GMEDIA sebagai sponsor pendiri."
+            lead="GMEDIA membantu Sakala mencapai MVP dan pilot awal melalui dukungan infrastruktur, domain, ruang eksperimen, dan dukungan teknis."
+          />
+          <p class="mt-6 max-w-xl leading-7 text-muted">
+            Dukungan itu tidak mengubah prinsip dasar Sakala sebagai project
+            open-source. Roadmap, dokumentasi, issue, dan kontribusi tetap
+            dikembangkan secara terbuka.
+          </p>
+          <p class="mt-4 max-w-xl leading-7 text-muted">
+            Sponsor tidak otomatis mengontrol keputusan teknis, prioritas
+            roadmap, perubahan lisensi, atau hak contributor. Sakala tetap
+            menggunakan Apache License 2.0.
+          </p>
+          <a
+            href="/governance"
+            data-astro-prefetch="hover"
+            class="mt-7 inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
           >
-            Dukungan awal
-          </p>
-          <h2 id="sponsor-title" class="mt-3 text-3xl font-semibold text-ink">
-            Didukung oleh GMEDIA sebagai sponsor pendiri.
-          </h2>
-          <p class="mt-5 leading-7 text-muted">
-            GMEDIA membantu Sakala mencapai MVP dan pilot awal melalui dukungan
-            infrastruktur, domain, ruang eksperimen, dan dukungan teknis.
-          </p>
+            Baca governance project &rarr;
+          </a>
         </div>
-        <div
-          class="rounded-3xl border border-border-strong bg-surface p-6 shadow-[0_18px_60px_rgba(15,118,110,0.08)]"
-        >
-          <p
-            class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary"
+
+        <figure class="m-0 rounded-2xl border border-border bg-surface p-6">
+          <figcaption
+            class="font-mono text-xs uppercase tracking-[0.14em] text-muted-2"
           >
-            Founding Sponsor & Infrastructure Supporter
-          </p>
+            Founding Sponsor &amp; Infrastructure Supporter
+          </figcaption>
           <div
-            class="mt-5 rounded-2xl border border-border bg-background px-5 py-6 flex items-center justify-center"
+            class="mt-5 flex items-center justify-center rounded-xl border border-border bg-background px-5 py-8"
           >
             <Image
               src="/sponsors/gmedia.png"
@@ -165,97 +202,32 @@ const ecosystem = [
               height="259"
               loading="lazy"
               alt="GMEDIA - PT Media Sarana Data"
-              class="h-auto w-full max-w-sm"
+              class="h-auto w-full max-w-xs"
             />
           </div>
-          <p class="mt-5 leading-7 text-muted">
-            Dukungan GMEDIA tidak mengubah prinsip dasar Sakala sebagai project
-            open-source. Roadmap, dokumentasi, issue, dan kontribusi tetap
-            dikembangkan secara terbuka.
-          </p>
-        </div>
+        </figure>
       </div>
-    </section>
 
-    <section class="mt-16" aria-labelledby="governance-title">
-      <div class="max-w-3xl">
-        <p
-          class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary"
-        >
-          Governance
-        </p>
-        <h2 id="governance-title" class="mt-3 text-3xl font-semibold text-ink">
-          Sponsor mendukung, maintainer menjaga arah project.
-        </h2>
-        <p class="mt-5 text-lg leading-8 text-muted">
-          Pada tahap awal, Sakala masih dikembangkan di dalam ekosistem GitHub
-          GMEDIA untuk mempercepat setup, validasi, dan kolaborasi internal.
-          Saat MVP lebih stabil dan kontribusi publik mulai tumbuh, Sakala
-          diarahkan untuk bergerak menuju model governance komunitas yang lebih
-          terbuka.
-        </p>
-        <p class="mt-4 text-lg leading-8 text-muted">
-          Sponsor tidak otomatis mengontrol keputusan teknis, prioritas roadmap,
-          perubahan lisensi, atau hak contributor. Sakala tetap menggunakan
-          Apache License 2.0.
-        </p>
-        <a
-          href="/governance"
-          class="mt-6 inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
-        >
-          Baca governance project &rarr;
-        </a>
-      </div>
-    </section>
+      <EarlyContributorsSection />
+    </Container>
+  </section>
 
-    <EarlyContributorsSection />
-
-    <section class="mt-16" aria-labelledby="ecosystem-title">
-      <p
-        class="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary"
-      >
-        Ekosistem repository
-      </p>
-      <h2 id="ecosystem-title" class="mt-3 text-3xl font-semibold text-ink">
-        Tanggung jawab yang dipisahkan dengan jelas
-      </h2>
-      <div class="mt-8 grid gap-4 sm:grid-cols-2">
-        {
-          ecosystem.map((repository) => (
-            <a
-              href={repository.href}
-              target="_blank"
-              rel="noreferrer"
-              class="group rounded-2xl border border-border bg-surface p-6 hover:border-primary"
-            >
-              <h3 class="font-mono font-semibold text-primary-dark group-hover:underline">
-                {repository.name}
-              </h3>
-              <p class="mt-3 leading-7 text-muted">{repository.role}</p>
-            </a>
-          ))
-        }
-      </div>
-    </section>
-
-    <section
-      class="mt-16 rounded-2xl border border-border-strong bg-primary-soft-2 p-7 sm:p-9"
-      aria-labelledby="next-step-title"
-    >
-      <h2 id="next-step-title" class="text-2xl font-semibold text-ink">
-        Pelajari arah teknis Sakala
-      </h2>
-      <p class="mt-3 max-w-2xl leading-7 text-muted">
-        Dokumentasi menjelaskan peran console, API, agent, infra, serta alur
-        deployment yang sedang dibangun.
-      </p>
+  <section class="surface-deep relative isolate overflow-hidden">
+    <div class="brand-lattice absolute inset-0 -z-10" aria-hidden="true"></div>
+    <Container className="relative py-16 sm:py-20">
+      <SectionHeader
+        eyebrow="Langkah berikutnya"
+        title="Pelajari arah teknis Sakala."
+        lead="Dokumentasi menjelaskan peran console, API, agent, infra, serta alur deployment yang sedang dibangun."
+        tone="deep"
+      />
       <a
         href="/docs"
         data-astro-prefetch="hover"
-        class="mt-6 inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
+        class="mt-8 inline-flex min-h-11 items-center rounded-xl border border-on-deep-label bg-on-deep-label px-5 py-3 text-sm font-semibold text-deep hover:border-white hover:bg-white"
       >
-        Baca dokumentasi Sakala &rarr;
+        Baca dokumentasi Sakala
       </a>
-    </section>
-  </Container>
+    </Container>
+  </section>
 </LandingLayout>
