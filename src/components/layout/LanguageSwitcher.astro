@@ -1,0 +1,71 @@
+---
+import { languages, localizePath, locales, type Lang } from "../../i18n";
+
+interface Props {
+  lang: Lang;
+  pathname: string;
+  label: string;
+  tone?: "light" | "deep";
+}
+
+const { lang, pathname, label, tone = "light" } = Astro.props;
+
+const style =
+  tone === "deep"
+    ? {
+        wrap: "border-deep-border",
+        active: "bg-on-deep-label text-deep",
+        idle: "text-on-deep-muted hover:text-on-deep",
+      }
+    : {
+        wrap: "border-border",
+        active: "bg-primary text-white",
+        idle: "text-muted hover:text-primary",
+      };
+---
+
+<nav aria-label={label}>
+  <ul
+    class:list={[
+      "m-0 flex list-none items-center gap-0.5 rounded-lg border p-0.5",
+      style.wrap,
+    ]}
+  >
+    {
+      locales.map((locale) => {
+        const isActive = locale === lang;
+        return (
+          <li>
+            <a
+              href={localizePath(pathname, locale)}
+              hreflang={languages[locale].htmlLang}
+              lang={languages[locale].htmlLang}
+              aria-current={isActive ? "true" : undefined}
+              class:list={[
+                "flex min-h-8 items-center rounded-md px-2.5 font-mono text-xs font-semibold",
+                isActive ? style.active : style.idle,
+              ]}
+            >
+              <span class="sr-only">{languages[locale].label}</span>
+              <span aria-hidden="true">{languages[locale].short}</span>
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

@@ -1,55 +1,114 @@
 ---
-import SakalaLogo from "../brand/SakalaLogo.astro";
+import BrandLockup from "../brand/BrandLockup.astro";
 import Container from "../ui/Container.astro";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
 import { links } from "../../data/links";
+import { isBilingual } from "../../data/navigation";
+import { stripLocale, type Lang } from "../../i18n";
+import type { Dictionary } from "../../i18n/id";
+
+interface Props {
+  lang: Lang;
+  t: Dictionary;
+}
+
+const { lang, t } = Astro.props;
+const base = stripLocale(Astro.url.pathname);
+const switchPath = isBilingual(base) ? base : "/";
+
+const navigation = [
+  { label: t.nav.docs, href: "/docs" },
+  { label: t.nav.about, href: "/tentang" },
+  { label: t.nav.changelog, href: "/changelog" },
+];
+
+const openSource = [
+  { label: t.nav.github, href: links.githubOrganization, external: true },
+  { label: t.footer.governance, href: "/governance" },
+  { label: t.footer.concepts, href: "/docs/concepts" },
+  { label: t.footer.rss, href: "/rss.xml" },
+];
 ---
 
-<footer class="border-t border-border bg-surface">
-  <Container className="grid gap-10 py-12 sm:grid-cols-[1fr_auto_auto]">
+<footer class="surface-deepest relative isolate overflow-hidden">
+  <div class="brand-lattice absolute inset-0 -z-10" aria-hidden="true"></div>
+
+  <Container
+    className="relative grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_auto_auto]"
+  >
     <div>
-      <SakalaLogo />
-      <p class="mt-4 max-w-sm text-sm leading-7 text-muted">
-        Sakala membantu project kecil keluar dari laptop dan menjadi link yang
-        bisa dibuka, dipelajari, dan dibagikan.
+      <BrandLockup class="h-7 w-auto text-on-deep" title="Sakala" />
+      <p
+        class="mt-4 font-mono text-xs uppercase tracking-[0.2em] text-on-deep-label"
+      >
+        {t.footer.tagline}
       </p>
+      <p class="mt-4 max-w-sm text-sm leading-7 text-on-deep-muted">
+        {t.footer.blurb}
+      </p>
+      <div class="mt-6">
+        <LanguageSwitcher
+          lang={lang}
+          pathname={switchPath}
+          label={t.nav.languageLabel}
+          tone="deep"
+        />
+      </div>
     </div>
-    <div class="space-y-3 text-sm">
-      <p class="font-semibold text-ink">Navigasi</p>
-      <a class="block text-muted hover:text-primary" href="/docs">Dokumentasi</a
-      >
-      <a class="block text-muted hover:text-primary" href="/tentang">Tentang</a>
-      <a class="block text-muted hover:text-primary" href="/changelog"
-        >Changelog</a
-      >
-      <a
-        class="block text-muted hover:text-primary"
-        href={links.githubRepository}
-        target="_blank"
-        rel="noreferrer">Repository</a
-      >
-    </div>
-    <div class="space-y-3 text-sm">
-      <p class="font-semibold text-ink">Open source</p>
-      <a
-        class="block text-muted hover:text-primary"
-        href={links.githubOrganization}
-        target="_blank"
-        rel="noreferrer">GitHub</a
-      >
-      <a class="block text-muted hover:text-primary" href="/governance"
-        >Governance</a
-      >
-      <a class="block text-muted hover:text-primary" href="/docs/concepts"
-        >Konsep</a
-      >
-      <a class="block text-muted hover:text-primary" href="/docs/faq">FAQ</a>
-      <a class="block text-muted hover:text-primary" href="/rss.xml"
-        >RSS Changelog</a
-      >
-    </div>
+
+    <nav aria-label={t.footer.navigationLabel}>
+      <p class="font-display text-sm font-semibold text-on-deep">
+        {t.footer.navigationLabel}
+      </p>
+      <ul class="m-0 mt-4 list-none space-y-2.5 p-0">
+        {
+          navigation.map((item) => (
+            <li>
+              <a
+                class="text-sm text-on-deep-muted hover:text-on-deep"
+                href={item.href}
+                data-astro-prefetch="hover"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <nav aria-label={t.footer.openSourceLabel}>
+      <p class="font-display text-sm font-semibold text-on-deep">
+        {t.footer.openSourceLabel}
+      </p>
+      <ul class="m-0 mt-4 list-none space-y-2.5 p-0">
+        {
+          openSource.map((item) => (
+            <li>
+              <a
+                class="text-sm text-on-deep-muted hover:text-on-deep"
+                href={item.href}
+                target={item.external ? "_blank" : undefined}
+                rel={item.external ? "noreferrer" : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
   </Container>
-  <div class="border-t border-border py-5 text-center text-sm text-muted">
-    &copy; {new Date().getFullYear()} Sakala Contributors. Licensed under Apache-2.0.
-    Founding sponsor: GMEDIA.
+
+  <div class="relative border-t border-deep-border">
+    <Container
+      className="flex flex-wrap items-center justify-between gap-3 py-5"
+    >
+      <p class="font-mono text-xs text-on-deep-muted">
+        &copy; {new Date().getFullYear()}
+        {t.footer.rights} · {t.footer.license}
+      </p>
+      <p class="font-mono text-xs text-on-deep-subtle">{t.footer.sponsor}</p>
+    </Container>
   </div>
 </footer>

@@ -1,0 +1,52 @@
+---
+interface Props {
+  steps: string[];
+  tone?: "light" | "deep";
+}
+
+const { steps, tone = "light" } = Astro.props;
+
+const style =
+  tone === "deep"
+    ? {
+        chip: "border-deep-border bg-deep-surface text-on-deep",
+        arrow: "text-on-deep-subtle",
+        rail: "border-deep-border",
+        note: "text-on-deep-muted",
+      }
+    : {
+        chip: "border-border bg-surface text-ink",
+        arrow: "text-muted-2",
+        rail: "border-border-strong",
+        note: "text-muted",
+      };
+---
+
+<div class="loop">
+  <ol class="m-0 flex list-none flex-wrap items-center gap-x-2 gap-y-3 p-0">
+    {
+      steps.map((step, index) => (
+        <li class="flex items-center gap-2">
+          <span
+            class={`rounded-lg border px-3 py-2 font-mono text-xs ${style.chip}`}
+          >
+            {step}
+          </span>
+          {index < steps.length - 1 && (
+            <span aria-hidden="true" class={`text-sm ${style.arrow}`}>
+              &rarr;
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+  <div
+    class={`mt-4 flex items-center gap-3 border-t border-dashed pt-3 ${style.rail}`}
+  >
+    <span aria-hidden="true" class={`font-mono text-sm ${style.arrow}`}
+      >&#8630;</span
+    >
+    <slot />
+  </div>
+</div>

@@ -1,0 +1,49 @@
+---
+import Container from "../ui/Container.astro";
+import { principleIds } from "../../data/sections";
+import type { Dictionary } from "../../i18n/id";
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+type PrincipleId = keyof Dictionary["principles"]["items"];
+---
+
+<section class="border-b border-border py-16 sm:py-20">
+  <Container>
+    <div class="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3">
+      <h2
+        class="text-balance font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl"
+      >
+        {t.principles.title}
+      </h2>
+      <p class="font-mono text-xs uppercase tracking-[0.18em] text-primary">
+        {t.principles.eyebrow}
+      </p>
+    </div>
+
+    <!-- Nomor dipakai karena tujuh prinsip memang bernomor pada PHILOSOPHY.md. -->
+    <ol
+      class="m-0 mt-10 grid list-none gap-x-8 gap-y-7 p-0 sm:grid-cols-2 lg:grid-cols-4"
+    >
+      {
+        principleIds.map((pid, index) => {
+          const item = t.principles.items[pid as PrincipleId];
+          return (
+            <li class="border-t border-border pt-4">
+              <span class="font-mono text-xs text-muted-2">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <h3 class="mt-1.5 font-display text-lg font-semibold text-ink">
+                {item.name}
+              </h3>
+              <p class="mt-1.5 text-sm leading-6 text-muted">{item.text}</p>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </Container>
+</section>

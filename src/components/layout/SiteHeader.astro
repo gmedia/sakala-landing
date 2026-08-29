@@ -2,49 +2,81 @@
 import SakalaLogo from "../brand/SakalaLogo.astro";
 import Button from "../ui/Button.astro";
 import Container from "../ui/Container.astro";
-import DocsMegaMenu from "./DocsMegaMenu.astro";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
 import MobileNav from "./MobileNav.astro";
 import { links } from "../../data/links";
-import { mainNavigation } from "../../data/navigation";
+import { getMainNavigation, isBilingual } from "../../data/navigation";
+import { stripLocale, type Lang } from "../../i18n";
+import type { Dictionary } from "../../i18n/id";
+
+interface Props {
+  lang: Lang;
+  t: Dictionary;
+}
+
+const { lang, t } = Astro.props;
 
 const currentPath =
   Astro.url.pathname.length > 1
     ? Astro.url.pathname.replace(/\/$/, "")
     : Astro.url.pathname;
+const basePath = stripLocale(currentPath);
+const switchPath = isBilingual(basePath) ? basePath : "/";
+const navigation = getMainNavigation(lang, t);
 ---
 
-<header
-  class="sticky top-0 z-30 border-b border-border/70 bg-background/85 backdrop-blur"
->
-  <Container className="flex h-18 items-center justify-between">
-    <SakalaLogo />
-    <nav class="hidden items-center gap-7 md:flex" aria-label="Navigasi utama">
-      <DocsMegaMenu currentPath={currentPath} />
+<!--
+  Header memakai permukaan gelap solid, bukan terang tembus pandang. Di atas
+  hero gelap, header translusen membuat teks membayang dan kontras jatuh.
+  Header dan footer gelap juga membingkai konten terang di antaranya.
+-->
+<header class="surface-deep sticky top-0 z-30 border-b border-deep-border">
+  <Container className="flex h-18 items-center justify-between gap-4">
+    <SakalaLogo
+      lang={lang}
+      label="Sakala"
+      class="h-7 w-auto text-on-deep sm:h-8"
+    />
+
+    <nav class="hidden items-center gap-7 md:flex" aria-label={t.nav.label}>
       {
-        mainNavigation
-          .filter((item) => item.label !== "Dokumentasi")
-          .map((item) => (
-            <a
-              href={item.href}
-              target={item.external ? "_blank" : undefined}
-              rel={item.external ? "noreferrer" : undefined}
-              data-astro-prefetch={item.external ? undefined : "hover"}
-              aria-current={currentPath === item.href ? "page" : undefined}
-              class:list={[
-                "inline-flex min-h-11 items-center border-b-2 text-sm font-medium hover:text-primary",
-                currentPath === item.href
-                  ? "border-primary text-primary-dark"
-                  : "border-transparent text-muted",
-              ]}
-            >
-              {item.label}
-            </a>
-          ))
+        navigation.map((item) => (
+          <a
+            href={item.href}
+            target={item.external ? "_blank" : undefined}
+            rel={item.external ? "noreferrer" : undefined}
+            data-astro-prefetch={item.external ? undefined : "hover"}
+            aria-current={currentPath === item.href ? "page" : undefined}
+            class:list={[
+              "inline-flex min-h-11 items-center border-b-2 text-sm font-medium hover:text-on-deep",
+              currentPath === item.href
+                ? "border-on-deep-label text-on-deep"
+                : "border-transparent text-on-deep-muted",
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
       }
     </nav>
+
     <div class="hidden items-center gap-3 md:flex">
-      <Button href={links.console} variant="secondary">Masuk</Button>
+      <LanguageSwitcher
+        lang={lang}
+        pathname={switchPath}
+        label={t.nav.languageLabel}
+        tone="deep"
+      />
+      <Button href={links.console} tone="deep" variant="secondary">
+        {t.nav.console}
+      </Button>
     </div>
-    <MobileNav />
+
+    <MobileNav
+      lang={lang}
+      t={t}
+      basePath={switchPath}
+      currentPath={currentPath}
+    />
   </Container>
 </header>

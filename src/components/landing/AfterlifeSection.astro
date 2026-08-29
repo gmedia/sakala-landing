@@ -1,0 +1,100 @@
+---
+import Container from "../ui/Container.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
+import StatusPill from "../ui/StatusPill.astro";
+import DiagramFigure from "../diagram/DiagramFigure.astro";
+import LoopDiagram from "../diagram/LoopDiagram.astro";
+import { afterlifePillars } from "../../data/sections";
+import type { Dictionary } from "../../i18n/id";
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+type PillarId = keyof Dictionary["afterlife"]["pillars"];
+
+const loopSteps = [
+  "Project",
+  "Deploy",
+  "Showcase",
+  "Template",
+  t.audience.items.beginner.name,
+];
+---
+
+<section
+  id="arah"
+  class="border-b border-border bg-background-soft py-20 sm:py-24"
+>
+  <Container>
+    <SectionHeader
+      eyebrow={t.afterlife.eyebrow}
+      title={t.afterlife.title}
+      lead={t.afterlife.lead}
+    />
+
+    <!-- Setiap pilar wajib membawa label status: PRD.md menegaskan desain siap
+         bukan berarti fitur berjalan. -->
+    <ul class="m-0 mt-12 grid list-none gap-4 p-0 lg:grid-cols-3">
+      {
+        afterlifePillars.map((pillar) => {
+          const copy = t.afterlife.pillars[pillar.id as PillarId];
+          const stateLabel =
+            pillar.tone === "progress"
+              ? t.roadmap.items.a.state
+              : t.status.items.service.state;
+          return (
+            <li class="flex flex-col rounded-2xl border border-border bg-surface p-6">
+              <div class="flex items-start justify-between gap-4">
+                <h3 class="font-display text-xl font-semibold tracking-tight text-ink">
+                  {copy.name}
+                </h3>
+                <StatusPill tone={pillar.tone} label={stateLabel} />
+              </div>
+              <p class="mt-3 text-sm italic leading-6 text-muted-2">
+                {copy.question}
+              </p>
+              <ul class="m-0 mt-5 list-none space-y-2 border-t border-dashed border-border p-0 pt-4">
+                {copy.items.map((entry) => (
+                  <li class="font-mono text-xs text-muted">{entry}</li>
+                ))}
+              </ul>
+            </li>
+          );
+        })
+      }
+    </ul>
+
+    <div
+      class="mt-14 grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-start"
+    >
+      <DiagramFigure
+        caption={t.afterlife.loop.caption}
+        alt={t.afterlife.loop.alt}
+      >
+        <LoopDiagram steps={loopSteps}>
+          <p class="text-sm leading-6 text-muted">{t.afterlife.loop.text}</p>
+        </LoopDiagram>
+      </DiagramFigure>
+
+      <div class="rounded-2xl border border-border bg-surface p-6">
+        <h3 class="font-display text-lg font-semibold text-ink">
+          {t.afterlife.boundary.title}
+        </h3>
+        <ul class="m-0 mt-4 list-none space-y-2 p-0">
+          {
+            t.afterlife.boundary.items.map((item) => (
+              <li class="flex items-baseline gap-2.5 text-sm leading-6 text-muted">
+                <span aria-hidden="true" class="text-muted-2">
+                  &times;
+                </span>
+                {item}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </Container>
+</section>

@@ -2,27 +2,49 @@
 interface Props {
   eyebrow?: string;
   title: string;
-  description?: string;
-  centered?: boolean;
+  lead?: string;
+  tone?: "light" | "deep";
+  class?: string;
 }
 
-const { eyebrow, title, description, centered = false } = Astro.props;
+const {
+  eyebrow,
+  title,
+  lead,
+  tone = "light",
+  class: className = "",
+} = Astro.props;
+
+const style =
+  tone === "deep"
+    ? {
+        eyebrow: "text-on-deep-label",
+        title: "text-on-deep",
+        lead: "text-on-deep-muted",
+      }
+    : { eyebrow: "text-primary", title: "text-ink", lead: "text-muted" };
 ---
 
-<div class:list={["max-w-2xl", centered && "mx-auto text-center"]}>
+<div class:list={["max-w-2xl", className]}>
   {
     eyebrow && (
-      <p class="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+      <p
+        class:list={[
+          "mb-3 font-mono text-xs uppercase tracking-[0.18em]",
+          style.eyebrow,
+        ]}
+      >
         {eyebrow}
       </p>
     )
   }
-  <h2 class="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+  <h2
+    class:list={[
+      "text-balance font-display text-3xl font-semibold tracking-tight sm:text-4xl",
+      style.title,
+    ]}
+  >
     {title}
   </h2>
-  {
-    description && (
-      <p class="mt-4 text-lg leading-8 text-muted">{description}</p>
-    )
-  }
+  {lead && <p class:list={["mt-4 text-lg leading-8", style.lead]}>{lead}</p>}
 </div>

@@ -1,70 +1,44 @@
 ---
 import Container from "../ui/Container.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
+import { problemIds } from "../../data/sections";
+import type { Dictionary } from "../../i18n/id";
 
-const problems = [
-  {
-    label: "masalah localhost",
-    title: "Project cuma jalan di localhost",
-    text: "Sudah bagus di laptop sendiri, tetapi belum punya link untuk dibagikan.",
-    class: "md:col-span-2 md:translate-y-7",
-  },
-  {
-    label: "tugas.zip",
-    title: "Tugas dikumpulkan sebagai screenshot atau ZIP",
-    text: "Dosen melihat file, bukan aplikasi yang benar-benar berjalan.",
-    class: "md:col-span-1",
-  },
-  {
-    label: "review manual",
-    title: "Dosen harus clone dan setup sendiri",
-    text: "Setiap project membawa instruksi install dan kemungkinan gagal yang berbeda.",
-    class: "md:col-span-1 md:mt-7",
-  },
-  {
-    label: "terlalu cepat",
-    title: "VPS datang terlalu cepat",
-    text: "Belajar deploy seharusnya tidak langsung dimulai dari SSL dan konfigurasi jaringan.",
-    class: "md:col-span-2",
-  },
-];
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+type ProblemId = keyof Dictionary["problem"]["items"];
 ---
 
-<section id="mengapa" class="relative bg-background-soft py-20 sm:py-24">
+<section id="masalah" class="border-b border-border py-20 sm:py-24">
   <Container>
-    <div class="grid gap-12 lg:grid-cols-[0.82fr_1.18fr]">
-      <div class="lg:sticky lg:top-30 lg:self-start">
-        <SectionHeader
-          eyebrow="Yang sering kejadian"
-          title="Project sudah jadi. Sekarang tinggal bikin orang lain bisa buka."
-          description="Biar tugas, portfolio, dan demo nggak berhenti di laptop sendiri."
-        />
-        <p
-          class="mt-8 inline-flex rounded-lg bg-accent-soft px-4 py-3 text-sm font-medium text-warm"
-        >
-          “jalan kok, di laptop aku”
-        </p>
-      </div>
-      <div class="grid gap-4 md:grid-cols-3">
+    <div class="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+      <SectionHeader
+        eyebrow={t.problem.eyebrow}
+        title={t.problem.title}
+        lead={t.problem.lead}
+        class="lg:sticky lg:top-28 lg:self-start"
+      />
+
+      <ul
+        class="m-0 grid list-none gap-px overflow-hidden rounded-2xl border border-border bg-border p-0 sm:grid-cols-2"
+      >
         {
-          problems.map((problem) => (
-            <article
-              class:list={[
-                "paper-card rounded-2xl border border-border bg-surface p-6",
-                problem.class,
-              ]}
-            >
-              <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-primary">
-                {problem.label}
-              </p>
-              <h3 class="mt-5 text-xl font-semibold leading-snug tracking-tight text-ink">
-                {problem.title}
-              </h3>
-              <p class="mt-3 text-sm leading-7 text-muted">{problem.text}</p>
-            </article>
-          ))
+          problemIds.map((pid) => {
+            const item = t.problem.items[pid as ProblemId];
+            return (
+              <li class="bg-surface p-6">
+                <h3 class="font-display text-lg font-semibold leading-snug tracking-tight text-ink">
+                  {item.title}
+                </h3>
+                <p class="mt-2.5 text-sm leading-7 text-muted">{item.text}</p>
+              </li>
+            );
+          })
         }
-      </div>
+      </ul>
     </div>
   </Container>
 </section>

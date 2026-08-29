@@ -7,6 +7,7 @@ import SiteFooter from "../components/layout/SiteFooter.astro";
 import SiteHeader from "../components/layout/SiteHeader.astro";
 import Breadcrumbs from "../components/ui/Breadcrumbs.astro";
 import Container from "../components/ui/Container.astro";
+import { defaultLang, useTranslations } from "../i18n";
 
 interface Props {
   title: string;
@@ -21,6 +22,10 @@ const {
   currentPath,
   breadcrumbLabel = title,
 } = Astro.props;
+
+// Dokumentasi baru tersedia dalam Bahasa Indonesia.
+const lang = defaultLang;
+const t = useTranslations(lang);
 const normalizedCurrentPath =
   currentPath.length > 1 ? currentPath.replace(/\/$/, "") : currentPath;
 const breadcrumbs = [
@@ -32,7 +37,7 @@ const breadcrumbs = [
 ---
 
 <BaseLayout title={title} description={description} {breadcrumbs}>
-  <SiteHeader />
+  <SiteHeader lang={lang} t={t} />
   <main id="main-content">
     <Container className="flex gap-12 py-8 lg:py-16">
       <DocsSidebar currentPath={normalizedCurrentPath} />
@@ -44,5 +49,5 @@ const breadcrumbs = [
       </div>
     </Container>
   </main>
-  <SiteFooter />
+  <SiteFooter lang={lang} t={t} />
 </BaseLayout>

@@ -1,19 +1,35 @@
 ---
 interface Props {
   href: string;
-  variant?: "primary" | "secondary" | "ghost";
+  variant?: "primary" | "secondary";
+  tone?: "light" | "deep";
   external?: boolean;
   prefetch?: "hover" | "tap" | "viewport" | "load";
+  class?: string;
 }
 
-const { href, variant = "primary", external = false, prefetch } = Astro.props;
+const {
+  href,
+  variant = "primary",
+  tone = "light",
+  external = false,
+  prefetch,
+  class: className = "",
+} = Astro.props;
+
 const styles = {
-  primary:
-    "border-primary bg-primary text-white hover:border-primary-dark hover:bg-primary-dark",
-  secondary:
-    "border-border-strong bg-surface text-ink hover:border-primary hover:text-primary",
-  ghost:
-    "border-transparent bg-transparent text-primary hover:bg-primary-soft-2",
+  light: {
+    primary:
+      "border-primary bg-primary text-white hover:border-primary-dark hover:bg-primary-dark",
+    secondary:
+      "border-border-strong bg-surface text-ink hover:border-primary hover:text-primary",
+  },
+  deep: {
+    primary:
+      "border-on-deep-label bg-on-deep-label text-deep hover:border-white hover:bg-white",
+    secondary:
+      "border-on-deep-subtle bg-transparent text-on-deep hover:border-on-deep-label hover:text-on-deep-label",
+  },
 };
 ---
 
@@ -24,7 +40,8 @@ const styles = {
   data-astro-prefetch={!external ? prefetch : undefined}
   class:list={[
     "inline-flex min-h-11 items-center justify-center rounded-xl border px-5 py-3 text-sm font-semibold",
-    styles[variant],
+    styles[tone][variant],
+    className,
   ]}
 >
   <slot />
