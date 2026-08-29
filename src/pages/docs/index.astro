@@ -1,78 +1,10 @@
 ---
-import { getEntry, render } from "astro:content";
-import DocsLayout from "../../layouts/DocsLayout.astro";
-
-const introduction = await getEntry("docs", "index");
-if (!introduction) throw new Error("Dokumen pengantar tidak ditemukan.");
-const { Content } = await render(introduction);
-
-const tracks = [
-  {
-    href: "/docs/quickstart",
-    title: "Quickstart",
-    text: "Alur awal dari Git menuju URL aplikasi.",
-  },
-  {
-    href: "/docs/concepts",
-    title: "Konsep dasar",
-    text: "Peran console, API, agent, dan infra.",
-  },
-  {
-    href: "/docs/deployment-flow",
-    title: "Alur deployment",
-    text: "Siklus command, claim, dan routing aplikasi.",
-  },
-  {
-    href: "/docs/agent-runtime",
-    title: "Cara kerja Agent",
-    text: "Polling, claim, operating mode, dan runtime node.",
-  },
-  {
-    href: "/docs/keluar-dari-localhost",
-    title: "Keluar dari localhost",
-    text: "Pilihan membagikan project sebagai URL publik.",
-  },
-  {
-    href: "/docs/glosarium",
-    title: "Glosarium",
-    text: "Istilah domain yang dipakai konsisten di seluruh Sakala.",
-  },
-  {
-    href: "/docs/faq",
-    title: "Pertanyaan umum",
-    text: "Status project, sasaran pengguna, dan kontribusi.",
-  },
-];
+import DocsHub from "../../components/pages/DocsHub.astro";
 ---
 
-<DocsLayout
-  title="Dokumentasi Sakala — Deploy Project dari Git"
-  description="Pelajari konsep Sakala, quickstart, dan alur deployment dari Git menuju URL publik untuk project kecil."
-  currentPath={Astro.url.pathname}
->
-  <article class="prose-sakala">
-    <Content />
-  </article>
-
-  <h2 class="mt-14 font-display text-xl font-semibold tracking-tight text-ink">
-    Pilih titik masuk
-  </h2>
-  <ul class="m-0 mt-5 grid list-none gap-3 p-0 sm:grid-cols-2">
-    {
-      tracks.map((track) => (
-        <li>
-          <a
-            href={track.href}
-            data-astro-prefetch="hover"
-            class="flex h-full flex-col rounded-xl border border-border bg-surface p-5 hover:border-primary"
-          >
-            <span class="font-display font-semibold text-ink">
-              {track.title}
-            </span>
-            <span class="mt-2 text-sm leading-6 text-muted">{track.text}</span>
-          </a>
-        </li>
-      ))
-    }
-  </ul>
-</DocsLayout>
+<DocsHub
+  track="panduan"
+  entryId="index"
+  title="Panduan Sakala — Membawa Project ke URL Publik"
+  description="Panduan penggunaan Sakala untuk membawa project dari repository Git menuju alamat publik, ditulis untuk yang belum terbiasa dengan server."
+/>

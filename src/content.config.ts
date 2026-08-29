@@ -7,8 +7,16 @@ const docs = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    /**
+     * Dokumentasi dipisah menjadi dua jalur agar pengguna yang hanya ingin
+     * memakai Sakala tidak tercampur dengan internal runtime. Jalur
+     * `referensi` muncul di kedua sidebar.
+     */
+    track: z.enum(["panduan", "teknis", "referensi"]).default("panduan"),
+    /** Label kelompok di dalam satu jalur. */
+    section: z.string(),
+    /** Urutan di dalam jalur. */
     order: z.number(),
-    section: z.string().default("Panduan"),
   }),
 });
 

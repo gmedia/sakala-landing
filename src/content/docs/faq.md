@@ -1,8 +1,9 @@
 ---
 title: Pertanyaan Umum
 description: Jawaban ringkas tentang status, sasaran, dan kontribusi Sakala.
-order: 8
-section: Dukungan
+track: referensi
+section: Referensi
+order: 2
 ---
 
 # Pertanyaan Umum

@@ -3,12 +3,12 @@ import { links } from "./links";
 export const docsMegaMenu = {
   sections: [
     {
-      title: "Mulai",
+      title: "Panduan penggunaan",
       items: [
         {
-          label: "Quickstart",
-          href: "/docs/quickstart",
-          description: "Alur awal dari Git menuju URL publik.",
+          label: "Panduan Sakala",
+          href: "/docs",
+          description: "Titik masuk bagi yang ingin memakai Sakala.",
           icon: "play",
         },
         {
@@ -18,25 +18,25 @@ export const docsMegaMenu = {
           icon: "link",
         },
         {
-          label: "Konsep dasar",
-          href: "/docs/concepts",
-          description: "Peran console, API, agent, infra, dan runtime.",
+          label: "Menyiapkan project",
+          href: "/docs/menyiapkan-project",
+          description: "Yang perlu dibereskan di repository sebelum deploy.",
           icon: "nodes",
         },
       ],
     },
     {
-      title: "Teknis",
+      title: "Dokumentasi teknis",
       items: [
         {
-          label: "Alur deployment",
-          href: "/docs/deployment-flow",
-          description: "Command, status, routing, dan runtime.",
+          label: "Arsitektur sistem",
+          href: "/docs/teknis/arsitektur",
+          description: "Topologi, batas hak istimewa, dan invariant.",
           icon: "flow",
         },
         {
           label: "Cara kerja Agent",
-          href: "/docs/agent-runtime",
+          href: "/docs/teknis/agent",
           description: "Polling, claim, operating mode, dan executor.",
           icon: "nodes",
         },
@@ -89,9 +89,9 @@ export const docsMegaMenu = {
   ],
   featured: {
     eyebrow: "Baru di Sakala?",
-    label: "Mulai dari Quickstart",
-    href: "/docs/quickstart",
+    label: "Mulai dari Panduan Sakala",
+    href: "/docs",
     description:
-      "Ikuti gambaran alur Sakala dulu, lalu lanjut ke konsep dasar.",
+      "Mulai dari panduan penggunaan. Dokumentasi teknis tersedia terpisah.",
   },
 } as const;

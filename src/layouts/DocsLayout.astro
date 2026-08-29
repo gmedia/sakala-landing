@@ -8,6 +8,7 @@ import SiteHeader from "../components/layout/SiteHeader.astro";
 import Breadcrumbs from "../components/ui/Breadcrumbs.astro";
 import Container from "../components/ui/Container.astro";
 import { defaultLang, useTranslations } from "../i18n";
+import { docTracks, trackFromPath } from "../data/docs";
 
 interface Props {
   title: string;
@@ -28,11 +29,13 @@ const lang = defaultLang;
 const t = useTranslations(lang);
 const normalizedCurrentPath =
   currentPath.length > 1 ? currentPath.replace(/\/$/, "") : currentPath;
+const track = docTracks[trackFromPath(normalizedCurrentPath)];
+const isHub = normalizedCurrentPath === track.href;
 const breadcrumbs = [
   { label: "Beranda", href: "/" },
-  ...(normalizedCurrentPath === "/docs"
-    ? [{ label: "Dokumentasi" }]
-    : [{ label: "Dokumentasi", href: "/docs" }, { label: breadcrumbLabel }]),
+  ...(isHub
+    ? [{ label: track.title }]
+    : [{ label: track.title, href: track.href }, { label: breadcrumbLabel }]),
 ];
 ---
 

@@ -1,8 +1,9 @@
 ---
 title: Membagikan Project dari Localhost
 description: Memahami cara membawa project dari localhost menuju URL publik dengan aman dan bertahap.
-order: 6
-section: Panduan
+track: panduan
+section: Mulai
+order: 2
 ---
 
 # Membagikan Project dari Localhost
@@ -25,7 +26,7 @@ Secara sederhana, alurnya adalah:
 4. reverse proxy menghubungkan domain publik ke port aplikasi;
 5. log dan status membantu memeriksa hasil deployment.
 
-Baca [Alur Deployment](/docs/deployment-flow) untuk memahami model komunikasi yang sedang disusun Sakala.
+Baca [Alur Deployment](/docs/teknis/alur-deployment) untuk memahami model komunikasi yang sedang disusun Sakala.
 
 ## Pilihan untuk membagikan project
 
@@ -59,7 +60,7 @@ Project yang berjalan baik di laptop belum tentu langsung berjalan pada lingkung
 - README menjelaskan cara menjalankan project;
 - halaman error tidak membocorkan credential atau detail sensitif.
 
-Jika project terdiri dari beberapa service, catat hubungan antara frontend, API, database, dan service pendukung lain. Pemisahan tanggung jawab ini juga dijelaskan pada [Konsep Dasar Sakala](/docs/concepts).
+Jika project terdiri dari beberapa service, catat hubungan antara frontend, API, database, dan service pendukung lain. Pemisahan tanggung jawab ini juga dijelaskan pada [Konsep Dasar Sakala](/docs/teknis/konsep).
 
 ## Arah yang sedang dibangun Sakala
 
@@ -67,7 +68,7 @@ Sakala diarahkan untuk membantu project kecil bergerak dari repository Git menuj
 
 Targetnya bukan menyembunyikan seluruh proses deployment. Sakala ingin membuat proses tersebut lebih mudah dipelajari tanpa mengubahnya menjadi klaim satu klik atau pengganti cloud enterprise.
 
-Lihat [Quickstart](/docs/quickstart) untuk gambaran pengalaman yang sedang dituju dan [Pertanyaan Umum](/docs/faq) untuk status produk saat ini.
+Lihat [Perjalanan Deploy Pertama](/docs/perjalanan-deploy) untuk gambaran pengalaman yang sedang dituju dan [Pertanyaan Umum](/docs/faq) untuk status produk saat ini.
 
 ## Setelah project memiliki URL publik
 

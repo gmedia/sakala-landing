@@ -1,8 +1,9 @@
 ---
 title: Glosarium
 description: Istilah domain Sakala yang dipakai konsisten di console, API, agent, dan dokumentasi.
-order: 7
+track: referensi
 section: Referensi
+order: 1
 ---
 
 # Glosarium

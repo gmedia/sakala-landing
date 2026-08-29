@@ -1,0 +1,59 @@
+---
+import { getEntry, render } from "astro:content";
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import { docTracks, getTrackGroups, type DocTrack } from "../../data/docs";
+
+interface Props {
+  track: DocTrack;
+  entryId: string;
+  title: string;
+  description: string;
+}
+
+const { track, entryId, title, description } = Astro.props;
+const entry = await getEntry("docs", entryId);
+if (!entry) throw new Error(`Dokumen hub tidak ditemukan: ${entryId}`);
+const { Content } = await render(entry);
+const groups = await getTrackGroups(track);
+const hubHref = docTracks[track].href;
+---
+
+<DocsLayout {title} {description} currentPath={Astro.url.pathname}>
+  <article class="prose-sakala">
+    <Content />
+  </article>
+
+  <div class="mt-14 space-y-10">
+    {
+      groups.map((group) => {
+        const items = group.items.filter((item) => item.href !== hubHref);
+        if (items.length === 0) return null;
+        return (
+          <section>
+            <h2 class="font-display text-xl font-semibold tracking-tight text-ink">
+              {group.section}
+            </h2>
+            <ul class="m-0 mt-4 grid list-none gap-3 p-0 sm:grid-cols-2">
+              {items.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    data-astro-prefetch="hover"
+                    class="flex h-full flex-col rounded-xl border border-border bg-surface p-5 hover:border-primary"
+                  >
+                    <span class="font-display font-semibold text-ink">
+                      {item.title}
+                    </span>
+                    <span class="mt-2 text-sm leading-6 text-muted">
+                      {item.description}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })
+    }
+  </div>
+</DocsLayout>

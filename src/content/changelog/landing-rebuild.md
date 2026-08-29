@@ -29,6 +29,15 @@ perjalanan produk dan model pertumbuhan, halaman governance menjelaskan domain
 keputusan serta struktur akses repository, dan dokumentasi mendapat glosarium
 istilah domain.
 
+Dokumentasi dipisah menjadi dua jalur. `/docs` berisi panduan penggunaan yang
+ditulis tanpa mengandaikan pembaca paham Docker atau reverse proxy, sedangkan
+`/docs/teknis` berisi arsitektur, runtime, dan keamanan. Navigasi diturunkan
+dari content collection, dan URL teknis lama dialihkan ke alamat barunya.
+
+Panduan penggunaan menambahkan halaman menyiapkan project, variabel dan secret,
+perjalanan deploy pertama, domain dan URL, serta membaca kegagalan deployment.
+Jalur teknis menambahkan arsitektur sistem dan model keamanan.
+
 Dokumentasi teknis kini memuat diagram: pembagian control plane dan data plane,
 state machine deployment, prioritas builder, dan siklus command Agent. Semuanya
 diturunkan dari dokumen arsitektur project.

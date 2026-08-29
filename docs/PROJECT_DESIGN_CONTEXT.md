@@ -121,6 +121,30 @@ section itu tidak dibuat.
 
 ---
 
+## 5b. Dokumentasi
+
+Dokumentasi dipisah menjadi dua jalur yang berdiri sendiri, karena persona
+utama Sakala adalah mahasiswa dan developer pemula yang tidak perlu melewati
+internal runtime untuk menemukan jawabannya.
+
+```txt
+/docs           Panduan Sakala      cara memakai
+/docs/teknis    Dokumentasi Teknis  cara Sakala dibangun
+```
+
+Aturan:
+
+- Jalur ditentukan lewat field `track` pada frontmatter, bukan lokasi berkas.
+- `track: referensi` muncul di kedua sidebar.
+- Sidebar, navigasi mobile, dan tautan sebelumnya/berikutnya diturunkan dari
+  content collection. Jangan membuat daftar navigasi terpisah yang menduplikasi
+  koleksi.
+- Jalur panduan ditulis tanpa mengandaikan pembaca paham Docker atau reverse
+  proxy. Istilah teknis dijelaskan saat pertama muncul.
+- Halaman yang menjelaskan alur belum tersedia wajib menyatakannya di awal.
+
+---
+
 ## 6. Ilustrasi
 
 Deployment itu abstrak, jadi diagram adalah alat penjelas utama, bukan dekorasi.

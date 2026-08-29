@@ -18,6 +18,14 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
+  // URL dokumentasi teknis pindah ke /docs/teknis saat dokumentasi dipisah
+  // menjadi jalur panduan dan jalur teknis.
+  redirects: {
+    "/docs/concepts": "/docs/teknis/konsep",
+    "/docs/deployment-flow": "/docs/teknis/alur-deployment",
+    "/docs/agent-runtime": "/docs/teknis/agent",
+    "/docs/quickstart": "/docs/perjalanan-deploy",
+  },
   prefetch: {
     prefetchAll: false,
     defaultStrategy: "hover",

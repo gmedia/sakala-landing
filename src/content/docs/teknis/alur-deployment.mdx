@@ -1,13 +1,14 @@
 ---
 title: Alur Deployment
 description: Siklus command, state machine deployment, prioritas builder, dan routing aplikasi pada Sakala.
-order: 4
-section: Konsep
+track: teknis
+section: Runtime
+order: 5
 ---
 
-import DiagramFigure from "../../components/diagram/DiagramFigure.astro";
-import StateFlow from "../../components/diagram/StateFlow.astro";
-import LoopDiagram from "../../components/diagram/LoopDiagram.astro";
+import DiagramFigure from "../../../components/diagram/DiagramFigure.astro";
+import StateFlow from "../../../components/diagram/StateFlow.astro";
+import LoopDiagram from "../../../components/diagram/LoopDiagram.astro";
 
 # Alur Deployment
 
@@ -90,4 +91,4 @@ MVP boleh memakai versi yang lebih sederhana, tetapi arsitekturnya sengaja tidak
 
 Fondasi MVP agent sudah menyediakan eksekusi Dockerfile dan Railpack serta pembaruan route Caddy secara opt-in. Fitur tersebut belum menjadi layanan hosted publik dan masih membutuhkan integrasi Agent API serta runtime node yang dikonfigurasi untuk pilot.
 
-Detail operating mode dan batas runtime dijelaskan pada [Cara kerja Sakala Agent](/docs/agent-runtime).
+Detail operating mode dan batas runtime dijelaskan pada [Cara kerja Sakala Agent](/docs/teknis/agent).

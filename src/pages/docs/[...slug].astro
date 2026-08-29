@@ -1,11 +1,12 @@
 ---
 import { getCollection, render, type CollectionEntry } from "astro:content";
 import DocsLayout from "../../layouts/DocsLayout.astro";
+import { hubIds } from "../../data/docs";
 
 export async function getStaticPaths() {
   const docs = await getCollection("docs");
   return docs
-    .filter((doc) => doc.id !== "index")
+    .filter((doc) => !hubIds.includes(doc.id))
     .map((doc) => ({
       params: { slug: doc.id },
       props: { doc },
@@ -21,7 +22,7 @@ const { Content } = await render(doc);
 ---
 
 <DocsLayout
-  title={`${doc.data.title} — Dokumentasi Sakala`}
+  title={`${doc.data.title} — Sakala`}
   description={doc.data.description}
   currentPath={Astro.url.pathname}
   breadcrumbLabel={doc.data.title}

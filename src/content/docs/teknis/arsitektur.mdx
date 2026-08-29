@@ -1,0 +1,116 @@
+---
+title: Arsitektur Sistem
+description: Topologi repository, pemisahan control plane dan data plane, topologi runtime MVP, dan invariant yang menjaganya.
+track: teknis
+section: Sistem
+order: 2
+---
+
+import DiagramFigure from "../../../components/diagram/DiagramFigure.astro";
+import RepoTopology from "../../../components/diagram/RepoTopology.astro";
+import SystemDiagram from "../../../components/diagram/SystemDiagram.astro";
+
+# Arsitektur Sistem
+
+Arsitektur Sakala disusun untuk menjaga kebijakan produk di control plane, mengisolasi operasi berhak istimewa di Agent, dan tetap sederhana pada MVP tanpa menutup jalan menuju multi-node.
+
+## Topologi repository
+
+<DiagramFigure
+  caption="Lima repository Sakala menurut hak istimewa yang dipegangnya."
+  alt="Kelompok publik berisi sakala-landing. Kelompok control plane berisi sakala-console dan sakala-api. Kelompok data plane berisi sakala-agent dan sakala-infra, satu-satunya kelompok yang menjalankan operasi runtime berhak istimewa."
+  class="my-8"
+>
+  <RepoTopology
+    publicLabel="Publik"
+    controlLabel="Control plane"
+    dataLabel="Data plane"
+    roles={{
+      landing: "Situs publik Astro, dokumentasi, dan pintu masuk SEO.",
+      console: "SvelteKit, SPA statis pada MVP.",
+      api: "Laravel, memegang state dan policy.",
+      agent: "Rust, satu-satunya yang menjalankan Docker dan Caddy.",
+      infra: "Referensi runtime dan playground lokal.",
+    }}
+  />
+</DiagramFigure>
+
+## Aliran antar komponen
+
+<DiagramFigure
+  caption="Arah komunikasi antara browser, control plane, dan data plane."
+  alt="Browser mengakses Console. Console berbicara dengan API sebagai control plane, dan API menyimpan state pada PostgreSQL. Agent menghubungi API secara outbound untuk polling, claim, dan pelaporan. Agent kemudian menjalankan Docker dan Caddy pada runtime node, menghasilkan container aplikasi yang dapat diakses publik."
+  class="my-8"
+>
+  <SystemDiagram
+    controlPlaneLabel="control plane"
+    dataPlaneLabel="data plane"
+    agentLabel="Agent"
+    appLabel="run.sakala.dev"
+    browserLabel="Browser"
+  />
+</DiagramFigure>
+
+Perhatikan arah panah dari Agent menuju API. Agent tidak membuka HTTP server dan tidak menerima koneksi masuk. Model ini membuat firewall dan NAT sederhana, dan tidak menciptakan remote shell.
+
+## Pembagian tanggung jawab
+
+**Control plane** memegang identitas, autentikasi, project, metadata deployment, desired state, metadata variabel dan secret, resource policy, metadata domain, AgentNode dan AgentCommand, event dan log, serta audit.
+
+Ia **tidak boleh** mengakses Docker socket, menjalankan container pengguna, melakukan `docker build`, mengubah Caddy pada host langsung dari sebuah HTTP request, atau berubah menjadi remote shell.
+
+**Data plane** memegang checkout, workspace, eksekusi proses, builder, image, siklus hidup container, penerapan batas resource, log, health, routing runtime, dan pembersihan.
+
+## Topologi runtime MVP
+
+Pada MVP, seluruhnya berjalan pada satu host.
+
+```txt
+Internet
+  └── Caddy
+        ├── Landing statis
+        ├── Console statis
+        ├── API           127.0.0.1:8080
+        └── Aplikasi user 127.0.0.1:31xxx
+```
+
+Aplikasi pengguna mengikat alamat loopback, tidak mempublikasikan port ke internet. Caddy yang meneruskan hostname publik ke port internal tersebut.
+
+Pemetaan domainnya:
+
+```txt
+sakala.dev          landing
+app.sakala.dev      console
+api.sakala.dev      API
+*.run.sakala.dev    aplikasi pengguna
+```
+
+## Kepemilikan resource
+
+Pembagian ini mencegah Agent mengetahui semantik paket produk.
+
+```txt
+sakala-api      menetapkan resource policy produk
+sakala-agent    menerapkannya pada node
+konfigurasi node  hard safety limit lokal
+```
+
+Bila resource yang diminta melewati batas maksimum node, kegagalan eksplisit lebih disukai daripada pemangkasan diam-diam.
+
+## Invariant
+
+Tujuh hal berikut memerlukan keputusan arsitektur tercatat bila hendak diubah:
+
+1. API tidak pernah mengakses Docker socket secara langsung.
+2. Agent adalah batas runtime berhak istimewa.
+3. Resource policy produk milik control plane.
+4. Console tidak memegang kebijakan bisnis.
+5. Kontrak antara API dan Agent diberi versi.
+6. Repository tidak digabung kembali menjadi satu dashboard demi kepraktisan.
+7. MVP tetap sederhana sampai validasi menuntut kompleksitas terdistribusi.
+
+## Jalan menuju multi-node
+
+Belum dibangun sekarang. Arahnya berurutan: satu runtime node, lalu beberapa node, metadata penempatan, label kemampuan node, drain, pemisahan gateway, router tersendiri, dan seterusnya.
+
+Yang dijaga sekarang hanyalah tidak menutup jalan itu.

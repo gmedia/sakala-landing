@@ -33,14 +33,3 @@ export function getMainNavigation(_lang: Lang, t: Dictionary): NavItem[] {
     },
   ];
 }
-
-export const docsNavigation = [
-  { label: "Pengantar", href: "/docs" },
-  { label: "Quickstart", href: "/docs/quickstart" },
-  { label: "Konsep dasar", href: "/docs/concepts" },
-  { label: "Alur deployment", href: "/docs/deployment-flow" },
-  { label: "Cara kerja Agent", href: "/docs/agent-runtime" },
-  { label: "Keluar dari localhost", href: "/docs/keluar-dari-localhost" },
-  { label: "Glosarium", href: "/docs/glosarium" },
-  { label: "Pertanyaan umum", href: "/docs/faq" },
-];

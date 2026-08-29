@@ -1,17 +1,15 @@
 ---
-import { docsNavigation } from "../../data/navigation";
+import { getTrackSequence, trackFromPath } from "../../data/docs";
 
 interface Props {
   currentPath: string;
 }
 
 const { currentPath } = Astro.props;
-const currentIndex = docsNavigation.findIndex(
-  (item) => item.href === currentPath,
-);
-const previous =
-  currentIndex > 0 ? docsNavigation[currentIndex - 1] : undefined;
-const next = currentIndex >= 0 ? docsNavigation[currentIndex + 1] : undefined;
+const sequence = await getTrackSequence(trackFromPath(currentPath));
+const index = sequence.findIndex((item) => item.href === currentPath);
+const previous = index > 0 ? sequence[index - 1] : undefined;
+const next = index >= 0 ? sequence[index + 1] : undefined;
 ---
 
 {
@@ -34,7 +32,7 @@ const next = currentIndex >= 0 ? docsNavigation[currentIndex + 1] : undefined;
               <span aria-hidden="true" class="text-muted-2">
                 &larr;{" "}
               </span>
-              {previous.label}
+              {previous.title}
             </span>
           </a>
         )}
@@ -50,7 +48,7 @@ const next = currentIndex >= 0 ? docsNavigation[currentIndex + 1] : undefined;
               Berikutnya
             </span>
             <span class="mt-1.5 font-display font-semibold text-ink">
-              {next.label}
+              {next.title}
               <span aria-hidden="true" class="text-muted-2">
                 {" "}
                 &rarr;
