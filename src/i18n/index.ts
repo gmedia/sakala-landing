@@ -44,7 +44,10 @@ export function localizePath(pathname: string, lang: Lang): string {
   const segments = stripLocale(pathname).split("/").filter(Boolean);
   const base = segments.length ? `/${segments.join("/")}` : "";
   const prefixed = lang === defaultLang ? base : `/${lang}${base}`;
-  return prefixed === "" ? "/" : `${prefixed}/`;
+  if (prefixed === "") return "/";
+  // Endpoint berkas seperti /rss.xml tidak boleh diberi trailing slash.
+  const isFile = segments.at(-1)?.includes(".") ?? false;
+  return isFile ? prefixed : `${prefixed}/`;
 }
 
 /**

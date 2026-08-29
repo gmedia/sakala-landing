@@ -5,6 +5,7 @@ import {
   defaultLang,
   getAlternates,
   languages,
+  localizePath,
   stripLocale,
   useTranslations,
   type Lang,
@@ -168,8 +169,8 @@ const jsonLd = JSON.stringify(structuredData ?? defaultStructuredData);
     <link
       rel="alternate"
       type="application/rss+xml"
-      title="Changelog Sakala"
-      href={new URL("/rss.xml", Astro.site)}
+      title={lang === "en" ? "Sakala Changelog" : "Changelog Sakala"}
+      href={new URL(localizePath("/rss.xml", lang), Astro.site)}
     />
 
     <meta property="og:site_name" content="Sakala" />

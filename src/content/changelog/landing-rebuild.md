@@ -3,6 +3,7 @@ title: Situs disusun ulang, dokumentasi diperdalam, dan dua bahasa
 description: Arah visual baru mengikuti Console, diagram teknis untuk menjelaskan infrastruktur, glosarium domain, serta dukungan Bahasa Indonesia dan Inggris.
 version: "0.3.0"
 publishedAt: 2026-08-29
+lang: id
 ---
 
 Landing `sakala.dev` disusun ulang agar setara dengan visi pada dokumentasi

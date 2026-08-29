@@ -367,6 +367,258 @@ export const id = {
     license: "Apache-2.0",
     sponsor: "Founding sponsor: GMEDIA",
   },
+  about: {
+    metaTitle: "Tentang Sakala — Project Deployment Open-Source",
+    metaDescription:
+      "Kenali tujuan Sakala, perjalanan produk yang dituju, prinsip open-source, dukungan founding sponsor, dan arah komunitasnya.",
+    crumb: "Tentang Sakala",
+    eyebrow: "Tentang Sakala",
+    title: "Deployment yang bisa dipelajari, bukan sekadar dipakai.",
+    lead: "Sakala membantu project berpindah dari repository Git menuju alamat publik melalui alur yang lebih sederhana, tanpa menyembunyikan apa yang sebenarnya terjadi.",
+    focus: {
+      eyebrow: "Fokus",
+      title:
+        "Untuk yang terhalang infrastruktur, bukan untuk beban kerja enterprise.",
+      p1: "Fokus awalnya sederhana: membantu project keluar dari localhost tanpa harus langsung berhadapan dengan VPS, TLS, reverse proxy, Docker networking, dan konfigurasi server manual.",
+      p2: "Sasarannya adalah tugas kuliah, portfolio, demo, kelas, komunitas, dan tim kecil. Sakala tidak diarahkan menjadi pengganti cloud enterprise, dan batasan itu dipegang secara sadar.",
+      note: "Foundation produk dan runtime masih disusun. Dokumentasi dan changelog menjelaskan perkembangan nyata tanpa mengklaim layanan siap production.",
+    },
+    journey: {
+      eyebrow: "Perjalanan produk",
+      title: "Deployment adalah jantungnya, bukan seluruh tubuhnya.",
+      lead: "Sakala ingin membantu sebuah karya melewati seluruh perjalanan, bukan berhenti pada saat image selesai dibangun.",
+      caption:
+        "Tujuh tahap perjalanan yang dituju Sakala, dari titik awal sampai karya melahirkan karya berikutnya.",
+      alt: "Perjalanan produk Sakala berurutan: Create sebagai titik awal, Manifest untuk mewujudkan, Operate untuk menjaga, Explore untuk ditemukan, Collaborate untuk dikerjakan bersama, Learn untuk dipelajari, dan Grow untuk tumbuh. Setelah Grow, siklusnya kembali ke Create bagi orang berikutnya.",
+      note: "Hanya Manifest yang sedang dikerjakan. Tahap lain adalah arah, dan ditandai demikian di seluruh situs ini.",
+    },
+    growth: {
+      title: "Tumbuh bertahap, bukan sekaligus",
+      lead: "Sakala sengaja tidak membangun semua level sekarang. Visinya luas, tetapi eksekusinya sempit dan berurutan.",
+      levels: [
+        "Deployment sederhana",
+        "Hosting yang andal",
+        "Layanan pendukung developer",
+        "Explore dan ekosistem",
+        "Kolaborasi dan pendidikan",
+        "Self-host dan platform terkelola",
+        "Infrastruktur developer terdistribusi",
+      ],
+      states: {
+        current: "sedang dikerjakan",
+        next: "berikutnya",
+        later: "arah",
+      },
+    },
+    boundary: {
+      title: "Yang sengaja tidak dikejar",
+      lead: "Menjaga identitas lebih penting daripada mengejar kesetaraan fitur.",
+      items: [
+        "dashboard cloud generik",
+        "UI Kubernetes dengan nama baru",
+        "jejaring sosial developer",
+        "LMS",
+        "domain registrar",
+        "pengganti suite observability",
+        "cloud berlabel AI tanpa nilai inti",
+      ],
+    },
+    openSource: {
+      eyebrow: "Open source",
+      title: "Terbuka agar bisa dipelajari, diaudit, dan dikembangkan bersama.",
+      lead: "Kode, dokumentasi, issue, roadmap, dan proses pengembangan dibuka supaya keputusan teknisnya dapat dibaca dan dikritisi secara publik.",
+      caption:
+        "Lima repository Sakala, dikelompokkan menurut hak istimewa yang dipegangnya.",
+      alt: "Kelompok publik berisi sakala-landing. Kelompok control plane berisi sakala-console dan sakala-api yang memegang kebijakan produk. Kelompok data plane berisi sakala-agent dan sakala-infra, satu-satunya kelompok yang menjalankan operasi runtime berhak istimewa.",
+      publicLabel: "Publik",
+      controlLabel: "Control plane",
+      dataLabel: "Data plane",
+      roles: {
+        landing: "Website, dokumentasi, dan pintu masuk SEO.",
+        console:
+          "Antarmuka SvelteKit untuk mengelola project dan mengikuti deployment.",
+        api: "Control plane Laravel untuk auth, project, deployment, dan command agent.",
+        agent: "Executor Rust yang menjalankan pekerjaan deployment pada node.",
+        infra: "Referensi runtime, networking, dan routing.",
+      },
+    },
+    domains: {
+      title: "Domain produk",
+      purposeHeader: "Tujuan",
+      valueHeader: "Domain",
+      rows: {
+        site: "Website dan dokumentasi",
+        console: "Console",
+        api: "API dan control plane",
+        runtime: "Aplikasi hasil deployment",
+      },
+    },
+    sponsor: {
+      eyebrow: "Dukungan awal",
+      title: "Didukung GMEDIA sebagai sponsor pendiri.",
+      lead: "GMEDIA membantu Sakala mencapai MVP dan pilot awal melalui dukungan infrastruktur, domain, ruang eksperimen, dan dukungan teknis.",
+      p1: "Dukungan itu tidak mengubah prinsip dasar Sakala sebagai project open-source. Roadmap, dokumentasi, issue, dan kontribusi tetap dikembangkan secara terbuka.",
+      p2: "Sponsor tidak otomatis mengontrol keputusan teknis, prioritas roadmap, perubahan lisensi, atau hak contributor. Sakala tetap menggunakan Apache License 2.0.",
+      cta: "Baca governance project",
+      cardLabel: "Founding Sponsor & Infrastructure Supporter",
+      imageAlt: "GMEDIA - PT Media Sarana Data",
+    },
+    next: {
+      eyebrow: "Langkah berikutnya",
+      title: "Pelajari arah teknis Sakala.",
+      lead: "Dokumentasi menjelaskan peran console, API, agent, infra, alur deployment, serta istilah domain yang dipakai konsisten.",
+      cta: "Baca dokumentasi Sakala",
+    },
+  },
+
+  governance: {
+    metaTitle: "Governance Sakala — Project Open-Source",
+    metaDescription:
+      "Prinsip governance Sakala, domain keputusan, struktur squad, batas peran sponsor, dan arah komunitas project deployment open-source Sakala.",
+    crumb: "Governance",
+    eyebrow: "Governance",
+    title: "Dibangun terbuka, dengan batas peran yang jelas.",
+    lead: "Sakala dikembangkan melalui roadmap, dokumentasi, issue, pull request, dan kontribusi publik. Pada tahap MVP, project ini dikelola maintainer awal dengan dukungan GMEDIA sebagai sponsor pendiri.",
+    principles: [
+      {
+        title: "Roadmap terbuka",
+        text: "Arah project dibahas melalui dokumentasi, issue, pull request, dan catatan perubahan yang dapat diikuti publik.",
+      },
+      {
+        title: "Keputusan teknis oleh maintainer",
+        text: "Sponsor dapat memberi dukungan dan masukan, tetapi keputusan teknis tetap dijaga oleh maintainer Sakala.",
+      },
+      {
+        title: "Lisensi jelas",
+        text: "Sakala menggunakan Apache License 2.0 agar source code tetap dapat dipelajari, digunakan, dan dikontribusi secara terbuka.",
+      },
+    ],
+    sponsor: {
+      eyebrow: "Peran sponsor",
+      title: "Sponsor mendukung keberlanjutan, bukan mengambil alih project.",
+      p1: "Sponsor dapat membantu Sakala melalui infrastruktur, domain, dukungan pengembangan, dokumentasi, program komunitas, atau kebutuhan operasional lain.",
+      caption: "Hubungan antara stewardship dan sponsor.",
+      alt: "Sakala Maintainers memegang stewardship dan keputusan teknis. GMEDIA berperan sebagai founding sponsor dan infrastructure supporter yang memberi dukungan, tetapi tidak memegang kendali atas keputusan teknis, prioritas roadmap, lisensi, maupun hak contributor. Contributor publik memberi masukan melalui issue dan pull request.",
+      cards: {
+        stewardship: {
+          role: "Stewardship",
+          name: "Sakala Maintainers",
+          text: "Memegang keputusan teknis, arsitektur, dan lisensi.",
+        },
+        supporting: {
+          role: "Mendukung",
+          name: "GMEDIA",
+          text: "Founding sponsor dan infrastructure supporter. Tanpa kendali atas roadmap maupun lisensi.",
+        },
+        contributing: {
+          role: "Berkontribusi",
+          name: "Contributor publik",
+          text: "Issue, pull request, dokumentasi, desain, dan pengujian.",
+        },
+      },
+      quote:
+        "Sakala adalah project deployment open-source yang diinisiasi oleh Sakala Maintainers dan didukung oleh GMEDIA sebagai founding sponsor dan infrastructure supporter.",
+    },
+    decisions: {
+      eyebrow: "Domain keputusan",
+      title: "Siapa memutuskan apa.",
+      lead: "Pembagian ini menjaga agar keputusan tidak bergantung pada satu orang, dan agar jalurnya dapat diikuti dari luar.",
+      rows: [
+        {
+          area: "Produk",
+          owner: "Maintainer bersama diskusi product dan design.",
+        },
+        {
+          area: "Arsitektur",
+          owner:
+            "Dipimpin maintainer. Perubahan boundary besar wajib dicatat sebagai keputusan arsitektur.",
+        },
+        {
+          area: "Implementasi",
+          owner: "Squad pemilik, di dalam arsitektur yang sudah ditetapkan.",
+        },
+        {
+          area: "Keamanan",
+          owner: "Tinjauan maintainer atau security dapat menahan rilis.",
+        },
+        {
+          area: "Komunitas dan moderasi",
+          owner:
+            "Aturan terdokumentasi, dapat diaudit, dengan jalur peninjauan.",
+        },
+      ],
+    },
+    squads: {
+      eyebrow: "Struktur kerja",
+      title: "Squad sebagai titik koordinasi, bukan hierarki.",
+      lead: "Pembagian ini menandai siapa yang paling dekat dengan sebuah area, bukan siapa yang berkuasa atasnya.",
+      items: [
+        {
+          name: "maintainers",
+          scope: "Stewardship, arsitektur, dan keputusan lisensi",
+        },
+        {
+          name: "design",
+          scope: "Product design, alur pengguna, dan sistem visual",
+        },
+        { name: "frontend", scope: "Console dan permukaan pengguna" },
+        { name: "backend", scope: "Control plane, kontrak API, dan data" },
+        { name: "runtime", scope: "Agent, eksekusi, dan infrastruktur" },
+      ],
+      note: "Nama contributor belum dipublikasikan. Pencantuman dilakukan setelah kontribusinya nyata dan orangnya menyetujui.",
+    },
+    access: {
+      title: "Akses repository",
+      lead: "Hak akses diberikan seminimal yang diperlukan agar pekerjaan tetap berjalan.",
+      rows: [
+        { level: "Repository utama", access: "Write bagi squad pemiliknya" },
+        {
+          level: "Lintas repository",
+          access: "Read secara default, Triage bila perlu",
+        },
+        {
+          level: "Maintainer",
+          access: "Maintain atau Admin hanya bila diperlukan",
+        },
+        { level: "Branch main", access: "Selalu dilindungi" },
+      ],
+      planningTitle: "Perencanaan publik dan internal",
+      planning1:
+        "Repository bersifat publik. Papan eksekusi harian tetap internal karena berisi blocker mentah, catatan mentoring, kapasitas tim, dan detail runtime yang sensitif.",
+      planning2:
+        "Transparansi roadmap tidak menuntut membuka seluruh isi ruang kerja. Roadmap publik dapat dipelihara terpisah saat kebutuhannya jelas.",
+    },
+    next: {
+      eyebrow: "Arah berikutnya",
+      title: "Governance ikut tumbuh bersama komunitas.",
+      lead: "Saat Sakala melewati fase MVP, mendapat pengguna nyata, dan menerima kontribusi eksternal yang lebih luas, project ini dapat bergerak menuju organisasi komunitas yang lebih independen dan model maintainer yang lebih formal.",
+    },
+  },
+
+  changelogPage: {
+    metaTitle: "Changelog — Sakala",
+    metaDescription:
+      "Ikuti pembaruan publik Sakala, termasuk landing page, dokumentasi, console, API, agent, dan fondasi deployment open-source.",
+    crumb: "Changelog",
+    eyebrow: "Changelog",
+    title: "Perkembangan yang bisa diperiksa.",
+    lead: "Pembaruan penting website, dokumentasi, dan fondasi produk. Yang dicatat di sini adalah perubahan yang benar-benar sudah terlihat publik, bukan rencana.",
+    rss: "Langganan RSS",
+    empty: "Belum ada pembaruan yang dicatat untuk bahasa ini.",
+  },
+
+  notFound: {
+    metaTitle: "Halaman tidak ditemukan — Sakala",
+    metaDescription: "Halaman yang kamu cari tidak ditemukan.",
+    eyebrow: "Error 404",
+    title: "Alamat ini belum menuju ke mana-mana.",
+    lead: "Tautannya mungkin sudah berubah, atau halamannya memang belum ada karena Sakala masih dibangun. Berikut tempat yang pasti bisa dibuka.",
+    destinations: {
+      home: { label: "Beranda", note: "Kembali ke awal" },
+      docs: { label: "Dokumentasi", note: "Konsep dan alur deployment" },
+      changelog: { label: "Changelog", note: "Perkembangan terbaru" },
+    },
+  },
 };
 
 export type Dictionary = typeof id;

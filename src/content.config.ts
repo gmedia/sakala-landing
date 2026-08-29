@@ -27,6 +27,9 @@ const changelog = defineCollection({
     description: z.string(),
     version: z.string(),
     publishedAt: z.coerce.date(),
+    /** Entri diterbitkan per bahasa. Tidak ada fallback: versi bahasa yang
+     *  belum ditulis tidak akan muncul. */
+    lang: z.enum(["id", "en"]).default("id"),
   }),
 });
 

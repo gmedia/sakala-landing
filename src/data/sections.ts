@@ -91,3 +91,18 @@ export const ecosystemRepositories = [
   { id: "infra", href: links.repositories.infra },
   { id: "landing", href: links.repositories.landing },
 ] as const;
+
+/** Model pertumbuhan VISION.md. Label ada di i18n; di sini hanya urutan,
+ *  tone, dan kunci status. */
+export const growthLevels = [
+  { tone: "progress", state: "current" },
+  { tone: "later", state: "next" },
+  { tone: "later", state: "later" },
+  { tone: "later", state: "later" },
+  { tone: "later", state: "later" },
+  { tone: "later", state: "later" },
+  { tone: "later", state: "later" },
+] as const satisfies ReadonlyArray<{
+  tone: Tone;
+  state: "current" | "next" | "later";
+}>;

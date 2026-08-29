@@ -368,4 +368,252 @@ export const en: Dictionary = {
     license: "Apache-2.0",
     sponsor: "Founding sponsor: GMEDIA",
   },
+  about: {
+    metaTitle: "About Sakala — An Open-Source Deployment Project",
+    metaDescription:
+      "The purpose behind Sakala, the product journey it aims for, its open-source principles, founding sponsor, and community direction.",
+    crumb: "About Sakala",
+    eyebrow: "About Sakala",
+    title: "Deployment you can learn from, not just use.",
+    lead: "Sakala helps a project move from a Git repository to a public address through a simpler path, without hiding what actually happens along the way.",
+    focus: {
+      eyebrow: "Focus",
+      title:
+        "For people blocked by infrastructure, not for enterprise workloads.",
+      p1: "The early focus is simple: help a project leave localhost without first having to face a VPS, TLS, reverse proxies, Docker networking, and manual server configuration.",
+      p2: "It is aimed at coursework, portfolios, demos, classes, communities, and small teams. Sakala is not being built as a replacement for enterprise cloud, and that boundary is held deliberately.",
+      note: "The product and runtime foundations are still being assembled. The documentation and changelog describe real progress without claiming the service is production ready.",
+    },
+    journey: {
+      eyebrow: "Product journey",
+      title: "Deployment is the heart, not the whole body.",
+      lead: "Sakala wants to support a piece of work through the entire journey, rather than stopping the moment an image finishes building.",
+      caption:
+        "The seven stages Sakala aims for, from the starting point to work that gives rise to more work.",
+      alt: "Sakala's product journey in order: Create as the starting point, Manifest to make it real, Operate to keep it healthy, Explore to be discovered, Collaborate to work on it together, Learn to study it, and Grow. After Grow the cycle returns to Create for the next person.",
+      note: "Only Manifest is being built. Every other stage is direction, and is marked as such throughout this site.",
+    },
+    growth: {
+      title: "Growing in steps, not all at once",
+      lead: "Sakala deliberately does not build every level now. The vision is broad, but execution stays narrow and sequential.",
+      levels: [
+        "Simple deployment",
+        "Reliable hosting",
+        "Developer services",
+        "Explore and ecosystem",
+        "Collaboration and education",
+        "Self-hosted and managed platform",
+        "Distributed developer infrastructure",
+      ],
+      states: { current: "in progress", next: "next", later: "direction" },
+    },
+    boundary: {
+      title: "What we deliberately avoid becoming",
+      lead: "Keeping an identity matters more than chasing feature parity.",
+      items: [
+        "a generic cloud dashboard",
+        "a Kubernetes UI with a new name",
+        "a developer social network",
+        "an LMS",
+        "a domain registrar",
+        "a replacement observability suite",
+        "an AI-branded cloud with no core value",
+      ],
+    },
+    openSource: {
+      eyebrow: "Open source",
+      title: "Open so it can be studied, audited, and built on together.",
+      lead: "The code, documentation, issues, roadmap, and development process are public so the technical decisions can be read and challenged.",
+      caption:
+        "Sakala's five repositories, grouped by the privilege each one holds.",
+      alt: "The public group holds sakala-landing. The control plane group holds sakala-console and sakala-api, which own product policy. The data plane group holds sakala-agent and sakala-infra, the only group that performs privileged runtime operations.",
+      publicLabel: "Public",
+      controlLabel: "Control plane",
+      dataLabel: "Data plane",
+      roles: {
+        landing: "Website, documentation, and SEO entry point.",
+        console:
+          "SvelteKit interface for managing projects and following deployments.",
+        api: "Laravel control plane for auth, projects, deployments, and agent commands.",
+        agent: "Rust executor that runs deployment work on a node.",
+        infra: "Runtime, networking, and routing reference.",
+      },
+    },
+    domains: {
+      title: "Product domains",
+      purposeHeader: "Purpose",
+      valueHeader: "Domain",
+      rows: {
+        site: "Website and documentation",
+        console: "Console",
+        api: "API and control plane",
+        runtime: "Deployed applications",
+      },
+    },
+    sponsor: {
+      eyebrow: "Early support",
+      title: "Supported by GMEDIA as founding sponsor.",
+      lead: "GMEDIA helps Sakala reach MVP and an early pilot through infrastructure, domains, room to experiment, and technical support.",
+      p1: "That support does not change Sakala's basic principle as an open-source project. The roadmap, documentation, issues, and contributions stay public.",
+      p2: "Sponsorship does not confer control over technical decisions, roadmap priorities, licensing, or contributor rights. Sakala remains under the Apache License 2.0.",
+      cta: "Read project governance",
+      cardLabel: "Founding Sponsor & Infrastructure Supporter",
+      imageAlt: "GMEDIA - PT Media Sarana Data",
+    },
+    next: {
+      eyebrow: "Next step",
+      title: "Learn how Sakala works underneath.",
+      lead: "The documentation covers the roles of console, API, agent, and infra, the deployment flow, and the domain language used throughout.",
+      cta: "Read the Sakala docs",
+    },
+  },
+
+  governance: {
+    metaTitle: "Sakala Governance — An Open-Source Project",
+    metaDescription:
+      "Sakala's governance principles, decision domains, squad structure, the limits of the sponsor's role, and the community direction.",
+    crumb: "Governance",
+    eyebrow: "Governance",
+    title: "Built in the open, with clear boundaries of role.",
+    lead: "Sakala is developed through a public roadmap, documentation, issues, pull requests, and contributions. During MVP it is stewarded by its early maintainers with GMEDIA as founding sponsor.",
+    principles: [
+      {
+        title: "Open roadmap",
+        text: "Direction is discussed through documentation, issues, pull requests, and change notes that anyone can follow.",
+      },
+      {
+        title: "Technical decisions stay with maintainers",
+        text: "A sponsor may offer support and input, but technical decisions remain with the Sakala maintainers.",
+      },
+      {
+        title: "Clear licensing",
+        text: "Sakala uses the Apache License 2.0 so the source can be studied, used, and contributed to openly.",
+      },
+    ],
+    sponsor: {
+      eyebrow: "The sponsor's role",
+      title:
+        "A sponsor supports continuity; it does not take the project over.",
+      p1: "A sponsor may help Sakala through infrastructure, domains, development support, documentation, community programmes, or other operational needs.",
+      caption: "How stewardship and sponsorship relate.",
+      alt: "Sakala Maintainers hold stewardship and technical decisions. GMEDIA acts as founding sponsor and infrastructure supporter, offering support but holding no control over technical decisions, roadmap priorities, licensing, or contributor rights. Public contributors take part through issues and pull requests.",
+      cards: {
+        stewardship: {
+          role: "Stewardship",
+          name: "Sakala Maintainers",
+          text: "Hold technical, architectural, and licensing decisions.",
+        },
+        supporting: {
+          role: "Supporting",
+          name: "GMEDIA",
+          text: "Founding sponsor and infrastructure supporter. No control over roadmap or licensing.",
+        },
+        contributing: {
+          role: "Contributing",
+          name: "Public contributors",
+          text: "Issues, pull requests, documentation, design, and testing.",
+        },
+      },
+      quote:
+        "Sakala is an open-source deployment project initiated by the Sakala Maintainers and supported by GMEDIA as founding sponsor and infrastructure supporter.",
+    },
+    decisions: {
+      eyebrow: "Decision domains",
+      title: "Who decides what.",
+      lead: "This split keeps decisions from resting on one person, and keeps the path followable from outside.",
+      rows: [
+        {
+          area: "Product",
+          owner: "Maintainers, together with product and design discussion.",
+        },
+        {
+          area: "Architecture",
+          owner:
+            "Maintainer-led. Major boundary changes must be recorded as an architecture decision.",
+        },
+        {
+          area: "Implementation",
+          owner: "The owning squad, within the established architecture.",
+        },
+        {
+          area: "Security",
+          owner: "A maintainer or security review can hold a release.",
+        },
+        {
+          area: "Community and moderation",
+          owner: "Documented rules, auditable, with a path for review.",
+        },
+      ],
+    },
+    squads: {
+      eyebrow: "How work is organised",
+      title: "Squads as a point of coordination, not a hierarchy.",
+      lead: "This marks who sits closest to an area, not who has authority over it.",
+      items: [
+        {
+          name: "maintainers",
+          scope: "Stewardship, architecture, and licensing decisions",
+        },
+        {
+          name: "design",
+          scope: "Product design, user flows, and the visual system",
+        },
+        { name: "frontend", scope: "Console and user-facing surfaces" },
+        { name: "backend", scope: "Control plane, API contracts, and data" },
+        { name: "runtime", scope: "Agent, execution, and infrastructure" },
+      ],
+      note: "Contributor names are not published yet. They are listed once the contribution is real and the person agrees.",
+    },
+    access: {
+      title: "Repository access",
+      lead: "Access is granted at the minimum level that keeps work moving.",
+      rows: [
+        { level: "Primary repository", access: "Write for the owning squad" },
+        {
+          level: "Cross repository",
+          access: "Read by default, Triage where needed",
+        },
+        {
+          level: "Maintainer",
+          access: "Maintain or Admin only where necessary",
+        },
+        { level: "Main branch", access: "Always protected" },
+      ],
+      planningTitle: "Public and internal planning",
+      planning1:
+        "Repositories are public. The day-to-day execution board stays internal because it holds raw blockers, mentoring notes, team capacity, and sensitive runtime detail.",
+      planning2:
+        "Roadmap transparency does not require opening the entire workspace. A public roadmap can be maintained separately once the need is clear.",
+    },
+    next: {
+      eyebrow: "What comes next",
+      title: "Governance grows with the community.",
+      lead: "Once Sakala passes MVP, gains real users, and receives broader external contribution, it can move toward a more independent community organisation and a more formal maintainer model.",
+    },
+  },
+
+  changelogPage: {
+    metaTitle: "Changelog — Sakala",
+    metaDescription:
+      "Follow public updates to Sakala, covering the landing page, documentation, console, API, agent, and open-source deployment foundations.",
+    crumb: "Changelog",
+    eyebrow: "Changelog",
+    title: "Progress you can check.",
+    lead: "Notable updates to the website, documentation, and product foundations. What is recorded here has actually shipped publicly; plans live elsewhere.",
+    rss: "Subscribe via RSS",
+    empty: "No updates have been recorded in this language yet.",
+  },
+
+  notFound: {
+    metaTitle: "Page not found — Sakala",
+    metaDescription: "The page you were looking for could not be found.",
+    eyebrow: "Error 404",
+    title: "This address does not lead anywhere yet.",
+    lead: "The link may have changed, or the page may simply not exist yet while Sakala is still being built. Here is where you can go instead.",
+    destinations: {
+      home: { label: "Home", note: "Back to the start" },
+      docs: { label: "Documentation", note: "Concepts and deployment flow" },
+      changelog: { label: "Changelog", note: "Latest progress" },
+    },
+  },
 };

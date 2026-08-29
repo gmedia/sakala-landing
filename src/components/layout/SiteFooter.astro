@@ -4,7 +4,7 @@ import Container from "../ui/Container.astro";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import { links } from "../../data/links";
 import { isBilingual } from "../../data/navigation";
-import { stripLocale, type Lang } from "../../i18n";
+import { localizePath, stripLocale, type Lang } from "../../i18n";
 import type { Dictionary } from "../../i18n/id";
 
 interface Props {
@@ -18,15 +18,15 @@ const switchPath = isBilingual(base) ? base : "/";
 
 const navigation = [
   { label: t.nav.docs, href: "/docs" },
-  { label: t.nav.about, href: "/tentang" },
-  { label: t.nav.changelog, href: "/changelog" },
+  { label: t.nav.about, href: localizePath("/tentang", lang) },
+  { label: t.nav.changelog, href: localizePath("/changelog", lang) },
 ];
 
 const openSource = [
   { label: t.nav.github, href: links.githubOrganization, external: true },
-  { label: t.footer.governance, href: "/governance" },
+  { label: t.footer.governance, href: localizePath("/governance", lang) },
   { label: t.footer.concepts, href: "/docs/teknis/konsep" },
-  { label: t.footer.rss, href: "/rss.xml" },
+  { label: t.footer.rss, href: localizePath("/rss.xml", lang) },
 ];
 ---
 
