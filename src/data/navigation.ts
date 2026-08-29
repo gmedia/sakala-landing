@@ -41,5 +41,6 @@ export const docsNavigation = [
   { label: "Alur deployment", href: "/docs/deployment-flow" },
   { label: "Cara kerja Agent", href: "/docs/agent-runtime" },
   { label: "Keluar dari localhost", href: "/docs/keluar-dari-localhost" },
+  { label: "Glosarium", href: "/docs/glosarium" },
   { label: "Pertanyaan umum", href: "/docs/faq" },
 ];

@@ -1,4 +1,5 @@
 ---
+import DiagramFigure from "../components/diagram/DiagramFigure.astro";
 import Container from "../components/ui/Container.astro";
 import PageHeader from "../components/ui/PageHeader.astro";
 import SectionHeader from "../components/ui/SectionHeader.astro";
@@ -21,14 +22,15 @@ const principles = [
   },
 ];
 
-const domains = [
+const decisionDomains = [
   {
     area: "Produk",
     owner: "Maintainer bersama diskusi product dan design.",
   },
   {
     area: "Arsitektur",
-    owner: "Dipimpin maintainer, perubahan boundary besar dicatat sebagai ADR.",
+    owner:
+      "Dipimpin maintainer. Perubahan boundary besar wajib dicatat sebagai keputusan arsitektur.",
   },
   {
     area: "Implementasi",
@@ -43,11 +45,34 @@ const domains = [
     owner: "Aturan terdokumentasi, dapat diaudit, dengan jalur peninjauan.",
   },
 ];
+
+/** Struktur koordinasi, bukan hierarki formal. Nama individu sengaja tidak
+ *  dicantumkan; pencatatan contributor mengikuti prinsip persetujuan. */
+const squads = [
+  {
+    name: "Maintainers",
+    scope: "Stewardship, arsitektur, dan keputusan lisensi",
+  },
+  { name: "Design", scope: "Product design, alur pengguna, dan sistem visual" },
+  { name: "Frontend", scope: "Console dan permukaan pengguna" },
+  { name: "Backend", scope: "Control plane, kontrak API, dan data" },
+  { name: "Runtime", scope: "Agent, eksekusi, dan infrastruktur" },
+];
+
+const permissions = [
+  { level: "Repository utama", access: "Write bagi squad pemiliknya" },
+  {
+    level: "Lintas repository",
+    access: "Read secara default, Triage bila perlu",
+  },
+  { level: "Maintainer", access: "Maintain atau Admin hanya bila diperlukan" },
+  { level: "Branch main", access: "Selalu dilindungi" },
+];
 ---
 
 <LandingLayout
   title="Governance Sakala — Project Open-Source"
-  description="Prinsip governance Sakala, peran maintainer, batas peran sponsor, dan arah komunitas project deployment open-source Sakala."
+  description="Prinsip governance Sakala, domain keputusan, struktur squad, batas peran sponsor, dan arah komunitas project deployment open-source Sakala."
   {breadcrumbs}
 >
   <PageHeader
@@ -82,18 +107,61 @@ const domains = [
           title="Sponsor mendukung keberlanjutan, bukan mengambil alih project."
           class="lg:sticky lg:top-28 lg:self-start"
         />
-        <div class="space-y-5 text-lg leading-8 text-muted">
-          <p>
+        <div class="space-y-6">
+          <p class="text-lg leading-8 text-muted">
             Sponsor dapat membantu Sakala melalui infrastruktur, domain,
             dukungan pengembangan, dokumentasi, program komunitas, atau
             kebutuhan operasional lain.
           </p>
-          <p>
-            Sponsor tidak otomatis mengontrol keputusan teknis, prioritas
-            roadmap, perubahan lisensi, hak contributor, atau arah komunitas.
-            Masukan dari sponsor tetap diperlakukan sebagai bagian dari diskusi
-            terbuka.
-          </p>
+
+          <DiagramFigure
+            caption="Hubungan antara stewardship dan sponsor."
+            alt="Sakala Maintainers memegang stewardship dan keputusan teknis. GMEDIA berperan sebagai founding sponsor dan infrastructure supporter yang memberi dukungan, tetapi tidak memegang kendali atas keputusan teknis, prioritas roadmap, lisensi, maupun hak contributor. Contributor publik memberi masukan melalui issue dan pull request."
+          >
+            <div class="grid gap-3 sm:grid-cols-3 sm:items-stretch">
+              <div
+                class="rounded-xl border border-primary bg-primary-soft-2 p-4"
+              >
+                <p
+                  class="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-primary"
+                >
+                  Stewardship
+                </p>
+                <p class="mt-2 font-display font-semibold text-ink">
+                  Sakala Maintainers
+                </p>
+                <p class="mt-1.5 text-xs leading-5 text-muted">
+                  Memegang keputusan teknis, arsitektur, dan lisensi.
+                </p>
+              </div>
+              <div class="rounded-xl border border-border bg-surface p-4">
+                <p
+                  class="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-muted-2"
+                >
+                  Mendukung
+                </p>
+                <p class="mt-2 font-display font-semibold text-ink">GMEDIA</p>
+                <p class="mt-1.5 text-xs leading-5 text-muted">
+                  Founding sponsor dan infrastructure supporter. Tanpa kendali
+                  atas roadmap maupun lisensi.
+                </p>
+              </div>
+              <div class="rounded-xl border border-border bg-surface p-4">
+                <p
+                  class="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-muted-2"
+                >
+                  Berkontribusi
+                </p>
+                <p class="mt-2 font-display font-semibold text-ink">
+                  Contributor publik
+                </p>
+                <p class="mt-1.5 text-xs leading-5 text-muted">
+                  Issue, pull request, dokumentasi, desain, dan pengujian.
+                </p>
+              </div>
+            </div>
+          </DiagramFigure>
+
           <blockquote
             class="border-l-2 border-primary pl-5 text-base leading-7 text-ink"
           >
@@ -117,7 +185,7 @@ const domains = [
         class="m-0 mt-10 grid gap-px overflow-hidden rounded-2xl border border-border bg-border"
       >
         {
-          domains.map((item) => (
+          decisionDomains.map((item) => (
             <div class="grid gap-1 bg-surface px-5 py-4 sm:grid-cols-[14rem_1fr] sm:items-baseline">
               <dt class="font-display font-semibold text-ink">{item.area}</dt>
               <dd class="m-0 text-sm leading-7 text-muted">{item.owner}</dd>
@@ -125,6 +193,79 @@ const domains = [
           ))
         }
       </dl>
+    </Container>
+  </section>
+
+  <section class="border-b border-border bg-background-soft py-20 sm:py-24">
+    <Container>
+      <div
+        class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start"
+      >
+        <div>
+          <SectionHeader
+            eyebrow="Struktur kerja"
+            title="Squad sebagai titik koordinasi, bukan hierarki."
+            lead="Pembagian ini menandai siapa yang paling dekat dengan sebuah area, bukan siapa yang berkuasa atasnya."
+          />
+          <ul
+            class="m-0 mt-8 grid list-none gap-px overflow-hidden rounded-2xl border border-border bg-border p-0"
+          >
+            {
+              squads.map((squad) => (
+                <li class="bg-surface px-5 py-4">
+                  <p class="font-mono text-sm font-semibold text-primary-dark">
+                    sakala-{squad.name.toLowerCase()}
+                  </p>
+                  <p class="mt-1 text-sm leading-6 text-muted">{squad.scope}</p>
+                </li>
+              ))
+            }
+          </ul>
+          <p class="mt-5 max-w-xl text-sm leading-7 text-muted-2">
+            Nama contributor belum dipublikasikan. Pencantuman dilakukan setelah
+            kontribusinya nyata dan orangnya menyetujui.
+          </p>
+        </div>
+
+        <div class="lg:pt-4">
+          <h2
+            class="font-display text-2xl font-semibold tracking-tight text-ink"
+          >
+            Akses repository
+          </h2>
+          <p class="mt-3 leading-7 text-muted">
+            Hak akses diberikan seminimal yang diperlukan agar pekerjaan tetap
+            berjalan.
+          </p>
+          <dl
+            class="m-0 mt-6 grid gap-px overflow-hidden rounded-2xl border border-border bg-border"
+          >
+            {
+              permissions.map((row) => (
+                <div class="grid gap-1 bg-surface px-5 py-3.5 sm:grid-cols-[11rem_1fr] sm:items-baseline">
+                  <dt class="font-mono text-xs text-muted-2">{row.level}</dt>
+                  <dd class="m-0 text-sm text-ink">{row.access}</dd>
+                </div>
+              ))
+            }
+          </dl>
+
+          <h2
+            class="mt-12 font-display text-2xl font-semibold tracking-tight text-ink"
+          >
+            Perencanaan publik dan internal
+          </h2>
+          <p class="mt-3 leading-7 text-muted">
+            Repository bersifat publik. Papan eksekusi harian tetap internal
+            karena berisi blocker mentah, catatan mentoring, kapasitas tim, dan
+            detail runtime yang sensitif.
+          </p>
+          <p class="mt-3 leading-7 text-muted">
+            Transparansi roadmap tidak menuntut membuka seluruh isi ruang kerja.
+            Roadmap publik dapat dipelihara terpisah saat kebutuhannya jelas.
+          </p>
+        </div>
+      </div>
     </Container>
   </section>
 

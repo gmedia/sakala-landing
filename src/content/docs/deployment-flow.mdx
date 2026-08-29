@@ -1,0 +1,93 @@
+---
+title: Alur Deployment
+description: Siklus command, state machine deployment, prioritas builder, dan routing aplikasi pada Sakala.
+order: 4
+section: Konsep
+---
+
+import DiagramFigure from "../../components/diagram/DiagramFigure.astro";
+import StateFlow from "../../components/diagram/StateFlow.astro";
+import LoopDiagram from "../../components/diagram/LoopDiagram.astro";
+
+# Alur Deployment
+
+Console mengirim intent pengguna ke API. API membuat command, lalu agent mengambil pekerjaan secara outbound. Tidak ada jalur yang membiarkan browser menyentuh runtime secara langsung.
+
+## Siklus command
+
+1. Console mengirim permintaan deployment ke API.
+2. API memvalidasi permintaan dan menyimpannya sebagai command.
+3. Agent melakukan polling terhadap command yang tersedia.
+4. Agent melakukan claim sebelum menjalankan pekerjaan.
+5. Agent mengirim event dan log yang sudah melalui redaction.
+6. Agent melaporkan hasil sukses atau gagal ke API.
+
+Polling hanya menawarkan pekerjaan yang eligible. Agent belum boleh mengeksekusi command sebelum claim atomik berhasil. Command yang sudah diklaim atau selesai tidak dikembalikan lagi sebagai pekerjaan pending biasa.
+
+## State deployment
+
+Sebuah deployment adalah percobaan, bukan objek yang selalu berhasil. Karena itu setiap tahap punya nama sendiri sehingga kegagalan dapat ditunjuk secara spesifik.
+
+<DiagramFigure
+  caption="Tahapan yang dilalui satu deployment, beserta dua keadaan akhirnya."
+  alt="Deployment berpindah berurutan dari queued, cloning, analyzing, preparing, building, starting, routing, sampai health checking. Dari situ ia berakhir pada salah satu dari dua keadaan: succeeded bila sehat, atau failed bila ada tahap yang gagal."
+  class="my-8"
+>
+  <StateFlow
+    states={[
+      { name: "queued" },
+      { name: "cloning" },
+      { name: "analyzing" },
+      { name: "preparing" },
+      { name: "building" },
+      { name: "starting" },
+      { name: "routing" },
+      { name: "health_checking" },
+      { name: "succeeded", kind: "success" },
+      { name: "failed", kind: "failure" },
+    ]}
+  />
+</DiagramFigure>
+
+Karena tahapnya bernama, pesan kegagalan dapat menyebut tahap mana yang berhenti dan apa yang perlu diperiksa, bukan sekadar `something went wrong`.
+
+Setiap deployment mencatat commit sumber, branch, pemicu, aktor, builder, runtime node, resource yang diminta dan diterapkan, status, event, log, image, route, hasil health check, waktu, serta kategori kegagalan.
+
+## Prioritas builder
+
+Sakala tidak menebak sembarangan. Urutan pemilihan builder bersifat tetap dan dapat dijelaskan.
+
+<DiagramFigure
+  caption="Urutan builder yang dicoba Sakala saat mengubah source menjadi image."
+  alt="Sakala mencoba Dockerfile milik pengguna lebih dulu. Bila tidak ada, ia memakai Railpack. Bila keduanya tidak sesuai, konfigurasi manual dipakai sebagai jalan terakhir."
+  class="my-8"
+>
+  <LoopDiagram
+    steps={["Dockerfile pengguna", "Railpack", "Konfigurasi manual"]}
+  >
+    <p class="text-sm leading-6 text-muted">
+      Dockerfile milik pengguna selalu menang. Railpack hanya dipakai ketika
+      repository tidak menyediakan Dockerfile.
+    </p>
+  </LoopDiagram>
+</DiagramFigure>
+
+Analisis repository memakai scanner Sakala dan `railpack info`. Deployment sesungguhnya memakai `railpack prepare` bersama BuildKit, bukan mengulang seluruh rangkaian analisis.
+
+## Routing aplikasi
+
+Aplikasi yang berhasil dijalankan dipetakan ke domain `*.run.sakala.dev`. Pada playground lokal, pola yang sama diuji melalui `*.run.sakala.localhost`.
+
+Container aplikasi mengikat alamat loopback, dan Caddy meneruskan hostname publik ke port internal tersebut. Route ditulis sebagai berkas yang divalidasi lebih dulu, baru kemudian dimuat ulang.
+
+## Deployment tidak merusak yang sedang sehat
+
+Sebuah deployment baru tidak seharusnya langsung menghancurkan aplikasi yang sedang berjalan. Arah yang dituju adalah membangun kandidat, menjalankannya, memeriksa route dan health-nya, baru menukar deployment aktif dan memensiunkan yang lama.
+
+MVP boleh memakai versi yang lebih sederhana, tetapi arsitekturnya sengaja tidak menyamakan project dengan satu container yang itu-itu saja.
+
+## Status saat ini
+
+Fondasi MVP agent sudah menyediakan eksekusi Dockerfile dan Railpack serta pembaruan route Caddy secara opt-in. Fitur tersebut belum menjadi layanan hosted publik dan masih membutuhkan integrasi Agent API serta runtime node yang dikonfigurasi untuk pilot.
+
+Detail operating mode dan batas runtime dijelaskan pada [Cara kerja Sakala Agent](/docs/agent-runtime).

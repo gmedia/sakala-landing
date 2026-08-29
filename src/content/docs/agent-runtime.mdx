@@ -5,25 +5,41 @@ order: 5
 section: Konsep
 ---
 
+import DiagramFigure from "../../components/diagram/DiagramFigure.astro";
+import SequenceFlow from "../../components/diagram/SequenceFlow.astro";
+
 # Cara Kerja Sakala Agent
 
 Sakala Agent adalah proses Rust yang berjalan pada runtime node. Tugasnya mengambil pekerjaan dari Sakala API, menjalankan operasi yang diizinkan pada node, lalu melaporkan heartbeat, event, log, dan hasil kembali ke API.
 
 Agent bukan web server dan tidak menerima perintah langsung dari browser. Semua komunikasi dimulai dari agent menuju API.
 
-```txt
-Sakala Console
-      |
-      v
-Sakala API menyimpan command
-      ^
-      | polling, claim, event, log, hasil
-      |
-Sakala Agent
-      |
-      v
-Docker, Railpack, dan Caddy pada runtime node
-```
+<DiagramFigure
+  caption="Arah komunikasi antara Console, API, dan Agent."
+  alt="Console mengirim permintaan ke API. API menyimpan command. Agent menghubungi API untuk polling, claim, mengirim event dan log, lalu melaporkan hasil. Seluruh komunikasi dimulai dari Agent menuju API, tidak pernah sebaliknya. Agent kemudian menjalankan Docker, Railpack, dan Caddy pada runtime node."
+  class="my-8"
+>
+  <SequenceFlow
+    actors={["Console", "API", "Agent", "Runtime node"]}
+    steps={[
+      { from: "Console", to: "API", action: "meminta deployment" },
+      { from: "API", to: "API", action: "menyimpan command berstatus pending" },
+      { from: "Agent", to: "API", action: "polling command yang eligible" },
+      { from: "Agent", to: "API", action: "claim atomik sebelum bekerja" },
+      {
+        from: "Agent",
+        to: "Runtime node",
+        action: "build, run, route, health check",
+      },
+      {
+        from: "Agent",
+        to: "API",
+        action: "mengirim event dan log ter-redaksi",
+      },
+      { from: "Agent", to: "API", action: "melaporkan sukses atau gagal" },
+    ]}
+  />
+</DiagramFigure>
 
 ## Dari command sampai selesai
 

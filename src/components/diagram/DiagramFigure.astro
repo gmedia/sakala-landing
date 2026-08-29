@@ -12,7 +12,7 @@ const captionTone = tone === "deep" ? "text-on-deep-muted" : "text-muted-2";
 const borderTone = tone === "deep" ? "border-deep-border" : "border-border";
 ---
 
-<figure class={`m-0 ${className}`}>
+<figure class={`not-prose m-0 ${className}`}>
   <div class={`diagram rounded-2xl border ${borderTone} p-5 sm:p-7`}>
     <slot />
     <p class="sr-only">{alt}</p>
