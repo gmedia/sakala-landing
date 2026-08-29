@@ -22,13 +22,13 @@ export const bilingualRoutes = [
 ] as const;
 
 export function isBilingual(path: string): boolean {
+  if (path === "/docs" || path.startsWith("/docs/")) return true;
   return (bilingualRoutes as readonly string[]).includes(path);
 }
 
 export function getMainNavigation(lang: Lang, t: Dictionary): NavItem[] {
   return [
-    // Dokumentasi masih Bahasa Indonesia, jadi tautannya tidak dilokalkan.
-    { key: "docs", label: t.nav.docs, href: "/docs" },
+    { key: "docs", label: t.nav.docs, href: localizePath("/docs", lang) },
     { key: "about", label: t.nav.about, href: localizePath("/tentang", lang) },
     {
       key: "changelog",

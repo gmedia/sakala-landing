@@ -1,0 +1,93 @@
+---
+title: Deployment Flow
+description: The command lifecycle, deployment state machine, builder priority, and application routing in Sakala.
+track: teknis
+section: Runtime
+order: 5
+lang: en
+---
+
+import DiagramFigure from "../../../../components/diagram/DiagramFigure.astro";
+import StateFlow from "../../../../components/diagram/StateFlow.astro";
+import LoopDiagram from "../../../../components/diagram/LoopDiagram.astro";
+
+# Deployment Flow
+
+The Console sends user intent to the API. The API creates a command, and the Agent picks the work up outbound. No path lets a browser touch the runtime directly.
+
+## Command lifecycle
+
+1. The Console sends a deployment request to the API.
+2. The API validates the request and stores it as a command.
+3. The Agent polls for available commands.
+4. The Agent claims a command before doing any work.
+5. The Agent sends events and logs that have already been redacted.
+6. The Agent reports success or failure to the API.
+
+Polling only offers eligible work. The Agent may not execute a command until an atomic claim succeeds. A command that is already claimed or finished is not returned again as ordinary pending work.
+
+## Deployment states
+
+A deployment is an attempt, not an object that always succeeds. That is why each stage has its own name, so failure can be pinned precisely.
+
+<DiagramFigure
+  caption="The stages a single deployment passes through, and its two possible endings."
+  alt="A deployment moves in order through queued, cloning, analyzing, preparing, building, starting, routing, and health checking. From there it ends in one of two states: succeeded when healthy, or failed when a stage did not pass."
+  class="my-8"
+>
+  <StateFlow
+    states={[
+      { name: "queued" },
+      { name: "cloning" },
+      { name: "analyzing" },
+      { name: "preparing" },
+      { name: "building" },
+      { name: "starting" },
+      { name: "routing" },
+      { name: "health_checking" },
+      { name: "succeeded", kind: "success" },
+      { name: "failed", kind: "failure" },
+    ]}
+  />
+</DiagramFigure>
+
+Because the stages are named, a failure message can say which stage stopped and what to check, rather than only `something went wrong`.
+
+Every deployment records the source commit, branch, trigger, actor, builder, runtime node, requested and applied resources, status, events, logs, image, route, health result, timestamps, and failure category.
+
+## Builder priority
+
+Sakala does not guess arbitrarily. The order in which builders are chosen is fixed and explainable.
+
+<DiagramFigure
+  caption="The order of builders Sakala tries when turning source into an image."
+  alt="Sakala tries the user's Dockerfile first. If none exists, it uses Railpack. If neither fits, manual configuration is the last resort."
+  class="my-8"
+>
+  <LoopDiagram steps={["User Dockerfile", "Railpack", "Manual configuration"]}>
+    <p class="text-sm leading-6 text-muted">
+      A user's Dockerfile always wins. Railpack is only used when the repository
+      provides none.
+    </p>
+  </LoopDiagram>
+</DiagramFigure>
+
+Repository analysis uses the Sakala scanner and `railpack info`. Real deployments use `railpack prepare` with BuildKit, rather than repeating the whole analysis chain.
+
+## Application routing
+
+An application that runs successfully is mapped to a `*.run.sakala.dev` domain. In the local playground the same pattern is exercised through `*.run.sakala.localhost`.
+
+Application containers bind to loopback, and Caddy forwards the public hostname to that internal port. Routes are written as files that are validated first, then reloaded.
+
+## A deployment does not destroy a healthy one
+
+A new deployment should not immediately tear down a running application. The direction is to build a candidate, start it, check its route and health, then switch the active deployment and retire the old one.
+
+MVP may implement something simpler, but the architecture deliberately avoids treating a project as one permanent container.
+
+## Current status
+
+The MVP Agent foundation already provides Dockerfile and Railpack execution, plus opt-in Caddy route updates. None of that is a hosted public service yet; it still needs Agent API integration and a runtime node configured for a pilot.
+
+Operating modes and runtime limits are described in [How the Sakala Agent Works](/en/docs/teknis/agent).

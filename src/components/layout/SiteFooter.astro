@@ -17,7 +17,7 @@ const base = stripLocale(Astro.url.pathname);
 const switchPath = isBilingual(base) ? base : "/";
 
 const navigation = [
-  { label: t.nav.docs, href: "/docs" },
+  { label: t.nav.docs, href: localizePath("/docs", lang) },
   { label: t.nav.about, href: localizePath("/tentang", lang) },
   { label: t.nav.changelog, href: localizePath("/changelog", lang) },
 ];
@@ -25,7 +25,7 @@ const navigation = [
 const openSource = [
   { label: t.nav.github, href: links.githubOrganization, external: true },
   { label: t.footer.governance, href: localizePath("/governance", lang) },
-  { label: t.footer.concepts, href: "/docs/teknis/konsep" },
+  { label: t.footer.concepts, href: localizePath("/docs/teknis/konsep", lang) },
   { label: t.footer.rss, href: localizePath("/rss.xml", lang) },
 ];
 ---

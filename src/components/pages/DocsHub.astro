@@ -1,24 +1,40 @@
 ---
 import { getEntry, render } from "astro:content";
 import DocsLayout from "../../layouts/DocsLayout.astro";
-import { docTracks, getTrackGroups, type DocTrack } from "../../data/docs";
+import { getTrackMeta, getTrackGroups, type DocTrack } from "../../data/docs";
+import { defaultLang, type Lang } from "../../i18n";
 
 interface Props {
   track: DocTrack;
   entryId: string;
   title: string;
   description: string;
+  lang?: Lang;
+  availableLocales?: Lang[];
 }
 
-const { track, entryId, title, description } = Astro.props;
+const {
+  track,
+  entryId,
+  title,
+  description,
+  lang = defaultLang,
+  availableLocales,
+} = Astro.props;
 const entry = await getEntry("docs", entryId);
 if (!entry) throw new Error(`Dokumen hub tidak ditemukan: ${entryId}`);
 const { Content } = await render(entry);
-const groups = await getTrackGroups(track);
-const hubHref = docTracks[track].href;
+const groups = await getTrackGroups(track, lang);
+const hubHref = getTrackMeta(track, lang).href;
 ---
 
-<DocsLayout {title} {description} currentPath={Astro.url.pathname}>
+<DocsLayout
+  {lang}
+  {title}
+  {description}
+  {availableLocales}
+  currentPath={Astro.url.pathname}
+>
   <article class="prose-sakala">
     <Content />
   </article>

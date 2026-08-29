@@ -182,10 +182,14 @@ Bahasa Indonesia adalah default tanpa prefix URL, Bahasa Inggris di `/en/`.
 - Sapaan Bahasa Indonesia memakai `kamu`.
 - Halaman yang belum diterjemahkan tidak mengumumkan hreflang alternate, dan
   pemilih bahasa mengarahkannya ke beranda locale, bukan ke 404.
-- Rute yang benar-benar dua bahasa dicatat pada `bilingualRoutes`. Saat ini:
-  beranda, tentang, governance, dan changelog.
-- Dokumentasi masih Bahasa Indonesia, dan hal itu dinyatakan terbuka pada
-  navigasi Inggris lewat `nav.docsNoteForEnglish`.
+- Rute yang benar-benar dua bahasa dicatat pada `bilingualRoutes`, dan seluruh
+  `/docs` juga dua bahasa.
+- Dokumen berbahasa Inggris berada di `src/content/docs/en/` dengan field
+  `lang`. Slug dipertahankan sama antar bahasa agar `localizePath` tetap
+  sederhana dan tidak perlu tabel pemetaan slug.
+- `availableLocales` untuk halaman dokumentasi dihitung dari collection lewat
+  `getDocLocales`, bukan ditulis manual, supaya dokumen yang belum
+  diterjemahkan tidak mengumumkan alternate palsu.
 - Changelog diterbitkan per bahasa lewat field `lang`, dan RSS dipisah menjadi
   `/rss.xml` serta `/en/rss.xml`. Satu feed tidak boleh mencampur bahasa karena
   elemen `language` hanya dapat menyatakan satu.

@@ -22,7 +22,7 @@ export const en: Dictionary = {
     menu: "Menu",
     close: "Close",
     languageLabel: "Choose language",
-    docsNoteForEnglish: "Documentation is currently written in Indonesian.",
+    docsNoteForEnglish: null,
   },
 
   hero: {

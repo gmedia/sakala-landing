@@ -1,27 +1,28 @@
 ---
-import { docTracks, type DocTrack } from "../../data/docs";
+import { getTrackMeta, type DocTrack } from "../../data/docs";
+import type { Lang } from "../../i18n";
 
 interface Props {
   current: DocTrack;
+  lang: Lang;
   class?: string;
 }
 
-const { current, class: className = "" } = Astro.props;
-const entries = Object.entries(docTracks) as [
-  DocTrack,
-  (typeof docTracks)[DocTrack],
-][];
+const { current, lang, class: className = "" } = Astro.props;
+const tracks: DocTrack[] = ["panduan", "teknis"];
+const label = lang === "en" ? "Documentation type" : "Jenis dokumentasi";
 ---
 
-<nav aria-label="Jenis dokumentasi" class={className}>
+<nav aria-label={label} class={className}>
   <ul class="m-0 grid list-none gap-1 p-0">
     {
-      entries.map(([key, track]) => {
+      tracks.map((key) => {
+        const meta = getTrackMeta(key, lang);
         const isCurrent = key === current;
         return (
           <li>
             <a
-              href={track.href}
+              href={meta.href}
               data-astro-prefetch="hover"
               aria-current={isCurrent ? "true" : undefined}
               class:list={[
@@ -37,10 +38,10 @@ const entries = Object.entries(docTracks) as [
                   isCurrent ? "text-primary-dark" : "text-ink",
                 ]}
               >
-                {track.title}
+                {meta.title}
               </span>
               <span class="mt-0.5 block text-xs leading-5 text-muted">
-                {track.blurb}
+                {meta.blurb}
               </span>
             </a>
           </li>

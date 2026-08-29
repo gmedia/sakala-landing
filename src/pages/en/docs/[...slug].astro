@@ -1,14 +1,14 @@
 ---
 import { getCollection, render, type CollectionEntry } from "astro:content";
-import DocsLayout from "../../layouts/DocsLayout.astro";
-import { getDocLocales, hubIds } from "../../data/docs";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import { getDocLocales, hubIds } from "../../../data/docs";
 
 export async function getStaticPaths() {
   const docs = await getCollection("docs");
   return docs
-    .filter((doc) => doc.data.lang === "id" && !hubIds.includes(doc.id))
+    .filter((doc) => doc.data.lang === "en" && !hubIds.includes(doc.id))
     .map((doc) => ({
-      params: { slug: doc.id },
+      params: { slug: doc.id.replace(/^en\//, "") },
       props: { doc },
     }));
 }
@@ -23,6 +23,7 @@ const availableLocales = await getDocLocales(doc.id);
 ---
 
 <DocsLayout
+  lang="en"
   title={`${doc.data.title} — Sakala`}
   description={doc.data.description}
   currentPath={Astro.url.pathname}

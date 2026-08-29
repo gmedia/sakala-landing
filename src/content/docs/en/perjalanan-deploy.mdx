@@ -1,0 +1,105 @@
+---
+title: Your First Deployment
+description: Ten stages from signing in to an application with a public address, as a picture of the flow being built.
+track: panduan
+section: Deploying
+order: 5
+lang: en
+---
+
+import DiagramFigure from "../../../components/diagram/DiagramFigure.astro";
+import FlowDiagram from "../../../components/diagram/FlowDiagram.astro";
+
+# Your First Deployment
+
+This page describes **the flow being built**, not steps you can run today. Sakala is not available as a public service yet.
+
+It is still useful: you can judge whether the flow makes sense, and see what to prepare in advance.
+
+## Five stages your project goes through
+
+<DiagramFigure
+  caption="The journey every project takes before it has a public address."
+  alt="Five sequential stages. Source is the repository and commit you choose. Build turns it into an image. Deploy runs the application as a container. Run confirms the application answers through a health check. Reach activates the public address."
+  class="my-8"
+>
+  <FlowDiagram
+    steps={[
+      { name: "Source", text: "The repository and commit you choose." },
+      { name: "Build", text: "Source becomes a runnable image." },
+      {
+        name: "Deploy",
+        text: "The application runs with explicit resource limits.",
+      },
+      {
+        name: "Run",
+        text: "A health check confirms the application really answers.",
+      },
+      {
+        name: "Reach",
+        text: "The public address is activated and can be opened.",
+      },
+    ]}
+  />
+</DiagramFigure>
+
+## Ten steps from your side
+
+From a user's point of view, the journey looks like this.
+
+### 1. Sign in
+
+You sign in to the Console at `app.sakala.dev`. Signing in with GitHub is the main path, because Sakala needs to read your repository.
+
+### 2. Onboarding
+
+Sakala asks the basics once, so it does not have to ask again for every project.
+
+### 3. Create a project
+
+A project is a long-lived container. It holds the connected repository, configuration, variables, addresses, and the full deployment history. A project is not simply one running container.
+
+### 4. Connect a repository
+
+You pick a repository and a branch. In the early stage, public GitHub repositories are what is supported.
+
+### 5. Repository analysis
+
+Sakala reads the repository to infer the stack, how to build it, and how to run it. The result is shown so you can check it, rather than being applied silently.
+
+If the guess is wrong, you can correct it. Sakala shows the reasoning behind the guess, for example:
+
+```txt
+Detected: Laravel
+PHP     : 8.x
+Builder : Railpack
+Port    : 8080
+```
+
+### 6. Configure
+
+You fill in variables, secrets, and other settings before the first deploy. See [Variables and Secrets](/en/docs/variabel-dan-secret).
+
+### 7. Deploy
+
+You press deploy. Sakala queues the work and runs it stage by stage.
+
+### 8. Follow the progress
+
+You see which stage is running, not just the word "processing". Every stage has a name, so a failure tells you where it stopped.
+
+### 9. Read the logs
+
+Build and runtime logs are available. Secrets are redacted so they are never printed.
+
+If it fails, see [When a Deployment Fails](/en/docs/ketika-gagal).
+
+### 10. Open the address, then redeploy
+
+An application that passes its health check gets a public address. After you fix your code and push, you can deploy again, and a new deployment does not immediately destroy a healthy one.
+
+## What is not in the early scope
+
+So expectations stay accurate, the following are deliberately out of the early scope: custom domains, managed databases, object storage, workers and cron, team workspaces, preview environments, rollback, and a CLI.
+
+All of it is recorded as direction on the [roadmap](/en/#roadmap), not promised now.

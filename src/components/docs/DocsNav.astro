@@ -1,12 +1,14 @@
 ---
 import { getTrackSequence, trackFromPath } from "../../data/docs";
+import type { Lang } from "../../i18n";
 
 interface Props {
   currentPath: string;
+  lang: Lang;
 }
 
-const { currentPath } = Astro.props;
-const sequence = await getTrackSequence(trackFromPath(currentPath));
+const { currentPath, lang } = Astro.props;
+const sequence = await getTrackSequence(trackFromPath(currentPath), lang);
 const index = sequence.findIndex((item) => item.href === currentPath);
 const previous = index > 0 ? sequence[index - 1] : undefined;
 const next = index >= 0 ? sequence[index + 1] : undefined;

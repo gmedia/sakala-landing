@@ -1,0 +1,74 @@
+---
+title: Core Concepts
+description: The role of each repository, the control plane and data plane boundary, and Sakala's domain language.
+track: teknis
+section: System
+order: 3
+lang: en
+---
+
+import RepoTopology from "../../../../components/diagram/RepoTopology.astro";
+import DiagramFigure from "../../../../components/diagram/DiagramFigure.astro";
+
+# Core Concepts
+
+Sakala separates the user experience from the runtime work so that security and ownership boundaries stay clear. That separation is not folder tidiness; it is a privilege boundary.
+
+## Control plane and data plane
+
+The **control plane** owns product policy: identity, projects, deployment metadata, desired state, resource policy, and audit. It never runs a container.
+
+The **data plane** owns execution: checkout, build, container lifecycle, resource enforcement, logs, health, and runtime routing.
+
+<DiagramFigure
+  caption="How Sakala's repositories divide by the privilege each one holds."
+  alt="Three groups of repositories. The public group holds sakala-landing. The control plane group holds sakala-console and sakala-api. The data plane group holds sakala-agent and sakala-infra, and only this group performs privileged runtime operations."
+  class="my-8"
+>
+  <RepoTopology
+    publicLabel="Public"
+    controlLabel="Control plane"
+    dataLabel="Data plane"
+    roles={{
+      landing: "Website, documentation, and SEO entry point.",
+      console: "SvelteKit interface for the user experience.",
+      api: "Laravel control plane for auth, projects, deployments, and commands.",
+      agent: "Rust executor that performs work on a runtime node.",
+      infra: "Runtime, networking, and routing reference.",
+    }}
+  />
+</DiagramFigure>
+
+## Boundaries that must hold
+
+Changing any of the following requires a recorded architecture decision:
+
+1. The API never accesses the Docker socket directly.
+2. The Agent is the only privileged runtime boundary.
+3. Product resource policy belongs to the control plane; enforcement belongs to the Agent.
+4. The Console does not own business policy.
+5. The contract between API and Agent is versioned.
+
+The Agent does not open an HTTP server to receive commands. The API stores work, and the Agent pulls and claims it outbound. This keeps firewall and NAT simple, and creates no remote shell.
+
+## Terms used consistently
+
+| Term              | Meaning                                                           |
+| ----------------- | ----------------------------------------------------------------- |
+| Project           | A long-lived product object owned by a user                       |
+| Deployment        | One attempt to manifest a source revision into a running workload |
+| Active deployment | The deployment currently serving the project                      |
+| Workload          | A runnable unit; currently a web service                          |
+| Generated domain  | Sakala's built-in hostname following `<slug>.run.sakala.dev`      |
+| Builder           | The mechanism that turns source into an image                     |
+| AgentCommand      | A control plane instruction claimed and executed by the Agent     |
+| Resource policy   | CPU and memory decided by the API                                 |
+| Hard safety limit | A node-local maximum the Agent will not exceed                    |
+
+The full list lives in the [glossary](/en/docs/glosarium).
+
+## Product boundaries
+
+Sakala is not being built as an enterprise cloud alternative, a Kubernetes UI with a new name, a developer social network, an LMS, or a replacement observability suite. The early focus is deployment that is easier to learn and use for small projects and teams.
+
+Read [How the Sakala Agent Works](/en/docs/teknis/agent) to understand connection modes and the runtime driver.

@@ -1,0 +1,117 @@
+---
+title: System Architecture
+description: Repository topology, the control plane and data plane split, the MVP runtime topology, and the invariants that protect them.
+track: teknis
+section: System
+order: 2
+lang: en
+---
+
+import DiagramFigure from "../../../../components/diagram/DiagramFigure.astro";
+import RepoTopology from "../../../../components/diagram/RepoTopology.astro";
+import SystemDiagram from "../../../../components/diagram/SystemDiagram.astro";
+
+# System Architecture
+
+Sakala's architecture keeps product policy in the control plane, isolates privileged operations in the Agent, and stays simple during MVP without closing the path to multiple nodes.
+
+## Repository topology
+
+<DiagramFigure
+  caption="Sakala's five repositories by the privilege each one holds."
+  alt="The public group holds sakala-landing. The control plane group holds sakala-console and sakala-api. The data plane group holds sakala-agent and sakala-infra, the only group that performs privileged runtime operations."
+  class="my-8"
+>
+  <RepoTopology
+    publicLabel="Public"
+    controlLabel="Control plane"
+    dataLabel="Data plane"
+    roles={{
+      landing: "Public Astro site, documentation, and SEO entry point.",
+      console: "SvelteKit, a static SPA during MVP.",
+      api: "Laravel, owning state and policy.",
+      agent: "Rust, the only component that drives Docker and Caddy.",
+      infra: "Runtime reference and local playground.",
+    }}
+  />
+</DiagramFigure>
+
+## How components communicate
+
+<DiagramFigure
+  caption="The direction of communication between browser, control plane, and data plane."
+  alt="The browser reaches the Console. The Console talks to the API as control plane, and the API stores state in PostgreSQL. The Agent contacts the API outbound to poll, claim, and report. The Agent then drives Docker and Caddy on a runtime node, producing a publicly reachable application container."
+  class="my-8"
+>
+  <SystemDiagram
+    controlPlaneLabel="control plane"
+    dataPlaneLabel="data plane"
+    agentLabel="Agent"
+    appLabel="run.sakala.dev"
+    browserLabel="Browser"
+  />
+</DiagramFigure>
+
+Note the arrow direction from Agent to API. The Agent opens no HTTP server and accepts no inbound connections. This keeps firewall and NAT simple, and creates no remote shell.
+
+## Division of responsibility
+
+The **control plane** owns identity, authentication, projects, deployment metadata, desired state, variable and secret metadata, resource policy, domain metadata, AgentNode and AgentCommand, events and logs, and audit.
+
+It **must not** access the Docker socket, run user containers, perform `docker build`, mutate host Caddy directly from an HTTP request, or become a remote shell.
+
+The **data plane** owns checkout, workspace, process execution, builders, images, container lifecycle, resource enforcement, logs, health, runtime routing, and cleanup.
+
+## MVP runtime topology
+
+During MVP everything runs on a single host.
+
+```txt
+Internet
+  └── Caddy
+        ├── Static landing
+        ├── Static console
+        ├── API           127.0.0.1:8080
+        └── User apps     127.0.0.1:31xxx
+```
+
+User applications bind to loopback and publish no ports to the internet. Caddy forwards the public hostname to that internal port.
+
+The domain mapping:
+
+```txt
+sakala.dev          landing
+app.sakala.dev      console
+api.sakala.dev      API
+*.run.sakala.dev    user applications
+```
+
+## Resource ownership
+
+This split stops the Agent from knowing product plan semantics.
+
+```txt
+sakala-api        decides product resource policy
+sakala-agent      enforces it on the node
+node config       node-local hard safety limit
+```
+
+If requested resources exceed the node maximum, an explicit failure is preferred over silently clamping them.
+
+## Invariants
+
+The following seven require a recorded architecture decision to change:
+
+1. The API never accesses the Docker socket directly.
+2. The Agent is the privileged runtime boundary.
+3. Product resource policy belongs to the control plane.
+4. The Console does not own business policy.
+5. The API to Agent contract is versioned.
+6. Repositories are not merged back into a single dashboard for convenience.
+7. MVP stays simple until validation justifies distributed complexity.
+
+## The path to multiple nodes
+
+Not being built now. The order is: a single runtime node, then several, placement metadata, node capability labels, drain, gateway separation, a dedicated router, and onward.
+
+What matters today is only that the path stays open.

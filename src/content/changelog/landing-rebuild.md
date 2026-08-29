@@ -21,9 +21,10 @@ pembagian control plane dan data plane, serta siklus karya melahirkan karya
 digambar sebagai SVG statis yang mengikuti warna permukaan dan memiliki padanan
 teks untuk pembaca screen reader.
 
-Situs sekarang tersedia dalam Bahasa Indonesia dan Inggris. Seluruh URL Bahasa
-Indonesia tidak berubah, dan halaman Inggris berada di bawah `/en/`. Halaman
-yang belum diterjemahkan tidak mengumumkan versi bahasa lain.
+Situs sekarang tersedia penuh dalam Bahasa Indonesia dan Inggris, termasuk
+seluruh dokumentasi. URL Bahasa Indonesia tidak berubah sama sekali, dan versi
+Inggris berada di bawah `/en/`. Halaman yang belum diterjemahkan tidak
+mengumumkan versi bahasa lain.
 
 Seluruh halaman lain ikut disusun ulang. Halaman tentang menambahkan
 perjalanan produk dan model pertumbuhan, halaman governance menjelaskan domain

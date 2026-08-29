@@ -27,7 +27,7 @@ const t = useTranslations(lang);
   description={t.meta.homeDescription}
   availableLocales={["id", "en"]}
 >
-  <HeroSection t={t} />
+  <HeroSection t={t} {lang} />
   <StatusStrip t={t} />
   <ProblemSection t={t} />
   <CrossingSection t={t} />
@@ -37,5 +37,5 @@ const t = useTranslations(lang);
   <RoadmapSection t={t} />
   <OpenSourceSection t={t} />
   <FaqSection t={t} />
-  <CtaSection t={t} />
+  <CtaSection t={t} {lang} />
 </LandingLayout>

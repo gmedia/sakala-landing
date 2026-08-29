@@ -1,19 +1,22 @@
 ---
 import DocsTrackSwitch from "./DocsTrackSwitch.astro";
-import { getTrackGroups, trackFromPath } from "../../data/docs";
+import { getTrackGroups, getTrackMeta, trackFromPath } from "../../data/docs";
+import type { Lang } from "../../i18n";
 
 interface Props {
   currentPath: string;
+  lang: Lang;
 }
 
-const { currentPath } = Astro.props;
+const { currentPath, lang } = Astro.props;
 const track = trackFromPath(currentPath);
-const groups = await getTrackGroups(track);
+const trackMeta = getTrackMeta(track, lang);
+const groups = await getTrackGroups(track, lang);
 ---
 
 <aside class="hidden w-64 shrink-0 lg:block">
   <div class="sticky top-28 max-h-[calc(100dvh-9rem)] overflow-y-auto pr-2">
-    <DocsTrackSwitch current={track} />
+    <DocsTrackSwitch current={track} {lang} />
 
     <div class="mt-7 space-y-6">
       {

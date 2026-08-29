@@ -17,6 +17,9 @@ const docs = defineCollection({
     section: z.string(),
     /** Urutan di dalam jalur. */
     order: z.number(),
+    /** Bahasa dokumen. Tidak ada fallback: jalur bahasa yang belum
+     *  diterjemahkan tidak akan muncul di sidebar bahasa itu. */
+    lang: z.enum(["id", "en"]).default("id"),
   }),
 });
 

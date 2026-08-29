@@ -14,6 +14,6 @@ Infrastructure is explained with diagrams rather than paragraphs alone. The five
 
 Documentation is now split into two tracks. `/docs` holds the usage guide, written without assuming the reader knows Docker or reverse proxies, while `/docs/teknis` holds architecture, runtime, and security. Navigation is derived from the content collection, and the old technical URLs redirect to their new addresses.
 
-The site is available in Indonesian and English. Every Indonesian URL is unchanged, and English pages live under `/en/`. Pages that have not been translated do not advertise a version in another language.
+The site is fully available in Indonesian and English, documentation included. Every Indonesian URL is unchanged, and English pages live under `/en/`. Pages that have not been translated do not advertise a version in another language.
 
 Typography uses Montserrat for headings and Inter for body text, both self-hosted under the SIL OFL. The logo, favicon, and Open Graph image were rebuilt from new vector assets.
