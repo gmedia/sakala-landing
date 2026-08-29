@@ -1,32 +1,21 @@
 ---
-import { Image } from "astro:assets";
-import BrandMark from "./BrandMark.astro";
+import BrandLockup from "./BrandLockup.astro";
+import { localizePath, type Lang } from "../../i18n";
 
 interface Props {
-  compact?: boolean;
+  lang: Lang;
+  class?: string;
+  label: string;
 }
 
-const { compact = false } = Astro.props;
+const { lang, class: className = "h-8 w-auto", label } = Astro.props;
 ---
 
 <a
-  href="/"
+  href={localizePath("/", lang)}
   data-astro-prefetch="hover"
-  class="inline-flex items-center"
-  aria-label="Sakala - Beranda"
+  class="inline-flex items-center rounded-sm"
+  aria-label={label}
 >
-  {
-    compact ? (
-      <BrandMark class="h-11 w-auto" />
-    ) : (
-      <Image
-        src="/logo.svg"
-        width="1310"
-        height="300"
-        alt="Sakala"
-        class="h-13 w-auto sm:h-14"
-        loading="eager"
-      />
-    )
-  }
+  <BrandLockup class={className} title={label} />
 </a>

@@ -37,6 +37,34 @@ Gunakan strategi `hover` untuk desktop dan `tap` untuk menu mobile. Jangan
 mengaktifkan `prefetchAll`, `viewport`, atau `load` secara luas karena dapat
 mengambil halaman yang tidak dibutuhkan pengguna.
 
+### Internationalization
+
+Routing i18n Astro aktif dengan `defaultLocale: "id"`, `locales: ["id", "en"]`,
+dan `prefixDefaultLocale: false`. Bahasa Indonesia tidak memakai prefix sehingga
+seluruh URL yang sudah terindeks tidak berubah, sedangkan Bahasa Inggris berada
+di bawah `/en/`.
+
+`@astrojs/sitemap` dikonfigurasi dengan opsi `i18n` agar sitemap memuat
+`xhtml:link` alternate hanya untuk halaman yang benar-benar terbit dua bahasa.
+
+String pengguna berada di `src/i18n/`. Tipe kamus diturunkan dari versi Bahasa
+Indonesia, sehingga terjemahan yang belum lengkap gagal pada `astro check`.
+Jangan menambahkan fallback yang menyajikan konten Bahasa Indonesia pada route
+`/en/`.
+
+### Astro Fonts
+
+Aktif memakai `fonts` dengan `fontProviders.local()`. Berkas font berada di
+`src/assets/fonts/` sebagai WOFF2 subset latin, bukan di `public/`, agar tidak
+terduplikasi pada output build.
+
+Bobot dibatasi: Montserrat 600 dan 700 untuk judul, Inter 400, 500, dan 600
+untuk teks. Preload hanya untuk bobot di atas lipatan, yaitu Montserrat 700 dan
+Inter 400. Lisensi SIL OFL kedua family disertakan di direktori yang sama.
+
+Jangan menambah provider remote. Self-host menjaga build tetap reproducible dan
+tidak menambah host pihak ketiga saat runtime.
+
 ### RSS Changelog
 
 `/rss.xml` dibangun sebagai static endpoint menggunakan `@astrojs/rss` dan
@@ -54,12 +82,6 @@ publik.
 Jangan menambahkan `ClientRouter` hanya untuk animasi. Fitur ini baru layak
 dievaluasi ketika ada kebutuhan client-side navigation atau persistent state
 lintas halaman yang terukur.
-
-### Astro Fonts
-
-Tunda sampai tersedia keputusan font brand dan aset font lokal yang memiliki
-lisensi jelas. Jangan menambah provider remote hanya untuk mengganti system
-fallback tanpa audit performa.
 
 ### Responsive Images
 

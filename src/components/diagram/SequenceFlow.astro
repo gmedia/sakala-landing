@@ -1,0 +1,49 @@
+---
+interface Step {
+  from: string;
+  to: string;
+  action: string;
+}
+
+interface Props {
+  actors: readonly string[];
+  steps: readonly Step[];
+}
+
+const { actors, steps } = Astro.props;
+---
+
+<div>
+  <ul
+    class="m-0 flex list-none flex-wrap items-center gap-2 border-b border-dashed border-border pb-4 p-0"
+  >
+    {
+      actors.map((actor) => (
+        <li class="rounded-lg border border-border-strong bg-surface px-3 py-1.5 font-mono text-xs font-medium text-ink">
+          {actor}
+        </li>
+      ))
+    }
+  </ul>
+
+  <!-- Urutan langkah membawa informasi, jadi daftar ini bernomor. -->
+  <ol class="m-0 mt-4 list-none space-y-2 p-0">
+    {
+      steps.map((step, index) => (
+        <li class="grid grid-cols-[2rem_1fr] items-baseline gap-3">
+          <span class="font-mono text-xs text-muted-2">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <span class="text-sm leading-6">
+            <span class="font-mono text-xs text-primary-dark">{step.from}</span>
+            <span aria-hidden="true" class="mx-1.5 text-muted-2">
+              &rarr;
+            </span>
+            <span class="font-mono text-xs text-primary-dark">{step.to}</span>
+            <span class="ml-2 text-muted">{step.action}</span>
+          </span>
+        </li>
+      ))
+    }
+  </ol>
+</div>

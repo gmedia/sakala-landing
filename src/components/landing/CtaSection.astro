@@ -1,39 +1,38 @@
 ---
-import Container from "../ui/Container.astro";
 import Button from "../ui/Button.astro";
+import Container from "../ui/Container.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
 import { links } from "../../data/links";
+import type { Dictionary } from "../../i18n/id";
+import { localizePath, type Lang } from "../../i18n";
+
+interface Props {
+  t: Dictionary;
+  lang: Lang;
+}
+
+const { t, lang } = Astro.props;
 ---
 
-<section class="pb-20 sm:pb-24">
-  <Container>
-    <div
-      class="editorial-grid relative overflow-hidden rounded-[2rem] border border-primary-soft bg-primary-soft-2 px-7 py-10 sm:px-12 sm:py-14"
-    >
-      <span
-        class="absolute right-10 top-8 hidden rounded-lg bg-surface px-4 py-2 font-mono text-xs text-primary sm:block"
+<section class="surface-deep relative isolate overflow-hidden">
+  <div class="brand-lattice absolute inset-0 -z-10" aria-hidden="true"></div>
+  <Container className="relative py-20 sm:py-24">
+    <SectionHeader
+      eyebrow={t.cta.eyebrow}
+      title={t.cta.title}
+      lead={t.cta.lead}
+      tone="deep"
+    />
+    <div class="mt-10 flex flex-wrap gap-3">
+      <Button href={localizePath("/docs", lang)} tone="deep" prefetch="hover"
+        >{t.cta.primary}</Button
       >
-        git push origin main
-      </span>
-      <p
-        class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-primary"
+      <Button
+        href={links.githubRepository}
+        tone="deep"
+        variant="secondary"
+        external>{t.cta.secondary}</Button
       >
-        Ikut dari awal
-      </p>
-      <h2
-        class="mt-5 max-w-3xl text-3xl font-semibold tracking-tight text-ink sm:text-5xl"
-      >
-        Bantu Sakala jadi jalur deploy yang ramah untuk belajar.
-      </h2>
-      <p class="mt-5 max-w-xl text-lg leading-8 text-muted">
-        Lihat arahnya, baca dokumentasinya, dan bantu bentuk pengalaman deploy
-        yang jelas untuk project kecil.
-      </p>
-      <div class="mt-9 flex flex-wrap gap-3">
-        <Button href="/docs" prefetch="hover">Baca Dokumentasi</Button>
-        <Button href={links.githubRepository} variant="secondary" external
-          >Lihat Repository</Button
-        >
-      </div>
     </div>
   </Container>
 </section>

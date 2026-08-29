@@ -7,42 +7,61 @@ import SiteFooter from "../components/layout/SiteFooter.astro";
 import SiteHeader from "../components/layout/SiteHeader.astro";
 import Breadcrumbs from "../components/ui/Breadcrumbs.astro";
 import Container from "../components/ui/Container.astro";
+import { defaultLang, localizePath, useTranslations, type Lang } from "../i18n";
+import { getTrackMeta, trackFromPath } from "../data/docs";
 
 interface Props {
+  lang?: Lang;
   title: string;
   description: string;
   currentPath: string;
   breadcrumbLabel?: string;
+  availableLocales?: Lang[];
 }
 
 const {
+  lang = defaultLang,
   title,
   description,
   currentPath,
   breadcrumbLabel = title,
+  availableLocales,
 } = Astro.props;
+
+const t = useTranslations(lang);
 const normalizedCurrentPath =
   currentPath.length > 1 ? currentPath.replace(/\/$/, "") : currentPath;
+const track = getTrackMeta(trackFromPath(normalizedCurrentPath), lang);
+const isHub = normalizedCurrentPath === track.href;
 const breadcrumbs = [
-  { label: "Beranda", href: "/" },
-  ...(normalizedCurrentPath === "/docs"
-    ? [{ label: "Dokumentasi" }]
-    : [{ label: "Dokumentasi", href: "/docs" }, { label: breadcrumbLabel }]),
+  { label: lang === "en" ? "Home" : "Beranda", href: localizePath("/", lang) },
+  ...(isHub
+    ? [{ label: track.title }]
+    : [{ label: track.title, href: track.href }, { label: breadcrumbLabel }]),
 ];
 ---
 
-<BaseLayout title={title} description={description} {breadcrumbs}>
-  <SiteHeader />
+<BaseLayout {lang} {title} {description} {availableLocales} {breadcrumbs}>
+  <SiteHeader lang={lang} t={t} />
+
+  <!-- Pita tipis sebagai penyambung dari header gelap. Dokumentasi sengaja
+       lebih tenang daripada landing, jadi hanya breadcrumb yang dibawa. -->
+  <div class="surface-deep border-b border-deep-border">
+    <Container className="py-3.5">
+      <Breadcrumbs items={breadcrumbs} tone="deep" />
+    </Container>
+  </div>
+
   <main id="main-content">
-    <Container className="flex gap-12 py-8 lg:py-16">
-      <DocsSidebar currentPath={normalizedCurrentPath} />
+    <Container className="flex gap-12 py-10 lg:py-16">
+      <DocsSidebar currentPath={normalizedCurrentPath} {lang} />
       <div class="min-w-0 max-w-3xl flex-1">
-        <DocsMobileNav currentPath={normalizedCurrentPath} />
-        <Breadcrumbs items={breadcrumbs} />
+        <DocsMobileNav currentPath={normalizedCurrentPath} {lang} />
         <slot />
-        <DocsNav currentPath={normalizedCurrentPath} />
+        <DocsNav currentPath={normalizedCurrentPath} {lang} />
       </div>
     </Container>
   </main>
-  <SiteFooter />
+
+  <SiteFooter lang={lang} t={t} />
 </BaseLayout>

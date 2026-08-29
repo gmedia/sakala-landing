@@ -2,12 +2,26 @@
 import BaseLayout from "./BaseLayout.astro";
 import SiteFooter from "../components/layout/SiteFooter.astro";
 import SiteHeader from "../components/layout/SiteHeader.astro";
+import { defaultLang, useTranslations, type Lang } from "../i18n";
+
+interface Props {
+  lang?: Lang;
+  title?: string;
+  description?: string;
+  pageType?: "WebPage" | "AboutPage" | "CollectionPage";
+  availableLocales?: Lang[];
+  noindex?: boolean;
+  breadcrumbs?: { label: string; href?: string }[];
+}
+
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
 ---
 
-<BaseLayout {...Astro.props}>
-  <SiteHeader />
+<BaseLayout {...Astro.props} lang={lang}>
+  <SiteHeader lang={lang} t={t} />
   <main id="main-content">
     <slot />
   </main>
-  <SiteFooter />
+  <SiteFooter lang={lang} t={t} />
 </BaseLayout>

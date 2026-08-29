@@ -1,0 +1,73 @@
+---
+title: Konsep Dasar
+description: Peran setiap repository, batas control plane dan data plane, serta istilah domain Sakala.
+track: teknis
+section: Sistem
+order: 3
+---
+
+import RepoTopology from "../../../components/diagram/RepoTopology.astro";
+import DiagramFigure from "../../../components/diagram/DiagramFigure.astro";
+
+# Konsep Dasar
+
+Sakala memisahkan pengalaman pengguna dari pekerjaan runtime agar batas keamanan dan ownership tetap jelas. Pemisahan itu bukan sekadar rapi-rapi struktur folder, melainkan batas hak istimewa.
+
+## Control plane dan data plane
+
+**Control plane** memegang kebijakan produk: identitas, project, metadata deployment, desired state, resource policy, dan audit. Ia tidak pernah menjalankan container.
+
+**Data plane** memegang eksekusi: checkout, build, container lifecycle, penerapan resource, log, health, dan routing runtime.
+
+<DiagramFigure
+  caption="Pembagian repository Sakala menurut hak istimewa yang dipegangnya."
+  alt="Tiga kelompok repository. Kelompok publik berisi sakala-landing. Kelompok control plane berisi sakala-console dan sakala-api. Kelompok data plane berisi sakala-agent dan sakala-infra, dan hanya kelompok inilah yang menjalankan operasi runtime berhak istimewa."
+  class="my-8"
+>
+  <RepoTopology
+    publicLabel="Publik"
+    controlLabel="Control plane"
+    dataLabel="Data plane"
+    roles={{
+      landing: "Website, dokumentasi, dan pintu masuk SEO.",
+      console: "Antarmuka SvelteKit untuk pengalaman pengguna.",
+      api: "Control plane Laravel untuk auth, project, deployment, dan command.",
+      agent: "Executor Rust yang menjalankan pekerjaan pada runtime node.",
+      infra: "Referensi runtime, networking, dan routing.",
+    }}
+  />
+</DiagramFigure>
+
+## Batas yang tidak boleh dilanggar
+
+Batas berikut membutuhkan keputusan arsitektur tercatat bila ingin diubah:
+
+1. API tidak pernah mengakses Docker socket secara langsung.
+2. Agent adalah satu-satunya batas runtime berhak istimewa.
+3. Resource policy produk milik control plane, penerapannya milik Agent.
+4. Console tidak memegang kebijakan bisnis.
+5. Kontrak antara API dan Agent diberi versi.
+
+Agent tidak membuka HTTP server untuk menerima command. API menyimpan pekerjaan, sedangkan agent mengambil dan mengklaimnya secara outbound. Model ini membuat firewall dan NAT sederhana, dan tidak menciptakan remote shell.
+
+## Istilah yang dipakai konsisten
+
+| Istilah           | Artinya                                                                |
+| ----------------- | ---------------------------------------------------------------------- |
+| Project           | Objek produk berumur panjang milik pengguna                            |
+| Deployment        | Satu percobaan mewujudkan satu revisi source menjadi workload berjalan |
+| Active deployment | Deployment yang sedang melayani project                                |
+| Workload          | Unit yang dapat dijalankan; saat ini web service                       |
+| Generated domain  | Hostname bawaan Sakala berpola `<slug>.run.sakala.dev`                 |
+| Builder           | Mekanisme yang mengubah source menjadi image                           |
+| AgentCommand      | Instruksi control plane yang diklaim dan dijalankan Agent              |
+| Resource policy   | CPU dan memori yang diputuskan API                                     |
+| Hard safety limit | Batas maksimum lokal node yang tidak akan dilampaui Agent              |
+
+Daftar lengkap tersedia pada [glosarium](/docs/glosarium).
+
+## Batas produk
+
+Sakala tidak diarahkan menjadi alternatif cloud enterprise, UI Kubernetes dengan nama baru, jejaring sosial developer, LMS, atau pengganti suite observability. Fokus awalnya adalah deployment yang lebih mudah dipelajari dan dipakai oleh project serta tim kecil.
+
+Baca [Cara kerja Sakala Agent](/docs/teknis/agent) untuk memahami mode koneksi dan runtime driver.

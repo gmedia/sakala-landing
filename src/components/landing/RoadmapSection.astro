@@ -1,0 +1,64 @@
+---
+import Container from "../ui/Container.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
+import StatusPill from "../ui/StatusPill.astro";
+import { roadmapItems } from "../../data/sections";
+import type { Dictionary } from "../../i18n/id";
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+type RoadmapId = keyof Dictionary["roadmap"]["items"];
+---
+
+<section
+  id="roadmap"
+  class="border-b border-border bg-background-soft py-20 sm:py-24"
+>
+  <Container>
+    <div class="grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+      <div class="lg:sticky lg:top-28 lg:self-start">
+        <SectionHeader
+          eyebrow={t.roadmap.eyebrow}
+          title={t.roadmap.title}
+          lead={t.roadmap.lead}
+        />
+        <div class="mt-8 rounded-xl border border-border bg-surface p-5">
+          <h3 class="font-display text-base font-semibold text-ink">
+            {t.roadmap.validation.title}
+          </h3>
+          <p class="mt-2 text-sm leading-6 text-muted">
+            {t.roadmap.validation.text}
+          </p>
+        </div>
+      </div>
+
+      <!-- Horizon berurutan, jadi penomoran memang membawa informasi. -->
+      <ol
+        class="m-0 list-none space-y-px overflow-hidden rounded-2xl border border-border bg-border p-0"
+      >
+        {
+          roadmapItems.map((item, index) => {
+            const copy = t.roadmap.items[item.id as RoadmapId];
+            return (
+              <li class="bg-surface p-5 sm:p-6">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                  <p class="font-mono text-xs uppercase tracking-[0.16em] text-muted-2">
+                    {t.roadmap.horizonLabel} {String.fromCharCode(65 + index)}
+                  </p>
+                  <StatusPill tone={item.tone} label={copy.state} />
+                </div>
+                <h3 class="mt-2.5 font-display text-xl font-semibold tracking-tight text-ink">
+                  {copy.name}
+                </h3>
+                <p class="mt-2 text-sm leading-7 text-muted">{copy.text}</p>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </div>
+  </Container>
+</section>

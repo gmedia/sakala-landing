@@ -1,7 +1,18 @@
 ---
+import { Font } from "astro:assets";
 import "../styles/global.css";
+import {
+  defaultLang,
+  getAlternates,
+  languages,
+  localizePath,
+  stripLocale,
+  useTranslations,
+  type Lang,
+} from "../i18n";
 
 interface Props {
+  lang?: Lang;
   title?: string;
   description?: string;
   image?: string;
@@ -9,31 +20,37 @@ interface Props {
   canonical?: URL | string;
   noindex?: boolean;
   pageType?: "WebPage" | "AboutPage" | "CollectionPage";
-  breadcrumbs?: {
-    label: string;
-    href?: string;
-  }[];
+  /** Locale yang benar-benar menerbitkan halaman ini. Halaman yang belum
+   *  diterjemahkan tidak boleh mengumumkan alternate yang tidak ada. */
+  availableLocales?: Lang[];
+  breadcrumbs?: { label: string; href?: string }[];
   structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const defaultTitle = "Sakala — Deploy Project dari Git Tanpa Ribet Server";
-const defaultDescription =
-  "Sakala sedang membangun pengalaman deployment open-source yang membantu project kecil bergerak dari Git menuju URL publik dengan alur yang mudah dipahami.";
 const {
-  title = defaultTitle,
-  description = defaultDescription,
+  lang = defaultLang,
   image = "/og/default.png",
-  imageAlt = "Ilustrasi brand Sakala dengan alur dari source node menuju app window",
   canonical = new URL(Astro.url.pathname, Astro.site),
   noindex = false,
   pageType = "WebPage",
+  availableLocales = [defaultLang],
   breadcrumbs = [],
   structuredData,
 } = Astro.props;
+
+const t = useTranslations(lang);
+const title = Astro.props.title ?? t.meta.siteTitle;
+const description = Astro.props.description ?? t.meta.siteDescription;
+const imageAlt = Astro.props.imageAlt ?? t.meta.ogAlt;
+
 const canonicalUrl = canonical.toString();
 const imageUrl = new URL(image, Astro.site).toString();
 const robotsContent = noindex ? "noindex, follow" : "index, follow";
-const isHomePage = canonicalUrl === new URL("/", Astro.site).toString();
+const htmlLang = languages[lang].htmlLang;
+const basePath = stripLocale(Astro.url.pathname);
+const alternates = noindex ? [] : getAlternates(basePath, availableLocales);
+const isHomePage = basePath === "/" || basePath === "";
+
 const breadcrumbStructuredData =
   breadcrumbs.length > 1
     ? {
@@ -47,6 +64,7 @@ const breadcrumbStructuredData =
         })),
       }
     : undefined;
+
 const siteEntities = [
   {
     "@type": "Organization",
@@ -54,7 +72,7 @@ const siteEntities = [
     name: "Sakala Project",
     alternateName: ["Sakala", "sakala.dev"],
     url: "https://sakala.dev",
-    logo: "https://sakala.dev/logo.svg",
+    logo: "https://sakala.dev/brand/sakala-lockup-full.svg",
     sameAs: ["https://github.com/gmedia"],
   },
   {
@@ -71,10 +89,8 @@ const siteEntities = [
     name: "Sakala",
     alternateName: ["sakala.dev"],
     url: "https://sakala.dev",
-    inLanguage: "id-ID",
-    publisher: {
-      "@id": "https://sakala.dev/#organization",
-    },
+    inLanguage: languages[defaultLang].htmlLang,
+    publisher: { "@id": "https://sakala.dev/#organization" },
   },
   {
     "@type": "SoftwareApplication",
@@ -83,63 +99,92 @@ const siteEntities = [
     applicationCategory: "DeveloperApplication",
     operatingSystem: "Web",
     url: "https://sakala.dev",
-    description: defaultDescription,
+    description,
     license: "https://www.apache.org/licenses/LICENSE-2.0",
-    creator: {
-      "@id": "https://sakala.dev/#organization",
-    },
-    funder: {
-      "@id": "https://sakala.dev/#gmedia",
-    },
-    sponsor: {
-      "@id": "https://sakala.dev/#gmedia",
-    },
+    creator: { "@id": "https://sakala.dev/#organization" },
+    funder: { "@id": "https://sakala.dev/#gmedia" },
+    sponsor: { "@id": "https://sakala.dev/#gmedia" },
   },
 ];
+
 const defaultStructuredData = {
   "@context": "https://schema.org",
   "@graph": [
-    ...(isHomePage ? siteEntities : []),
+    ...(isHomePage && lang === defaultLang ? siteEntities : []),
     {
       "@type": pageType,
       "@id": `${canonicalUrl}#webpage`,
       url: canonicalUrl,
       name: title,
       description,
-      inLanguage: "id-ID",
-      isPartOf: {
-        "@id": "https://sakala.dev/#website",
-      },
-      publisher: {
-        "@id": "https://sakala.dev/#organization",
-      },
+      inLanguage: htmlLang,
+      isPartOf: { "@id": "https://sakala.dev/#website" },
+      publisher: { "@id": "https://sakala.dev/#organization" },
     },
     ...(breadcrumbStructuredData ? [breadcrumbStructuredData] : []),
   ],
 };
+
 const jsonLd = JSON.stringify(structuredData ?? defaultStructuredData);
 ---
 
 <!doctype html>
-<html lang="id">
+<html lang={htmlLang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#F8FAF7" />
+    <meta name="theme-color" content="#08413D" />
     <meta name="robots" content={robotsContent} />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <Font cssVariable="--font-montserrat" preload={[{ weight: 700 }]} />
+    <Font cssVariable="--font-inter" preload={[{ weight: 400 }]} />
+
+    {
+      alternates.map((alt) => (
+        <link
+          rel="alternate"
+          hreflang={alt.htmlLang}
+          href={new URL(alt.path, Astro.site).toString()}
+        />
+      ))
+    }
+    {
+      alternates.length > 1 && (
+        <link
+          rel="alternate"
+          hreflang="x-default"
+          href={new URL(
+            alternates.find((a) => a.lang === defaultLang)?.path ?? "/",
+            Astro.site,
+          ).toString()}
+        />
+      )
+    }
+
     <link
       rel="alternate"
       type="application/rss+xml"
-      title="Changelog Sakala"
-      href={new URL("/rss.xml", Astro.site)}
+      title={lang === "en" ? "Sakala Changelog" : "Changelog Sakala"}
+      href={new URL(localizePath("/rss.xml", lang), Astro.site)}
     />
+
     <meta property="og:site_name" content="Sakala" />
-    <meta property="og:locale" content="id_ID" />
+    <meta property="og:locale" content={languages[lang].ogLocale} />
+    {
+      alternates
+        .filter((alt) => alt.lang !== lang)
+        .map((alt) => (
+          <meta
+            property="og:locale:alternate"
+            content={languages[alt.lang].ogLocale}
+          />
+        ))
+    }
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -156,7 +201,7 @@ const jsonLd = JSON.stringify(structuredData ?? defaultStructuredData);
     <script type="application/ld+json" is:inline set:html={jsonLd} />
   </head>
   <body class="text-ink antialiased">
-    <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
+    <a class="skip-link" href="#main-content">{t.meta.skipToContent}</a>
     <slot />
   </body>
 </html>

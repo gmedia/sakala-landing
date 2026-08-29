@@ -1,48 +1,65 @@
 ---
 import Container from "../ui/Container.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
-import { faqItems } from "../../data/faq";
+import { faqIds } from "../../data/sections";
 import { links } from "../../data/links";
+import type { Dictionary } from "../../i18n/id";
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+type FaqId = keyof Dictionary["faq"]["items"];
 ---
 
-<section id="faq" class="py-20 sm:py-24">
-  <Container className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr]">
-    <div>
-      <SectionHeader
-        eyebrow="FAQ"
-        title="Tanya dulu juga boleh."
-        description="Kami sengaja jujur karena Sakala masih tahap awal."
-      />
-      <p
-        class="mt-8 rounded-xl border border-border bg-surface px-4 py-3 text-sm text-muted"
+<section id="faq" class="border-b border-border py-20 sm:py-24">
+  <Container>
+    <div class="grid gap-12 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)]">
+      <div class="lg:sticky lg:top-28 lg:self-start">
+        <SectionHeader eyebrow={t.faq.eyebrow} title={t.faq.title} />
+        <p class="mt-6 text-sm leading-7 text-muted">
+          {t.faq.contactPrefix}{" "}
+          <a
+            class="font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
+            href={links.githubIssues}
+            target="_blank"
+            rel="noreferrer">{t.faq.contactLink}</a
+          >.
+        </p>
+      </div>
+
+      <div
+        class="grid gap-px overflow-hidden rounded-2xl border border-border bg-border"
       >
-        Ada pertanyaan lain? Mulai dari <a
-          class="font-semibold text-primary underline decoration-primary-soft underline-offset-4 hover:text-primary-dark"
-          href={links.githubIssues}
-          target="_blank"
-          rel="noreferrer">issue di GitHub</a
-        >.
-      </p>
-    </div>
-    <div class="space-y-3">
-      {
-        faqItems.map((item, index) => (
-          <details
-            class="paper-card group rounded-xl border border-border bg-surface p-5"
-            open={index === 0}
-          >
-            <summary class="flex min-h-11 cursor-pointer list-none items-start justify-between gap-4 font-semibold text-ink">
-              {item.question}
-              <span class="rounded-full bg-background-soft px-2 text-lg leading-6 text-primary group-open:rotate-45">
-                +
-              </span>
-            </summary>
-            <p class="mt-4 max-w-2xl border-t border-dashed border-border pt-4 leading-7 text-muted">
-              {item.answer}
-            </p>
-          </details>
-        ))
-      }
+        {
+          faqIds.map((fid, index) => {
+            const item = t.faq.items[fid as FaqId];
+            return (
+              <details class="group bg-surface" open={index === 0}>
+                <summary class="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-display font-semibold text-ink hover:text-primary-dark sm:px-6">
+                  {item.q}
+                  <span
+                    aria-hidden="true"
+                    class="grid size-6 shrink-0 place-items-center rounded-full border border-border text-lg leading-none text-primary transition-transform group-open:rotate-45"
+                  >
+                    +
+                  </span>
+                </summary>
+                <p class="max-w-2xl px-5 pb-5 leading-7 text-muted sm:px-6">
+                  {item.a}
+                </p>
+              </details>
+            );
+          })
+        }
+      </div>
     </div>
   </Container>
 </section>
+
+<style>
+  summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

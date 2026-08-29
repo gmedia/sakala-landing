@@ -1,58 +1,11 @@
 ---
-import { getEntry, render } from "astro:content";
-import Card from "../../components/ui/Card.astro";
-import DocsLayout from "../../layouts/DocsLayout.astro";
-
-const introduction = await getEntry("docs", "index");
-if (!introduction) throw new Error("Dokumen pengantar tidak ditemukan.");
-const { Content } = await render(introduction);
-const links = [
-  {
-    href: "/docs/quickstart",
-    title: "Quickstart",
-    text: "Alur awal dari Git menuju URL aplikasi.",
-  },
-  {
-    href: "/docs/concepts",
-    title: "Konsep dasar",
-    text: "Peran console, API, agent, dan infra.",
-  },
-  {
-    href: "/docs/deployment-flow",
-    title: "Alur deployment",
-    text: "Siklus command dan routing aplikasi.",
-  },
-  {
-    href: "/docs/agent-runtime",
-    title: "Cara kerja Sakala Agent",
-    text: "Polling, claim, operating mode, dan runtime node.",
-  },
-  {
-    href: "/docs/keluar-dari-localhost",
-    title: "Keluar dari localhost",
-    text: "Memahami pilihan untuk membagikan project sebagai URL publik.",
-  },
-];
+import DocsHub from "../../components/pages/DocsHub.astro";
 ---
 
-<DocsLayout
-  title="Dokumentasi Sakala — Deploy Project dari Git"
-  description="Pelajari konsep Sakala, quickstart, dan alur deployment dari Git menuju URL publik untuk project kecil."
-  currentPath={Astro.url.pathname}
->
-  <article class="prose-sakala">
-    <Content />
-  </article>
-  <div class="mt-10 grid gap-3 sm:grid-cols-2">
-    {
-      links.map((link) => (
-        <a href={link.href} data-astro-prefetch="hover">
-          <Card class="h-full hover:border-primary">
-            <h2 class="font-semibold text-ink">{link.title}</h2>
-            <p class="mt-2 text-sm leading-6 text-muted">{link.text}</p>
-          </Card>
-        </a>
-      ))
-    }
-  </div>
-</DocsLayout>
+<DocsHub
+  track="panduan"
+  entryId="index"
+  title="Panduan Sakala — Membawa Project ke URL Publik"
+  description="Panduan penggunaan Sakala untuk membawa project dari repository Git menuju alamat publik, ditulis untuk yang belum terbiasa dengan server."
+  availableLocales={["id", "en"]}
+/>

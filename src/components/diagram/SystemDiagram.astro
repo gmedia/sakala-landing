@@ -1,0 +1,138 @@
+---
+interface Props {
+  controlPlaneLabel: string;
+  dataPlaneLabel: string;
+  agentLabel: string;
+  appLabel: string;
+  browserLabel: string;
+  tone?: "light" | "deep";
+}
+
+const {
+  controlPlaneLabel,
+  dataPlaneLabel,
+  agentLabel,
+  appLabel,
+  browserLabel,
+  tone = "light",
+} = Astro.props;
+
+const nodes = [
+  { x: 16, y: 36, w: 100, h: 48, label: browserLabel },
+  { x: 152, y: 36, w: 112, h: 48, label: "Console" },
+  { x: 300, y: 36, w: 160, h: 48, label: "API", accent: true },
+  { x: 496, y: 36, w: 136, h: 48, label: "PostgreSQL" },
+  { x: 300, y: 196, w: 160, h: 48, label: agentLabel, accent: true },
+  { x: 496, y: 168, w: 112, h: 44, label: "Docker" },
+  { x: 496, y: 232, w: 112, h: 44, label: "Caddy" },
+  { x: 648, y: 196, w: 156, h: 48, label: appLabel },
+];
+
+/** Garis lurus dengan kepala panah digambar eksplisit, bukan lewat <marker>,
+ *  agar warnanya selalu ikut currentColor di latar terang maupun gelap. */
+function arrow(x1: number, y1: number, x2: number, y2: number) {
+  const angle = Math.atan2(y2 - y1, x2 - x1);
+  const size = 7;
+  const spread = 0.42;
+  const p = (a: number) =>
+    `${(x2 - size * Math.cos(angle + a)).toFixed(2)} ${(y2 - size * Math.sin(angle + a)).toFixed(2)}`;
+  return {
+    line: `M${x1} ${y1}L${x2.toFixed(2)} ${y2.toFixed(2)}`,
+    head: `M${x2.toFixed(2)} ${y2.toFixed(2)}L${p(spread)}L${p(-spread)}Z`,
+  };
+}
+
+const arrows = [
+  arrow(116, 60, 148, 60),
+  arrow(264, 60, 296, 60),
+  arrow(460, 60, 492, 60),
+  arrow(380, 196, 380, 88),
+  arrow(460, 212, 492, 194),
+  arrow(460, 230, 492, 250),
+  arrow(608, 190, 644, 210),
+  arrow(608, 254, 644, 232),
+];
+
+const c =
+  tone === "deep"
+    ? {
+        node: "var(--color-deep-border)",
+        nodeFill: "var(--color-deep-surface)",
+        accent: "var(--color-on-deep-label)",
+        text: "var(--color-on-deep)",
+        soft: "var(--color-on-deep-muted)",
+      }
+    : {
+        node: "var(--color-border-strong)",
+        nodeFill: "var(--color-surface)",
+        accent: "var(--color-primary)",
+        text: "var(--color-ink)",
+        soft: "var(--color-muted)",
+      };
+---
+
+<svg viewBox="0 0 820 292" fill="none" aria-hidden="true">
+  <g font-family="var(--font-mono)" font-size="12.5">
+    <text x="16" y="22" fill={c.soft} letter-spacing="0.1em">
+      {controlPlaneLabel.toUpperCase()}
+    </text>
+    <text x="16" y="158" fill={c.soft} letter-spacing="0.1em">
+      {dataPlaneLabel.toUpperCase()}
+    </text>
+  </g>
+
+  <line
+    x1="8"
+    y1="128"
+    x2="812"
+    y2="128"
+    stroke={c.node}
+    stroke-width="1"
+    stroke-dasharray="5 6"></line>
+
+  {
+    nodes.map((n) => (
+      <g>
+        <rect
+          x={n.x}
+          y={n.y}
+          width={n.w}
+          height={n.h}
+          rx="10"
+          fill={c.nodeFill}
+          stroke={n.accent ? c.accent : c.node}
+          stroke-width={n.accent ? 2 : 1.25}
+        />
+        <text
+          x={n.x + n.w / 2}
+          y={n.y + n.h / 2 + 4.5}
+          text-anchor="middle"
+          font-family="var(--font-mono)"
+          font-size="13"
+          fill={c.text}
+        >
+          {n.label}
+        </text>
+      </g>
+    ))
+  }
+
+  {
+    arrows.map((a) => (
+      <g>
+        <path d={a.line} stroke={c.soft} stroke-width="1.5" />
+        <path d={a.head} fill={c.soft} />
+      </g>
+    ))
+  }
+
+  <text
+    x="394"
+    y="116"
+    font-family="var(--font-mono)"
+    font-size="12"
+    fill={c.accent}
+  >
+    poll · claim · report
+  </text>
+</svg>

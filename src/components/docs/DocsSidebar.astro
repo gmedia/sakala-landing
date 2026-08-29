@@ -1,34 +1,55 @@
 ---
-import { docsNavigation } from "../../data/navigation";
+import DocsTrackSwitch from "./DocsTrackSwitch.astro";
+import { getTrackGroups, getTrackMeta, trackFromPath } from "../../data/docs";
+import type { Lang } from "../../i18n";
 
 interface Props {
   currentPath: string;
+  lang: Lang;
 }
 
-const { currentPath } = Astro.props;
+const { currentPath, lang } = Astro.props;
+const track = trackFromPath(currentPath);
+const trackMeta = getTrackMeta(track, lang);
+const groups = await getTrackGroups(track, lang);
 ---
 
-<aside class="hidden w-56 shrink-0 lg:block">
-  <p class="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-muted">
-    Dokumentasi
-  </p>
-  <nav class="space-y-1" aria-label="Dokumentasi">
-    {
-      docsNavigation.map((item) => (
-        <a
-          href={item.href}
-          data-astro-prefetch="hover"
-          aria-current={currentPath === item.href ? "page" : undefined}
-          class:list={[
-            "flex min-h-11 items-center rounded-lg px-3 py-2 text-sm",
-            currentPath === item.href
-              ? "bg-primary-soft-2 font-semibold text-primary-dark"
-              : "text-muted hover:bg-background-soft hover:text-primary",
-          ]}
-        >
-          {item.label}
-        </a>
-      ))
-    }
-  </nav>
+<aside class="hidden w-64 shrink-0 lg:block">
+  <div class="sticky top-28 max-h-[calc(100dvh-9rem)] overflow-y-auto pr-2">
+    <DocsTrackSwitch current={track} {lang} />
+
+    <div class="mt-7 space-y-6">
+      {
+        groups.map((group) => (
+          <nav aria-label={group.section}>
+            <p class="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-muted-2">
+              {group.section}
+            </p>
+            <ul class="m-0 mt-2.5 list-none space-y-0.5 p-0">
+              {group.items.map((item) => {
+                const isCurrent = currentPath === item.href;
+                return (
+                  <li>
+                    <a
+                      href={item.href}
+                      data-astro-prefetch="hover"
+                      aria-current={isCurrent ? "page" : undefined}
+                      class:list={[
+                        "flex min-h-10 items-center rounded-lg border-l-2 px-3 py-1.5 text-sm",
+                        isCurrent
+                          ? "border-primary bg-primary-soft-2 font-semibold text-primary-dark"
+                          : "border-transparent text-muted hover:border-border-strong hover:bg-background-soft hover:text-ink",
+                      ]}
+                    >
+                      {item.title}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        ))
+      }
+    </div>
+  </div>
 </aside>

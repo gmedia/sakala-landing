@@ -1,0 +1,113 @@
+---
+title: How the Sakala Agent Works
+description: Understanding polling, command claiming, operating modes, and the Docker runtime in the Sakala Agent.
+track: teknis
+section: Runtime
+order: 6
+lang: en
+---
+
+import DiagramFigure from "../../../../components/diagram/DiagramFigure.astro";
+import SequenceFlow from "../../../../components/diagram/SequenceFlow.astro";
+
+# How the Sakala Agent Works
+
+The Sakala Agent is a Rust process running on a runtime node. Its job is to take work from the Sakala API, perform the permitted operations on the node, then report heartbeats, events, logs, and results back.
+
+The Agent is not a web server and accepts no commands directly from a browser. All communication starts from the Agent toward the API.
+
+<DiagramFigure
+  caption="The direction of communication between Console, API, and Agent."
+  alt="The Console sends a request to the API. The API stores the command. The Agent contacts the API to poll, claim, send events and logs, then report the result. All communication begins at the Agent and goes to the API, never the reverse. The Agent then drives Docker, Railpack, and Caddy on the runtime node."
+  class="my-8"
+>
+  <SequenceFlow
+    actors={["Console", "API", "Agent", "Runtime node"]}
+    steps={[
+      { from: "Console", to: "API", action: "requests a deployment" },
+      { from: "API", to: "API", action: "stores a pending command" },
+      { from: "Agent", to: "API", action: "polls for eligible commands" },
+      { from: "Agent", to: "API", action: "claims atomically before working" },
+      {
+        from: "Agent",
+        to: "Runtime node",
+        action: "build, run, route, health check",
+      },
+      { from: "Agent", to: "API", action: "sends redacted events and logs" },
+      { from: "Agent", to: "API", action: "reports success or failure" },
+    ]}
+  />
+</DiagramFigure>
+
+## From command to completion
+
+1. A user requests a deployment through the Sakala Console.
+2. The API validates access, policy, and project resources.
+3. The API stores the command with status `Pending`.
+4. The Agent asks for commands available to that node.
+5. The Agent **claims** atomically before doing any work.
+6. The Agent runs the inspection or deployment and sends events and logs.
+7. The Agent marks the command as succeeded or failed.
+
+A polling result does not mean the Agent owns the command. Claiming prevents two Agents running the same work. Once claimed or finished, the API does not return it again as ordinary pending work.
+
+## `local`, `connected`, `noop`, and `docker`
+
+Sakala separates how the Agent connects from how it executes runtime work.
+
+| Setting     | Meaning                                                                              |
+| ----------- | ------------------------------------------------------------------------------------ |
+| `local`     | The Agent does not contact the API. Heartbeat and polling appear only as local logs. |
+| `connected` | The Agent uses a token for heartbeat, polling, claiming, and reporting to the API.   |
+| `noop`      | Commands complete without running Git, Docker, Railpack, or Caddy.                   |
+| `docker`    | Supported commands genuinely execute on the runtime node.                            |
+
+The combinations support incremental development:
+
+- `local + noop` is the safe default for confirming the binary runs;
+- `connected + noop` exercises the full API contract without touching the host;
+- `connected + docker` is the real runtime flow for a prepared node;
+- `local + docker` does not take deployments from the API, so it is not a normal operating flow.
+
+Noop is not a fake deployment presented as a live application. It only proves that authentication, the command lifecycle, and reporting are connected before privileged host access is enabled.
+
+## Project preview and deployment
+
+Preview uses the `InspectProject` command. The Agent checks out the commit, runs a light scanner and `railpack info`, then returns stack metadata. This stage builds no image and starts no container.
+
+Deployment uses the `DeployProject` command. For repositories with a Dockerfile, the user's configuration takes priority. Without one, the Agent can use Railpack to prepare a build plan, and Docker Buildx builds the application image.
+
+```txt
+Preview:
+repository -> scanner + railpack info -> stack metadata
+
+Deploy:
+repository -> Dockerfile/Railpack -> image -> container -> health check -> route
+```
+
+## Who decides resources?
+
+The Sakala API decides resources based on project, workspace, or plan policy. The Agent does not decide whether a user is on a particular plan.
+
+The Agent validates and applies memory, CPU, and process limits on the container. The node keeps a hard safety limit so that a wrong or oversized command cannot disturb other workloads.
+
+```txt
+Sakala API     decides what resources may be requested
+Sakala Agent   validates and applies them on the node
+```
+
+## Caddy during MVP
+
+The current Agent implementation uses the Caddy container from `sakala-infra`. Caddy and applications share the `sakala-runtime` Docker network, so Caddy can reach an application by container name without publishing its port to the internet.
+
+Caddy installed directly on the host is not yet a supported runtime topology for the Agent. Supporting it needs loopback port allocation and a separate reload adapter, not merely a different reload command.
+
+For a pilot, a host Caddy can still act as a static outer edge forwarding traffic to `sakala-caddy` on loopback. The Agent keeps managing the container router, while TLS and outer edge policy stay with the operator.
+
+## MVP status
+
+The MVP Agent foundation covers connected polling, the command lifecycle, project inspection, Dockerfile and Railpack builds, container resource guards, health checks, Caddy routes, reconciliation, and reporting.
+
+That means the executor foundation can be exercised as a system. It does not mean the hosted Sakala service is production ready. A pilot still needs matching Agent API endpoints, node provisioning, secret management, observability, backups, and end-to-end operational testing.
+
+The full implementation and technical contract live in the [`sakala-agent`](https://github.com/gmedia/sakala-agent) repository.

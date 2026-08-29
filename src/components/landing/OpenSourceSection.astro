@@ -1,80 +1,92 @@
 ---
-import Button from "../ui/Button.astro";
 import Container from "../ui/Container.astro";
 import SectionHeader from "../ui/SectionHeader.astro";
-import { links } from "../../data/links";
+import { ecosystemRepositories } from "../../data/sections";
+import type { Dictionary } from "../../i18n/id";
 
-const principles = [
-  [
-    "Dibangun terbuka",
-    "Keputusan dan perkembangan bisa diikuti lewat repository.",
-  ],
-  [
-    "Bisa dipelajari",
-    "Proses deploy dibuat transparan supaya bisa dipahami pelan-pelan.",
-  ],
-  [
-    "Bisa dikontribusi",
-    "Dokumentasi, issue, UI, dan arsitektur tumbuh dari masukan nyata.",
-  ],
-];
+interface Props {
+  t: Dictionary;
+}
 
-const repositories = [
-  ["sakala-console", "antarmuka pengguna", links.repositories.console],
-  ["sakala-api", "control plane", links.repositories.api],
-  ["sakala-agent", "eksekutor runtime", links.repositories.agent],
-  ["sakala-infra", "playground lokal", links.repositories.infra],
-  ["sakala-landing", "website & dokumentasi", links.repositories.landing],
+const { t } = Astro.props;
+type RepoId = keyof Dictionary["openSource"]["repositories"];
+
+const facts = [
+  { label: t.openSource.licenseLabel, value: t.openSource.licenseValue },
+  {
+    label: t.openSource.stewardshipLabel,
+    value: t.openSource.stewardshipValue,
+  },
+  { label: t.openSource.sponsorLabel, value: t.openSource.sponsorValue },
 ];
 ---
 
-<section id="open-source" class="relative py-20 sm:py-24">
+<section id="open-source" class="border-b border-border py-20 sm:py-24">
   <Container>
-    <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+    <div class="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
       <div>
         <SectionHeader
-          eyebrow="Open source"
-          title="Dibangun terbuka. Bisa dipelajari, bisa dioprek."
-          description="Sakala masih dibangun. Versi yang stabil perlu tumbuh dari kebutuhan kelas, komunitas, dan pengguna awal."
+          eyebrow={t.openSource.eyebrow}
+          title={t.openSource.title}
+          lead={t.openSource.lead}
         />
-        <div class="mt-8">
-          <Button href={links.githubRepository} external
-            >Lihat Repository</Button
-          >
-        </div>
-      </div>
 
-      <div class="space-y-4">
-        <div class="grid gap-3 sm:grid-cols-3">
+        <dl
+          class="m-0 mt-8 grid gap-px overflow-hidden rounded-xl border border-border bg-border"
+        >
           {
-            principles.map(([title, text]) => (
-              <article class="paper-card rounded-xl border border-border bg-surface p-4">
-                <h3 class="font-semibold text-ink">{title}</h3>
-                <p class="mt-3 text-sm leading-6 text-muted">{text}</p>
-              </article>
+            facts.map((fact) => (
+              <div class="grid gap-1 bg-surface px-4 py-3 sm:grid-cols-[10rem_1fr] sm:items-baseline">
+                <dt class="font-mono text-xs uppercase tracking-[0.14em] text-muted-2">
+                  {fact.label}
+                </dt>
+                <dd class="m-0 text-sm font-medium text-ink">{fact.value}</dd>
+              </div>
             ))
           }
-        </div>
-        <div
-          class="rounded-xl border border-border bg-surface-elevated p-5 font-mono text-xs"
+        </dl>
+
+        <p class="mt-5 max-w-xl text-sm leading-7 text-muted">
+          {t.openSource.sponsorNote}
+        </p>
+
+        <a
+          href={"/governance"}
+          data-astro-prefetch="hover"
+          class="mt-6 inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
         >
-          <p class="mb-4 text-primary">$ lihat ekosistem/</p>
-          <div class="grid gap-3 sm:grid-cols-2">
-            {
-              repositories.map(([repo, role, href]) => (
+          {t.openSource.governanceCta} &rarr;
+        </a>
+      </div>
+
+      <div>
+        <p class="font-mono text-xs uppercase tracking-[0.18em] text-muted-2">
+          {t.openSource.ecosystemLabel}
+        </p>
+        <ul class="m-0 mt-4 grid list-none gap-2 p-0">
+          {
+            ecosystemRepositories.map((repo) => (
+              <li>
                 <a
-                  href={href}
+                  href={repo.href}
                   target="_blank"
                   rel="noreferrer"
-                  class="flex min-h-11 items-center justify-between gap-3 rounded-lg bg-background px-3 py-2 hover:bg-primary-soft-2"
+                  class="flex min-h-14 items-center justify-between gap-4 rounded-xl border border-border bg-surface px-4 py-3 hover:border-primary"
                 >
-                  <span class="text-ink">{repo}</span>
-                  <span class="text-muted-2">{role}</span>
+                  <span class="font-mono text-sm font-medium text-primary-dark">
+                    sakala-{repo.id}
+                  </span>
+                  <span class="text-right text-sm text-muted">
+                    {t.openSource.repositories[repo.id as RepoId]}
+                    <span aria-hidden="true" class="ml-1.5 text-muted-2">
+                      &#8599;
+                    </span>
+                  </span>
                 </a>
-              ))
-            }
-          </div>
-        </div>
+              </li>
+            ))
+          }
+        </ul>
       </div>
     </div>
   </Container>

@@ -1,0 +1,96 @@
+---
+import { getCollection } from "astro:content";
+import Container from "../ui/Container.astro";
+import PageHeader from "../ui/PageHeader.astro";
+import LandingLayout from "../../layouts/LandingLayout.astro";
+import {
+  languages,
+  localizePath,
+  useTranslations,
+  type Lang,
+} from "../../i18n";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const c = t.changelogPage;
+
+// Tanpa fallback: entri bahasa lain tidak ditampilkan di sini.
+const entries = (await getCollection("changelog"))
+  .filter((entry) => entry.data.lang === lang)
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+
+const date = new Intl.DateTimeFormat(languages[lang].htmlLang, {
+  dateStyle: "long",
+});
+
+const breadcrumbs = [
+  { label: lang === "en" ? "Home" : "Beranda", href: localizePath("/", lang) },
+  { label: c.crumb },
+];
+---
+
+<LandingLayout
+  lang={lang}
+  title={c.metaTitle}
+  description={c.metaDescription}
+  pageType="CollectionPage"
+  availableLocales={["id", "en"]}
+  {breadcrumbs}
+>
+  <PageHeader eyebrow={c.eyebrow} title={c.title} lead={c.lead} {breadcrumbs}>
+    <a
+      href="/rss.xml"
+      class="mt-8 inline-flex min-h-11 items-center gap-2 rounded-xl border border-on-deep-subtle px-4 py-2.5 font-mono text-xs text-on-deep hover:border-on-deep-label hover:text-on-deep-label"
+    >
+      <span aria-hidden="true">&#9673;</span>
+      {c.rss}
+    </a>
+  </PageHeader>
+
+  <section class="py-20 sm:py-24">
+    <Container>
+      {
+        entries.length === 0 ? (
+          <p class="rounded-2xl border border-border bg-surface px-6 py-8 text-center text-muted">
+            {c.empty}
+          </p>
+        ) : (
+          <ol class="m-0 list-none space-y-px overflow-hidden rounded-2xl border border-border bg-border p-0">
+            {entries.map((entry) => (
+              <li
+                id={`v-${entry.data.version}`}
+                class="scroll-mt-28 bg-surface p-6 sm:p-8"
+              >
+                <div class="grid gap-5 md:grid-cols-[10rem_1fr] md:gap-8">
+                  <div>
+                    <p class="font-mono text-sm font-semibold text-primary-dark">
+                      v{entry.data.version}
+                    </p>
+                    <time
+                      class="mt-1.5 block font-mono text-xs text-muted-2"
+                      datetime={entry.data.publishedAt.toISOString()}
+                    >
+                      {date.format(entry.data.publishedAt)}
+                    </time>
+                  </div>
+                  <div>
+                    <h2 class="font-display text-xl font-semibold tracking-tight text-ink">
+                      {entry.data.title}
+                    </h2>
+                    <p class="mt-3 max-w-2xl leading-7 text-muted">
+                      {entry.data.description}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ol>
+        )
+      }
+    </Container>
+  </section>
+</LandingLayout>

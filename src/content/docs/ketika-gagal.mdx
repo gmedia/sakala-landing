@@ -1,0 +1,116 @@
+---
+title: Ketika Deployment Gagal
+description: Membaca tahap mana yang gagal, penyebab yang paling sering, dan apa yang perlu diperiksa lebih dulu.
+track: panduan
+section: Proses deploy
+order: 7
+---
+
+import DiagramFigure from "../../components/diagram/DiagramFigure.astro";
+import StateFlow from "../../components/diagram/StateFlow.astro";
+
+# Ketika Deployment Gagal
+
+Deployment gagal itu wajar, terutama yang pertama. Yang membedakan pengalaman baik dan buruk bukan jumlah kegagalannya, melainkan apakah kamu bisa tahu **di mana** gagalnya.
+
+Karena itu setiap tahap punya nama sendiri.
+
+<DiagramFigure
+  caption="Tahap yang dilalui deployment. Kegagalan selalu terjadi pada salah satu tahap bernama."
+  alt="Deployment berpindah berurutan dari queued, cloning, analyzing, preparing, building, starting, routing, sampai health checking, lalu berakhir sebagai succeeded atau failed. Kegagalan dapat ditunjuk pada tahap tertentu."
+  class="my-8"
+>
+  <StateFlow
+    states={[
+      { name: "queued" },
+      { name: "cloning" },
+      { name: "analyzing" },
+      { name: "preparing" },
+      { name: "building" },
+      { name: "starting" },
+      { name: "routing" },
+      { name: "health_checking" },
+      { name: "succeeded", kind: "success" },
+      { name: "failed", kind: "failure" },
+    ]}
+  />
+</DiagramFigure>
+
+## Baca dari bawah ke atas
+
+Log biasanya panjang. Pesan kesalahan yang sebenarnya hampir selalu berada di **dekat akhir**, bukan di awal.
+
+Baris merah pertama yang kamu lihat dari atas sering hanya akibat, bukan sebab.
+
+## Penyebab menurut tahapnya
+
+### Gagal saat `cloning`
+
+Repository tidak dapat diambil. Biasanya karena repository privat, branch yang dituju tidak ada, atau nama repository salah ketik.
+
+### Gagal saat `analyzing`
+
+Sakala tidak dapat menebak cara membangun project-mu. Ini terjadi ketika struktur project tidak umum atau berkas manifest tidak ada.
+
+Solusinya adalah menyediakan `Dockerfile` supaya kamu sendiri yang menentukan caranya.
+
+### Gagal saat `building`
+
+Ini yang paling sering. Biasanya salah satu dari:
+
+- ada dependency yang dipakai tetapi tidak tercatat di manifest;
+- versi bahasa berbeda dengan yang ada di laptopmu;
+- perintah build gagal karena berkas yang dibutuhkan tidak ikut ter-commit;
+- proses build kehabisan memori.
+
+Uji dengan clone bersih ke folder baru, lalu jalankan build dari nol. Kalau gagal di sana, penyebabnya bukan Sakala.
+
+### Gagal saat `starting`
+
+Image berhasil dibangun tetapi aplikasi langsung berhenti. Umumnya karena variabel yang dibutuhkan belum diisi, koneksi database gagal, atau perintah start-nya salah.
+
+### Gagal saat `health_checking`
+
+Aplikasi berjalan tetapi tidak menjawab pada port yang diharapkan. Ini yang paling membingungkan karena semuanya terlihat berhasil.
+
+Tiga penyebab, hampir selalu:
+
+1. Aplikasi bind ke `localhost`, bukan `0.0.0.0`. Di dalam container, `localhost` berarti "hanya di dalam sini".
+2. Aplikasi memakai port tetap, tidak membaca `PORT` dari environment.
+3. Aplikasi butuh waktu mulai lebih lama daripada batas health check.
+
+Bentuk penjelasan yang dituju Sakala kira-kira seperti ini:
+
+```txt
+Tahap: Health Check
+
+Aplikasi berhasil dijalankan,
+tetapi tidak menjawab pada port yang diharapkan.
+
+Periksa:
+- alamat bind
+- port yang diekspos
+- log runtime
+```
+
+### Gagal saat `routing`
+
+Alamat publik tidak dapat diaktifkan. Ini lebih sering merupakan masalah pada sisi platform daripada pada kodemu.
+
+### Gagal karena `resource` atau `timeout`
+
+Aplikasi melewati batas memori atau CPU yang diberikan, atau sebuah tahap berjalan terlalu lama. Build yang berat dan kebocoran memori adalah penyebab tersering.
+
+## Urutan pemeriksaan yang disarankan
+
+1. Catat tahap mana yang gagal. Ini menyempitkan kemungkinan dengan cepat.
+2. Baca log dari bagian akhir.
+3. Coba ulangi langkah yang sama pada clone bersih di laptopmu.
+4. Periksa variabel yang dibutuhkan sudah terisi.
+5. Kalau berhenti di health check, periksa bind address dan port lebih dulu.
+
+## Kalau tetap buntu
+
+Sakala belum tersedia sebagai layanan publik, jadi belum ada dukungan operasional. Untuk sekarang, masalah dokumentasi dan website dapat dilaporkan lewat [issue repository](https://github.com/gmedia/sakala-landing/issues).
+
+Kategori kegagalan di halaman ini juga dipakai secara internal untuk menganalisis penyebab yang paling sering, sehingga pesan kesalahannya bisa terus diperbaiki.

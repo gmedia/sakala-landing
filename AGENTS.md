@@ -14,12 +14,21 @@ Dokumen ini berlaku bagi AI agents, Codex CLI, automation tools, dan contributor
 ## Product dan Brand Rules
 
 - Jangan mengubah arah brand tanpa persetujuan eksplisit.
-- Pertahankan antarmuka light-first, bersih, hangat, dan aksen teal.
-- Jangan memakai gaya dark cyberpunk, AI glow, atau template SaaS generik.
-- Copy yang dilihat pengguna harus dalam Bahasa Indonesia, kecuali nama teknis atau badge yang sudah ditetapkan.
+- Pertahankan komposisi light base dengan dark anchor: hero, CTA, header, dan
+  footer memakai permukaan teal pekat, sisanya latar terang.
+- Ikuti bahasa visual Console pada Figma, bukan art direction landing lama
+  (paper, receipt, editorial grid) yang sudah dipensiunkan.
+- Jangan menjadikan seluruh halaman gelap, dan jangan memakai neon, glow, atau
+  template SaaS generik.
+- Copy yang dilihat pengguna tersedia dalam Bahasa Indonesia dan Inggris melalui
+  `src/i18n/`. Bahasa Indonesia adalah default tanpa prefix URL.
+- Jangan menyajikan konten Bahasa Indonesia pada route `/en/`, dan jangan
+  mengumumkan hreflang untuk halaman yang belum diterjemahkan.
 - Jangan membuat klaim layanan production atau enterprise yang belum tersedia.
 - Jangan memosisikan Sakala sebagai produk tertutup milik GMEDIA. Gunakan framing: Sakala adalah project open-source yang didukung GMEDIA sebagai sponsor pendiri.
-- Untuk pekerjaan UI/UX, baca guideline `docs/PROJECT_DESIGN_CONTEXT.md`.
+- Untuk pekerjaan UI/UX, baca `docs/PROJECT_DESIGN_CONTEXT.md`. Sumber kebenaran
+  produk tetap `sakala-docs`; dokumen di `docs/` adalah turunan yang
+  mendeskripsikan situs, bukan prinsip produk.
 - Untuk pekerjaan SEO, metadata, structured data, sitemap, atau konten publik, baca dan ikuti `docs/PROJECT_SEO_AUDIT.md`.
 - Untuk menambah atau mengubah fitur Astro, baca keputusan `docs/PROJECT_ASTRO_FEATURES.md`.
 
@@ -32,6 +41,8 @@ Dokumen ini berlaku bagi AI agents, Codex CLI, automation tools, dan contributor
 - Utamakan Astro components untuk section statis.
 - Gunakan Tailwind CSS v4 melalui Vite plugin, bukan integrasi Tailwind lama.
 - Gunakan prefetch secara selektif pada navigasi internal berintensi tinggi; jangan mengaktifkan `prefetchAll`.
+- Gunakan API `fonts` Astro dengan provider `local`. Font disimpan di
+  `src/assets/fonts/` beserta lisensinya; jangan menambah host font pihak ketiga.
 - Pertahankan RSS changelog sebagai static endpoint yang bersumber dari content collection.
 - Perbarui dokumentasi bila mengubah struktur situs, navigasi, atau content collections.
 

@@ -1,0 +1,51 @@
+---
+import type { Tone } from "../../data/sections";
+
+interface Props {
+  tone: Tone;
+  label: string;
+  surface?: "light" | "deep";
+  class?: string;
+}
+
+const { tone, label, surface = "light", class: className = "" } = Astro.props;
+
+/**
+ * Status selalu membawa label teks. Bentuk penanda juga dibedakan per tone,
+ * sehingga maknanya tidak pernah bergantung pada warna saja.
+ */
+const shape: Record<Tone, string> = {
+  ready: "rounded-full",
+  progress: "rounded-full",
+  testing: "rounded-xs rotate-45",
+  later: "rounded-full border border-current bg-transparent",
+};
+
+const color: Record<"light" | "deep", Record<Tone, string>> = {
+  light: {
+    ready: "text-success",
+    progress: "text-warning",
+    testing: "text-info",
+    later: "text-muted-2",
+  },
+  deep: {
+    ready: "text-success-on-deep",
+    progress: "text-warning-on-deep",
+    testing: "text-on-deep-label",
+    later: "text-on-deep-subtle",
+  },
+};
+---
+
+<span
+  class:list={[
+    "inline-flex items-center gap-2 font-mono text-xs",
+    color[surface][tone],
+    className,
+  ]}
+>
+  <span
+    aria-hidden="true"
+    class:list={["size-2 shrink-0 bg-current", shape[tone]]}></span>
+  {label}
+</span>

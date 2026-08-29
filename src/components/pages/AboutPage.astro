@@ -1,0 +1,259 @@
+---
+import { Image } from "astro:assets";
+import EarlyContributorsSection from "../about/EarlyContributorsSection.astro";
+import DiagramFigure from "../diagram/DiagramFigure.astro";
+import GrowthLadder from "../diagram/GrowthLadder.astro";
+import LoopDiagram from "../diagram/LoopDiagram.astro";
+import RepoTopology from "../diagram/RepoTopology.astro";
+import Container from "../ui/Container.astro";
+import PageHeader from "../ui/PageHeader.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
+import { growthLevels } from "../../data/sections";
+import { domains } from "../../data/links";
+import LandingLayout from "../../layouts/LandingLayout.astro";
+import { localizePath, useTranslations, type Lang } from "../../i18n";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const a = t.about;
+
+const breadcrumbs = [
+  { label: lang === "en" ? "Home" : "Beranda", href: localizePath("/", lang) },
+  { label: a.crumb },
+];
+
+const levels = growthLevels.map((level, index) => ({
+  name: a.growth.levels[index],
+  tone: level.tone,
+  state: a.growth.states[level.state],
+}));
+
+const domainRows = [
+  { purpose: a.domains.rows.site, value: domains.site },
+  { purpose: a.domains.rows.console, value: domains.console },
+  { purpose: a.domains.rows.api, value: domains.api },
+  { purpose: a.domains.rows.runtime, value: domains.runtime },
+];
+---
+
+<LandingLayout
+  lang={lang}
+  title={a.metaTitle}
+  description={a.metaDescription}
+  pageType="AboutPage"
+  availableLocales={["id", "en"]}
+  {breadcrumbs}
+>
+  <PageHeader eyebrow={a.eyebrow} title={a.title} lead={a.lead} {breadcrumbs} />
+
+  <section class="border-b border-border py-20 sm:py-24">
+    <Container>
+      <div class="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+        <SectionHeader
+          eyebrow={a.focus.eyebrow}
+          title={a.focus.title}
+          class="lg:sticky lg:top-28 lg:self-start"
+        />
+        <div class="space-y-5 text-lg leading-8 text-muted">
+          <p>{a.focus.p1}</p>
+          <p>{a.focus.p2}</p>
+          <p
+            class="rounded-xl border border-border bg-surface px-5 py-4 text-base leading-7"
+          >
+            {a.focus.note}
+          </p>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <section class="border-b border-border bg-background-soft py-20 sm:py-24">
+    <Container>
+      <SectionHeader
+        eyebrow={a.journey.eyebrow}
+        title={a.journey.title}
+        lead={a.journey.lead}
+      />
+
+      <DiagramFigure
+        caption={a.journey.caption}
+        alt={a.journey.alt}
+        class="mt-10"
+      >
+        <LoopDiagram
+          steps={[
+            "Create",
+            "Manifest",
+            "Operate",
+            "Explore",
+            "Collaborate",
+            "Learn",
+            "Grow",
+          ]}
+        >
+          <p class="text-sm leading-6 text-muted">{a.journey.note}</p>
+        </LoopDiagram>
+      </DiagramFigure>
+
+      <div
+        class="mt-14 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-start"
+      >
+        <div>
+          <h2
+            class="font-display text-2xl font-semibold tracking-tight text-ink"
+          >
+            {a.growth.title}
+          </h2>
+          <p class="mt-3 max-w-xl leading-7 text-muted">{a.growth.lead}</p>
+          <div class="mt-6"><GrowthLadder {levels} /></div>
+        </div>
+
+        <div class="rounded-2xl border border-border bg-surface p-6">
+          <h2 class="font-display text-lg font-semibold text-ink">
+            {a.boundary.title}
+          </h2>
+          <p class="mt-2 text-sm leading-6 text-muted">{a.boundary.lead}</p>
+          <ul class="m-0 mt-5 list-none space-y-2 p-0">
+            {
+              a.boundary.items.map((item) => (
+                <li class="flex items-baseline gap-2.5 text-sm leading-6 text-muted">
+                  <span aria-hidden="true" class="text-muted-2">
+                    &times;
+                  </span>
+                  {item}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <section class="border-b border-border py-20 sm:py-24">
+    <Container>
+      <SectionHeader
+        eyebrow={a.openSource.eyebrow}
+        title={a.openSource.title}
+        lead={a.openSource.lead}
+      />
+
+      <DiagramFigure
+        caption={a.openSource.caption}
+        alt={a.openSource.alt}
+        class="mt-10"
+      >
+        <RepoTopology
+          publicLabel={a.openSource.publicLabel}
+          controlLabel={a.openSource.controlLabel}
+          dataLabel={a.openSource.dataLabel}
+          roles={a.openSource.roles}
+        />
+      </DiagramFigure>
+
+      <h2
+        class="mt-14 font-display text-2xl font-semibold tracking-tight text-ink"
+      >
+        {a.domains.title}
+      </h2>
+      <div class="diagram mt-6 rounded-2xl border border-border bg-surface">
+        <table class="w-full min-w-md border-collapse text-sm">
+          <thead>
+            <tr class="border-b border-border">
+              <th
+                class="px-5 py-3 text-left font-mono text-xs uppercase tracking-[0.14em] text-muted-2"
+                >{a.domains.purposeHeader}</th
+              >
+              <th
+                class="px-5 py-3 text-left font-mono text-xs uppercase tracking-[0.14em] text-muted-2"
+                >{a.domains.valueHeader}</th
+              >
+            </tr>
+          </thead>
+          <tbody>
+            {
+              domainRows.map((row) => (
+                <tr class="border-b border-border last:border-b-0">
+                  <td class="px-5 py-3 text-muted">{row.purpose}</td>
+                  <td class="px-5 py-3 font-mono text-primary-dark">
+                    {row.value}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </Container>
+  </section>
+
+  <section class="border-b border-border bg-background-soft py-20 sm:py-24">
+    <Container>
+      <div
+        class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-start"
+      >
+        <div>
+          <SectionHeader
+            eyebrow={a.sponsor.eyebrow}
+            title={a.sponsor.title}
+            lead={a.sponsor.lead}
+          />
+          <p class="mt-6 max-w-xl leading-7 text-muted">{a.sponsor.p1}</p>
+          <p class="mt-4 max-w-xl leading-7 text-muted">{a.sponsor.p2}</p>
+          <a
+            href={localizePath("/governance", lang)}
+            data-astro-prefetch="hover"
+            class="mt-7 inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
+          >
+            {a.sponsor.cta} &rarr;
+          </a>
+        </div>
+
+        <figure class="m-0 rounded-2xl border border-border bg-surface p-6">
+          <figcaption
+            class="font-mono text-xs uppercase tracking-[0.14em] text-muted-2"
+          >
+            {a.sponsor.cardLabel}
+          </figcaption>
+          <div
+            class="mt-5 flex items-center justify-center rounded-xl border border-border bg-background px-5 py-8"
+          >
+            <Image
+              src="/sponsors/gmedia.png"
+              width="720"
+              height="259"
+              loading="lazy"
+              alt={a.sponsor.imageAlt}
+              class="h-auto w-full max-w-xs"
+            />
+          </div>
+        </figure>
+      </div>
+
+      <EarlyContributorsSection />
+    </Container>
+  </section>
+
+  <section class="surface-deep relative isolate overflow-hidden">
+    <div class="brand-lattice absolute inset-0 -z-10" aria-hidden="true"></div>
+    <Container className="relative py-16 sm:py-20">
+      <SectionHeader
+        eyebrow={a.next.eyebrow}
+        title={a.next.title}
+        lead={a.next.lead}
+        tone="deep"
+      />
+      <a
+        href={localizePath("/docs", lang)}
+        data-astro-prefetch="hover"
+        class="mt-8 inline-flex min-h-11 items-center rounded-xl border border-on-deep-label bg-on-deep-label px-5 py-3 text-sm font-semibold text-deep hover:border-white hover:bg-white"
+      >
+        {a.next.cta}
+      </a>
+    </Container>
+  </section>
+</LandingLayout>
