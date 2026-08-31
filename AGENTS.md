@@ -40,6 +40,16 @@ docs/PROJECT_ASTRO_FEATURES.md
 ARCHITECTURE.md
 ```
 
+For what the current landing actually implements — chapters, artifacts, the
+reveal mechanism, and the surface scale — read:
+
+```text
+docs/PROJECT_LANDING_BUILD.md
+```
+
+It describes the build, not the intent. Where it conflicts with
+`docs/landing/`, the creative direction wins.
+
 ### Superseded creative direction
 
 For the next major homepage rebuild, `docs/landing/*` supersedes conflicting **creative/homepage-structure** direction in:

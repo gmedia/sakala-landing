@@ -36,10 +36,11 @@ alur kerjanya, dimulai dari Phase 0 — Audit sebelum menyentuh kode.
 
 | Dokumen                                                  | Isi                                                       |
 | -------------------------------------------------------- | --------------------------------------------------------- |
+| [`PROJECT_LANDING_BUILD.md`](PROJECT_LANDING_BUILD.md)   | Konteks implementasi landing v2: bab, artefak, gerak      |
 | [`PROJECT_ASTRO_FEATURES.md`](PROJECT_ASTRO_FEATURES.md) | Fitur Astro yang aktif dan yang ditunda: i18n, fonts, RSS |
 | [`PROJECT_SEO_AUDIT.md`](PROJECT_SEO_AUDIT.md)           | Audit SEO, sinyal entitas, dan alur Search Console        |
 
-Keduanya tetap berlaku. Aturan spesifik soal routing i18n, provider font
+Ketiganya tetap berlaku. Aturan spesifik soal routing i18n, provider font
 `local`, dan prefetch selektif tinggal di sini, bukan di `AGENTS.md`.
 
 ### `archive/` — sudah disupersede

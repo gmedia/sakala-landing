@@ -38,8 +38,13 @@ const converge = branches.map(
     Cabang yang belum tersedia ditandai teks, bukan hanya warna. */
 }
 <div class="relative">
+  {
+    /* Konektor mengasumsikan cabangnya berjajar dalam satu baris, dan itu baru
+      berlaku sejak lg. Di bawah itu cabangnya membungkus, jadi garisnya
+      disembunyikan daripada menunjuk ke tempat yang salah. */
+  }
   <svg
-    class="pointer-events-none absolute inset-0 hidden h-full w-full sm:block"
+    class="pointer-events-none absolute inset-0 hidden h-full w-full lg:block"
     viewBox="0 0 1000 480"
     preserveAspectRatio="none"
     aria-hidden="true"

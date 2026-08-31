@@ -237,6 +237,53 @@ Learn:
 
 A landing can be memorable without becoming a motion demo.
 
+## Concept explorations (internal)
+
+Reference:
+
+```text
+docs/landing/reference/concept-explorations.html
+```
+
+Principle borrowed:
+
+- meaning belongs in the **construction** of an artifact, not in its caption;
+- an artifact should make the chapter's claim visible on its own.
+
+How Sakala translates it:
+
+```text
+.distance-artifact  → gridded stage, floating dark window, reach pill
+.threshold          → chapter-wide crossing: horizontal line at the crossing
+                      point, concentric-ring mark, vertical connectors
+.deploy-card        → one card, stages beside their result
+.browser-page:before→ soft radial bloom behind a page that is now live
+.lineage            → node graph with computed SVG connectors
+.clarity-card       → status rows beside their explanation
+```
+
+Token translation:
+
+```text
+#F4F1EA           → var(--color-canvas)
+#157F76           → var(--color-primary)
+Iowan Old Style   → font-display (Montserrat)
+--line            → var(--color-border)
+```
+
+What is deliberately NOT copied:
+
+- the editorial serif — the Sakala Design System specifies Montserrat/Inter,
+  and `ART_DIRECTION.md` §6 rules the serif out;
+- the cream paper ground — `ART_DIRECTION.md` §4 rules it out;
+- `#157F76`, which is not a canonical Sakala value;
+- its heavier shadow scale.
+
+Note for future agents: this file was first read at the token layer and
+rejected wholesale. That was a mistake. The conflict lives only in the brand
+layer; the composition underneath does not conflict with anything and was the
+valuable part. Read a reference at both layers before rejecting it.
+
 ## Reference rule for agents
 
 When using a reference, document:
