@@ -30,7 +30,19 @@ export default defineConfig({
     "/docs/concepts": "/docs/teknis/konsep",
     "/docs/deployment-flow": "/docs/teknis/alur-deployment",
     "/docs/agent-runtime": "/docs/teknis/agent",
-    "/docs/quickstart": "/docs/perjalanan-deploy",
+    // Halaman yang menjanjikan pemakaian dicabut selama produknya belum ada.
+    // Semuanya mendarat di hub docs, bukan pada janji yang tidak bisa ditepati.
+    "/docs/quickstart": "/docs",
+    "/docs/perjalanan-deploy": "/docs",
+    "/docs/menyiapkan-project": "/docs",
+    "/docs/ketika-gagal": "/docs",
+    "/docs/variabel-dan-secret": "/docs",
+    "/docs/domain-dan-url": "/docs",
+    "/en/docs/perjalanan-deploy": "/en/docs",
+    "/en/docs/menyiapkan-project": "/en/docs",
+    "/en/docs/ketika-gagal": "/en/docs",
+    "/en/docs/variabel-dan-secret": "/en/docs",
+    "/en/docs/domain-dan-url": "/en/docs",
   },
   prefetch: {
     prefetchAll: false,

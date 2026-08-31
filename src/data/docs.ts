@@ -4,16 +4,19 @@ import { defaultLang, type Lang } from "../i18n";
 export type DocTrack = "panduan" | "teknis";
 
 /**
- * Dua jalur dokumentasi yang berdiri sendiri. Pengguna yang hanya ingin
- * memakai Sakala tidak perlu melewati internal runtime untuk menemukan
- * jawabannya, dan sebaliknya.
+ * Dua jalur dokumentasi yang berdiri sendiri. Jalur pertama menjelaskan
+ * persoalan dan arahnya, jalur kedua menjelaskan mesinnya.
+ *
+ * Kunci `panduan` dipertahankan karena dipakai frontmatter setiap dokumen.
+ * Salinannya tidak lagi berbunyi "panduan pakai": selama Sakala belum jadi
+ * layanan publik, judul semacam itu menjanjikan sesuatu yang belum ada.
  */
 const trackCopy = {
   id: {
     panduan: {
-      label: "Panduan",
-      title: "Panduan Sakala",
-      blurb: "Untuk kamu yang ingin memakai Sakala.",
+      label: "Pengantar",
+      title: "Pengantar Sakala",
+      blurb: "Persoalan yang dikerjakan dan arah yang sedang dibangun.",
     },
     teknis: {
       label: "Teknis",
@@ -23,9 +26,9 @@ const trackCopy = {
   },
   en: {
     panduan: {
-      label: "Guide",
-      title: "Using Sakala",
-      blurb: "For people who want to use Sakala.",
+      label: "Overview",
+      title: "Understanding Sakala",
+      blurb: "The problem being worked on, and the direction being built.",
     },
     teknis: {
       label: "Technical",
@@ -79,9 +82,12 @@ export async function getTrackGroups(
   lang: Lang,
 ): Promise<DocGroup[]> {
   const entries = await getCollection("docs");
+  // Halaman hub sudah diwakili pemilih jalur, jadi ia tidak diulang sebagai
+  // item daftar di bawahnya.
   const selected = entries.filter(
     (entry) =>
       entry.data.lang === lang &&
+      !hubIds.includes(entry.id) &&
       (entry.data.track === track || entry.data.track === "referensi"),
   );
 

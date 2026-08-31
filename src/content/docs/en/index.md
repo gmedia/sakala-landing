@@ -1,37 +1,39 @@
 ---
-title: Using Sakala
-description: The starting point for people who want to use Sakala to take a project from a repository to a public address.
+title: Understanding Sakala
+description: The problem Sakala is working on, the direction of its design, and what does and does not exist yet.
 track: panduan
 section: Start here
 order: 1
 lang: en
 ---
 
-# Using Sakala
+# Understanding Sakala
 
-This section is for people who want to **use** Sakala: to take a project from a Git repository and turn it into an application other people can open in a browser.
+This section explains the problem Sakala is working on: taking a project from a Git repository and turning it into an application other people can open in a browser.
 
-You do not need to understand Docker, reverse proxies, or server configuration to follow it. Technical terms are explained the first time they appear.
+You do not need to understand Docker, reverse proxies, or server configuration to read it. Technical terms are explained the first time they appear.
 
 ## Where things actually stand
 
-Sakala is **not available as a public service yet**. The deployment flow described here is the experience being built, not something you can run today.
+Sakala is **not available as a public service yet**. There is no deployment flow you can run today.
 
-What you can do right now:
+So this is not a usage guide. What lives here are design documents: the problem, the decisions already made, and the direction being built toward.
 
-- understand why a project needs to leave `localhost`;
-- prepare your repository so it is ready to deploy anywhere;
-- learn how deployment failures are read and fixed.
+What stays useful right now:
 
-All three stay useful even if you end up using a different platform.
+- understanding why a project needs to leave `localhost`;
+- reading the [Deployment Flow](/en/docs/teknis/alur-deployment) as a design, not a promise;
+- settling on shared vocabulary through the [Glossary](/en/docs/glosarium).
+
+All of it holds even if you end up using a different platform.
 
 ## If you want to understand the machinery
 
-This guide deliberately avoids explaining how Sakala is built. That lives in the
+This section deliberately avoids explaining how Sakala is built. That lives in the
 [Technical Documentation](/en/docs/teknis), which covers architecture, privilege
 boundaries, the command lifecycle, and how the Agent works.
 
-## Addresses Sakala uses
+## Planned addresses
 
 | Purpose               | Address            |
 | --------------------- | ------------------ |
@@ -39,4 +41,4 @@ boundaries, the command lifecycle, and how the Agent works.
 | Console               | `app.sakala.dev`   |
 | Deployed applications | `*.run.sakala.dev` |
 
-The Console is the interface where you will manage projects. The `*.run.sakala.dev` pattern means each application gets its own sub-address.
+Of the three, only `sakala.dev` is live. The Console is where projects will be managed later, and the `*.run.sakala.dev` pattern means each application gets its own sub-address.
