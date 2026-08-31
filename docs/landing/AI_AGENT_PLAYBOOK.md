@@ -147,10 +147,15 @@ Audit `src/styles/global.css`.
 The supplied canonical Sakala design anchors are:
 
 ```text
-Green Teal   #0F796E
+Green Teal   #0F766E
 Burnt Orange #C2670E
 Eerie Black  #1E1E1D
-Montserrat
+```
+
+```text
+Brand / Display / Heading   Montserrat
+Body / Reading / Long-form  Inter
+Mono / Technical artifact   system monospace
 ```
 
 Current repository values may differ.

@@ -19,6 +19,9 @@ export const id = {
     openSource: "Open Source",
     changelog: "Changelog",
     github: "GitHub",
+    /* Belum dipakai. CTA "Masuk" dicabut dari header selama Sakala belum
+       tersedia sebagai layanan publik; label dan links.console disimpan agar
+       tinggal dihidupkan kembali saat public beta dibuka. */
     console: "Masuk",
     menu: "Menu",
     close: "Tutup",
@@ -60,7 +63,6 @@ export const id = {
       ],
       caption:
         "Sebuah repository menyimpan kemungkinan: ide yang sudah punya bentuk, tetapi belum punya alamat.",
-      alt: "Artefak repository bernama portfolio pada branch main, berisi folder src dan public, serta berkas package.json dan README.md. Ia menggambarkan project yang lengkap sebagai source code.",
     },
 
     distance: {
@@ -79,7 +81,6 @@ export const id = {
       ],
       caption:
         "Aplikasi berjalan pada alamat yang hanya menunjuk kembali ke perangkat yang menjalankannya.",
-      alt: "Sebuah jendela aplikasi melayang di tengah bidang berkisi, menampilkan alamat localhost titik dua 5173 dan halaman yang sedang berjalan. Catatan di pojok menyebut bahwa alamat itu hanya dapat dibuka olehmu sendiri.",
     },
 
     threshold: {
@@ -93,7 +94,6 @@ export const id = {
       fromToken: "github.com/kamu/karya",
       toToken: "karya.run.sakala.dev",
       caption: "Sakala berada tepat pada perpindahan itu.",
-      alt: "Diagram ambang. Source berada di atas, Sakala di tengah sebagai perpindahan, dan wujud di bawah sebagai aplikasi yang dapat dijangkau.",
     },
 
     manifestation: {
@@ -134,8 +134,6 @@ export const id = {
       refrain: "Here it is.",
       deployCaption:
         "Enam tahap, dan akibatnya: karya yang sudah dapat dijangkau.",
-      deployAlt:
-        "Satu artefak deployment dengan dua sisi. Di kiri, enam tahap berurutan: Repository, Analyze, Build, Start, Health, dan Reach. Di kanan, jendela browser menampilkan alamat portfolio titik run titik sakala titik dev dalam keadaan sehat. Tiap tahap bernama sehingga kegagalan dapat ditunjuk secara spesifik.",
       note: "Alamat, tahap, dan status pada bagian ini menggambarkan alur yang sedang dibangun.",
     },
 
@@ -149,6 +147,8 @@ export const id = {
         { name: "Start", ok: true },
         { name: "Health", ok: false },
       ],
+      stateOk: "berhasil",
+      stateFailed: "gagal",
       failureTitle: "Health Check gagal",
       failureBody:
         "Aplikasi berhasil dijalankan, tetapi tidak menjawab pada port yang diharapkan.",
@@ -156,7 +156,6 @@ export const id = {
       checks: ["alamat bind", "port yang diekspos", "log runtime"],
       caption:
         "Kegagalan ditunjuk pada tahap tertentu, bukan dilaporkan sebagai kesalahan umum.",
-      alt: "Artefak diagnostik. Repository, Build, dan Start berhasil, sedangkan Health gagal. Penjelasannya menyebut bahwa aplikasi berjalan tetapi tidak menjawab pada port yang diharapkan, dengan tiga hal yang perlu diperiksa.",
       note: "Bentuk penjelasan ini menggambarkan arah yang dituju.",
     },
 
@@ -175,7 +174,6 @@ export const id = {
       newWork: "Karya baru",
       caption:
         "Sebuah karya yang hidup dapat melahirkan karya berikutnya. Bagian bertanda arah belum tersedia.",
-      alt: "Diagram kelanjutan. Karya yang hidup bercabang menjadi dibuka, dibagikan, dipelajari, dan diperbaiki. Dari sana ia dapat menjadi template, dan template menjadi titik awal karya baru.",
       more: "Lihat arah produk",
     },
 
@@ -191,8 +189,6 @@ export const id = {
         { label: "Kontribusi", value: "Terbuka" },
       ],
       factsCaption: "Bukti keterbukaan Sakala, bukan sekadar label.",
-      factsAlt:
-        "Daftar bukti keterbukaan: source publik, lisensi Apache 2.0, arsitektur terdokumentasi, keputusan tercatat, dan kontribusi terbuka.",
       human:
         "Teknologi adalah alat. Yang penting adalah apa yang akhirnya dapat diwujudkan manusia dengannya.",
       stewardship:
@@ -470,8 +466,6 @@ export const id = {
     ],
     stewardshipCaption:
       "Hubungan antara stewardship, sponsor, dan contributor.",
-    stewardshipAlt:
-      "Sakala Maintainers memegang stewardship dan keputusan teknis. GMEDIA berperan sebagai founding sponsor tanpa kendali atas roadmap maupun lisensi. Contributor publik berpartisipasi lewat issue dan pull request.",
     decisionsTitle: "Domain keputusan",
     decisions: [
       {
@@ -501,8 +495,6 @@ export const id = {
       "Tanggung jawab dipisahkan supaya batas hak istimewa tetap jelas. Hanya Agent yang menjalankan operasi runtime.",
     ecosystemCaption:
       "Lima repository Sakala, dikelompokkan menurut hak istimewa yang dipegangnya.",
-    ecosystemAlt:
-      "Kelompok publik berisi sakala-landing. Kelompok control plane berisi sakala-console dan sakala-api. Kelompok data plane berisi sakala-agent dan sakala-infra, satu-satunya kelompok yang menjalankan operasi runtime berhak istimewa.",
     publicLabel: "Publik",
     controlLabel: "Control plane",
     dataLabel: "Data plane",

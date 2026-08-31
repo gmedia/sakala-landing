@@ -1,10 +1,8 @@
 ---
 import SakalaLogo from "../brand/SakalaLogo.astro";
-import Button from "../ui/Button.astro";
 import Container from "../ui/Container.astro";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import MobileNav from "./MobileNav.astro";
-import { links } from "../../data/links";
 import { getMainNavigation, isBilingual } from "../../data/navigation";
 import { stripLocale, type Lang } from "../../i18n";
 import type { Dictionary } from "../../i18n/id";
@@ -62,13 +60,16 @@ const navigation = getMainNavigation(lang, t);
       }
     </nav>
 
-    <div class="hidden items-center gap-3 lg:flex">
+    <!-- Tanpa CTA primer selama Sakala belum tersedia sebagai layanan publik.
+         Menawarkan "Masuk" tepat di bawah pemberitahuan status yang menyatakan
+         sebaliknya adalah janji yang tidak bisa ditepati. links.console tetap
+         disimpan, tinggal dihidupkan saat public beta dibuka. -->
+    <div class="hidden items-center lg:flex">
       <LanguageSwitcher
         lang={lang}
         pathname={switchPath}
         label={t.nav.languageLabel}
       />
-      <Button href={links.console} variant="secondary">{t.nav.console}</Button>
     </div>
 
     <MobileNav

@@ -59,7 +59,6 @@ export const en: Dictionary = {
       ],
       caption:
         "A repository holds a possibility: an idea that already has form, but not yet an address.",
-      alt: "A repository artifact named portfolio on the main branch, holding src and public folders alongside package.json and README.md. It represents a project that is complete as source code.",
     },
 
     distance: {
@@ -78,7 +77,6 @@ export const en: Dictionary = {
       ],
       caption:
         "The application runs at an address that only points back to the machine running it.",
-      alt: "An application window floating at the centre of a gridded field, showing the address localhost colon 5173 and a page that is running. A note in the corner states that the address is reachable only by you.",
     },
 
     threshold: {
@@ -92,7 +90,6 @@ export const en: Dictionary = {
       fromToken: "github.com/you/karya",
       toToken: "karya.run.sakala.dev",
       caption: "Sakala sits exactly at that crossing.",
-      alt: "A threshold diagram. Source sits above, Sakala in the middle as the crossing, and presence below as an application that can be reached.",
     },
 
     manifestation: {
@@ -133,8 +130,6 @@ export const en: Dictionary = {
       refrain: "Here it is.",
       deployCaption:
         "Six stages, and their consequence: a work that can be reached.",
-      deployAlt:
-        "A single deployment artifact with two sides. On the left, six ordered stages: Repository, Analyze, Build, Start, Health, and Reach. On the right, a browser window showing the address portfolio dot run dot sakala dot dev in a healthy state. Each stage is named so a failure can be pinned precisely.",
       note: "The address, stages, and states in this section describe the flow being built.",
     },
 
@@ -148,6 +143,8 @@ export const en: Dictionary = {
         { name: "Start", ok: true },
         { name: "Health", ok: false },
       ],
+      stateOk: "ok",
+      stateFailed: "failed",
       failureTitle: "Health Check failed",
       failureBody:
         "The application started, but did not respond on the expected port.",
@@ -155,7 +152,6 @@ export const en: Dictionary = {
       checks: ["bind address", "exposed port", "runtime logs"],
       caption:
         "Failure is pinned to a named stage rather than reported as a general error.",
-      alt: "A diagnostic artifact. Repository, Build, and Start succeeded while Health failed. The explanation states the application started but did not answer on the expected port, with three things to check.",
       note: "This shape of explanation describes the direction being pursued.",
     },
 
@@ -174,7 +170,6 @@ export const en: Dictionary = {
       newWork: "New work",
       caption:
         "A living work can give rise to the next one. Items marked as direction are not available yet.",
-      alt: "A continuation diagram. A living work branches into opened, shared, learned from, and repaired. From there it can become a template, and a template becomes the starting point for new work.",
       more: "See the product direction",
     },
 
@@ -190,8 +185,6 @@ export const en: Dictionary = {
         { label: "Contribution", value: "Open" },
       ],
       factsCaption: "Evidence of openness, not merely a badge.",
-      factsAlt:
-        "A list of evidence for openness: public source, Apache 2.0 license, documented architecture, recorded decisions, and open contribution.",
       human:
         "Technology is a tool. What matters is what people can finally bring into being with it.",
       stewardship:
@@ -469,8 +462,6 @@ export const en: Dictionary = {
     ],
     stewardshipCaption:
       "How stewardship, sponsorship, and contribution relate.",
-    stewardshipAlt:
-      "Sakala Maintainers hold stewardship and technical decisions. GMEDIA acts as founding sponsor with no control over roadmap or licensing. Public contributors take part through issues and pull requests.",
     decisionsTitle: "Decision domains",
     decisions: [
       {
@@ -500,8 +491,6 @@ export const en: Dictionary = {
       "Responsibility is separated so the privilege boundary stays clear. Only the Agent performs runtime operations.",
     ecosystemCaption:
       "Sakala's five repositories, grouped by the privilege each one holds.",
-    ecosystemAlt:
-      "The public group holds sakala-landing. The control plane group holds sakala-console and sakala-api. The data plane group holds sakala-agent and sakala-infra, the only group that performs privileged runtime operations.",
     publicLabel: "Public",
     controlLabel: "Control plane",
     dataLabel: "Data plane",

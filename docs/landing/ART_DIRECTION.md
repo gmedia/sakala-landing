@@ -12,17 +12,24 @@ Canonical visual anchors from the supplied Sakala style guide:
 
 ```text
 Brand / Green Teal
-#0F796E
+#0F766E
 
 Secondary / Burnt Orange
 #C2670E
 
 Black / Eerie Black
 #1E1E1D
-
-Typeface
-Montserrat
 ```
+
+Typography is a pair, not a single face:
+
+```text
+Brand / Display / Heading   Montserrat
+Body / Reading / Long-form  Inter
+Mono / Technical artifact   system monospace
+```
+
+Inter is an intentional supporting typeface for reading, not a second brand.
 
 Use the real Figma/design-system ramps for tints and shades.
 
@@ -207,7 +214,11 @@ The visual identity is technical, not an environmental campaign.
 
 ## 6. Typography
 
-Use Montserrat as the primary Sakala typeface according to the supplied design system.
+Montserrat carries brand, display, and headings. Inter carries body and
+long-form reading. Technical artifacts use system monospace.
+
+Inter is an intentional supporting typeface chosen for reading comfort at
+length. It is not a second brand, and it never appears in display roles.
 
 Do not introduce an editorial serif merely to make the site "philosophical."
 
@@ -423,7 +434,7 @@ Remove the logo.
 Does the page still feel like a coherent Sakala experience because of:
 
 - Green Teal behavior;
-- Montserrat;
+- Montserrat display paired with Inter reading;
 - technical artifacts;
 - status grammar;
 - Green Line;

@@ -1,6 +1,5 @@
 ---
 import LanguageSwitcher from "./LanguageSwitcher.astro";
-import { links } from "../../data/links";
 import { getMainNavigation } from "../../data/navigation";
 import type { Lang } from "../../i18n";
 import type { Dictionary } from "../../i18n/id";
@@ -93,12 +92,6 @@ const navigation = getMainNavigation(lang, t);
         pathname={basePath}
         label={t.nav.languageLabel}
       />
-      <a
-        href={links.console}
-        class="inline-flex min-h-11 items-center rounded-xl border border-border-strong px-4 text-sm font-semibold text-ink hover:border-primary hover:text-primary"
-      >
-        {t.nav.console}
-      </a>
     </div>
   </nav>
 </details>

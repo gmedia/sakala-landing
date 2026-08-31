@@ -106,10 +106,15 @@ Before implementation:
 Canonical provided design anchors:
 
 ```text
-Green Teal   #0F796E
+Green Teal   #0F766E
 Burnt Orange #C2670E
 Eerie Black  #1E1E1D
-Montserrat
+```
+
+```text
+Brand / Display / Heading   Montserrat
+Body / Reading / Long-form  Inter
+Mono / Technical artifact   system monospace
 ```
 
 Use Figma/source design tokens for full ramps.
@@ -118,9 +123,14 @@ Do not guess missing shades.
 
 ## 6. Typography
 
-Maintain Montserrat as the Sakala identity typeface according to the supplied design system.
+Montserrat is the Sakala identity typeface and stays in display roles.
+Inter is the reading typeface for body and long-form text, and is kept
+deliberately rather than audited away.
 
-If current repo uses Inter in contexts that remain appropriate, audit against the current official design system before deleting it globally.
+```text
+--font-display: Montserrat
+--font-sans:    Inter
+```
 
 Do not change documentation typography casually while rebuilding only the landing.
 

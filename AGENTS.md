@@ -89,11 +89,20 @@ The landing does **not** create a new Sakala visual identity.
 Canonical anchors from the supplied design system:
 
 ```text
-Green Teal   #0F796E
+Green Teal   #0F766E
 Burnt Orange #C2670E
 Eerie Black  #1E1E1D
-Typeface     Montserrat
 ```
+
+Typography is a pair, not a single face:
+
+```text
+Brand / Display / Heading   Montserrat
+Body / Reading / Long-form  Inter
+Mono / Technical artifact   system monospace
+```
+
+Inter is an intentional supporting typeface for reading, not a second brand.
 
 Use actual Figma/design-system ramps instead of guessing missing shades.
 

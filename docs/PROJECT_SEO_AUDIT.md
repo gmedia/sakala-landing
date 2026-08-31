@@ -47,12 +47,12 @@ Perbaikan low-risk yang diterapkan bersama audit:
 - `WebSite` memiliki fallback site name `sakala.dev`;
 - structured data entitas dan site name dibatasi ke homepage.
 - breadcrumb visual dan `BreadcrumbList` memakai hierarchy yang sama pada docs,
-  changelog, dan halaman tentang;
+  changelog, dan halaman Open Source;
 - changelog ditandai sebagai `CollectionPage`;
 - panduan people-first tentang membagikan project dari localhost ditambahkan
   sebagai pintu masuk query non-brand.
-- halaman `Tentang Sakala` menjelaskan ownership, tujuan, status, dan ekosistem
-  repository sebagai penguat sinyal entitas.
+- halaman `Open Source` menjelaskan governance, ownership, stewardship, dan
+  identitas project sebagai penguat sinyal entitas.
 - RSS changelog tersedia sebagai static endpoint dan diumumkan melalui
   auto-discovery metadata.
 
@@ -69,7 +69,7 @@ eksternal.
 | Breadcrumb halaman bertingkat                    | Selesai         | Visual dan `BreadcrumbList` berasal dari data yang sama   |
 | Klasifikasi changelog                            | Selesai         | Menggunakan `CollectionPage`                              |
 | Konten intent `project dari localhost`           | Selesai         | Tersedia pada `/docs/keluar-dari-localhost`               |
-| Halaman entity `Tentang Sakala`                  | Selesai         | Menggunakan `AboutPage` pada `/tentang`                   |
+| Halaman entity `Open Source`                     | Selesai         | Menggunakan `AboutPage` pada `/open-source`               |
 | RSS changelog                                    | Selesai         | Static feed tersedia pada `/rss.xml`                      |
 | Tanggal update dan sitemap `lastmod`             | Ditunda sengaja | Belum ada proses yang menjamin tanggal selalu akurat      |
 | Social preview per halaman                       | Ditunda sengaja | Belum ada manfaat terukur yang melebihi biaya maintenance |
@@ -125,15 +125,15 @@ Rekomendasi:
   deployment open-source untuk project kecil dan pembelajaran;
 - minta halaman resmi GMEDIA yang relevan menautkan Sakala dengan anchor text
   deskriptif;
-- pertahankan halaman `Tentang Sakala` sebagai sumber ownership, tujuan, status
-  produk, dan hubungan repository yang dapat diverifikasi.
+- pertahankan halaman `Open Source` sebagai sumber governance, ownership,
+  stewardship, dan identitas project yang dapat diverifikasi.
 
 Hindari membuat banyak variasi nama brand yang belum dikenal pengguna.
 
 ### P1 - Tambah Konten People-First Berdasarkan Intent Nyata
 
-Saat ini situs memiliki landing, halaman tentang, changelog, dan enam halaman
-docs. Ini cukup untuk menjelaskan fondasi, tetapi belum cukup untuk banyak query
+Saat ini situs memiliki landing, halaman Open Source, changelog, dan sepuluh
+halaman docs dalam dua jalur. Ini cukup untuk menjelaskan fondasi, tetapi belum cukup untuk banyak query
 non-brand.
 Prioritas konten berikutnya harus menjawab kebutuhan nyata, misalnya:
 

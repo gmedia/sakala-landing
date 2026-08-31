@@ -97,11 +97,30 @@ berbentuk panduan pakai. Halaman yang menjanjikan pemakaian sudah dicabut dan
 alamat lamanya diarahkan ke hub. Yang tersisa menjelaskan cara kerja dan arah,
 dan itu tetap jujur.
 
+## Anchor yang sudah dikunci
+
+```txt
+Green Teal    #0F766E
+Burnt Orange  #C2670E
+Eerie Black   #1E1E1D
+```
+
+`#0F766E` adalah nilai kanonik, diambil dari aset Figma yang sebenarnya.
+Dokumen yang sempat menulis `#0F796E` sudah diselaraskan, sehingga tidak ada
+lagi dua versi di repository ini.
+
+Tipografi adalah pasangan, bukan satu keluarga:
+
+```txt
+Brand / Display / Heading   Montserrat   --font-display
+Body / Reading / Long-form  Inter        --font-sans
+Mono / Technical artifact   monospace    --font-mono
+```
+
+Inter dipilih sengaja demi kenyamanan membaca teks panjang. Ia bukan brand
+kedua, dan tidak pernah dipakai pada peran display.
+
 ## Yang masih terbuka
 
-Keduanya menunggu pemilik design system, tidak diputuskan di repository ini:
-
-- Green Teal. `ART_DIRECTION.md` menulis `#0F796E`, aset Figma memakai
-  `#0F766E`. Implementasi mengikuti aset Figma.
 - Ramp penuh Burnt Orange dan Eerie Black belum tersedia di Figma. Hanya nilai
   anchor yang dipakai; tidak ada shade yang dikarang.

@@ -10,9 +10,21 @@ interface Props {
   failureBody: string;
   checkLabel: string;
   checks: readonly string[];
+  /** Label keadaan tahap, bukan kesehatan aplikasi. Datang dari kamus supaya
+   *  halaman Indonesia tidak menyisipkan status berbahasa Inggris. */
+  stateOk: string;
+  stateFailed: string;
 }
 
-const { states, failureTitle, failureBody, checkLabel, checks } = Astro.props;
+const {
+  states,
+  failureTitle,
+  failureBody,
+  checkLabel,
+  checks,
+  stateOk,
+  stateFailed,
+} = Astro.props;
 ---
 
 {
@@ -38,7 +50,7 @@ const { states, failureTitle, failureBody, checkLabel, checks } = Astro.props;
             ]}
           >
             <span aria-hidden="true">{state.ok ? "✓" : "×"}</span>
-            {state.ok ? "ok" : "failed"}
+            {state.ok ? stateOk : stateFailed}
           </span>
         </li>
       ))

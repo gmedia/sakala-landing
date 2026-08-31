@@ -28,7 +28,7 @@ All homepage artifacts should look like they belong to the same Sakala system.
 
 Shared grammar:
 
-- Montserrat for interface text where appropriate;
+- Montserrat for artifact headings and labels, Inter for explanatory text;
 - project-approved monospace for technical labels;
 - Sakala Green Teal;
 - official neutral/border tokens;

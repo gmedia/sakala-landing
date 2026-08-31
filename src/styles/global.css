@@ -4,15 +4,14 @@
   Token direkonsiliasi dengan Sakala Design System.
 
   Anchor kanonik:
-    Green Teal    #0F766E   diverifikasi dari aset logo Figma
+    Green Teal    #0F766E
     Burnt Orange  #C2670E
     Eerie Black   #1E1E1D
-    Montserrat
 
-  Catatan: docs/landing/ART_DIRECTION.md menulis Green Teal sebagai #0F796E.
-  Aset logo yang diekspor dari Figma memakai #0F766E, dan nilai itulah yang
-  dipakai di sini. Selisihnya satu digit dan tampak seperti salah ketik.
-  Perlu dikonfirmasi ke pemilik design system.
+  Tipografi berpasangan: Montserrat untuk brand, display, dan judul; Inter
+  untuk teks bacaan; monospace sistem untuk artefak teknis.
+
+  Nilai di atas kanonik dan diambil dari aset Figma yang sebenarnya.
 */
 
 @theme {

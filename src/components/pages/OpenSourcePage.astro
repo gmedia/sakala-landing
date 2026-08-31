@@ -48,11 +48,7 @@ const breadcrumbs = [
           </p>
           <p class="mt-5 max-w-xl leading-7 text-muted">{o.sponsorBody}</p>
 
-          <ArtifactFigure
-            caption={o.stewardshipCaption}
-            alt={o.stewardshipAlt}
-            class="mt-10"
-          >
+          <ArtifactFigure caption={o.stewardshipCaption} class="mt-10">
             <div class="grid gap-3 sm:grid-cols-3">
               {
                 o.stewardshipCards.map((card, index) => (
@@ -130,11 +126,7 @@ const breadcrumbs = [
         <p class="mt-5 text-lg leading-8 text-muted">{o.ecosystemLead}</p>
       </div>
 
-      <ArtifactFigure
-        caption={o.ecosystemCaption}
-        alt={o.ecosystemAlt}
-        class="mt-10"
-      >
+      <ArtifactFigure caption={o.ecosystemCaption} class="mt-10">
         <RepoTopology
           publicLabel={o.publicLabel}
           controlLabel={o.controlLabel}
