@@ -25,42 +25,42 @@ const destinations = [
   description={n.metaDescription}
   noindex
 >
-  <section class="surface-deep relative isolate overflow-hidden">
+  <!-- Halaman ini bicara tentang alamat yang tidak menuju ke mana-mana, dan
+       itu tema yang sama dengan seluruh situs. Karena itu ia memakai bahasa
+       naratif yang sama, bukan pita gelap yang tidak dituntut isinya. -->
+  <section class="relative isolate overflow-hidden bg-canvas">
     <BrandMark
-      class="pointer-events-none absolute -right-20 top-1/2 -z-10 hidden h-[26rem] w-auto -translate-y-1/2 text-on-deep opacity-[0.06] lg:block"
+      class="pointer-events-none absolute -right-24 top-1/2 -z-10 hidden h-[26rem] w-auto -translate-y-1/2 text-primary opacity-[0.04] lg:block"
     />
 
-    <Container className="relative py-24 sm:py-32">
-      <p
-        class="font-mono text-xs uppercase tracking-[0.24em] text-on-deep-label"
-      >
-        {n.eyebrow}
-      </p>
+    <Container className="py-28 sm:py-36 lg:py-44">
+      <p class="artifact-label text-spark-text">{n.eyebrow}</p>
       <h1
-        class="mt-5 max-w-2xl text-balance font-display text-[clamp(2rem,5vw,3.5rem)] font-bold leading-[1.06] tracking-[-0.03em] text-on-deep"
+        class="mt-5 max-w-[16ch] text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-ink"
       >
         {n.title}
       </h1>
-      <p class="mt-6 max-w-xl text-lg leading-8 text-on-deep-muted">{n.lead}</p>
+      <p class="mt-7 max-w-xl text-lg leading-8 text-muted">{n.lead}</p>
 
-      <ul class="m-0 mt-10 grid list-none gap-2 p-0 sm:max-w-xl">
+      <ul
+        class="green-line m-0 mt-12 list-none space-y-1 p-0 pl-8 sm:max-w-lg"
+        style="--line-inset: 2rem"
+      >
         {
           destinations.map((item) => (
             <li>
               <a
                 href={item.href}
                 data-astro-prefetch="hover"
-                class="flex min-h-14 items-center justify-between gap-4 rounded-xl border border-deep-border bg-deep-surface px-4 py-3 hover:border-on-deep-label"
+                class="green-line-node green-line-node-mid flex min-h-14 items-center justify-between gap-4 py-2 text-ink hover:text-primary-dark"
               >
                 <span>
-                  <span class="block text-sm font-semibold text-on-deep">
-                    {item.label}
-                  </span>
-                  <span class="mt-0.5 block text-xs text-on-deep-muted">
+                  <span class="block font-semibold">{item.label}</span>
+                  <span class="mt-0.5 block text-sm text-muted">
                     {item.note}
                   </span>
                 </span>
-                <span aria-hidden="true" class="text-on-deep-label">
+                <span aria-hidden="true" class="text-muted-2">
                   &rarr;
                 </span>
               </a>
