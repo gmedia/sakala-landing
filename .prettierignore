@@ -4,3 +4,6 @@ dist/
 .husky/_/
 public/og/*.png
 package-lock.json
+
+# Artefak referensi visual. Dipertahankan apa adanya, bukan source kita.
+docs/landing/reference/

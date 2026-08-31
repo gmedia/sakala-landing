@@ -1,0 +1,62 @@
+---
+interface Branch {
+  name: string;
+  status: string;
+}
+
+interface Props {
+  root: string;
+  branches: readonly Branch[];
+  onward: string;
+  newWork: string;
+  directionLabel: string;
+  directionKey: string;
+}
+
+const { root, branches, onward, newWork, directionLabel, directionKey } =
+  Astro.props;
+---
+
+<!-- Kelanjutan, bukan grafik sosial. Tidak ada jumlah pengikut atau suka.
+     Cabang yang belum tersedia ditandai teks, bukan hanya warna. -->
+<div>
+  <p
+    class="inline-flex items-center gap-2.5 rounded-xl border border-primary-soft bg-primary-soft-2 px-4 py-2.5"
+  >
+    <span class="size-2 rounded-full bg-primary" aria-hidden="true"></span>
+    <span class="font-display font-semibold text-primary-dark">{root}</span>
+  </p>
+
+  <ul
+    class="green-line green-line-live m-0 mt-6 list-none space-y-3 py-1 pl-8 p-0"
+  >
+    {
+      branches.map((branch) => {
+        const isDirection = branch.status === directionKey;
+        return (
+          <li class="green-line-node green-line-node-live relative flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span class="text-ink">{branch.name}</span>
+            {isDirection && (
+              <span class="rounded-full border border-border px-2 py-0.5 font-mono text-[0.65rem] uppercase tracking-[0.1em] text-muted-2">
+                {directionLabel}
+              </span>
+            )}
+          </li>
+        );
+      })
+    }
+  </ul>
+
+  <div class="mt-6 pl-8">
+    <p
+      class="inline-flex items-center gap-2.5 rounded-xl border border-border bg-surface px-4 py-2.5"
+    >
+      <span class="size-2 rounded-full bg-spark" aria-hidden="true"></span>
+      <span class="font-display font-semibold text-ink">{onward}</span>
+    </p>
+    <p class="mt-3 flex items-center gap-2.5 text-muted">
+      <span aria-hidden="true" class="font-mono text-muted-2">└─</span>
+      {newWork}
+    </p>
+  </div>
+</div>

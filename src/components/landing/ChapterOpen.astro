@@ -1,0 +1,66 @@
+---
+import ArtifactFigure from "../artifact/ArtifactFigure.astro";
+import OpenProofArtifact from "../artifact/OpenProofArtifact.astro";
+import Chapter from "./Chapter.astro";
+import { localizePath, type Lang } from "../../i18n";
+import type { Dictionary } from "../../i18n/id";
+
+interface Props {
+  t: Dictionary;
+  lang: Lang;
+}
+
+const { t, lang } = Astro.props;
+const c = t.home.open;
+---
+
+<!-- Bab 07 — Terbuka dan manusia. Kembali dari sistem menuju orang.
+     Keyakinan disertai bukti, bukan sekadar lencana open source. -->
+<Chapter tone="light" labelledby="open-title">
+  <div
+    class="grid gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] lg:gap-20"
+  >
+    <div>
+      <p class="becoming artifact-label text-primary">{c.eyebrow}</p>
+      <h2
+        id="open-title"
+        class="becoming mt-5 max-w-[18ch] text-balance font-display text-narrative-m font-bold tracking-[-0.025em] text-ink"
+      >
+        {c.title}
+      </h2>
+      <p
+        class="becoming becoming-delay-1 mt-7 max-w-md text-lg leading-8 text-muted"
+      >
+        {c.lead}
+      </p>
+
+      <p
+        class="becoming becoming-delay-2 mt-10 max-w-md border-l-2 border-spark pl-5 font-display text-xl leading-8 text-ink"
+      >
+        {c.human}
+      </p>
+
+      <p
+        class="becoming becoming-delay-3 mt-8 max-w-md text-sm leading-7 text-muted-2"
+      >
+        {c.stewardship}
+      </p>
+
+      <a
+        href={localizePath("/open-source", lang)}
+        data-astro-prefetch="hover"
+        class="becoming becoming-delay-3 mt-6 inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
+      >
+        {c.cta} &rarr;
+      </a>
+    </div>
+
+    <ArtifactFigure
+      caption={c.factsCaption}
+      alt={c.factsAlt}
+      class="becoming becoming-delay-1 lg:pt-14"
+    >
+      <OpenProofArtifact facts={c.facts} />
+    </ArtifactFigure>
+  </div>
+</Chapter>

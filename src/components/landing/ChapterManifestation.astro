@@ -1,0 +1,61 @@
+---
+import ArtifactFigure from "../artifact/ArtifactFigure.astro";
+import BrowserArtifact from "../artifact/BrowserArtifact.astro";
+import JourneyArtifact from "../artifact/JourneyArtifact.astro";
+import Chapter from "./Chapter.astro";
+import type { Dictionary } from "../../i18n/id";
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+const c = t.home.manifestation;
+---
+
+<!-- Bab 04 — Perjalanan. Bab bukti produk utama.
+     "I built this." menjadi "Here it is." -->
+<Chapter tone="light" size="tall" labelledby="manifestation-title">
+  <div class="max-w-2xl">
+    <p class="becoming artifact-label text-primary">{c.eyebrow}</p>
+    <h2
+      id="manifestation-title"
+      class="becoming mt-5 text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-ink"
+    >
+      {c.title}
+    </h2>
+    <p class="becoming becoming-delay-1 mt-7 text-lg leading-8 text-muted">
+      {c.lead}
+    </p>
+  </div>
+
+  <div
+    class="mt-16 grid gap-16 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1fr)] lg:gap-20"
+  >
+    <ArtifactFigure caption={c.stepsCaption} alt={c.stepsAlt} class="becoming">
+      <JourneyArtifact steps={c.steps} />
+    </ArtifactFigure>
+
+    <div class="lg:pt-6">
+      <ArtifactFigure
+        caption={c.arrivalCaption}
+        alt={c.arrivalAlt}
+        note={c.note}
+        class="becoming becoming-delay-1"
+      >
+        <BrowserArtifact
+          label={c.arrivalLabel}
+          address={c.domain}
+          state="live"
+        />
+      </ArtifactFigure>
+
+      <p
+        class="becoming becoming-delay-2 mt-10 font-display text-2xl font-semibold text-primary-dark"
+        lang="en"
+      >
+        &ldquo;{c.refrain}&rdquo;
+      </p>
+    </div>
+  </div>
+</Chapter>

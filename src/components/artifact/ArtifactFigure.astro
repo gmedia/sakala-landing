@@ -1,0 +1,70 @@
+---
+interface Props {
+  /** Keterangan yang terlihat, menjelaskan apa yang ditunjukkan artefak. */
+  caption: string;
+  /** Padanan teks berurutan untuk pembaca yang tidak melihat gambar. */
+  alt: string;
+  /** Penanda kematangan. Artefak yang menggambarkan alur yang belum berjalan
+   *  wajib menyatakannya, bukan tampil seolah sudah tersedia. */
+  note?: string;
+  tone?: "light" | "deep" | "depth";
+  class?: string;
+}
+
+const {
+  caption,
+  alt,
+  note,
+  tone = "light",
+  class: className = "",
+} = Astro.props;
+
+const style = {
+  light: {
+    caption: "text-muted-2",
+    note: "border-border text-muted-2",
+  },
+  deep: {
+    caption: "text-on-deep-muted",
+    note: "border-deep-border text-on-deep-subtle",
+  },
+  depth: {
+    caption: "text-on-depth-muted",
+    note: "border-depth-border text-on-depth-subtle",
+  },
+}[tone];
+---
+
+<figure class:list={["not-prose m-0", className]}>
+  <slot />
+  <p class="sr-only">{alt}</p>
+  <figcaption class:list={["mt-4 text-sm leading-6", style.caption]}>
+    {caption}
+  </figcaption>
+  {
+    note && (
+      <p
+        class:list={[
+          "mt-3 border-l-2 pl-3 font-mono text-[0.7rem] leading-5",
+          style.note,
+        ]}
+      >
+        {note}
+      </p>
+    )
+  }
+</figure>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

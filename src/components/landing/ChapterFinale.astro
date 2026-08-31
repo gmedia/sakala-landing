@@ -1,0 +1,56 @@
+---
+import Button from "../ui/Button.astro";
+import Chapter from "./Chapter.astro";
+import { links } from "../../data/links";
+import { localizePath, type Lang } from "../../i18n";
+import type { Dictionary } from "../../i18n/id";
+
+interface Props {
+  t: Dictionary;
+  lang: Lang;
+}
+
+const { t, lang } = Astro.props;
+const c = t.home.finale;
+---
+
+<!-- Bab 08 — Penutup yang tenang. Tindakan mengikuti kematangan produk:
+     menjelajah dan membaca, bukan mendaftar atau deploy. -->
+<Chapter tone="light" size="tall" labelledby="finale-title">
+  <div class="mx-auto max-w-2xl text-center">
+    <h2
+      id="finale-title"
+      class="becoming text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-ink"
+    >
+      {c.title}
+    </h2>
+    <p class="becoming becoming-delay-1 mt-7 text-lg leading-8 text-muted">
+      {c.lead}
+    </p>
+
+    <div
+      class="becoming becoming-delay-2 mt-11 flex flex-wrap items-center justify-center gap-3"
+    >
+      <Button href={localizePath("/produk", lang)} prefetch="hover">
+        {c.primary}
+      </Button>
+      <Button
+        href={localizePath("/docs", lang)}
+        variant="secondary"
+        prefetch="hover"
+      >
+        {c.secondary}
+      </Button>
+    </div>
+
+    <a
+      href={links.githubOrganization}
+      target="_blank"
+      rel="noreferrer"
+      class="becoming becoming-delay-3 mt-8 inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-muted hover:text-primary-dark"
+    >
+      {c.tertiary}
+      <span aria-hidden="true">&#8599;</span>
+    </a>
+  </div>
+</Chapter>

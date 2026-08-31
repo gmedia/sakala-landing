@@ -1,38 +1,49 @@
 ---
-import type { Tone } from "../../data/sections";
-
 interface Props {
-  tone: Tone;
+  /** Kunci status pada kamus i18n. */
+  tone: string;
   label: string;
-  surface?: "light" | "deep";
+  surface?: "light" | "deep" | "depth";
   class?: string;
 }
 
 const { tone, label, surface = "light", class: className = "" } = Astro.props;
 
-/**
- * Status selalu membawa label teks. Bentuk penanda juga dibedakan per tone,
- * sehingga maknanya tidak pernah bergantung pada warna saja.
- */
-const shape: Record<Tone, string> = {
-  ready: "rounded-full",
-  progress: "rounded-full",
-  testing: "rounded-xs rotate-45",
-  later: "rounded-full border border-current bg-transparent",
+/** Bentuk penanda dibedakan per status, sehingga arti tidak pernah
+ *  bergantung pada warna saja. Label teks selalu ikut. */
+const shape: Record<string, string> = {
+  available: "rounded-full",
+  building: "rounded-full",
+  testing: "rotate-45 rounded-xs",
+  next: "rounded-xs",
+  direction: "rounded-full border border-current bg-transparent",
+  unavailable: "rounded-full border border-current bg-transparent",
 };
 
-const color: Record<"light" | "deep", Record<Tone, string>> = {
+const color: Record<string, Record<string, string>> = {
   light: {
-    ready: "text-success",
-    progress: "text-warning",
+    available: "text-success",
+    building: "text-warning",
     testing: "text-info",
-    later: "text-muted-2",
+    next: "text-muted",
+    direction: "text-muted-2",
+    unavailable: "text-muted-2",
   },
   deep: {
-    ready: "text-success-on-deep",
-    progress: "text-warning-on-deep",
+    available: "text-success-on-deep",
+    building: "text-warning-on-deep",
     testing: "text-on-deep-label",
-    later: "text-on-deep-subtle",
+    next: "text-on-deep-muted",
+    direction: "text-on-deep-subtle",
+    unavailable: "text-on-deep-subtle",
+  },
+  depth: {
+    available: "text-success-on-depth",
+    building: "text-spark-on-depth",
+    testing: "text-on-depth",
+    next: "text-on-depth-muted",
+    direction: "text-on-depth-subtle",
+    unavailable: "text-on-depth-subtle",
   },
 };
 ---
@@ -40,12 +51,13 @@ const color: Record<"light" | "deep", Record<Tone, string>> = {
 <span
   class:list={[
     "inline-flex items-center gap-2 font-mono text-xs",
-    color[surface][tone],
+    color[surface][tone] ?? color[surface].direction,
     className,
   ]}
 >
   <span
     aria-hidden="true"
-    class:list={["size-2 shrink-0 bg-current", shape[tone]]}></span>
+    class:list={["size-2 shrink-0 bg-current", shape[tone] ?? shape.direction]}
+  ></span>
   {label}
 </span>

@@ -16,13 +16,13 @@ const { lang, t, basePath, currentPath } = Astro.props;
 const navigation = getMainNavigation(lang, t);
 ---
 
-<details class="group relative md:hidden">
+<details class="group relative lg:hidden">
   <summary
-    class="inline-flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-xl border border-deep-border bg-deep-surface px-3 py-2 text-sm font-semibold text-on-deep hover:border-on-deep-label"
+    class="inline-flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-xl border border-border bg-surface px-3 py-2 text-sm font-semibold text-ink hover:border-primary"
   >
     <svg
       aria-hidden="true"
-      class="size-4 text-on-deep-label group-open:hidden"
+      class="size-4 text-primary group-open:hidden"
       viewBox="0 0 20 20"
       fill="none"
       stroke="currentColor"
@@ -33,7 +33,7 @@ const navigation = getMainNavigation(lang, t);
     </svg>
     <svg
       aria-hidden="true"
-      class="hidden size-4 text-on-deep-label group-open:block"
+      class="hidden size-4 text-primary group-open:block"
       viewBox="0 0 20 20"
       fill="none"
       stroke="currentColor"

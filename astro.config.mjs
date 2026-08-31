@@ -21,6 +21,12 @@ export default defineConfig({
   // URL dokumentasi teknis pindah ke /docs/teknis saat dokumentasi dipisah
   // menjadi jalur panduan dan jalur teknis.
   redirects: {
+    // /tentang dan /governance dilebur menjadi satu halaman open source
+    // saat homepage disusun ulang mengikuti docs/landing/.
+    "/tentang": "/open-source",
+    "/governance": "/open-source",
+    "/en/tentang": "/en/open-source",
+    "/en/governance": "/en/open-source",
     "/docs/concepts": "/docs/teknis/konsep",
     "/docs/deployment-flow": "/docs/teknis/alur-deployment",
     "/docs/agent-runtime": "/docs/teknis/agent",

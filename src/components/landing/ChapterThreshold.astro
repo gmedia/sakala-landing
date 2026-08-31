@@ -1,0 +1,57 @@
+---
+import ArtifactFigure from "../artifact/ArtifactFigure.astro";
+import ThresholdArtifact from "../artifact/ThresholdArtifact.astro";
+import Chapter from "./Chapter.astro";
+import type { Dictionary } from "../../i18n/id";
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+const c = t.home.threshold;
+---
+
+<!-- Bab 03 — Ambang. Satu-satunya transisi dramatis di halaman ini.
+     Di sinilah Green Teal masuk dan menjadi bermakna. -->
+<Chapter
+  tone="deep"
+  size="tall"
+  labelledby="threshold-title"
+  class="threshold-split"
+>
+  <div
+    class="grid gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] lg:items-center lg:gap-20"
+  >
+    <div>
+      <p class="becoming artifact-label text-on-deep-label">{c.eyebrow}</p>
+      <h2
+        id="threshold-title"
+        class="becoming mt-5 max-w-[16ch] text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-on-deep"
+      >
+        {c.title}
+      </h2>
+
+      <!-- Kalimat penjelas biasa. Ada supaya filosofi tidak menjadi kabur,
+           dan supaya mesin pencari menemukan penjelasan yang jelas. -->
+      <p
+        class="becoming becoming-delay-1 mt-9 max-w-xl border-l-2 border-on-deep-label pl-5 text-lg leading-8 text-on-deep"
+      >
+        {c.plain}
+      </p>
+    </div>
+
+    <ArtifactFigure
+      caption={c.caption}
+      alt={c.alt}
+      tone="deep"
+      class="becoming becoming-delay-2"
+    >
+      <div
+        class="rounded-2xl border border-deep-border bg-deep-surface px-6 py-12"
+      >
+        <ThresholdArtifact from={c.from} through={c.through} to={c.to} />
+      </div>
+    </ArtifactFigure>
+  </div>
+</Chapter>

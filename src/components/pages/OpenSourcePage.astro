@@ -1,0 +1,184 @@
+---
+import ArtifactFigure from "../artifact/ArtifactFigure.astro";
+import OpenProofArtifact from "../artifact/OpenProofArtifact.astro";
+import RepoTopology from "../diagram/RepoTopology.astro";
+import Container from "../ui/Container.astro";
+import PageHeader from "../ui/PageHeader.astro";
+import { links } from "../../data/links";
+import LandingLayout from "../../layouts/LandingLayout.astro";
+import { localizePath, useTranslations, type Lang } from "../../i18n";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const o = t.openSourcePage;
+
+const breadcrumbs = [
+  { label: lang === "en" ? "Home" : "Beranda", href: localizePath("/", lang) },
+  { label: o.crumb },
+];
+---
+
+<LandingLayout
+  lang={lang}
+  title={o.metaTitle}
+  description={o.metaDescription}
+  pageType="AboutPage"
+  availableLocales={["id", "en"]}
+  {breadcrumbs}
+>
+  <PageHeader eyebrow={o.eyebrow} title={o.title} lead={o.lead} {breadcrumbs} />
+
+  <section class="border-b border-border bg-background-soft py-20 sm:py-24">
+    <Container>
+      <div
+        class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-16"
+      >
+        <div>
+          <h2
+            class="font-display text-narrative-m font-bold tracking-[-0.025em] text-ink"
+          >
+            {o.sponsorTitle}
+          </h2>
+          <p class="mt-5 max-w-xl text-lg leading-8 text-muted">
+            {o.sponsorLead}
+          </p>
+          <p class="mt-5 max-w-xl leading-7 text-muted">{o.sponsorBody}</p>
+
+          <ArtifactFigure
+            caption={o.stewardshipCaption}
+            alt={o.stewardshipAlt}
+            class="mt-10"
+          >
+            <div class="grid gap-3 sm:grid-cols-3">
+              {
+                o.stewardshipCards.map((card, index) => (
+                  <div
+                    class:list={[
+                      "rounded-xl border p-4",
+                      index === 0
+                        ? "border-primary bg-primary-soft-2"
+                        : "border-border bg-surface",
+                    ]}
+                  >
+                    <p
+                      class:list={[
+                        "artifact-label",
+                        index === 0 ? "text-primary" : "text-muted-2",
+                      ]}
+                    >
+                      {card.role}
+                    </p>
+                    <p class="mt-2 font-display font-semibold text-ink">
+                      {card.name}
+                    </p>
+                    <p class="mt-1.5 text-xs leading-5 text-muted">
+                      {card.text}
+                    </p>
+                  </div>
+                ))
+              }
+            </div>
+          </ArtifactFigure>
+        </div>
+
+        <div class="lg:pt-3">
+          <h2 class="font-display text-lg font-semibold text-ink">
+            {o.factsTitle}
+          </h2>
+          <div class="mt-5">
+            <OpenProofArtifact facts={o.facts} />
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <section class="border-b border-border py-20 sm:py-24">
+    <Container>
+      <h2
+        class="font-display text-narrative-m font-bold tracking-[-0.025em] text-ink"
+      >
+        {o.decisionsTitle}
+      </h2>
+      <dl
+        class="m-0 mt-10 grid gap-px overflow-hidden rounded-2xl border border-border bg-border"
+      >
+        {
+          o.decisions.map((item) => (
+            <div class="grid gap-1 bg-surface px-5 py-4 sm:grid-cols-[12rem_1fr] sm:items-baseline">
+              <dt class="font-display font-semibold text-ink">{item.area}</dt>
+              <dd class="m-0 text-sm leading-7 text-muted">{item.owner}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </Container>
+  </section>
+
+  <section class="border-b border-border bg-background-soft py-20 sm:py-24">
+    <Container>
+      <div class="max-w-2xl">
+        <h2
+          class="font-display text-narrative-m font-bold tracking-[-0.025em] text-ink"
+        >
+          {o.ecosystemTitle}
+        </h2>
+        <p class="mt-5 text-lg leading-8 text-muted">{o.ecosystemLead}</p>
+      </div>
+
+      <ArtifactFigure
+        caption={o.ecosystemCaption}
+        alt={o.ecosystemAlt}
+        class="mt-10"
+      >
+        <RepoTopology
+          publicLabel={o.publicLabel}
+          controlLabel={o.controlLabel}
+          dataLabel={o.dataLabel}
+          roles={o.repoRoles}
+        />
+      </ArtifactFigure>
+    </Container>
+  </section>
+
+  <section class="py-20 sm:py-24">
+    <Container>
+      <div
+        class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] lg:gap-16"
+      >
+        <div>
+          <h2
+            class="font-display text-narrative-m font-bold tracking-[-0.025em] text-ink"
+          >
+            {o.contributorsTitle}
+          </h2>
+          <p class="mt-5 max-w-xl text-lg leading-8 text-muted">
+            {o.contributorsLead}
+          </p>
+          <a
+            href={links.githubIssues}
+            target="_blank"
+            rel="noreferrer"
+            class="mt-7 inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
+          >
+            {o.contributeCta} &rarr;
+          </a>
+        </div>
+
+        <ul class="m-0 flex list-none flex-wrap gap-2 p-0 lg:pt-3">
+          {
+            o.contributorAreas.map((area) => (
+              <li class="rounded-lg border border-border bg-surface px-3 py-2 font-mono text-xs text-primary-dark">
+                {area}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </Container>
+  </section>
+</LandingLayout>

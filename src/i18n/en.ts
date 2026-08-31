@@ -4,18 +4,21 @@ export const en: Dictionary = {
   meta: {
     siteTitle: "Sakala — Bringing Code to Life as Real Applications",
     siteDescription:
-      "Sakala is an open-source deployment project that helps code move from a repository into an application people can open, share, and learn from. Still under active development.",
+      "Sakala is an open-source deployment project that helps source in a repository become an application that runs, can be opened, and can be shared. Still under active development.",
     homeTitle: "Sakala — Manifesting Code into Reality",
     homeDescription:
-      "Sakala helps projects move from a Git repository into applications that genuinely run. An open-source project being built in the open.",
+      "Sakala is an open-source deployment project that helps carry source from a repository into an application that runs, can be opened, and can be shared. Being built in the open.",
     ogAlt: "Sakala logo with the tagline Manifesting Code into Reality",
     skipToContent: "Skip to main content",
   },
 
   nav: {
     label: "Main navigation",
+    philosophy: "Philosophy",
+    product: "Product",
     docs: "Documentation",
-    about: "About",
+    roadmap: "Roadmap",
+    openSource: "Open Source",
     changelog: "Changelog",
     github: "GitHub",
     console: "Sign in",
@@ -25,170 +28,327 @@ export const en: Dictionary = {
     docsNoteForEnglish: null,
   },
 
-  hero: {
-    badge: "Under active development",
-    tagline: "Manifesting Code into Reality",
-    title: "Code is not where the work ends.",
-    lead: "A repository stores code well, but it does not give that code a life. Sakala is being built for the journey that follows: turning source into an application people can open, share, and learn from.",
-    ctaPrimary: "Read the docs",
-    ctaSecondary: "View repository",
-    honesty:
-      "Sakala is not available as a public service yet. What you can do today is read the architecture, follow the progress, and contribute.",
-  },
-
   status: {
-    label: "Development status",
-    designNote: "Design status",
-    engineeringNote: "Engineering status",
-    disclaimer:
-      "A finished design does not mean the feature runs. The two statuses are kept separate on purpose.",
-    items: {
-      design: {
-        name: "Core product flow design",
-        state: "complete",
-      },
-      foundation: {
-        name: "Console, API, agent foundation",
-        state: "being built",
-      },
-      runtime: {
-        name: "Deployment runtime",
-        state: "under test",
-      },
-      service: {
-        name: "Public service",
-        state: "not available",
-      },
-    },
+    available: "available",
+    building: "being built",
+    testing: "under test",
+    next: "next",
+    direction: "direction",
+    unavailable: "not available",
   },
 
-  problem: {
-    eyebrow: "The usual gap",
-    title: "It runs on your laptop. Nobody else can open it.",
-    lead: "An application starts to feel real once it can run, be opened, and be tested against the real world. The distance to that point is often longer than expected.",
-    items: {
-      localhost: {
-        title: "The project stops at localhost",
-        text: "It runs fine on your own machine, but it has no address you can share.",
-      },
-      handover: {
-        title: "Work is handed over as an archive",
-        text: "Reviewers see files and screenshots rather than an application that actually runs.",
-      },
-      setup: {
-        title: "Readers have to set it up themselves",
-        text: "Every project carries different install steps, and every set of steps has its own way of failing.",
-      },
-      tooEarly: {
-        title: "Servers arrive too early",
-        text: "Learning to ship software should not begin with TLS, reverse proxies, and network configuration.",
-      },
+  home: {
+    notice: {
+      label: "Status",
+      text: "Sakala is not available as a public service yet. The flow on this page is the experience being built.",
+      link: "See development status",
     },
-  },
 
-  crossing: {
-    eyebrow: "How it works",
-    title: "One crossing, five stages that can be explained.",
-    lead: "Behind a single deploy command sit Git, a builder, containers, routing, and health checks. Sakala carries that complexity, but still explains what happened.",
-    steps: {
-      source: {
-        name: "Source",
-        text: "A Git repository and an exact commit form the starting point.",
-      },
-      build: {
-        name: "Build",
-        text: "The stack is detected and an image is built. Dockerfile first, Railpack as the fallback.",
-      },
-      deploy: {
-        name: "Deploy",
-        text: "A container is started with explicit resource limits.",
-      },
-      run: {
-        name: "Run",
-        text: "Health checks confirm the application actually answers, not merely that it started.",
-      },
-      reach: {
-        name: "Reach",
-        text: "A public route is activated, and the application gets an address people can open.",
-      },
-    },
-    transparency: {
-      title: "Automation is fine, as long as it can be explained.",
-      text: "When something fails, what you need is not “something went wrong” but which stage failed and what to check.",
-      sample: {
-        caption: "The shape of explanation we are aiming for",
-        stage: "Stage: Health Check",
-        body: "The application started, but did not respond on the expected port.",
-        checks: ["bind address", "exposed port", "runtime logs"],
-      },
-    },
-    diagram: {
+    possibility: {
+      title: "Every work begins as a possibility.",
+      lead: "A project can be finished, stored neatly, and running on your own screen. And still, nobody else can open it.",
+      artifactLabel: "Repository",
+      branch: "main",
+      commit: "commit a3f9c21",
+      files: [
+        "portfolio/",
+        "├── src/",
+        "├── public/",
+        "├── package.json",
+        "└── README.md",
+      ],
       caption:
-        "How Sakala moves a repository to an application with a public address.",
-      alt: "A five-stage flow diagram. Source leads to Build, Build to Deploy, Deploy to Run, and Run to Reach, which produces a public URL.",
+        "A repository holds a possibility: an idea that already has form, but not yet an address.",
+      alt: "A repository artifact named portfolio on the main branch, holding src and public folders alongside package.json and README.md. It represents a project that is complete as source code.",
     },
-    systemDiagram: {
-      caption: "How responsibility is divided between Sakala components.",
-      alt: "A system diagram. The browser reaches the Console, the Console talks to the API as control plane, the API stores commands, the Agent pulls those commands outbound and then drives Docker and Caddy on a runtime node, producing a publicly reachable application container.",
-      note: "The API never touches the Docker socket. Every privileged runtime operation belongs to the Agent alone.",
+
+    distance: {
+      eyebrow: "The distance",
+      title: "Not everything finished being made is finished becoming real.",
+      lead: "Running on a laptop proves something works. Not that the world can open it.",
+      refrain: "I built this.",
+      artifactLabel: "Running locally",
+      address: "localhost:5173",
+      note: "Alive, but only on one machine.",
+      observations: [
+        "A repository holds source. The world needs something it can open.",
+        "This project is not broken. It simply has not arrived.",
+      ],
+      caption:
+        "The application runs at an address that only points back to the machine running it.",
+      alt: "A browser window artifact showing the address localhost colon 5173. The application runs, but that address can only be opened from the machine running it.",
+    },
+
+    threshold: {
+      eyebrow: "The threshold",
+      title: "Between possibility and presence, there is a journey.",
+      plain:
+        "Sakala is an open-source deployment project that helps carry source from a repository into an application that runs, can be opened, and can be shared.",
+      from: "Source",
+      through: "Sakala",
+      to: "Presence",
+      caption: "Sakala sits exactly at that crossing.",
+      alt: "A threshold diagram. Source sits above, Sakala in the middle as the crossing, and presence below as an application that can be reached.",
+    },
+
+    manifestation: {
+      eyebrow: "The journey",
+      title: "Presence is more than a successful build.",
+      lead: "The journey is not finished until the work can actually be reached. Every stage has a name, so you know where it stands.",
+      steps: [
+        {
+          name: "Repository",
+          text: "The source and the exact commit form the starting point.",
+        },
+        {
+          name: "Analyze",
+          text: "The stack is detected, and what was read is shown for you to check.",
+        },
+        {
+          name: "Build",
+          text: "Source becomes an image that can run.",
+        },
+        {
+          name: "Start",
+          text: "The application runs with explicit resource limits.",
+        },
+        {
+          name: "Health",
+          text: "Sakala confirms the application genuinely answers.",
+        },
+        {
+          name: "Reach",
+          text: "A public route is activated, and the work has an address.",
+        },
+      ],
+      stepsCaption:
+        "Six stages, from repository to a work that can be reached.",
+      stepsAlt:
+        "An ordered list of six deployment stages: Repository, Analyze, Build, Start, Health, and Reach. Each stage is named so a failure can be pinned precisely.",
+      arrivalLabel: "Reachable",
+      domain: "portfolio.run.sakala.dev",
+      refrain: "Here it is.",
+      arrivalCaption:
+        "An application that passes its health check receives a public address anyone can open.",
+      arrivalAlt:
+        "A browser window artifact showing the address portfolio dot run dot sakala dot dev in a healthy state. The application can now be opened from anywhere.",
+      note: "The address, stages, and states in this section describe the flow being built.",
+    },
+
+    clarity: {
+      eyebrow: "Clarity",
+      title: "Simple should not have to mean hidden.",
+      lead: "Magic may happen. Mystery does not have to. When something fails, you deserve to know why.",
+      states: [
+        { name: "Repository", ok: true },
+        { name: "Build", ok: true },
+        { name: "Start", ok: true },
+        { name: "Health", ok: false },
+      ],
+      failureTitle: "Health Check failed",
+      failureBody:
+        "The application started, but did not respond on the expected port.",
+      checkLabel: "Check",
+      checks: ["bind address", "exposed port", "runtime logs"],
+      caption:
+        "Failure is pinned to a named stage rather than reported as a general error.",
+      alt: "A diagnostic artifact. Repository, Build, and Start succeeded while Health failed. The explanation states the application started but did not answer on the expected port, with three things to check.",
+      note: "This shape of explanation describes the direction being pursued.",
+    },
+
+    life: {
+      eyebrow: "Continuation",
+      title: "Deployment is not the end of the journey.",
+      lead: "A living work can be opened, shared, learned from, and repaired. Some of it becomes a starting point for someone else.",
+      root: "A living work",
+      branches: [
+        { name: "Opened", status: "available" },
+        { name: "Shared", status: "available" },
+        { name: "Learned from", status: "direction" },
+        { name: "Repaired", status: "available" },
+      ],
+      onward: "Becomes a template",
+      newWork: "New work",
+      caption:
+        "A living work can give rise to the next one. Items marked as direction are not available yet.",
+      alt: "A continuation diagram. A living work branches into opened, shared, learned from, and repaired. From there it can become a template, and a template becomes the starting point for new work.",
+      more: "See the product direction",
+    },
+
+    open: {
+      eyebrow: "In the open",
+      title: "What helps people learn should itself be open to study.",
+      lead: "Sakala's flow, contracts, and technical trade-offs are public so they can be read, corrected, and built on together.",
+      facts: [
+        { label: "Source", value: "Public" },
+        { label: "License", value: "Apache-2.0" },
+        { label: "Architecture", value: "Documented" },
+        { label: "Decisions", value: "Recorded" },
+        { label: "Contribution", value: "Open" },
+      ],
+      factsCaption: "Evidence of openness, not merely a badge.",
+      factsAlt:
+        "A list of evidence for openness: public source, Apache 2.0 license, documented architecture, recorded decisions, and open contribution.",
+      human:
+        "Technology is a tool. What matters is what people can finally bring into being with it.",
+      stewardship:
+        "Sakala is an open-source project initiated by the Sakala Maintainers and supported by GMEDIA as founding sponsor and infrastructure supporter.",
+      cta: "Read the governance",
+    },
+
+    finale: {
+      title: "What will you bring into being?",
+      lead: "Every work begins as a possibility.",
+      primary: "Explore Sakala",
+      secondary: "Read the docs",
+      tertiary: "View on GitHub",
     },
   },
 
-  principles: {
-    eyebrow: "Seven principles",
-    title: "What we hold on to when deciding.",
-    items: {
-      wujud: { name: "Manifest", text: "Code becomes something real." },
-      purna: { name: "Complete", text: "The journey is supported to its end." },
-      sederhana: {
-        name: "Simple",
-        text: "Complexity is not billed to the user.",
+  philosophy: {
+    metaTitle: "Sakala Philosophy — Manifesting Code into Reality",
+    metaDescription:
+      "Sakala's seven principles, what the tagline Manifesting Code into Reality means, and why deployment is treated as a crossing from possibility into presence.",
+    crumb: "Philosophy",
+    eyebrow: "Philosophy",
+    title: "Code is not where the work ends.",
+    lead: "Code is possibility: an idea that has been given structure, and something waiting to be made real. Sakala exists at the boundary between possibility and presence.",
+    arcTitle: "Three stages underneath everything",
+    arc: [
+      {
+        name: "Possibility",
+        text: "Something could exist. Source code is potential that already has structure.",
       },
-      terang: { name: "Clear", text: "Automation must be explainable." },
-      tumbuh: {
-        name: "Grow",
-        text: "Start small, keep room to become larger.",
+      {
+        name: "Presence",
+        text: "Something now exists in a form other people can reach.",
       },
-      berbagi: {
-        name: "Share",
-        text: "Work can be seen, studied, and passed on.",
+      {
+        name: "Continuation",
+        text: "Its existence makes the next work possible.",
       },
-      manusia: {
-        name: "Human",
-        text: "Technology is a tool that helps people create.",
+    ],
+    principlesTitle: "Seven principles",
+    principlesLead:
+      "These are not slogans. Each principle carries a product consequence.",
+    principles: [
+      {
+        name: "Wujud · Manifest",
+        text: "Code finds its meaning when it can become something real.",
+        consequence: "The journey does not stop at a successful build.",
       },
-    },
+      {
+        name: "Purna · Complete",
+        text: "The journey is supported to its end, not abandoned midway through complexity.",
+        consequence:
+          "Build, container, route, health check, then a public address.",
+      },
+      {
+        name: "Sederhana · Simple",
+        text: "Platform complexity should not be a tax every user pays.",
+        consequence: "Simple by default, transparent when needed.",
+      },
+      {
+        name: "Terang · Clear",
+        text: "Automation may happen, but it must be explainable.",
+        consequence:
+          "When a deployment fails, you deserve to know which stage stopped.",
+      },
+      {
+        name: "Tumbuh · Grow",
+        text: "Start small without closing off the possibility of becoming larger.",
+        consequence:
+          "Do not build tomorrow today; do not make tomorrow impossible either.",
+      },
+      {
+        name: "Berbagi · Share",
+        text: "Good work should be able to outlive the assignment that produced it.",
+        consequence:
+          "A living work can become an example, a template, and a new beginning.",
+      },
+      {
+        name: "Manusia · Human",
+        text: "Infrastructure is a tool. People and what they create are the point.",
+        consequence:
+          "Sakala succeeds when someone manages to make their work live.",
+      },
+    ],
+    taglineTitle: "Manifesting Code into Reality",
+    taglineBody:
+      "The tagline is not a turn of phrase. It names the actual work: helping something abstract become present, openable, and testable against the real world.",
+    filterTitle: "The product filter",
+    filterLead:
+      "Before a major feature enters the roadmap, these questions are asked.",
+    filter: [
+      "Does this help a work become real?",
+      "Does it make the user's journey more complete?",
+      "Does it reduce complexity without becoming a black box?",
+      "Does it help users understand and grow?",
+      "Does it let a work live longer?",
+      "Does it leave room to grow without forcing complexity now?",
+      "Is the benefit real for people, not merely technically enjoyable?",
+    ],
   },
 
-  afterlife: {
-    eyebrow: "Product direction",
-    title: "Deployment is the heart, not the whole body.",
-    lead: "Once a piece of work is alive, it still needs to be maintained, discovered, and learned from. This section describes the direction, not features that already exist.",
-    statusLabel: "Status",
-    pillars: {
-      operate: {
+  product: {
+    metaTitle: "Sakala Product — Capabilities and Direction",
+    metaDescription:
+      "What Sakala does today, what is being built, and where it is heading. Every capability carries an honest status.",
+    crumb: "Product",
+    eyebrow: "Product",
+    title: "What Sakala does, and how far along it is.",
+    lead: "Every capability on this page carries a status. A finished design does not mean the feature runs.",
+    disclaimer:
+      "Sakala is not available as a public service yet. The product and runtime foundations are still being assembled in the open.",
+    pillarsTitle: "The product journey",
+    pillars: [
+      {
+        name: "Create",
+        question: "Where does this work begin?",
+        status: "building",
+        items: [
+          "connect a Git repository",
+          "choose a branch",
+          "templates as a starting point",
+        ],
+      },
+      {
+        name: "Manifest",
+        question: "How does this source become something alive?",
+        status: "building",
+        items: [
+          "repository analysis and stack detection",
+          "build via Dockerfile or Railpack",
+          "deployment, health check, and public route",
+          "redeploy",
+        ],
+      },
+      {
         name: "Operate",
-        question: "Once it is alive, how is the application kept healthy?",
+        question: "Once alive, how is the application kept healthy?",
+        status: "next",
         items: [
           "variables and secrets",
-          "domains and TLS",
+          "generated and custom domains",
           "logs and health",
           "basic metrics",
         ],
       },
-      explore: {
+      {
         name: "Explore",
         question: "What can grow out of work that is already alive?",
+        status: "direction",
         items: [
           "project showcase",
           "templates",
           "creator profiles",
-          "collections and curation",
+          "collections and project lineage",
         ],
       },
-      learn: {
+      {
         name: "Learn",
         question: "How do people learn to ship software for real?",
+        status: "direction",
         items: [
           "classes and workshops",
           "assignments",
@@ -196,400 +356,171 @@ export const en: Dictionary = {
           "mentor review",
         ],
       },
-    },
-    loop: {
-      title: "Work gives rise to work",
-      text: "A living project can become an example, an example can become a template, and a template can become someone else's starting point.",
-      caption: "The cycle Sakala aims for once a project is successfully live.",
-      alt: "A cycle diagram. Project leads to Deploy, Deploy to Showcase, Showcase to Template, Template to a new developer, and that developer starts a new project, returning to the beginning.",
-    },
-    boundary: {
-      title: "What we deliberately avoid becoming",
-      items: [
-        "a generic cloud dashboard",
-        "a Kubernetes UI with a new name",
-        "a developer social network",
-        "an LMS",
-        "a replacement observability suite",
-      ],
-    },
+    ],
+    boundaryTitle: "What we deliberately avoid becoming",
+    boundaryLead:
+      "Keeping an identity matters more than chasing feature parity.",
+    boundary: [
+      "a generic cloud dashboard",
+      "a Kubernetes UI with a new name",
+      "a developer social network",
+      "an LMS",
+      "a domain registrar",
+      "a replacement observability suite",
+      "an AI-branded cloud with no core value",
+    ],
+    docsCta: "Read the docs",
+    roadmapCta: "See the roadmap",
   },
 
-  audience: {
-    eyebrow: "Who it is for",
-    title: "Built first for those most blocked by infrastructure.",
-    lead: "Sakala's early priority is people who write good code but are held back by servers.",
-    items: {
-      student: {
-        name: "Students",
-        text: "Hand in work as an address that opens, not an archive that must be reassembled.",
-      },
-      beginner: {
-        name: "Beginner developers",
-        text: "Move a project out of localhost while understanding why each stage exists.",
-      },
-      instructor: {
-        name: "Instructors and mentors",
-        text: "Open participants' work in a browser without preparing an environment for each one.",
-      },
-      creator: {
-        name: "Open-source creators",
-        text: "Offer a living demo and a starting point other people can build on.",
-      },
-      community: {
-        name: "Communities",
-        text: "Run workshops with consistent onboarding and predictable resources.",
-      },
-      team: {
-        name: "Small teams",
-        text: "Share prototypes and internal demos without starting from server configuration.",
-      },
-    },
-  },
-
-  roadmap: {
+  roadmapPage: {
+    metaTitle: "Sakala Roadmap — Direction, Not a Promise of Dates",
+    metaDescription:
+      "Sakala's product horizons, design and engineering status kept separate, and what must hold before a horizon may begin.",
+    crumb: "Roadmap",
     eyebrow: "Roadmap",
     title: "Direction, not a promise of dates.",
-    lead: "Sakala runs three parallel views that are related but never perfectly in sync.",
+    lead: "Sakala runs three parallel views that are related but never perfectly in sync: product, design, and engineering.",
     horizonLabel: "Horizon",
-    items: {
-      a: {
+    horizons: [
+      {
         name: "Manifestation",
-        text: "Identity, projects, repository analysis, build, deploy, logs, generated domain, and redeploy.",
-        state: "in progress",
+        status: "building",
+        text: "Identity, projects, repository analysis, build, deploy, logs, generated domain, health, and redeploy.",
       },
-      b: {
+      {
         name: "Reliable operation",
+        status: "next",
         text: "Custom domains, deployment recovery, runtime logs, metrics, and webhook auto-deploy.",
-        state: "next",
       },
-      c: {
+      {
         name: "Explore and ecosystem",
+        status: "direction",
         text: "Showcase, creator profiles, templates, collections, and project lineage.",
-        state: "in design",
       },
-      d: {
+      {
         name: "Collaboration and learning",
+        status: "direction",
         text: "Workspaces, members, roles, classrooms, assignments, and internship flow.",
-        state: "planned",
       },
-      e: {
+      {
         name: "Developer services",
+        status: "direction",
         text: "Managed PostgreSQL, Redis, object storage, workers, and richer observability.",
-        state: "planned",
       },
-      f: {
+      {
         name: "Platform",
+        status: "direction",
         text: "CLI, public API, self-host installer, and multi-node runtime.",
-        state: "planned",
-      },
-    },
-    validation: {
-      title: "When a horizon may begin",
-      text: "A finished design is not reason enough. What counts is user demand, product leverage, engineering cost, operational cost, and architectural readiness.",
-    },
-  },
-
-  openSource: {
-    eyebrow: "Open source",
-    title: "Built in the open so it can be studied and corrected.",
-    lead: "Deployment teaches more when its flow, contracts, and technical trade-offs can be read and improved together.",
-    licenseLabel: "License",
-    licenseValue: "Apache License 2.0",
-    stewardshipLabel: "Stewardship",
-    stewardshipValue: "Sakala Maintainers",
-    sponsorLabel: "Founding sponsor",
-    sponsorValue: "GMEDIA · PT Media Sarana Data",
-    sponsorNote:
-      "The sponsor supports infrastructure and the early phase. Sponsorship does not confer control over technical decisions, roadmap priorities, licensing, or contributor rights.",
-    ecosystemLabel: "Repository ecosystem",
-    repositories: {
-      console: "User interface",
-      api: "Control plane",
-      agent: "Runtime executor",
-      infra: "Runtime reference",
-      landing: "Website and documentation",
-    },
-    governanceCta: "Read project governance",
-  },
-
-  faq: {
-    eyebrow: "Questions",
-    title: "What people usually ask first.",
-    contactPrefix: "Something else on your mind? Start with",
-    contactLink: "an issue on GitHub",
-    items: {
-      ready: {
-        q: "Can I use Sakala yet?",
-        a: "Not as a public service. The product and runtime foundations are still being built, and the status is shown openly so expectations stay accurate.",
-      },
-      docker: {
-        q: "Do I need to understand Docker and reverse proxies first?",
-        a: "Not on day one. Sakala carries the complexity but still shows what happens, so you can learn it gradually when you want to go deeper.",
-      },
-      enterprise: {
-        q: "Is this a replacement for enterprise cloud?",
-        a: "No. Sakala is built for learning, portfolios, demos, classes, communities, and small teams who want their work to be openable by others.",
-      },
-      gmedia: {
-        q: "What is GMEDIA's role?",
-        a: "GMEDIA is the founding sponsor and infrastructure supporter for the early phase. Sakala remains an open-source project with a public roadmap, documentation, and contributions.",
-      },
-      contribute: {
-        q: "How can I contribute?",
-        a: "Start with an issue, a documentation fix, feedback on the product flow, or a pull request. Contribution is not only code; design, testing, and community work shape the foundation too.",
-      },
-      selfhost: {
-        q: "Will self-hosting be possible?",
-        a: "That is the planned direction through a separate installer and distribution, but it is not being built yet.",
-      },
-    },
-  },
-
-  cta: {
-    eyebrow: "Join early",
-    title: "Help shape a deployment path that is clear enough to learn from.",
-    lead: "Read the architecture, follow the progress, and tell us what is missing. Early users shape what this becomes.",
-    primary: "Read the docs",
-    secondary: "View repository",
-  },
-
-  footer: {
-    tagline: "Manifesting Code into Reality",
-    blurb:
-      "An open-source deployment project that helps work move from a repository into a living application.",
-    navigationLabel: "Navigation",
-    openSourceLabel: "Open source",
-    governance: "Governance",
-    concepts: "Concepts",
-    faqLink: "FAQ",
-    rss: "Changelog RSS",
-    rights: "Sakala Contributors",
-    license: "Apache-2.0",
-    sponsor: "Founding sponsor: GMEDIA",
-  },
-  about: {
-    metaTitle: "About Sakala — An Open-Source Deployment Project",
-    metaDescription:
-      "The purpose behind Sakala, the product journey it aims for, its open-source principles, founding sponsor, and community direction.",
-    crumb: "About Sakala",
-    eyebrow: "About Sakala",
-    title: "Deployment you can learn from, not just use.",
-    lead: "Sakala helps a project move from a Git repository to a public address through a simpler path, without hiding what actually happens along the way.",
-    focus: {
-      eyebrow: "Focus",
-      title:
-        "For people blocked by infrastructure, not for enterprise workloads.",
-      p1: "The early focus is simple: help a project leave localhost without first having to face a VPS, TLS, reverse proxies, Docker networking, and manual server configuration.",
-      p2: "It is aimed at coursework, portfolios, demos, classes, communities, and small teams. Sakala is not being built as a replacement for enterprise cloud, and that boundary is held deliberately.",
-      note: "The product and runtime foundations are still being assembled. The documentation and changelog describe real progress without claiming the service is production ready.",
-    },
-    journey: {
-      eyebrow: "Product journey",
-      title: "Deployment is the heart, not the whole body.",
-      lead: "Sakala wants to support a piece of work through the entire journey, rather than stopping the moment an image finishes building.",
-      caption:
-        "The seven stages Sakala aims for, from the starting point to work that gives rise to more work.",
-      alt: "Sakala's product journey in order: Create as the starting point, Manifest to make it real, Operate to keep it healthy, Explore to be discovered, Collaborate to work on it together, Learn to study it, and Grow. After Grow the cycle returns to Create for the next person.",
-      note: "Only Manifest is being built. Every other stage is direction, and is marked as such throughout this site.",
-    },
-    growth: {
-      title: "Growing in steps, not all at once",
-      lead: "Sakala deliberately does not build every level now. The vision is broad, but execution stays narrow and sequential.",
-      levels: [
-        "Simple deployment",
-        "Reliable hosting",
-        "Developer services",
-        "Explore and ecosystem",
-        "Collaboration and education",
-        "Self-hosted and managed platform",
-        "Distributed developer infrastructure",
-      ],
-      states: { current: "in progress", next: "next", later: "direction" },
-    },
-    boundary: {
-      title: "What we deliberately avoid becoming",
-      lead: "Keeping an identity matters more than chasing feature parity.",
-      items: [
-        "a generic cloud dashboard",
-        "a Kubernetes UI with a new name",
-        "a developer social network",
-        "an LMS",
-        "a domain registrar",
-        "a replacement observability suite",
-        "an AI-branded cloud with no core value",
-      ],
-    },
-    openSource: {
-      eyebrow: "Open source",
-      title: "Open so it can be studied, audited, and built on together.",
-      lead: "The code, documentation, issues, roadmap, and development process are public so the technical decisions can be read and challenged.",
-      caption:
-        "Sakala's five repositories, grouped by the privilege each one holds.",
-      alt: "The public group holds sakala-landing. The control plane group holds sakala-console and sakala-api, which own product policy. The data plane group holds sakala-agent and sakala-infra, the only group that performs privileged runtime operations.",
-      publicLabel: "Public",
-      controlLabel: "Control plane",
-      dataLabel: "Data plane",
-      roles: {
-        landing: "Website, documentation, and SEO entry point.",
-        console:
-          "SvelteKit interface for managing projects and following deployments.",
-        api: "Laravel control plane for auth, projects, deployments, and agent commands.",
-        agent: "Rust executor that runs deployment work on a node.",
-        infra: "Runtime, networking, and routing reference.",
-      },
-    },
-    domains: {
-      title: "Product domains",
-      purposeHeader: "Purpose",
-      valueHeader: "Domain",
-      rows: {
-        site: "Website and documentation",
-        console: "Console",
-        api: "API and control plane",
-        runtime: "Deployed applications",
-      },
-    },
-    sponsor: {
-      eyebrow: "Early support",
-      title: "Supported by GMEDIA as founding sponsor.",
-      lead: "GMEDIA helps Sakala reach MVP and an early pilot through infrastructure, domains, room to experiment, and technical support.",
-      p1: "That support does not change Sakala's basic principle as an open-source project. The roadmap, documentation, issues, and contributions stay public.",
-      p2: "Sponsorship does not confer control over technical decisions, roadmap priorities, licensing, or contributor rights. Sakala remains under the Apache License 2.0.",
-      cta: "Read project governance",
-      cardLabel: "Founding Sponsor & Infrastructure Supporter",
-      imageAlt: "GMEDIA - PT Media Sarana Data",
-    },
-    next: {
-      eyebrow: "Next step",
-      title: "Learn how Sakala works underneath.",
-      lead: "The documentation covers the roles of console, API, agent, and infra, the deployment flow, and the domain language used throughout.",
-      cta: "Read the Sakala docs",
-    },
-  },
-
-  governance: {
-    metaTitle: "Sakala Governance — An Open-Source Project",
-    metaDescription:
-      "Sakala's governance principles, decision domains, squad structure, the limits of the sponsor's role, and the community direction.",
-    crumb: "Governance",
-    eyebrow: "Governance",
-    title: "Built in the open, with clear boundaries of role.",
-    lead: "Sakala is developed through a public roadmap, documentation, issues, pull requests, and contributions. During MVP it is stewarded by its early maintainers with GMEDIA as founding sponsor.",
-    principles: [
-      {
-        title: "Open roadmap",
-        text: "Direction is discussed through documentation, issues, pull requests, and change notes that anyone can follow.",
-      },
-      {
-        title: "Technical decisions stay with maintainers",
-        text: "A sponsor may offer support and input, but technical decisions remain with the Sakala maintainers.",
-      },
-      {
-        title: "Clear licensing",
-        text: "Sakala uses the Apache License 2.0 so the source can be studied, used, and contributed to openly.",
       },
     ],
-    sponsor: {
-      eyebrow: "The sponsor's role",
-      title:
-        "A sponsor supports continuity; it does not take the project over.",
-      p1: "A sponsor may help Sakala through infrastructure, domains, development support, documentation, community programmes, or other operational needs.",
-      caption: "How stewardship and sponsorship relate.",
-      alt: "Sakala Maintainers hold stewardship and technical decisions. GMEDIA acts as founding sponsor and infrastructure supporter, offering support but holding no control over technical decisions, roadmap priorities, licensing, or contributor rights. Public contributors take part through issues and pull requests.",
-      cards: {
-        stewardship: {
-          role: "Stewardship",
-          name: "Sakala Maintainers",
-          text: "Hold technical, architectural, and licensing decisions.",
-        },
-        supporting: {
-          role: "Supporting",
-          name: "GMEDIA",
-          text: "Founding sponsor and infrastructure supporter. No control over roadmap or licensing.",
-        },
-        contributing: {
-          role: "Contributing",
-          name: "Public contributors",
-          text: "Issues, pull requests, documentation, design, and testing.",
-        },
+    designTitle: "Design and engineering status stay separate",
+    designLead:
+      "A design being ready does not mean engineering has committed to building it. The two are deliberately not conflated.",
+    tracks: [
+      { name: "Core product flow design", status: "available" },
+      { name: "Console, API, agent foundation", status: "building" },
+      { name: "Deployment runtime", status: "testing" },
+      { name: "Public service", status: "unavailable" },
+    ],
+    gateTitle: "When a horizon may begin",
+    gateLead:
+      "A finished design is not reason enough. What counts is user demand, product leverage, engineering cost, operational cost, and architectural readiness.",
+  },
+
+  openSourcePage: {
+    metaTitle: "Sakala Open Source — Governance, Sponsor, and Ecosystem",
+    metaDescription:
+      "How Sakala is stewarded: maintainer stewardship, the limits of GMEDIA's role as founding sponsor, the Apache-2.0 license, and the repository ecosystem.",
+    crumb: "Open Source",
+    eyebrow: "Open Source",
+    title: "Open so it can be studied, audited, and corrected.",
+    lead: "Deployment teaches more when its flow, contracts, and technical trade-offs can be read and improved together.",
+    factsTitle: "Project facts",
+    facts: [
+      { label: "License", value: "Apache License 2.0" },
+      { label: "Stewardship", value: "Sakala Maintainers" },
+      { label: "Founding sponsor", value: "GMEDIA · PT Media Sarana Data" },
+    ],
+    sponsorTitle: "The limits of the sponsor's role",
+    sponsorLead:
+      "GMEDIA supports infrastructure, domains, room to experiment, and technical help so Sakala can reach MVP and an early pilot.",
+    sponsorBody:
+      "Sponsorship does not confer control over technical decisions, roadmap priorities, licensing, or contributor rights. Sakala continues with a public roadmap, documentation, and contributions.",
+    stewardshipCards: [
+      {
+        role: "Stewardship",
+        name: "Sakala Maintainers",
+        text: "Hold technical, architectural, and licensing decisions.",
       },
-      quote:
-        "Sakala is an open-source deployment project initiated by the Sakala Maintainers and supported by GMEDIA as founding sponsor and infrastructure supporter.",
+      {
+        role: "Supporting",
+        name: "GMEDIA",
+        text: "Founding sponsor and infrastructure supporter. No control over roadmap or licensing.",
+      },
+      {
+        role: "Contributing",
+        name: "Public contributors",
+        text: "Issues, pull requests, documentation, design, and testing.",
+      },
+    ],
+    stewardshipCaption:
+      "How stewardship, sponsorship, and contribution relate.",
+    stewardshipAlt:
+      "Sakala Maintainers hold stewardship and technical decisions. GMEDIA acts as founding sponsor with no control over roadmap or licensing. Public contributors take part through issues and pull requests.",
+    decisionsTitle: "Decision domains",
+    decisions: [
+      {
+        area: "Product",
+        owner: "Maintainers, together with product and design discussion.",
+      },
+      {
+        area: "Architecture",
+        owner:
+          "Maintainer-led. Major boundary changes are recorded as architecture decisions.",
+      },
+      {
+        area: "Implementation",
+        owner: "The owning squad, within the established architecture.",
+      },
+      {
+        area: "Security",
+        owner: "A maintainer or security review can hold a release.",
+      },
+      {
+        area: "Community",
+        owner: "Documented rules, auditable, with a path for review.",
+      },
+    ],
+    ecosystemTitle: "Repository ecosystem",
+    ecosystemLead:
+      "Responsibility is separated so the privilege boundary stays clear. Only the Agent performs runtime operations.",
+    ecosystemCaption:
+      "Sakala's five repositories, grouped by the privilege each one holds.",
+    ecosystemAlt:
+      "The public group holds sakala-landing. The control plane group holds sakala-console and sakala-api. The data plane group holds sakala-agent and sakala-infra, the only group that performs privileged runtime operations.",
+    publicLabel: "Public",
+    controlLabel: "Control plane",
+    dataLabel: "Data plane",
+    repoRoles: {
+      landing: "Website, documentation, and SEO entry point.",
+      console: "The user interface for managing projects.",
+      api: "Control plane for auth, projects, deployments, and commands.",
+      agent: "Runtime executor that performs work on a node.",
+      infra: "Runtime, networking, and routing reference.",
     },
-    decisions: {
-      eyebrow: "Decision domains",
-      title: "Who decides what.",
-      lead: "This split keeps decisions from resting on one person, and keeps the path followable from outside.",
-      rows: [
-        {
-          area: "Product",
-          owner: "Maintainers, together with product and design discussion.",
-        },
-        {
-          area: "Architecture",
-          owner:
-            "Maintainer-led. Major boundary changes must be recorded as an architecture decision.",
-        },
-        {
-          area: "Implementation",
-          owner: "The owning squad, within the established architecture.",
-        },
-        {
-          area: "Security",
-          owner: "A maintainer or security review can hold a release.",
-        },
-        {
-          area: "Community and moderation",
-          owner: "Documented rules, auditable, with a path for review.",
-        },
-      ],
-    },
-    squads: {
-      eyebrow: "How work is organised",
-      title: "Squads as a point of coordination, not a hierarchy.",
-      lead: "This marks who sits closest to an area, not who has authority over it.",
-      items: [
-        {
-          name: "maintainers",
-          scope: "Stewardship, architecture, and licensing decisions",
-        },
-        {
-          name: "design",
-          scope: "Product design, user flows, and the visual system",
-        },
-        { name: "frontend", scope: "Console and user-facing surfaces" },
-        { name: "backend", scope: "Control plane, API contracts, and data" },
-        { name: "runtime", scope: "Agent, execution, and infrastructure" },
-      ],
-      note: "Contributor names are not published yet. They are listed once the contribution is real and the person agrees.",
-    },
-    access: {
-      title: "Repository access",
-      lead: "Access is granted at the minimum level that keeps work moving.",
-      rows: [
-        { level: "Primary repository", access: "Write for the owning squad" },
-        {
-          level: "Cross repository",
-          access: "Read by default, Triage where needed",
-        },
-        {
-          level: "Maintainer",
-          access: "Maintain or Admin only where necessary",
-        },
-        { level: "Main branch", access: "Always protected" },
-      ],
-      planningTitle: "Public and internal planning",
-      planning1:
-        "Repositories are public. The day-to-day execution board stays internal because it holds raw blockers, mentoring notes, team capacity, and sensitive runtime detail.",
-      planning2:
-        "Roadmap transparency does not require opening the entire workspace. A public roadmap can be maintained separately once the need is clear.",
-    },
-    next: {
-      eyebrow: "What comes next",
-      title: "Governance grows with the community.",
-      lead: "Once Sakala passes MVP, gains real users, and receives broader external contribution, it can move toward a more independent community organisation and a more formal maintainer model.",
-    },
+    contributorsTitle: "Early contributors",
+    contributorsLead:
+      "Names are listed once the contribution is real and the person agrees to being named. Contribution is not only code.",
+    contributorAreas: [
+      "Product & Design",
+      "Frontend",
+      "Backend & Platform",
+      "Documentation",
+      "Testing",
+      "Community",
+    ],
+    contributeCta: "See where to contribute",
   },
 
   changelogPage: {
@@ -615,5 +546,17 @@ export const en: Dictionary = {
       docs: { label: "Documentation", note: "Concepts and deployment flow" },
       changelog: { label: "Changelog", note: "Latest progress" },
     },
+  },
+
+  footer: {
+    tagline: "Manifesting Code into Reality",
+    blurb:
+      "An open-source deployment project that helps work move from a repository into a living application.",
+    exploreLabel: "Explore",
+    projectLabel: "Project",
+    rss: "Changelog RSS",
+    rights: "Sakala Contributors",
+    license: "Apache-2.0",
+    sponsor: "Founding sponsor: GMEDIA",
   },
 };

@@ -1,0 +1,35 @@
+---
+interface Step {
+  name: string;
+  text: string;
+}
+
+interface Props {
+  steps: readonly Step[];
+}
+
+const { steps } = Astro.props;
+---
+
+<!-- Green Line of Life: satu garis mengikuti project melewati tiap tahap.
+     Urutan tetap terbaca tanpa animasi maupun warna. -->
+<ol
+  data-sequence
+  class="green-line green-line-live m-0 list-none space-y-7 py-1 pl-8 pr-0"
+>
+  {
+    steps.map((step, index) => (
+      <li class="sequence-step green-line-node green-line-node-live relative">
+        <p class="flex items-baseline gap-3">
+          <span class="font-mono text-xs text-muted-2">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <span class="font-display text-lg font-semibold text-ink">
+            {step.name}
+          </span>
+        </p>
+        <p class="mt-1.5 max-w-md text-sm leading-6 text-muted">{step.text}</p>
+      </li>
+    ))
+  }
+</ol>

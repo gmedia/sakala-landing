@@ -1,0 +1,24 @@
+---
+interface Props {
+  label: string;
+  branch: string;
+  commit: string;
+  files: readonly string[];
+}
+
+const { label, branch, commit, files } = Astro.props;
+---
+
+<!-- Artefak repository. Sengaja bukan tiruan tangkapan layar GitHub. -->
+<div class="artifact rounded-2xl border border-border bg-surface">
+  <div
+    class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-border px-5 py-3"
+  >
+    <span class="artifact-label text-muted-2">{label}</span>
+    <span class="font-mono text-xs text-muted-2">
+      {branch} · {commit}
+    </span>
+  </div>
+  <pre
+    class="m-0 overflow-x-auto px-5 py-5 font-mono text-sm leading-7 text-ink">{files.join("\n")}</pre>
+</div>

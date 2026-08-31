@@ -134,7 +134,14 @@ const jsonLd = JSON.stringify(structuredData ?? defaultStructuredData);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#08413D" />
+    <meta name="theme-color" content="#0F766E" />
+    <script is:inline>
+      // Dijalankan sebelum paint. Tanpa JavaScript atribut ini tidak pernah
+      // ada, sehingga konten naratif tampil apa adanya.
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.dataset.motion = "on";
+      }
+    </script>
     <meta name="robots" content={robotsContent} />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -203,5 +210,8 @@ const jsonLd = JSON.stringify(structuredData ?? defaultStructuredData);
   <body class="text-ink antialiased">
     <a class="skip-link" href="#main-content">{t.meta.skipToContent}</a>
     <slot />
+    <script>
+      import "../scripts/becoming";
+    </script>
   </body>
 </html>
