@@ -35,11 +35,12 @@ Use the real Figma/design-system ramps for tints and shades.
 
 Do not reconstruct the whole ramp by guessing from screenshots.
 
-### Important repository audit
+### Reconciliation status
 
-The current landing repo contains older local tokens such as `#0F766E` and uses Inter for body copy.
+The repository previously carried conflicting brand and typography assumptions.
 
-During the rebuild, explicitly reconcile repository tokens with the canonical Sakala design system instead of silently mixing two systems.
+The v2 rebuild reconciled them with the canonical Sakala system documented
+above. Do not reintroduce a second system alongside it.
 
 ## 2. Relationship with Console
 

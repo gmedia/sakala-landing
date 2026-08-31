@@ -263,14 +263,21 @@ Do not shrink a desktop diagram until labels become unreadable.
 
 ## 14. Artifact accessibility
 
-Every informative artifact needs an equivalent semantic description.
+An artifact is accessible when its own markup carries the meaning.
 
 For diagrams:
 
+- semantic reading order;
 - `figure`;
 - meaningful `figcaption`;
-- text alternative/order;
+- explicit text alternative **only** when the visual itself cannot be
+  represented by the semantic DOM;
 - status not communicated only by color.
+
+Artifacts built from real markup — ordered lists, status text, stage names,
+addresses — are already read as content. Adding an `sr-only` summary on top of
+them makes screen readers announce everything twice. Do not add one by
+default.
 
 For purely decorative technical texture:
 

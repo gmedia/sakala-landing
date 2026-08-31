@@ -26,21 +26,23 @@ Ilustrasi bukan gambar, melainkan konstruksi HTML dan CSS di
 `src/components/artifact/`. Tidak ada pustaka diagram, tidak ada aset yang
 perlu diunduh.
 
-| Komponen             | Membawa                                             |
-| -------------------- | --------------------------------------------------- |
-| `SourceArtifact`     | Repository sebagai kemungkinan yang sudah berbentuk |
-| `LocalhostArtifact`  | Panggung berkisi dengan jendela yang terkurung      |
-| `ThresholdArtifact`  | Penyeberangan: garis, mark bercincin, konektor      |
-| `DeploymentArtifact` | Tahap dan hasilnya dalam satu bingkai               |
-| `ClarityArtifact`    | Baris status berdampingan dengan penjelasannya      |
-| `LineageArtifact`    | Node graph dengan konektor SVG yang dihitung        |
-| `OpenProofArtifact`  | Bukti keterbukaan, bukan label                      |
-| `ArtifactFigure`     | Pembungkus: keterangan, teks alternatif, kematangan |
+| Komponen             | Membawa                                               |
+| -------------------- | ----------------------------------------------------- |
+| `SourceArtifact`     | Repository sebagai kemungkinan yang sudah berbentuk   |
+| `LocalhostArtifact`  | Panggung berkisi dengan jendela yang terkurung        |
+| `ThresholdArtifact`  | Penyeberangan: garis, mark bercincin, konektor        |
+| `DeploymentArtifact` | Tahap dan hasilnya dalam satu bingkai                 |
+| `ClarityArtifact`    | Baris status berdampingan dengan penjelasannya        |
+| `LineageArtifact`    | Node graph dengan konektor SVG yang dihitung          |
+| `OpenProofArtifact`  | Bukti keterbukaan, bukan label                        |
+| `ArtifactFigure`     | Pembungkus figure, figcaption, dan penanda kematangan |
 
 Aturan yang berlaku untuk semuanya:
 
-- setiap artefak lewat `ArtifactFigure`, sehingga teks alternatif dan penanda
-  kematangan tidak pernah hilang;
+- artefak dibangun dengan HTML semantik dan reading order yang utuh;
+- `ArtifactFigure` menambahkan figcaption dan penanda kematangan. Padanan
+  tekstual khusus hanya diperlukan untuk artefak yang murni visual, dan tidak
+  pernah ditambahkan sebagai kebiasaan;
 - status tidak pernah disampaikan lewat warna saja;
 - artefak yang menggambarkan alur yang belum berjalan wajib menyatakannya;
 - seluruh dekorasi `aria-hidden`;
@@ -93,9 +95,11 @@ mesinnya. Kunci track `panduan` dipertahankan karena dipakai frontmatter setiap
 dokumen, tetapi salinannya berbunyi "Pengantar", bukan "Panduan".
 
 Selama Sakala belum tersedia sebagai layanan publik, dokumentasi tidak boleh
-berbentuk panduan pakai. Halaman yang menjanjikan pemakaian sudah dicabut dan
-alamat lamanya diarahkan ke hub. Yang tersisa menjelaskan cara kerja dan arah,
-dan itu tetap jujur.
+berbentuk panduan pakai. Halaman yang menjanjikan pemakaian sudah dicabut,
+tetapi URL lamanya tidak dibiarkan 404. Halaman penggunaan yang tidak punya
+penerus diarahkan ke hub; perjalanan deployment diarahkan ke rancangan alur
+teknis yang ekuivalen. Yang tersisa menjelaskan cara kerja dan arah, dan itu
+tetap jujur.
 
 ## Anchor yang sudah dikunci
 
