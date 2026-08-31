@@ -59,6 +59,17 @@ Setelah `npm install`, script `prepare` mengaktifkan hook Husky. Commit akan men
 - `src/pages/`: route statis `/`, `/tentang`, `/governance`, `/docs`,
   `/changelog`, `/rss.xml`, serta `/404`.
 - `public/`: logo, favicon, robots, dan Open Graph image.
+- `docs/`: dokumen kerja repository. Bukan dokumentasi publik.
+
+## Dokumen Kerja
+
+Arah kreatif landing berada di [`docs/landing/`](docs/landing/README.md),
+dan itulah sumber kebenaran untuk rebuild homepage berikutnya. Keputusan
+teknis repository berada di [`docs/`](docs/README.md).
+
+Urutan otoritasnya dijelaskan pada [`docs/README.md`](docs/README.md).
+Ringkasnya: dokumentasi project Sakala, lalu Design System, lalu
+`docs/landing/`, lalu keputusan teknis, baru implementasi.
 
 ## Governance dan Sponsor
 
@@ -79,3 +90,6 @@ Sakala Landing menggunakan Apache License 2.0. Baca
 [CONTRIBUTING.md](CONTRIBUTING.md) dan
 [keputusan fitur Astro](docs/PROJECT_ASTRO_FEATURES.md) sebelum membuat pull
 request, lalu ikuti Conventional Commits.
+
+Untuk pekerjaan pada homepage, baca [AGENTS.md](AGENTS.md) dan
+[`docs/landing/`](docs/landing/README.md) lebih dulu.
