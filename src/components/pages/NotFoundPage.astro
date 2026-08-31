@@ -14,7 +14,7 @@ const n = t.notFound;
 
 const destinations = [
   { ...n.destinations.home, href: localizePath("/", lang) },
-  { ...n.destinations.docs, href: "/docs" },
+  { ...n.destinations.docs, href: localizePath("/docs", lang) },
   { ...n.destinations.changelog, href: localizePath("/changelog", lang) },
 ];
 ---
@@ -26,7 +26,6 @@ const destinations = [
   noindex
 >
   <section class="surface-deep relative isolate overflow-hidden">
-    <div class="brand-lattice absolute inset-0 -z-20" aria-hidden="true"></div>
     <BrandMark
       class="pointer-events-none absolute -right-20 top-1/2 -z-10 hidden h-[26rem] w-auto -translate-y-1/2 text-on-deep opacity-[0.06] lg:block"
     />

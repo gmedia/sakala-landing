@@ -43,8 +43,8 @@ const breadcrumbs = [
 >
   <PageHeader eyebrow={c.eyebrow} title={c.title} lead={c.lead} {breadcrumbs}>
     <a
-      href="/rss.xml"
-      class="mt-8 inline-flex min-h-11 items-center gap-2 rounded-xl border border-on-deep-subtle px-4 py-2.5 font-mono text-xs text-on-deep hover:border-on-deep-label hover:text-on-deep-label"
+      href={localizePath("/rss.xml", lang)}
+      class="mt-8 inline-flex min-h-11 items-center gap-2 rounded-xl border border-border-strong px-4 py-2.5 font-mono text-xs text-primary-dark hover:border-primary hover:bg-primary-soft-2"
     >
       <span aria-hidden="true">&#9673;</span>
       {c.rss}

@@ -5,23 +5,32 @@ interface Props {
   lang: Lang;
   pathname: string;
   label: string;
-  tone?: "light" | "deep";
+  tone?: "light" | "deep" | "depth";
 }
 
 const { lang, pathname, label, tone = "light" } = Astro.props;
 
-const style =
-  tone === "deep"
-    ? {
-        wrap: "border-deep-border",
-        active: "bg-on-deep-label text-deep",
-        idle: "text-on-deep-muted hover:text-on-deep",
-      }
-    : {
-        wrap: "border-border",
-        active: "bg-primary text-white",
-        idle: "text-muted hover:text-primary",
-      };
+// Satu tone per keluarga permukaan. "deep" dikalibrasi untuk teal pekat,
+// "depth" untuk Eerie Black; menukar keduanya membuat kontrol ber-hue asing.
+const styles = {
+  light: {
+    wrap: "border-border",
+    active: "bg-primary text-white",
+    idle: "text-muted hover:text-primary",
+  },
+  deep: {
+    wrap: "border-deep-border",
+    active: "bg-on-deep-label text-deep",
+    idle: "text-on-deep-muted hover:text-on-deep",
+  },
+  depth: {
+    wrap: "border-depth-border bg-depth-surface",
+    active: "bg-on-depth text-depth",
+    idle: "text-on-depth-muted hover:text-on-depth",
+  },
+} as const;
+
+const style = styles[tone];
 ---
 
 <nav aria-label={label}>
