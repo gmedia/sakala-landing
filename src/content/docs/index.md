@@ -1,36 +1,38 @@
 ---
-title: Panduan Sakala
-description: Titik masuk bagi kamu yang ingin memakai Sakala untuk membawa project dari repository menuju alamat publik.
+title: Pengantar Sakala
+description: Persoalan yang sedang dikerjakan Sakala, arah rancangannya, dan apa yang sudah maupun belum ada.
 track: panduan
 section: Mulai
 order: 1
 ---
 
-# Panduan Sakala
+# Pengantar Sakala
 
-Halaman ini untuk kamu yang ingin **memakai** Sakala: membawa project dari repository Git menjadi aplikasi yang bisa dibuka orang lain lewat browser.
+Halaman ini menjelaskan persoalan yang sedang dikerjakan Sakala: membawa project dari repository Git menjadi aplikasi yang bisa dibuka orang lain lewat browser.
 
-Kamu tidak perlu sudah paham Docker, reverse proxy, atau konfigurasi server untuk mengikuti panduan ini. Istilah teknis akan dijelaskan saat pertama kali muncul.
+Kamu tidak perlu sudah paham Docker, reverse proxy, atau konfigurasi server untuk membacanya. Istilah teknis dijelaskan saat pertama kali muncul.
 
 ## Status saat ini, supaya tidak salah harap
 
-Sakala **belum tersedia sebagai layanan publik**. Alur deploy yang dijelaskan di sini adalah pengalaman yang sedang dibangun, bukan sesuatu yang bisa kamu jalankan hari ini.
+Sakala **belum tersedia sebagai layanan publik**. Tidak ada alur deploy yang bisa kamu jalankan hari ini.
 
-Yang sudah bisa kamu lakukan sekarang:
+Karena itu dokumentasi ini bukan panduan pakai. Yang ada di sini adalah dokumen rancangan: penjelasan tentang persoalannya, keputusan desain yang sudah diambil, dan arah yang sedang dituju.
+
+Yang tetap berguna sekarang:
 
 - memahami kenapa project perlu keluar dari `localhost`;
-- menyiapkan repository supaya siap dideploy ke platform mana pun;
-- mempelajari bagaimana kegagalan deployment dibaca dan diperbaiki.
+- membaca [Alur Deployment](/docs/teknis/alur-deployment) sebagai rancangan, bukan janji;
+- menyamakan istilah lewat [Glosarium](/docs/glosarium).
 
-Tiga hal itu tetap berguna walau kamu akhirnya memakai platform lain.
+Semuanya tetap berlaku walau kamu akhirnya memakai platform lain.
 
 ## Kalau kamu ingin memahami mesinnya
 
-Panduan ini sengaja tidak membahas cara Sakala dibangun. Untuk itu ada
+Bagian ini sengaja tidak membahas cara Sakala dibangun. Untuk itu ada
 [Dokumentasi Teknis](/docs/teknis) yang membahas arsitektur, batas hak istimewa,
 alur command, dan cara kerja Agent.
 
-## Alamat yang dipakai Sakala
+## Alamat yang direncanakan
 
 | Tujuan                    | Alamat             |
 | ------------------------- | ------------------ |
@@ -38,4 +40,4 @@ alur command, dan cara kerja Agent.
 | Console                   | `app.sakala.dev`   |
 | Aplikasi hasil deployment | `*.run.sakala.dev` |
 
-Console adalah antarmuka tempat kamu nanti mengelola project. Pola `*.run.sakala.dev` berarti tiap aplikasi mendapat sub-alamatnya sendiri.
+Dari ketiganya baru `sakala.dev` yang hidup. Console adalah antarmuka tempat project akan dikelola nanti, dan pola `*.run.sakala.dev` berarti tiap aplikasi mendapat sub-alamatnya sendiri.

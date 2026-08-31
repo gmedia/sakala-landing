@@ -21,10 +21,31 @@ export default defineConfig({
   // URL dokumentasi teknis pindah ke /docs/teknis saat dokumentasi dipisah
   // menjadi jalur panduan dan jalur teknis.
   redirects: {
+    // /tentang dan /governance dilebur menjadi satu halaman open source
+    // saat homepage disusun ulang mengikuti docs/landing/.
+    "/tentang": "/open-source",
+    "/governance": "/open-source",
+    "/en/tentang": "/en/open-source",
+    "/en/governance": "/en/open-source",
     "/docs/concepts": "/docs/teknis/konsep",
     "/docs/deployment-flow": "/docs/teknis/alur-deployment",
     "/docs/agent-runtime": "/docs/teknis/agent",
-    "/docs/quickstart": "/docs/perjalanan-deploy",
+    // Halaman yang menjanjikan pemakaian dicabut selama produknya belum ada.
+    // Perjalanan deploy tetap punya penerus yang setara, yaitu rancangan
+    // alurnya di jalur teknis, jadi ia tidak dilempar ke hub.
+    "/docs/perjalanan-deploy": "/docs/teknis/alur-deployment",
+    "/en/docs/perjalanan-deploy": "/en/docs/teknis/alur-deployment",
+    // Sisanya tidak punya penerus satu lawan satu, jadi mendarat di hub.
+    "/docs/quickstart": "/docs",
+    "/docs/menyiapkan-project": "/docs",
+    "/docs/ketika-gagal": "/docs",
+    "/docs/variabel-dan-secret": "/docs",
+    "/docs/domain-dan-url": "/docs",
+    "/en/docs/quickstart": "/en/docs",
+    "/en/docs/menyiapkan-project": "/en/docs",
+    "/en/docs/ketika-gagal": "/en/docs",
+    "/en/docs/variabel-dan-secret": "/en/docs",
+    "/en/docs/domain-dan-url": "/en/docs",
   },
   prefetch: {
     prefetchAll: false,

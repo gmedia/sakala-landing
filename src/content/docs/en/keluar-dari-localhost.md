@@ -51,13 +51,25 @@ A VPS gives you more control, but you also become responsible for the operating 
 
 ## What to prepare first
 
-A project that runs happily on a laptop will not necessarily run elsewhere. The checklist lives in [Preparing Your Project](/en/docs/menyiapkan-project).
+A project that runs happily on a laptop will not necessarily run elsewhere. Check the following:
+
+- the source code lives in the right Git repository;
+- dependencies and build commands are clearly recorded;
+- the application reads its port from the environment when the framework needs it;
+- secrets are not stored in the repository;
+- local files or databases are not assumed to always be there;
+- the README explains how to run the project;
+- error pages do not leak credentials or sensitive detail.
+
+If the project spans several services, write down how the frontend, API, database, and supporting services relate to each other. That separation of responsibility is also covered in [Sakala Concepts](/en/docs/teknis/konsep).
 
 ## What Sakala is building toward
 
 Sakala aims to help small projects move from a Git repository to a public address through a path that is easy to follow. You will pick a repository through the Console, the API manages deployment state and commands, and an Agent performs the runtime work and reports status and logs back.
 
 The goal is not to hide the deployment process. Sakala wants to make it easier to learn without turning it into a one-click claim or a replacement for enterprise cloud.
+
+See [Deployment Flow](/en/docs/teknis/alur-deployment) for how that path is designed, and [FAQ](/en/docs/faq) for where the product stands today.
 
 ## After a project has a public address
 

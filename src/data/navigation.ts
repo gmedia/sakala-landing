@@ -10,14 +10,15 @@ export type NavItem = {
 };
 
 /**
- * Rute yang benar-benar terbit dalam dua bahasa. Halaman lain sengaja tidak
- * dilokalkan supaya navigasi tidak pernah mengarah ke URL yang tidak ada, dan
- * supaya /en tidak menyajikan konten Bahasa Indonesia.
+ * Rute yang terbit dalam dua bahasa. Dipakai pemilih bahasa supaya ia tidak
+ * pernah mengarah ke halaman yang tidak ada.
  */
 export const bilingualRoutes = [
   "/",
-  "/tentang",
-  "/governance",
+  "/filosofi",
+  "/produk",
+  "/roadmap",
+  "/open-source",
   "/changelog",
 ] as const;
 
@@ -26,14 +27,24 @@ export function isBilingual(path: string): boolean {
   return (bilingualRoutes as readonly string[]).includes(path);
 }
 
+/** Navigasi utama sengaja pendek. Sisanya berada di footer. */
 export function getMainNavigation(lang: Lang, t: Dictionary): NavItem[] {
   return [
-    { key: "docs", label: t.nav.docs, href: localizePath("/docs", lang) },
-    { key: "about", label: t.nav.about, href: localizePath("/tentang", lang) },
     {
-      key: "changelog",
-      label: t.nav.changelog,
-      href: localizePath("/changelog", lang),
+      key: "philosophy",
+      label: t.nav.philosophy,
+      href: localizePath("/filosofi", lang),
+    },
+    {
+      key: "product",
+      label: t.nav.product,
+      href: localizePath("/produk", lang),
+    },
+    { key: "docs", label: t.nav.docs, href: localizePath("/docs", lang) },
+    {
+      key: "roadmap",
+      label: t.nav.roadmap,
+      href: localizePath("/roadmap", lang),
     },
     {
       key: "github",

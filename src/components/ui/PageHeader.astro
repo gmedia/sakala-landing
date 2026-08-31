@@ -12,29 +12,18 @@ interface Props {
 const { eyebrow, title, lead, breadcrumbs = [] } = Astro.props;
 ---
 
-<!-- Pita gelap yang menyambung dari header, menjaga halaman sekunder tetap
-     berada dalam sistem anchor yang sama dengan beranda. -->
-<section class="surface-deep relative isolate overflow-hidden">
-  <div class="brand-lattice absolute inset-0 -z-10" aria-hidden="true"></div>
-  <Container className="relative py-14 sm:py-18">
-    {breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} tone="deep" />}
-    <p
-      class="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-on-deep-label"
-    >
-      {eyebrow}
-    </p>
+<!-- Header halaman dalam tampilan terang dan editorial. Halaman kedua
+     tidak lagi otomatis dibuka dengan pita gelap. -->
+<section class="border-b border-border bg-canvas">
+  <Container className="py-16 sm:py-20 lg:py-24">
+    {breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} />}
+    <p class="mt-8 artifact-label text-primary">{eyebrow}</p>
     <h1
-      class="mt-4 max-w-3xl text-balance font-display text-[clamp(2rem,4.5vw,3.25rem)] font-bold leading-[1.06] tracking-[-0.03em] text-on-deep"
+      class="mt-5 max-w-3xl text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-ink"
     >
       {title}
     </h1>
-    {
-      lead && (
-        <p class="mt-5 max-w-2xl text-lg leading-8 text-on-deep-muted">
-          {lead}
-        </p>
-      )
-    }
+    {lead && <p class="mt-7 max-w-2xl text-lg leading-8 text-muted">{lead}</p>}
     <slot />
   </Container>
 </section>

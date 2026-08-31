@@ -28,14 +28,14 @@ const label = lang === "en" ? "Documentation type" : "Jenis dokumentasi";
               class:list={[
                 "block rounded-lg border px-3 py-2.5",
                 isCurrent
-                  ? "border-primary bg-primary-soft-2"
-                  : "border-border bg-surface hover:border-border-strong",
+                  ? "border-border-strong bg-surface"
+                  : "border-transparent hover:border-border",
               ]}
             >
               <span
                 class:list={[
                   "block text-sm font-semibold",
-                  isCurrent ? "text-primary-dark" : "text-ink",
+                  isCurrent ? "green-line-dot text-ink" : "text-muted",
                 ]}
               >
                 {meta.title}

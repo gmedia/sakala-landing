@@ -1,0 +1,62 @@
+---
+import ArtifactFigure from "../artifact/ArtifactFigure.astro";
+import LocalhostArtifact from "../artifact/LocalhostArtifact.astro";
+import Chapter from "./Chapter.astro";
+import type { Dictionary } from "../../i18n/id";
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+const c = t.home.distance;
+---
+
+<!-- Bab 02 — Jarak. Project belum rusak, ia hanya belum sampai. -->
+<Chapter tone="soft" labelledby="distance-title" thread>
+  <div
+    class="grid gap-16 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)] lg:items-center lg:gap-20"
+  >
+    <ArtifactFigure caption={c.caption} class="becoming lg:order-2">
+      <LocalhostArtifact
+        label={c.artifactLabel}
+        address={c.address}
+        appTitle={c.appTitle}
+        appSub={c.appSub}
+        reach={c.reach}
+      />
+    </ArtifactFigure>
+
+    <div class="lg:order-1">
+      <p class="becoming artifact-label text-spark-text">{c.eyebrow}</p>
+      <h2
+        id="distance-title"
+        class="becoming mt-5 max-w-[16ch] text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-ink"
+      >
+        {c.title}
+      </h2>
+      <p
+        class="becoming becoming-delay-1 mt-7 max-w-md text-lg leading-8 text-muted"
+      >
+        {c.lead}
+      </p>
+
+      <ul
+        class="becoming becoming-delay-2 m-0 mt-9 list-none space-y-4 border-l-2 border-border-strong p-0 pl-5"
+      >
+        {
+          c.observations.map((line) => (
+            <li class="max-w-md leading-7 text-muted">{line}</li>
+          ))
+        }
+      </ul>
+
+      <p
+        class="becoming becoming-delay-3 mt-9 font-mono text-sm text-muted-2"
+        lang="en"
+      >
+        &ldquo;{c.refrain}&rdquo;
+      </p>
+    </div>
+  </div>
+</Chapter>

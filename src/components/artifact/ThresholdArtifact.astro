@@ -1,0 +1,101 @@
+---
+import BrandMark from "../brand/BrandMark.astro";
+
+interface Props {
+  from: string;
+  through: string;
+  to: string;
+  fromToken: string;
+  toToken: string;
+}
+
+const { from, through, to, fromToken, toToken } = Astro.props;
+---
+
+{
+  /* Penyeberangan, bukan tumpukan. Garis mendatar membelah seluruh lebar
+    sebagai ambangnya, mark duduk tepat di atasnya dengan cincin yang
+    melebar, dan konektor vertikal menyambungkan sisi atas ke sisi bawah.
+    Susunan inilah yang menjadikannya perpindahan dan bukan sekadar daftar. */
+}
+<div
+  data-sequence
+  class="threshold-cross relative grid min-h-[30rem] grid-rows-[1fr_auto_1fr] items-center justify-items-center gap-6 sm:min-h-[34rem]"
+>
+  <div class="sequence-step flex flex-col items-center gap-4">
+    <p class="artifact-label text-on-deep-subtle">{from}</p>
+    <p
+      class="rounded-xl border border-deep-border bg-deep-surface px-4 py-3 font-mono text-xs text-on-deep-muted sm:text-sm"
+    >
+      {fromToken}
+    </p>
+  </div>
+
+  <div
+    class="sequence-step threshold-mark relative z-10 grid place-items-center rounded-full"
+  >
+    <BrandMark class="h-11 w-auto text-on-deep-label sm:h-12" />
+    <span class="sr-only">{through}</span>
+  </div>
+
+  <div class="sequence-step flex flex-col items-center gap-4">
+    <p
+      class="rounded-xl border border-on-deep-label bg-deep px-4 py-3 font-mono text-xs text-on-deep sm:text-sm"
+    >
+      {toToken}
+    </p>
+    <p class="artifact-label text-on-deep-label">{to}</p>
+  </div>
+</div>
+
+<style>
+  /* Ambangnya sendiri: satu garis yang melintasi seluruh lebar pada titik
+     penyeberangan. Ia digambar di belakang mark, bukan di dalamnya. */
+  .threshold-cross::before {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    height: 1px;
+    content: "";
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-on-deep-label),
+      transparent
+    );
+    opacity: 0.42;
+  }
+
+  .threshold-mark {
+    width: 7rem;
+    height: 7rem;
+    border: 1px solid var(--color-on-deep-label);
+    background: var(--color-deep);
+    /* Cincin konsentris menggantikan glow: ia menandai pusat tanpa
+       mengaburkan tepi, dan tetap tegas ketika kontras dinaikkan. */
+    box-shadow:
+      0 0 0 1rem rgb(204 251 241 / 6%),
+      0 0 0 2.125rem rgb(204 251 241 / 3.5%);
+  }
+
+  /* Konektor yang menyambungkan token di atas dan di bawah ke mark. */
+  .threshold-mark::before,
+  .threshold-mark::after {
+    position: absolute;
+    left: 50%;
+    width: 1px;
+    height: 4.5rem;
+    content: "";
+  }
+
+  .threshold-mark::before {
+    bottom: 100%;
+    background: linear-gradient(transparent, var(--color-on-deep-label));
+  }
+
+  .threshold-mark::after {
+    top: 100%;
+    background: linear-gradient(var(--color-on-deep-label), transparent);
+  }
+</style>

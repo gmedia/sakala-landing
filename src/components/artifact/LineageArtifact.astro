@@ -1,0 +1,110 @@
+---
+interface Branch {
+  name: string;
+  status: string;
+}
+
+interface Props {
+  root: string;
+  branches: readonly Branch[];
+  onward: string;
+  newWork: string;
+  directionLabel: string;
+  directionKey: string;
+}
+
+const { root, branches, onward, newWork, directionLabel, directionKey } =
+  Astro.props;
+
+/* Konektor digambar dari posisi node yang dihitung, bukan angka tetap,
+   supaya grafnya tetap benar bila jumlah cabang berubah. */
+const columnCenter = (index: number) =>
+  ((index + 0.5) / branches.length) * 1000;
+
+const fanOut = branches.map(
+  (_, index) =>
+    `M500 96 C500 160, ${columnCenter(index)} 150, ${columnCenter(index)} 216`,
+);
+const converge = branches.map(
+  (_, index) =>
+    `M${columnCenter(index)} 278 C${columnCenter(index)} 340, 500 350, 500 394`,
+);
+---
+
+{
+  /* Percabangan, bukan daftar. Satu karya yang hidup menyebar ke beberapa
+    kelanjutan, lalu berkumpul kembali menjadi titik awal karya berikutnya.
+    Bentuk itu yang membawa artinya; daftar vertikal tidak membawanya.
+    Cabang yang belum tersedia ditandai teks, bukan hanya warna. */
+}
+<div class="relative">
+  {
+    /* Konektor mengasumsikan cabangnya berjajar dalam satu baris, dan itu baru
+      berlaku sejak lg. Di bawah itu cabangnya membungkus, jadi garisnya
+      disembunyikan daripada menunjuk ke tempat yang salah. */
+  }
+  <svg
+    class="pointer-events-none absolute inset-0 hidden h-full w-full lg:block"
+    viewBox="0 0 1000 480"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    {
+      [...fanOut, ...converge].map((d) => (
+        <path
+          d={d}
+          fill="none"
+          stroke="var(--color-border-strong)"
+          stroke-width="1.5"
+          stroke-dasharray="4 6"
+          vector-effect="non-scaling-stroke"
+        />
+      ))
+    }
+  </svg>
+
+  <div class="relative grid gap-10 sm:gap-14">
+    <div class="flex justify-center">
+      <p
+        class="inline-flex items-center gap-2.5 rounded-xl border border-primary-soft bg-primary-soft-2 px-4 py-2.5"
+      >
+        <span class="size-2 rounded-full bg-primary" aria-hidden="true"></span>
+        <span class="font-display font-semibold text-primary-dark">{root}</span>
+      </p>
+    </div>
+
+    <ul
+      class="m-0 grid list-none gap-3 p-0 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4"
+    >
+      {
+        branches.map((branch) => (
+          <li class="flex justify-center">
+            <span class="inline-flex min-h-11 flex-wrap items-center justify-center gap-x-2.5 gap-y-1 rounded-xl border border-border bg-surface px-4 py-2.5 text-center">
+              <span class="text-ink">{branch.name}</span>
+              {branch.status === directionKey && (
+                <span class="rounded-full border border-border px-2 py-0.5 font-mono text-[0.65rem] uppercase tracking-[0.1em] text-muted-2">
+                  {directionLabel}
+                </span>
+              )}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="flex flex-col items-center">
+      <p
+        class="inline-flex items-center gap-2.5 rounded-xl border border-border bg-surface px-4 py-2.5"
+      >
+        <span class="size-2 rounded-full bg-spark" aria-hidden="true"></span>
+        <span class="font-display font-semibold text-ink">{onward}</span>
+      </p>
+      <p class="mt-4 flex items-center gap-2.5 text-muted">
+        <span aria-hidden="true" class="font-mono text-muted-2"
+          >&#9492;&#9472;</span
+        >
+        {newWork}
+      </p>
+    </div>
+  </div>
+</div>

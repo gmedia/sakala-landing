@@ -43,8 +43,8 @@ const breadcrumbs = [
 >
   <PageHeader eyebrow={c.eyebrow} title={c.title} lead={c.lead} {breadcrumbs}>
     <a
-      href="/rss.xml"
-      class="mt-8 inline-flex min-h-11 items-center gap-2 rounded-xl border border-on-deep-subtle px-4 py-2.5 font-mono text-xs text-on-deep hover:border-on-deep-label hover:text-on-deep-label"
+      href={localizePath("/rss.xml", lang)}
+      class="mt-8 inline-flex min-h-11 items-center gap-2 rounded-xl border border-border-strong px-4 py-2.5 font-mono text-xs text-primary-dark hover:border-primary hover:bg-primary-soft-2"
     >
       <span aria-hidden="true">&#9673;</span>
       {c.rss}
@@ -59,13 +59,22 @@ const breadcrumbs = [
             {c.empty}
           </p>
         ) : (
-          <ol class="m-0 list-none space-y-px overflow-hidden rounded-2xl border border-border bg-border p-0">
-            {entries.map((entry) => (
+          /* Changelog adalah kelanjutan project itu sendiri, jadi ia memakai
+             garis yang sama dengan bab Kelanjutan di beranda. Versi terbaru
+             berada di simpul teratas. */
+          <ol
+            class="green-line m-0 list-none space-y-12 p-0 pl-8"
+            style="--line-inset: 2rem"
+          >
+            {entries.map((entry, index) => (
               <li
                 id={`v-${entry.data.version}`}
-                class="scroll-mt-28 bg-surface p-6 sm:p-8"
+                class:list={[
+                  "green-line-node scroll-mt-28",
+                  index === 0 && "green-line-node-live",
+                ]}
               >
-                <div class="grid gap-5 md:grid-cols-[10rem_1fr] md:gap-8">
+                <div class="grid gap-2 md:grid-cols-[10rem_1fr] md:gap-8">
                   <div>
                     <p class="font-mono text-sm font-semibold text-primary-dark">
                       v{entry.data.version}

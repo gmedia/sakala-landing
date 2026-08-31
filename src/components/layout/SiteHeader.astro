@@ -1,10 +1,8 @@
 ---
 import SakalaLogo from "../brand/SakalaLogo.astro";
-import Button from "../ui/Button.astro";
 import Container from "../ui/Container.astro";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import MobileNav from "./MobileNav.astro";
-import { links } from "../../data/links";
 import { getMainNavigation, isBilingual } from "../../data/navigation";
 import { stripLocale, type Lang } from "../../i18n";
 import type { Dictionary } from "../../i18n/id";
@@ -26,19 +24,21 @@ const navigation = getMainNavigation(lang, t);
 ---
 
 <!--
-  Header memakai permukaan gelap solid, bukan terang tembus pandang. Di atas
-  hero gelap, header translusen membuat teks membayang dan kontras jatuh.
-  Header dan footer gelap juga membingkai konten terang di antaranya.
+  Header terang dan tenang. Halaman dibuka pada bab Kemungkinan yang netral,
+  sehingga header gelap dari landing sebelumnya tidak diteruskan. Permukaan
+  gelap kini ditentukan narasi, bukan kebiasaan.
 -->
-<header class="surface-deep sticky top-0 z-30 border-b border-deep-border">
-  <Container className="flex h-18 items-center justify-between gap-4">
+<header
+  class="sticky top-0 z-30 border-b border-border bg-canvas/90 backdrop-blur"
+>
+  <Container className="flex h-16 items-center justify-between gap-4 sm:h-18">
     <SakalaLogo
       lang={lang}
       label="Sakala"
-      class="h-7 w-auto text-on-deep sm:h-8"
+      class="h-7 w-auto text-primary sm:h-8"
     />
 
-    <nav class="hidden items-center gap-7 md:flex" aria-label={t.nav.label}>
+    <nav class="hidden items-center gap-7 lg:flex" aria-label={t.nav.label}>
       {
         navigation.map((item) => (
           <a
@@ -48,10 +48,10 @@ const navigation = getMainNavigation(lang, t);
             data-astro-prefetch={item.external ? undefined : "hover"}
             aria-current={currentPath === item.href ? "page" : undefined}
             class:list={[
-              "inline-flex min-h-11 items-center border-b-2 text-sm font-medium hover:text-on-deep",
+              "inline-flex min-h-11 items-center border-b-2 text-sm font-medium hover:text-primary-dark",
               currentPath === item.href
-                ? "border-on-deep-label text-on-deep"
-                : "border-transparent text-on-deep-muted",
+                ? "border-primary text-primary-dark"
+                : "border-transparent text-muted",
             ]}
           >
             {item.label}
@@ -60,16 +60,16 @@ const navigation = getMainNavigation(lang, t);
       }
     </nav>
 
-    <div class="hidden items-center gap-3 md:flex">
+    <!-- Tanpa CTA primer selama Sakala belum tersedia sebagai layanan publik.
+         Menawarkan "Masuk" tepat di bawah pemberitahuan status yang menyatakan
+         sebaliknya adalah janji yang tidak bisa ditepati. links.console tetap
+         disimpan, tinggal dihidupkan saat public beta dibuka. -->
+    <div class="hidden items-center lg:flex">
       <LanguageSwitcher
         lang={lang}
         pathname={switchPath}
         label={t.nav.languageLabel}
-        tone="deep"
       />
-      <Button href={links.console} tone="deep" variant="secondary">
-        {t.nav.console}
-      </Button>
     </div>
 
     <MobileNav

@@ -16,56 +16,57 @@ const { lang, t } = Astro.props;
 const base = stripLocale(Astro.url.pathname);
 const switchPath = isBilingual(base) ? base : "/";
 
-const navigation = [
+const explore = [
+  { label: t.nav.philosophy, href: localizePath("/filosofi", lang) },
+  { label: t.nav.product, href: localizePath("/produk", lang) },
   { label: t.nav.docs, href: localizePath("/docs", lang) },
-  { label: t.nav.about, href: localizePath("/tentang", lang) },
-  { label: t.nav.changelog, href: localizePath("/changelog", lang) },
+  { label: t.nav.roadmap, href: localizePath("/roadmap", lang) },
 ];
 
-const openSource = [
-  { label: t.nav.github, href: links.githubOrganization, external: true },
-  { label: t.footer.governance, href: localizePath("/governance", lang) },
-  { label: t.footer.concepts, href: localizePath("/docs/teknis/konsep", lang) },
+const project = [
+  { label: t.nav.openSource, href: localizePath("/open-source", lang) },
+  { label: t.nav.changelog, href: localizePath("/changelog", lang) },
   { label: t.footer.rss, href: localizePath("/rss.xml", lang) },
+  { label: t.nav.github, href: links.githubOrganization, external: true },
 ];
 ---
 
-<footer class="surface-deepest relative isolate overflow-hidden">
-  <div class="brand-lattice absolute inset-0 -z-10" aria-hidden="true"></div>
-
+<!-- Penutup yang tenang di permukaan Eerie Black. Ia menutup halaman tanpa
+     bersaing dengan bab Ambang yang memakai teal pekat. -->
+<footer class="surface-depth">
   <Container
-    className="relative grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_auto_auto]"
+    className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.5fr_auto_auto]"
   >
     <div>
-      <BrandLockup class="h-7 w-auto text-on-deep" title="Sakala" />
+      <BrandLockup class="h-7 w-auto text-on-depth" title="Sakala" />
       <p
-        class="mt-4 font-mono text-xs uppercase tracking-[0.2em] text-on-deep-label"
+        class="mt-5 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-spark-on-depth"
       >
         {t.footer.tagline}
       </p>
-      <p class="mt-4 max-w-sm text-sm leading-7 text-on-deep-muted">
+      <p class="mt-5 max-w-sm text-sm leading-7 text-on-depth-muted">
         {t.footer.blurb}
       </p>
-      <div class="mt-6">
+      <div class="mt-7">
         <LanguageSwitcher
           lang={lang}
           pathname={switchPath}
           label={t.nav.languageLabel}
-          tone="deep"
+          tone="depth"
         />
       </div>
     </div>
 
-    <nav aria-label={t.footer.navigationLabel}>
-      <p class="font-display text-sm font-semibold text-on-deep">
-        {t.footer.navigationLabel}
+    <nav aria-label={t.footer.exploreLabel}>
+      <p class="font-display text-sm font-semibold text-on-depth">
+        {t.footer.exploreLabel}
       </p>
       <ul class="m-0 mt-4 list-none space-y-2.5 p-0">
         {
-          navigation.map((item) => (
+          explore.map((item) => (
             <li>
               <a
-                class="text-sm text-on-deep-muted hover:text-on-deep"
+                class="text-sm text-on-depth-muted hover:text-on-depth"
                 href={item.href}
                 data-astro-prefetch="hover"
               >
@@ -77,21 +78,26 @@ const openSource = [
       </ul>
     </nav>
 
-    <nav aria-label={t.footer.openSourceLabel}>
-      <p class="font-display text-sm font-semibold text-on-deep">
-        {t.footer.openSourceLabel}
+    <nav aria-label={t.footer.projectLabel}>
+      <p class="font-display text-sm font-semibold text-on-depth">
+        {t.footer.projectLabel}
       </p>
       <ul class="m-0 mt-4 list-none space-y-2.5 p-0">
         {
-          openSource.map((item) => (
+          project.map((item) => (
             <li>
               <a
-                class="text-sm text-on-deep-muted hover:text-on-deep"
+                class="text-sm text-on-depth-muted hover:text-on-depth"
                 href={item.href}
                 target={item.external ? "_blank" : undefined}
                 rel={item.external ? "noreferrer" : undefined}
               >
                 {item.label}
+                {item.external && (
+                  <span aria-hidden="true" class="ml-1 text-on-depth-subtle">
+                    &#8599;
+                  </span>
+                )}
               </a>
             </li>
           ))
@@ -100,15 +106,15 @@ const openSource = [
     </nav>
   </Container>
 
-  <div class="relative border-t border-deep-border">
+  <div class="border-t border-depth-border">
     <Container
       className="flex flex-wrap items-center justify-between gap-3 py-5"
     >
-      <p class="font-mono text-xs text-on-deep-muted">
+      <p class="font-mono text-xs text-on-depth-muted">
         &copy; {new Date().getFullYear()}
         {t.footer.rights} · {t.footer.license}
       </p>
-      <p class="font-mono text-xs text-on-deep-subtle">{t.footer.sponsor}</p>
+      <p class="font-mono text-xs text-on-depth-subtle">{t.footer.sponsor}</p>
     </Container>
   </div>
 </footer>

@@ -1,0 +1,81 @@
+---
+interface State {
+  name: string;
+  ok: boolean;
+}
+
+interface Props {
+  states: readonly State[];
+  failureTitle: string;
+  failureBody: string;
+  checkLabel: string;
+  checks: readonly string[];
+  /** Label keadaan tahap, bukan kesehatan aplikasi. Datang dari kamus supaya
+   *  halaman Indonesia tidak menyisipkan status berbahasa Inggris. */
+  stateOk: string;
+  stateFailed: string;
+}
+
+const {
+  states,
+  failureTitle,
+  failureBody,
+  checkLabel,
+  checks,
+  stateOk,
+  stateFailed,
+} = Astro.props;
+---
+
+{
+  /* Alat diagnosis: status di kiri, penjelasannya di kanan, dalam satu kartu.
+    Berdampingan, terlihat bahwa penjelasan itu milik baris yang gagal —
+    ditumpuk, hubungan itu harus ditebak sendiri.
+    Status tidak pernah disampaikan lewat warna saja. */
+}
+<div
+  class="artifact grid overflow-hidden rounded-2xl border border-depth-border bg-depth-surface lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]"
+>
+  <ul
+    class="m-0 list-none divide-y divide-depth-border border-b border-depth-border p-0 lg:border-b-0 lg:border-r"
+  >
+    {
+      states.map((state) => (
+        <li class="flex items-center justify-between gap-4 px-5 py-3.5">
+          <span class="font-mono text-sm text-on-depth">{state.name}</span>
+          <span
+            class:list={[
+              "flex items-center gap-2 font-mono text-xs",
+              state.ok ? "text-success-on-depth" : "text-error-on-depth",
+            ]}
+          >
+            <span aria-hidden="true">{state.ok ? "✓" : "×"}</span>
+            {state.ok ? stateOk : stateFailed}
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="px-5 py-6 sm:px-7">
+    <p class="artifact-label text-on-depth-subtle">{checkLabel}</p>
+    <p class="mt-3 font-mono text-sm leading-6 text-error-on-depth">
+      {failureTitle}
+    </p>
+    <p class="mt-3 max-w-md leading-7 text-on-depth-muted">
+      {failureBody}
+    </p>
+    <ul class="m-0 mt-6 list-none space-y-1.5 p-0">
+      {
+        checks.map((check) => (
+          <li class="font-mono text-sm text-on-depth">
+            <span aria-hidden="true" class="text-on-depth-subtle">
+              &rarr;{" "}
+            </span>
+            {check}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>

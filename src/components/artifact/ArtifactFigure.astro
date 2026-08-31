@@ -1,0 +1,75 @@
+---
+interface Props {
+  /** Keterangan yang terlihat, menjelaskan apa yang ditunjukkan artefak. */
+  caption: string;
+  /** Penanda kematangan. Artefak yang menggambarkan alur yang belum berjalan
+   *  wajib menyatakannya, bukan tampil seolah sudah tersedia. */
+  note?: string;
+  tone?: "light" | "deep" | "depth";
+  /** Ikut perataan artefaknya. Keterangan rata kiri di bawah komposisi
+   *  terpusat terbaca seperti milik elemen lain. */
+  align?: "start" | "center";
+  class?: string;
+}
+
+const {
+  caption,
+  note,
+  tone = "light",
+  align = "start",
+  class: className = "",
+} = Astro.props;
+
+const centered = align === "center";
+
+const style = {
+  light: {
+    caption: "text-muted-2",
+    note: "border-border text-muted-2",
+  },
+  deep: {
+    caption: "text-on-deep-muted",
+    note: "border-deep-border text-on-deep-subtle",
+  },
+  depth: {
+    caption: "text-on-depth-muted",
+    note: "border-depth-border text-on-depth-subtle",
+  },
+}[tone];
+---
+
+{
+  /* Artefak di sini dibangun dari HTML semantik: daftar berurutan, teks status,
+    nama tahap, alamat. Pembaca layar sudah menerimanya sebagai isi. Ringkasan
+    sr-only tambahan hanya membuat semuanya terbaca dua kali, jadi
+
+      artefak semantik + figcaption yang terlihat = representasi yang aksesibel
+
+    Bila suatu saat ada artefak yang murni visual, misalnya SVG tanpa teks,
+    barulah ia butuh padanan tekstual tersendiri. */
+}
+<figure class:list={["not-prose m-0", className]}>
+  <slot />
+  <figcaption
+    class:list={[
+      "mt-4 text-sm leading-6",
+      style.caption,
+      centered && "mx-auto max-w-xl text-center",
+    ]}
+  >
+    {caption}
+  </figcaption>
+  {
+    note && (
+      <p
+        class:list={[
+          "mt-3 border-l-2 pl-3 font-mono text-[0.7rem] leading-5",
+          style.note,
+          centered && "mx-auto max-w-xl",
+        ]}
+      >
+        {note}
+      </p>
+    )
+  }
+</figure>

@@ -1,71 +1,116 @@
 @import "tailwindcss";
 
+/*
+  Token direkonsiliasi dengan Sakala Design System.
+
+  Anchor kanonik:
+    Green Teal    #0F766E
+    Burnt Orange  #C2670E
+    Eerie Black   #1E1E1D
+
+  Tipografi berpasangan: Montserrat untuk brand, display, dan judul; Inter
+  untuk teks bacaan; monospace sistem untuk artefak teknis.
+
+  Nilai di atas kanonik dan diambil dari aset Figma yang sebenarnya.
+*/
+
 @theme {
-  /* Ground terang */
-  --color-background: #f8faf7;
-  --color-background-soft: #f1f5f2;
+  /* Ground netral. Possibility dibuka tanpa warna brand. */
+  --color-canvas: #fbfbfa;
+  --color-background: #fbfbfa;
+  --color-background-soft: #f4f4f2;
   --color-surface: #ffffff;
-  --color-surface-elevated: #fbfdfb;
+  --color-surface-elevated: #fdfdfc;
 
-  /* Teks di ground terang. Rasio terhadap --color-background:
-     ink 15.76, muted 5.42, muted-2 4.68. */
-  --color-ink: #17211b;
-  --color-muted: #5c6a62;
-  --color-muted-2: #66746c;
+  /* Teks di ground terang. Rasio terhadap --color-canvas:
+     ink 16.11, muted 5.61, muted-2 4.63. */
+  --color-ink: #1e1e1d;
+  --color-muted: #5c5c58;
+  --color-muted-2: #6b6b66;
 
-  --color-border: #dde5df;
-  --color-border-strong: #cfdad2;
+  --color-border: #e2e2de;
+  --color-border-strong: #d1d1cb;
 
-  /* Ramp brand */
+  /* Green Teal. Identitas Sakala dan makna naratif: manifestasi, hidup,
+     hadir, tumbuh. */
   --color-primary: #0f766e;
   --color-primary-dark: #115e59;
   --color-primary-soft: #ccfbf1;
   --color-primary-soft-2: #e7fffa;
 
-  /* Permukaan gelap. Nilai berasal dari variabel Figma:
-     primary-800 #08413D dan primary-100 #B5D5D2. */
+  /* Permukaan teal pekat. Nilai dari variabel Figma primary-800 dan
+     primary-100. Dipakai pada Threshold, bukan otomatis pada hero. */
   --color-deep: #08413d;
   --color-deepest: #06322f;
   --color-deep-surface: #0b4d48;
   --color-deep-border: #14564f;
 
-  /* Teks di atas permukaan gelap. Rasio terhadap --color-deep:
+  /* Teks di atas permukaan teal pekat. Rasio terhadap --color-deep:
      on-deep 11.45, label 10.16, muted 7.31, subtle 5.03. */
   --color-on-deep: #ffffff;
   --color-on-deep-label: #ccfbf1;
   --color-on-deep-muted: #b5d5d2;
   --color-on-deep-subtle: #8fb3ae;
 
-  /* Status di ground terang */
+  /* Eerie Black. Kedalaman teknis: source, log, artefak diagnostik. */
+  --color-depth: #1e1e1d;
+  --color-depth-surface: #292927;
+  --color-depth-border: #3a3a37;
+
+  /* Teks di atas Eerie Black. Rasio terhadap --color-depth:
+     on-depth 13.60, muted 6.99, subtle 5.14. */
+  --color-on-depth: #e8e8e6;
+  --color-on-depth-muted: #a8a8a4;
+  --color-on-depth-subtle: #8f8f8b;
+
+  /* Burnt Orange. Percikan manusia, niat, titik transisi.
+     Anchor #C2670E hanya mencapai 3.87 di ground terang, sehingga ia dipakai
+     untuk elemen non-teks yang ambangnya 3:1. Teks memakai varian gelap. */
+  --color-spark: #c2670e;
+  --color-spark-text: #96500b;
+  --color-spark-on-depth: #e08a2e;
+  --color-spark-soft: #fdf0e2;
+
+  /* Status semantik, sengaja dipisahkan dari warna brand. */
   --color-success: #15803d;
   --color-warning: #9a4d06;
   --color-error: #b91c1c;
   --color-info: #2563eb;
 
-  /* Status di permukaan gelap. Varian terang karena versi ground terang
-     hanya mencapai 1.8-2.4 di atas --color-deep. */
   --color-success-on-deep: #4ade80;
   --color-warning-on-deep: #fbbf24;
   --color-error-on-deep: #fca5a5;
 
-  --color-terminal: #0f172a;
-  --color-terminal-text: #e2e8f0;
+  --color-success-on-depth: #4ade80;
+  --color-error-on-depth: #fca5a5;
+
+  --color-terminal: #1e1e1d;
+  --color-terminal-text: #e8e8e6;
 
   --font-display: var(--font-montserrat);
   --font-sans: var(--font-inter);
   --font-mono:
     ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  /* Skala display naratif khusus landing. Console memakai ceiling lebih
+     rendah; nilai ini tidak dipakai di dokumentasi. */
+  --text-narrative-xl: clamp(2.5rem, 6.2vw, 5.25rem);
+  --text-narrative-xl--line-height: 1.02;
+  --text-narrative-l: clamp(2rem, 4.6vw, 3.75rem);
+  --text-narrative-l--line-height: 1.06;
+  --text-narrative-m: clamp(1.75rem, 3.4vw, 2.75rem);
+  --text-narrative-m--line-height: 1.14;
 }
 
 :root {
   color: var(--color-ink);
-  background: var(--color-background);
+  background: var(--color-canvas);
   font-family: var(--font-sans);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 
-  /* Dipakai oleh :focus-visible. Di dalam .surface-deep nilainya ditukar
-     karena --color-primary hanya 2.09:1 di atas #08413D. */
+  /* Ditukar di dalam permukaan gelap. --color-primary hanya 2.09:1 di atas
+     #08413D, sehingga focus ring praktis hilang tanpa penukaran ini. */
   --focus-ring: var(--color-primary);
 }
 
@@ -76,7 +121,7 @@ html {
 body {
   min-width: 320px;
   margin: 0;
-  background: var(--color-background);
+  background: var(--color-canvas);
 }
 
 ::selection {
@@ -116,7 +161,7 @@ a {
   transform: translateY(0);
 }
 
-/* ---------- permukaan gelap ---------- */
+/* ---------- permukaan ---------- */
 
 .surface-deep,
 .surface-deepest {
@@ -132,36 +177,134 @@ a {
   background: var(--color-deepest);
 }
 
+.surface-depth {
+  --focus-ring: var(--color-on-depth);
+  background: var(--color-depth);
+  color: var(--color-on-depth);
+}
+
 .surface-deep ::selection,
 .surface-deepest ::selection {
   color: var(--color-deep);
   background: var(--color-on-deep-label);
 }
 
-/* Kisi belah ketupat yang menggemakan geometri mark Sakala.
-   Murni gradient, tanpa aset gambar. */
-.brand-lattice {
-  background-image:
-    linear-gradient(45deg, rgb(255 255 255 / 4%) 1px, transparent 1px),
-    linear-gradient(-45deg, rgb(255 255 255 / 4%) 1px, transparent 1px);
-  background-size: 46px 46px;
+.surface-depth ::selection {
+  color: var(--color-depth);
+  background: var(--color-on-depth);
 }
 
-.brand-glow {
-  background:
-    radial-gradient(
-      ellipse 60% 50% at 78% 12%,
-      rgb(204 251 241 / 10%),
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 50% 40% at 8% 92%,
-      rgb(143 179 174 / 8%),
-      transparent 70%
-    );
+/* ---------- Green Line of Life ----------
+   Motif utama: satu garis tipis yang mengikuti project melewati halaman.
+   Ia mulai samar, menguat di Sakala, lalu bercabang saat kelanjutan. */
+
+.green-line {
+  /* Jarak dari garis ke teks. Nilainya harus sama dengan padding kiri daftar,
+     karena titik diposisikan mundur sejauh ini agar duduk tepat di garis. */
+  --line-inset: 2rem;
+
+  position: relative;
 }
 
-/* ---------- diagram ---------- */
+.green-line::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  content: "";
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--line-color, var(--color-border-strong)) 12%,
+    var(--line-color, var(--color-border-strong)) 88%,
+    transparent
+  );
+}
+
+.green-line-live {
+  --line-color: var(--color-primary);
+}
+
+.green-line-node {
+  position: relative;
+}
+
+.green-line-node::after {
+  position: absolute;
+  top: 0.55em;
+  left: calc(var(--line-inset) * -1 - 0.28rem);
+  width: 0.5625rem;
+  height: 0.5625rem;
+  border: 1px solid var(--color-canvas);
+  border-radius: 999px;
+  content: "";
+  background: var(--node-color, var(--color-border-strong));
+}
+
+.green-line-node-live::after {
+  --node-color: var(--color-primary);
+}
+
+/* Penanda "kamu di sini" berupa titik di depan label, untuk kontrol yang
+   berdiri sendiri tanpa garis vertikal seperti .green-line-node. */
+.green-line-dot::before {
+  display: inline-block;
+  width: 0.4375rem;
+  height: 0.4375rem;
+  margin-right: 0.5rem;
+  border-radius: 999px;
+  vertical-align: 0.09em;
+  content: "";
+  background: var(--color-primary);
+}
+
+/* Node yang duduk di tengah tinggi baris, bukan pada baris teks pertama.
+   Dipakai daftar navigasi yang punya tinggi minimum dan perataan tengah,
+   sehingga offset berbasis em milik .green-line-node akan meleset. */
+.green-line-node-mid::after {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Permukaan Threshold dibelah tepat pada titik penyeberangan, sehingga
+   perpindahan terlihat bahkan sebelum artefaknya dibaca. */
+.threshold-split {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0 48%,
+    rgb(204 251 241 / 6%) 48% 100%
+  );
+}
+
+/* Langkah berurutan dalam satu proses. Digerbangi atribut yang sama dengan
+   `.becoming`, sehingga tanpa JavaScript seluruh langkah tetap terbaca. */
+[data-motion="on"] .sequence-step {
+  opacity: 0;
+  transform: translateY(0.5rem);
+  transition:
+    opacity 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-motion="on"] .sequence-step.is-present {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- artefak ---------- */
+
+.artifact {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.artifact-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
 
 .diagram {
   overflow-x: auto;
@@ -181,7 +324,38 @@ a {
   letter-spacing: 0.08em;
 }
 
-/* ---------- motion ---------- */
+/* ---------- motion ----------
+   Tidak ada yang bergerak kecuali sesuatu sedang menjadi.
+   Hanya satu hal menjadi dalam satu waktu. */
+
+/* Digerbangi atribut yang hanya dipasang skrip inline ketika JavaScript
+   berjalan dan pengguna tidak meminta pengurangan gerak. Tanpa JavaScript
+   atribut itu tidak pernah ada, sehingga konten tampil apa adanya dan tidak
+   pernah tersembunyi permanen. */
+[data-motion="on"] .becoming {
+  opacity: 0;
+  transform: translateY(0.75rem);
+  transition:
+    opacity 620ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-motion="on"] .becoming.is-present {
+  opacity: 1;
+  transform: none;
+}
+
+[data-motion="on"] .becoming-delay-1 {
+  transition-delay: 110ms;
+}
+
+[data-motion="on"] .becoming-delay-2 {
+  transition-delay: 220ms;
+}
+
+[data-motion="on"] .becoming-delay-3 {
+  transition-delay: 330ms;
+}
 
 @media (prefers-reduced-motion: reduce) {
   html {

@@ -1,0 +1,50 @@
+---
+import ArtifactFigure from "../artifact/ArtifactFigure.astro";
+import SourceArtifact from "../artifact/SourceArtifact.astro";
+import Chapter from "./Chapter.astro";
+import type { Dictionary } from "../../i18n/id";
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+const c = t.home.possibility;
+---
+
+<!-- Bab 01 — Kemungkinan.
+     Netral, lapang, hampir tanpa warna brand. Satu objek fokus.
+     Ditumpuk, bukan dua kolom, supaya headline punya ruang penuh dan tidak
+     bertabrakan dengan artefak pada layar lebar. -->
+<Chapter
+  tone="light"
+  size="tall"
+  labelledby="possibility-title"
+  class="border-t-0"
+>
+  <h1
+    id="possibility-title"
+    class="becoming max-w-[16ch] text-balance font-display text-narrative-xl font-bold tracking-[-0.035em] text-ink"
+  >
+    {c.title}
+  </h1>
+
+  <div
+    class="mt-16 grid gap-12 lg:mt-20 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1fr)] lg:items-start lg:gap-20"
+  >
+    <p
+      class="becoming becoming-delay-1 max-w-lg text-lg leading-8 text-muted sm:text-xl sm:leading-9"
+    >
+      {c.lead}
+    </p>
+
+    <ArtifactFigure caption={c.caption} class="becoming becoming-delay-2">
+      <SourceArtifact
+        label={c.artifactLabel}
+        branch={c.branch}
+        commit={c.commit}
+        files={c.files}
+      />
+    </ArtifactFigure>
+  </div>
+</Chapter>

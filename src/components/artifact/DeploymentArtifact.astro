@@ -1,0 +1,98 @@
+---
+import JourneyArtifact from "./JourneyArtifact.astro";
+
+interface Step {
+  name: string;
+  text: string;
+}
+
+interface Props {
+  steps: readonly Step[];
+  label: string;
+  address: string;
+  healthy: string;
+  arrivalTitle: string;
+  arrivalSub: string;
+}
+
+const { steps, label, address, healthy, arrivalTitle, arrivalSub } =
+  Astro.props;
+---
+
+{
+  /* Sebab dan akibat dalam satu bingkai. Tahapnya di kiri, hasilnya di kanan.
+    Dipisah menjadi dua artefak, pembaca harus menyambungkannya sendiri; di
+    sini hubungan itu sudah terlihat. */
+}
+<div
+  class="artifact overflow-hidden rounded-2xl border border-border bg-surface"
+>
+  <div
+    class="flex items-center gap-3 border-b border-border bg-background-soft px-4 py-3"
+  >
+    <span class="flex gap-1.5" aria-hidden="true">
+      <span class="size-2.5 rounded-full bg-border-strong"></span>
+      <span class="size-2.5 rounded-full bg-border-strong"></span>
+      <span class="size-2.5 rounded-full bg-border-strong"></span>
+    </span>
+    <span class="artifact-label text-muted-2">{label}</span>
+  </div>
+
+  <div class="grid lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+    <div class="border-b border-border p-6 sm:p-8 lg:border-b-0 lg:border-r">
+      <JourneyArtifact steps={steps} />
+    </div>
+
+    <div class="flex flex-col p-6 sm:p-8">
+      <div
+        class="flex items-center gap-3 rounded-t-xl border border-border bg-background-soft px-4 py-2.5"
+      >
+        <span class="flex gap-1.5" aria-hidden="true">
+          <span class="size-2 rounded-full bg-border-strong"></span>
+          <span class="size-2 rounded-full bg-border-strong"></span>
+        </span>
+        <span
+          class="min-w-0 flex-1 truncate rounded-full bg-canvas px-3 py-1 font-mono text-xs text-muted"
+        >
+          {address}
+        </span>
+      </div>
+
+      <div
+        class="arrival-page relative grid flex-1 place-items-center rounded-b-xl border border-t-0 border-border px-6 py-12 text-center"
+      >
+        <div class="relative">
+          <p class="font-mono text-xs text-primary-dark">{healthy}</p>
+          <p
+            class="mt-3 font-display text-2xl font-semibold text-ink sm:text-3xl"
+          >
+            {arrivalTitle}
+          </p>
+          <p class="mx-auto mt-3 max-w-xs leading-7 text-muted">
+            {arrivalSub}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Mekar lembut di belakang halaman yang sudah hidup. Ia menandai momen
+     "muncul" tanpa menambah teks, dan tidak pernah menutupi isinya. */
+  .arrival-page {
+    background: var(--color-surface);
+    isolation: isolate;
+  }
+
+  .arrival-page::before {
+    position: absolute;
+    z-index: -1;
+    width: min(20rem, 90%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    content: "";
+    background: var(--color-primary-soft-2);
+    filter: blur(10px);
+  }
+</style>

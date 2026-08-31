@@ -1,0 +1,26 @@
+---
+interface Fact {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  facts: readonly Fact[];
+}
+
+const { facts } = Astro.props;
+---
+
+<!-- Keyakinan disertai bukti. Nilainya faktual dan dapat diperiksa. -->
+<dl
+  class="m-0 grid gap-px overflow-hidden rounded-2xl border border-border bg-border"
+>
+  {
+    facts.map((fact) => (
+      <div class="grid gap-1 bg-surface px-5 py-3.5 sm:grid-cols-[9rem_1fr] sm:items-baseline">
+        <dt class="artifact-label text-muted-2">{fact.label}</dt>
+        <dd class="m-0 font-mono text-sm text-ink">{fact.value}</dd>
+      </div>
+    ))
+  }
+</dl>

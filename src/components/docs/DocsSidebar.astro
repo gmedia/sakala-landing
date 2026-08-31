@@ -1,6 +1,6 @@
 ---
 import DocsTrackSwitch from "./DocsTrackSwitch.astro";
-import { getTrackGroups, getTrackMeta, trackFromPath } from "../../data/docs";
+import { getTrackGroups, trackFromPath } from "../../data/docs";
 import type { Lang } from "../../i18n";
 
 interface Props {
@@ -10,7 +10,6 @@ interface Props {
 
 const { currentPath, lang } = Astro.props;
 const track = trackFromPath(currentPath);
-const trackMeta = getTrackMeta(track, lang);
 const groups = await getTrackGroups(track, lang);
 ---
 
@@ -25,7 +24,10 @@ const groups = await getTrackGroups(track, lang);
             <p class="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-muted-2">
               {group.section}
             </p>
-            <ul class="m-0 mt-2.5 list-none space-y-0.5 p-0">
+            <ul
+              class="green-line m-0 mt-2.5 list-none space-y-0.5 p-0 pl-4"
+              style="--line-inset: 1rem"
+            >
               {group.items.map((item) => {
                 const isCurrent = currentPath === item.href;
                 return (
@@ -35,10 +37,10 @@ const groups = await getTrackGroups(track, lang);
                       data-astro-prefetch="hover"
                       aria-current={isCurrent ? "page" : undefined}
                       class:list={[
-                        "flex min-h-10 items-center rounded-lg border-l-2 px-3 py-1.5 text-sm",
+                        "flex min-h-10 items-center py-1.5 pr-2 text-sm",
                         isCurrent
-                          ? "border-primary bg-primary-soft-2 font-semibold text-primary-dark"
-                          : "border-transparent text-muted hover:border-border-strong hover:bg-background-soft hover:text-ink",
+                          ? "green-line-node green-line-node-mid green-line-node-live font-semibold text-ink"
+                          : "text-muted hover:text-ink",
                       ]}
                     >
                       {item.title}

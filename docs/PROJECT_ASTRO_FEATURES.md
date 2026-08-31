@@ -65,6 +65,23 @@ Inter 400. Lisensi SIL OFL kedua family disertakan di direktori yang sama.
 Jangan menambah provider remote. Self-host menjaga build tetap reproducible dan
 tidak menambah host pihak ketiga saat runtime.
 
+### Progressive Enhancement Motion
+
+Landing memakai dua skrip kecil, bukan library animasi.
+
+Skrip inline pada `<head>` memasang `data-motion="on"` sebelum paint, hanya bila
+JavaScript berjalan dan pengguna tidak meminta pengurangan gerak. Seluruh aturan
+penyembunyian awal digerbangi atribut itu, sehingga tanpa JavaScript konten
+naratif tampil apa adanya dan tidak pernah tersembunyi permanen.
+
+Modul `src/scripts/becoming.ts` memakai `IntersectionObserver` untuk menyalakan
+elemen saat masuk viewport. Elemen bertanda `data-sequence` menyalakan anaknya
+secara berurutan; ini dipakai hanya untuk tahap deployment, karena ia memang
+proses yang bergerak melewati tahap bernama.
+
+Jangan menambah library animasi tanpa menunjukkan mengapa primitif ini tidak
+memadai.
+
 ### RSS Changelog
 
 `/rss.xml` dibangun sebagai static endpoint menggunakan `@astrojs/rss` dan

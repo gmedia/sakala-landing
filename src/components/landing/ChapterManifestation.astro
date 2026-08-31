@@ -1,0 +1,52 @@
+---
+import ArtifactFigure from "../artifact/ArtifactFigure.astro";
+import DeploymentArtifact from "../artifact/DeploymentArtifact.astro";
+import Chapter from "./Chapter.astro";
+import type { Dictionary } from "../../i18n/id";
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+const c = t.home.manifestation;
+---
+
+<!-- Bab 04 — Perjalanan. Bab bukti produk utama.
+     "I built this." menjadi "Here it is." -->
+<Chapter tone="light" size="tall" labelledby="manifestation-title" thread>
+  <div class="max-w-2xl">
+    <p class="becoming artifact-label text-primary">{c.eyebrow}</p>
+    <h2
+      id="manifestation-title"
+      class="becoming mt-5 text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-ink"
+    >
+      {c.title}
+    </h2>
+    <p class="becoming becoming-delay-1 mt-7 text-lg leading-8 text-muted">
+      {c.lead}
+    </p>
+  </div>
+
+  <ArtifactFigure
+    caption={c.deployCaption}
+    note={c.note}
+    class="becoming mt-16"
+  >
+    <DeploymentArtifact
+      steps={c.steps}
+      label={c.arrivalLabel}
+      address={c.domain}
+      healthy={c.healthy}
+      arrivalTitle={c.arrivalTitle}
+      arrivalSub={c.arrivalSub}
+    />
+  </ArtifactFigure>
+
+  <p
+    class="becoming becoming-delay-2 mt-10 font-display text-2xl font-semibold text-primary-dark"
+    lang="en"
+  >
+    &ldquo;{c.refrain}&rdquo;
+  </p>
+</Chapter>

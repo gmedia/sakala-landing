@@ -68,7 +68,7 @@ Sakala diarahkan untuk membantu project kecil bergerak dari repository Git menuj
 
 Targetnya bukan menyembunyikan seluruh proses deployment. Sakala ingin membuat proses tersebut lebih mudah dipelajari tanpa mengubahnya menjadi klaim satu klik atau pengganti cloud enterprise.
 
-Lihat [Perjalanan Deploy Pertama](/docs/perjalanan-deploy) untuk gambaran pengalaman yang sedang dituju dan [Pertanyaan Umum](/docs/faq) untuk status produk saat ini.
+Lihat [Alur Deployment](/docs/teknis/alur-deployment) untuk rancangan alurnya dan [Pertanyaan Umum](/docs/faq) untuk status produk saat ini.
 
 ## Setelah project memiliki URL publik
 

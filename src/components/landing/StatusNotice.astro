@@ -1,0 +1,34 @@
+---
+import Container from "../ui/Container.astro";
+import { localizePath, type Lang } from "../../i18n";
+import type { Dictionary } from "../../i18n/id";
+
+interface Props {
+  t: Dictionary;
+  lang: Lang;
+}
+
+const { t, lang } = Astro.props;
+const c = t.home.notice;
+---
+
+<!-- Kejujuran soal kematangan tetap terlihat, tetapi tidak mendominasi
+     pembukaan emosional. Ditempatkan sebagai pita tipis, bukan bab. -->
+<div class="border-b border-border bg-background-soft">
+  <Container
+    className="flex flex-col items-start gap-x-4 gap-y-1.5 py-3 sm:flex-row sm:flex-wrap sm:items-center"
+  >
+    <span class="inline-flex items-center gap-2 artifact-label text-spark-text">
+      <span class="size-1.5 rounded-full bg-spark" aria-hidden="true"></span>
+      {c.label}
+    </span>
+    <p class="text-sm leading-6 text-muted sm:min-w-0 sm:flex-1">{c.text}</p>
+    <a
+      href={localizePath("/roadmap", lang)}
+      data-astro-prefetch="hover"
+      class="text-sm font-medium text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
+    >
+      {c.link}
+    </a>
+  </Container>
+</div>

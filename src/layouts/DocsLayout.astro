@@ -44,11 +44,11 @@ const breadcrumbs = [
 <BaseLayout {lang} {title} {description} {availableLocales} {breadcrumbs}>
   <SiteHeader lang={lang} t={t} />
 
-  <!-- Pita tipis sebagai penyambung dari header gelap. Dokumentasi sengaja
+  <!-- Pita breadcrumb mengikuti header yang kini terang. Dokumentasi sengaja
        lebih tenang daripada landing, jadi hanya breadcrumb yang dibawa. -->
-  <div class="surface-deep border-b border-deep-border">
+  <div class="border-b border-border bg-background-soft">
     <Container className="py-3.5">
-      <Breadcrumbs items={breadcrumbs} tone="deep" />
+      <Breadcrumbs items={breadcrumbs} />
     </Container>
   </div>
 
