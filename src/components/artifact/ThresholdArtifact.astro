@@ -19,9 +19,10 @@ const { from, through, to, fromToken, toToken } = Astro.props;
     Susunan inilah yang menjadikannya perpindahan dan bukan sekadar daftar. */
 }
 <div
+  data-sequence
   class="threshold-cross relative grid min-h-[30rem] grid-rows-[1fr_auto_1fr] items-center justify-items-center gap-6 sm:min-h-[34rem]"
 >
-  <div class="flex flex-col items-center gap-4">
+  <div class="sequence-step flex flex-col items-center gap-4">
     <p class="artifact-label text-on-deep-subtle">{from}</p>
     <p
       class="rounded-xl border border-deep-border bg-deep-surface px-4 py-3 font-mono text-xs text-on-deep-muted sm:text-sm"
@@ -31,13 +32,13 @@ const { from, through, to, fromToken, toToken } = Astro.props;
   </div>
 
   <div
-    class="threshold-mark relative z-10 grid place-items-center rounded-full"
+    class="sequence-step threshold-mark relative z-10 grid place-items-center rounded-full"
   >
     <BrandMark class="h-11 w-auto text-on-deep-label sm:h-12" />
     <span class="sr-only">{through}</span>
   </div>
 
-  <div class="flex flex-col items-center gap-4">
+  <div class="sequence-step flex flex-col items-center gap-4">
     <p
       class="rounded-xl border border-on-deep-label bg-deep px-4 py-3 font-mono text-xs text-on-deep sm:text-sm"
     >

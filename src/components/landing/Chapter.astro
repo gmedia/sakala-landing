@@ -8,6 +8,10 @@ interface Props {
   tone?: "light" | "soft" | "deep" | "depth";
   size?: "regular" | "tall";
   labelledby?: string;
+  /** Sambungan Green Line yang melintasi batas bab. ART_DIRECTION §8 meminta
+   *  garisnya mengikuti project sepanjang halaman, bukan berhenti di dalam
+   *  masing-masing artefak. */
+  thread?: boolean;
   class?: string;
 }
 
@@ -16,6 +20,7 @@ const {
   tone = "light",
   size = "regular",
   labelledby,
+  thread = false,
   class: className = "",
 } = Astro.props;
 
@@ -30,8 +35,39 @@ const spacing =
   size === "tall" ? "py-28 sm:py-36 lg:py-44" : "py-24 sm:py-28 lg:py-32";
 ---
 
-<section {id} class:list={[surface, className]} aria-labelledby={labelledby}>
+<section
+  {id}
+  class:list={["relative", surface, className]}
+  aria-labelledby={labelledby}
+>
+  {thread && <span class="chapter-thread" aria-hidden="true" />}
   <Container className={spacing}>
     <slot />
   </Container>
 </section>
+
+<style>
+  /* Benang yang menyeberangi batas bab. Ia turun dari garis pemisah dan
+     memudar, sehingga perpindahan antar bab terbaca sebagai satu perjalanan
+     yang berlanjut, bukan tumpukan bagian yang terpisah. */
+  .chapter-thread {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1px;
+    height: 4.5rem;
+    background: linear-gradient(
+      to bottom,
+      var(--thread-color, var(--color-border-strong)),
+      transparent
+    );
+  }
+
+  .surface-deep > .chapter-thread {
+    --thread-color: var(--color-on-deep-label);
+  }
+
+  .surface-depth > .chapter-thread {
+    --thread-color: var(--color-depth-border);
+  }
+</style>

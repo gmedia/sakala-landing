@@ -12,14 +12,24 @@ function present(el: Element): void {
   el.classList.add("is-present");
 }
 
+function inViewport(el: Element): boolean {
+  const box = el.getBoundingClientRect();
+  return box.top < window.innerHeight && box.bottom > 0;
+}
+
 const items = document.querySelectorAll<HTMLElement>(".becoming");
 const sequences = document.querySelectorAll<HTMLElement>("[data-sequence]");
 
+function presentSteps(sequence: Element, stepDelay = 0): void {
+  sequence.querySelectorAll(".sequence-step").forEach((el, index) => {
+    if (stepDelay === 0) present(el);
+    else window.setTimeout(() => present(el), index * stepDelay);
+  });
+}
+
 if (!motionOn || !supported) {
   items.forEach(present);
-  sequences.forEach((seq) =>
-    seq.querySelectorAll(".sequence-step").forEach(present),
-  );
+  sequences.forEach((seq) => presentSteps(seq));
 } else {
   const reveal = new IntersectionObserver(
     (entries) => {
@@ -34,6 +44,23 @@ if (!motionOn || !supported) {
   items.forEach((el) => reveal.observe(el));
 
   /**
+   * Deployment dan penyeberangan adalah proses yang melewati tahap bernama,
+   * jadi tahapnya dinyalakan berurutan, bukan serentak.
+   */
+  const step = 240;
+  const progress = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        presentSteps(entry.target, step);
+        progress.unobserve(entry.target);
+      }
+    },
+    { threshold: 0.3 },
+  );
+  sequences.forEach((el) => progress.observe(el));
+
+  /**
    * Metrik font web baru berlaku setelah `load`, dan pergeseran layout yang
    * menyertainya bisa meninggalkan elemen yang sudah terlihat tanpa pernah
    * tercatat masuk viewport. Satu pemeriksaan ulang menutup celah itu, karena
@@ -43,35 +70,20 @@ if (!motionOn || !supported) {
     "load",
     () => {
       for (const el of items) {
-        if (el.classList.contains("is-present")) continue;
-        const box = el.getBoundingClientRect();
-        if (box.top < window.innerHeight && box.bottom > 0) {
-          present(el);
-          reveal.unobserve(el);
-        }
+        if (el.classList.contains("is-present") || !inViewport(el)) continue;
+        present(el);
+        reveal.unobserve(el);
+      }
+      for (const seq of sequences) {
+        const steps = seq.querySelectorAll(".sequence-step");
+        const stranded = [...steps].some(
+          (el) => !el.classList.contains("is-present"),
+        );
+        if (!stranded || !inViewport(seq)) continue;
+        presentSteps(seq, step);
+        progress.unobserve(seq);
       }
     },
     { once: true },
   );
-
-  /**
-   * Deployment adalah proses yang bergerak melewati tahap yang sudah bernama,
-   * jadi tahapnya dinyalakan berurutan, bukan serentak. Ini satu-satunya
-   * urutan bertahap di halaman.
-   */
-  const step = 240;
-  const progress = new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        const steps = entry.target.querySelectorAll(".sequence-step");
-        steps.forEach((el, index) => {
-          window.setTimeout(() => present(el), index * step);
-        });
-        progress.unobserve(entry.target);
-      }
-    },
-    { threshold: 0.3 },
-  );
-  sequences.forEach((el) => progress.observe(el));
 }
