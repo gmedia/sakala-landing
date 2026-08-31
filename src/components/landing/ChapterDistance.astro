@@ -1,6 +1,6 @@
 ---
 import ArtifactFigure from "../artifact/ArtifactFigure.astro";
-import BrowserArtifact from "../artifact/BrowserArtifact.astro";
+import LocalhostArtifact from "../artifact/LocalhostArtifact.astro";
 import Chapter from "./Chapter.astro";
 import type { Dictionary } from "../../i18n/id";
 
@@ -18,11 +18,12 @@ const c = t.home.distance;
     class="grid gap-16 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)] lg:items-center lg:gap-20"
   >
     <ArtifactFigure caption={c.caption} alt={c.alt} class="becoming lg:order-2">
-      <BrowserArtifact
+      <LocalhostArtifact
         label={c.artifactLabel}
         address={c.address}
-        note={c.note}
-        state="local"
+        appTitle={c.appTitle}
+        appSub={c.appSub}
+        reach={c.reach}
       />
     </ArtifactFigure>
 

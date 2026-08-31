@@ -69,14 +69,16 @@ export const en: Dictionary = {
       refrain: "I built this.",
       artifactLabel: "Running locally",
       address: "localhost:5173",
-      note: "Alive, but only on one machine.",
+      appTitle: "Hello, world.",
+      appSub: "It works on this machine.",
+      reach: "reachable by: you",
       observations: [
         "A repository holds source. The world needs something it can open.",
         "This project is not broken. It simply has not arrived.",
       ],
       caption:
         "The application runs at an address that only points back to the machine running it.",
-      alt: "A browser window artifact showing the address localhost colon 5173. The application runs, but that address can only be opened from the machine running it.",
+      alt: "An application window floating at the centre of a gridded field, showing the address localhost colon 5173 and a page that is running. A note in the corner states that the address is reachable only by you.",
     },
 
     threshold: {
@@ -84,9 +86,11 @@ export const en: Dictionary = {
       title: "Between possibility and presence, there is a journey.",
       plain:
         "Sakala is an open-source deployment project that helps carry source from a repository into an application that runs, can be opened, and can be shared.",
-      from: "Source",
+      from: "Possibility / Local",
       through: "Sakala",
-      to: "Presence",
+      to: "Presence / Public",
+      fromToken: "github.com/you/karya",
+      toToken: "karya.run.sakala.dev",
       caption: "Sakala sits exactly at that crossing.",
       alt: "A threshold diagram. Source sits above, Sakala in the middle as the crossing, and presence below as an application that can be reached.",
     },
@@ -121,17 +125,16 @@ export const en: Dictionary = {
           text: "A public route is activated, and the work has an address.",
         },
       ],
-      stepsCaption:
-        "Six stages, from repository to a work that can be reached.",
-      stepsAlt:
-        "An ordered list of six deployment stages: Repository, Analyze, Build, Start, Health, and Reach. Each stage is named so a failure can be pinned precisely.",
       arrivalLabel: "Reachable",
       domain: "portfolio.run.sakala.dev",
+      healthy: "200 · healthy",
+      arrivalTitle: "Hello, world.",
+      arrivalSub: "No longer only source. Now it is present.",
       refrain: "Here it is.",
-      arrivalCaption:
-        "An application that passes its health check receives a public address anyone can open.",
-      arrivalAlt:
-        "A browser window artifact showing the address portfolio dot run dot sakala dot dev in a healthy state. The application can now be opened from anywhere.",
+      deployCaption:
+        "Six stages, and their consequence: a work that can be reached.",
+      deployAlt:
+        "A single deployment artifact with two sides. On the left, six ordered stages: Repository, Analyze, Build, Start, Health, and Reach. On the right, a browser window showing the address portfolio dot run dot sakala dot dev in a healthy state. Each stage is named so a failure can be pinned precisely.",
       note: "The address, stages, and states in this section describe the flow being built.",
     },
 

@@ -17,44 +17,44 @@ const c = t.home.life;
 <!-- Bab 06 — Kelanjutan. Explore dan Learn muncul sebagai akibat dari
      karya yang hidup, bukan sebagai grid fitur. -->
 <Chapter tone="soft" labelledby="life-title">
-  <div
-    class="grid gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-center lg:gap-20"
-  >
-    <div>
-      <p class="becoming artifact-label text-primary">{c.eyebrow}</p>
-      <h2
-        id="life-title"
-        class="becoming mt-5 max-w-[16ch] text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-ink"
-      >
-        {c.title}
-      </h2>
-      <p
-        class="becoming becoming-delay-1 mt-7 max-w-md text-lg leading-8 text-muted"
-      >
-        {c.lead}
-      </p>
-      <a
-        href={localizePath("/produk", lang)}
-        data-astro-prefetch="hover"
-        class="becoming becoming-delay-2 mt-8 inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
-      >
-        {c.more} &rarr;
-      </a>
-    </div>
-
-    <ArtifactFigure
-      caption={c.caption}
-      alt={c.alt}
-      class="becoming becoming-delay-1"
+  <!-- Terpusat, karena percabangannya menyebar ke dua arah dan butuh
+       seluruh lebar bab untuk terbaca sebagai percabangan. -->
+  <div class="mx-auto max-w-2xl text-center">
+    <p class="becoming artifact-label text-primary">{c.eyebrow}</p>
+    <h2
+      id="life-title"
+      class="becoming mx-auto mt-5 max-w-[18ch] text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-ink"
     >
-      <LineageArtifact
-        root={c.root}
-        branches={c.branches}
-        onward={c.onward}
-        newWork={c.newWork}
-        directionLabel={t.status.direction}
-        directionKey="direction"
-      />
-    </ArtifactFigure>
+      {c.title}
+    </h2>
+    <p class="becoming becoming-delay-1 mt-7 text-lg leading-8 text-muted">
+      {c.lead}
+    </p>
+  </div>
+
+  <ArtifactFigure
+    caption={c.caption}
+    alt={c.alt}
+    align="center"
+    class="becoming becoming-delay-1 mt-16"
+  >
+    <LineageArtifact
+      root={c.root}
+      branches={c.branches}
+      onward={c.onward}
+      newWork={c.newWork}
+      directionLabel={t.status.direction}
+      directionKey="direction"
+    />
+  </ArtifactFigure>
+
+  <div class="mt-12 text-center">
+    <a
+      href={localizePath("/produk", lang)}
+      data-astro-prefetch="hover"
+      class="becoming becoming-delay-2 inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
+    >
+      {c.more} &rarr;
+    </a>
   </div>
 </Chapter>

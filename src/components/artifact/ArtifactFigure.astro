@@ -8,6 +8,9 @@ interface Props {
    *  wajib menyatakannya, bukan tampil seolah sudah tersedia. */
   note?: string;
   tone?: "light" | "deep" | "depth";
+  /** Ikut perataan artefaknya. Keterangan rata kiri di bawah komposisi
+   *  terpusat terbaca seperti milik elemen lain. */
+  align?: "start" | "center";
   class?: string;
 }
 
@@ -16,8 +19,11 @@ const {
   alt,
   note,
   tone = "light",
+  align = "start",
   class: className = "",
 } = Astro.props;
+
+const centered = align === "center";
 
 const style = {
   light: {
@@ -38,7 +44,13 @@ const style = {
 <figure class:list={["not-prose m-0", className]}>
   <slot />
   <p class="sr-only">{alt}</p>
-  <figcaption class:list={["mt-4 text-sm leading-6", style.caption]}>
+  <figcaption
+    class:list={[
+      "mt-4 text-sm leading-6",
+      style.caption,
+      centered && "mx-auto max-w-xl text-center",
+    ]}
+  >
     {caption}
   </figcaption>
   {
@@ -47,6 +59,7 @@ const style = {
         class:list={[
           "mt-3 border-l-2 pl-3 font-mono text-[0.7rem] leading-5",
           style.note,
+          centered && "mx-auto max-w-xl",
         ]}
       >
         {note}

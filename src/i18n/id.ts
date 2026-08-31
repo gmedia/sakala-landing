@@ -70,14 +70,16 @@ export const id = {
       refrain: "I built this.",
       artifactLabel: "Berjalan secara lokal",
       address: "localhost:5173",
-      note: "Hidup, tetapi hanya di satu mesin.",
+      appTitle: "Halo, dunia.",
+      appSub: "Berjalan baik di mesin ini.",
+      reach: "dapat dibuka oleh: kamu",
       observations: [
         "Repository menyimpan source. Dunia membutuhkan sesuatu yang dapat dibuka.",
         "Project ini tidak rusak. Ia hanya belum sampai.",
       ],
       caption:
         "Aplikasi berjalan pada alamat yang hanya menunjuk kembali ke perangkat yang menjalankannya.",
-      alt: "Artefak jendela browser yang menampilkan alamat localhost titik dua 5173. Aplikasi berjalan, tetapi alamat itu hanya dapat dibuka dari perangkat yang menjalankannya.",
+      alt: "Sebuah jendela aplikasi melayang di tengah bidang berkisi, menampilkan alamat localhost titik dua 5173 dan halaman yang sedang berjalan. Catatan di pojok menyebut bahwa alamat itu hanya dapat dibuka olehmu sendiri.",
     },
 
     threshold: {
@@ -85,9 +87,11 @@ export const id = {
       title: "Di antara kemungkinan dan wujud, ada sebuah perjalanan.",
       plain:
         "Sakala adalah project deployment open-source yang membantu membawa source dari repository menjadi aplikasi yang dapat berjalan, dibuka, dan dibagikan.",
-      from: "Source",
+      from: "Kemungkinan / Lokal",
       through: "Sakala",
-      to: "Wujud",
+      to: "Wujud / Publik",
+      fromToken: "github.com/kamu/karya",
+      toToken: "karya.run.sakala.dev",
       caption: "Sakala berada tepat pada perpindahan itu.",
       alt: "Diagram ambang. Source berada di atas, Sakala di tengah sebagai perpindahan, dan wujud di bawah sebagai aplikasi yang dapat dijangkau.",
     },
@@ -122,17 +126,16 @@ export const id = {
           text: "Route publik diaktifkan, dan karya memiliki alamat.",
         },
       ],
-      stepsCaption:
-        "Enam tahap dari repository sampai sebuah karya dapat dijangkau.",
-      stepsAlt:
-        "Daftar berurutan enam tahap deployment: Repository, Analyze, Build, Start, Health, dan Reach. Tiap tahap bernama sehingga kegagalan dapat ditunjuk secara spesifik.",
       arrivalLabel: "Dapat dijangkau",
       domain: "portfolio.run.sakala.dev",
+      healthy: "200 · sehat",
+      arrivalTitle: "Halo, dunia.",
+      arrivalSub: "Sekarang bukan lagi sekadar source. Sekarang ia hadir.",
       refrain: "Here it is.",
-      arrivalCaption:
-        "Aplikasi yang lolos health check memperoleh alamat publik yang dapat dibuka siapa pun.",
-      arrivalAlt:
-        "Artefak jendela browser menampilkan alamat portfolio titik run titik sakala titik dev dengan status sehat. Aplikasi kini dapat dibuka dari mana saja.",
+      deployCaption:
+        "Enam tahap, dan akibatnya: karya yang sudah dapat dijangkau.",
+      deployAlt:
+        "Satu artefak deployment dengan dua sisi. Di kiri, enam tahap berurutan: Repository, Analyze, Build, Start, Health, dan Reach. Di kanan, jendela browser menampilkan alamat portfolio titik run titik sakala titik dev dalam keadaan sehat. Tiap tahap bernama sehingga kegagalan dapat ditunjuk secara spesifik.",
       note: "Alamat, tahap, dan status pada bagian ini menggambarkan alur yang sedang dibangun.",
     },
 
