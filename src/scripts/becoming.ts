@@ -34,6 +34,27 @@ if (!motionOn || !supported) {
   items.forEach((el) => reveal.observe(el));
 
   /**
+   * Metrik font web baru berlaku setelah `load`, dan pergeseran layout yang
+   * menyertainya bisa meninggalkan elemen yang sudah terlihat tanpa pernah
+   * tercatat masuk viewport. Satu pemeriksaan ulang menutup celah itu, karena
+   * kegagalannya berupa konten yang hilang, bukan sekadar animasi yang lewat.
+   */
+  window.addEventListener(
+    "load",
+    () => {
+      for (const el of items) {
+        if (el.classList.contains("is-present")) continue;
+        const box = el.getBoundingClientRect();
+        if (box.top < window.innerHeight && box.bottom > 0) {
+          present(el);
+          reveal.unobserve(el);
+        }
+      }
+    },
+    { once: true },
+  );
+
+  /**
    * Deployment adalah proses yang bergerak melewati tahap yang sudah bernama,
    * jadi tahapnya dinyalakan berurutan, bukan serentak. Ini satu-satunya
    * urutan bertahap di halaman.

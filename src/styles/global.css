@@ -247,6 +247,27 @@ a {
   --node-color: var(--color-primary);
 }
 
+/* Penanda "kamu di sini" berupa titik di depan label, untuk kontrol yang
+   berdiri sendiri tanpa garis vertikal seperti .green-line-node. */
+.green-line-dot::before {
+  display: inline-block;
+  width: 0.4375rem;
+  height: 0.4375rem;
+  margin-right: 0.5rem;
+  border-radius: 999px;
+  vertical-align: 0.09em;
+  content: "";
+  background: var(--color-primary);
+}
+
+/* Node yang duduk di tengah tinggi baris, bukan pada baris teks pertama.
+   Dipakai daftar navigasi yang punya tinggi minimum dan perataan tengah,
+   sehingga offset berbasis em milik .green-line-node akan meleset. */
+.green-line-node-mid::after {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 /* Permukaan Threshold dibelah tepat pada titik penyeberangan, sehingga
    perpindahan terlihat bahkan sebelum artefaknya dibaca. */
 .threshold-split {
