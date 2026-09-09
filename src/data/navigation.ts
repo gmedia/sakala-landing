@@ -27,20 +27,22 @@ export function isBilingual(path: string): boolean {
   return (bilingualRoutes as readonly string[]).includes(path);
 }
 
-/** Navigasi utama sengaja pendek. Sisanya berada di footer. */
+/** Navigasi utama sengaja pendek. Sisanya berada di footer.
+ *  Produk dan Dokumentasi mendahului Filosofi: developer yang scanning mencari
+ *  keduanya lebih dulu, dan filosofi tetap satu klik untuk yang mencarinya. */
 export function getMainNavigation(lang: Lang, t: Dictionary): NavItem[] {
   return [
-    {
-      key: "philosophy",
-      label: t.nav.philosophy,
-      href: localizePath("/filosofi", lang),
-    },
     {
       key: "product",
       label: t.nav.product,
       href: localizePath("/produk", lang),
     },
     { key: "docs", label: t.nav.docs, href: localizePath("/docs", lang) },
+    {
+      key: "philosophy",
+      label: t.nav.philosophy,
+      href: localizePath("/filosofi", lang),
+    },
     {
       key: "roadmap",
       label: t.nav.roadmap,

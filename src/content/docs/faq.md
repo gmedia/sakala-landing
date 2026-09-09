@@ -8,6 +8,10 @@ order: 2
 
 # Pertanyaan Umum
 
+## Apa itu Sakala?
+
+Sakala adalah platform deployment open-source yang membawa project dari repository Git menjadi aplikasi yang dapat dibuka dan dibagikan. Ia diinisiasi oleh Sakala Maintainers, didukung GMEDIA sebagai founding sponsor, dan masih dalam pengembangan aktif — belum tersedia sebagai layanan publik.
+
 ## Apakah Sakala dapat langsung dipakai production?
 
 Belum. Sakala berada dalam tahap pengembangan aktif dan saat ini menyusun foundation produk serta runtime.

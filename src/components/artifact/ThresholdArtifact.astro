@@ -22,6 +22,7 @@ const { from, through, to, fromToken, toToken } = Astro.props;
   data-sequence
   class="threshold-cross relative grid min-h-[30rem] grid-rows-[1fr_auto_1fr] items-center justify-items-center gap-6 sm:min-h-[34rem]"
 >
+  <span class="threshold-glow" aria-hidden="true"></span>
   <div class="sequence-step flex flex-col items-center gap-4">
     <p class="artifact-label text-on-deep-subtle">{from}</p>
     <p

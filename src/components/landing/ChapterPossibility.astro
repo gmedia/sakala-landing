@@ -1,42 +1,71 @@
 ---
 import ArtifactFigure from "../artifact/ArtifactFigure.astro";
+import BrandMark from "../brand/BrandMark.astro";
+import Button from "../ui/Button.astro";
 import SourceArtifact from "../artifact/SourceArtifact.astro";
 import Chapter from "./Chapter.astro";
+import { localizePath, type Lang } from "../../i18n";
 import type { Dictionary } from "../../i18n/id";
 
 interface Props {
   t: Dictionary;
+  lang: Lang;
 }
 
-const { t } = Astro.props;
+const { t, lang } = Astro.props;
 const c = t.home.possibility;
 ---
 
 <!-- Bab 01 — Kemungkinan.
-     Netral, lapang, hampir tanpa warna brand. Satu objek fokus.
-     Ditumpuk, bukan dua kolom, supaya headline punya ruang penuh dan tidak
-     bertabrakan dengan artefak pada layar lebar. -->
+     Headline tetap puitis; jangkar faktualnya adalah subheadline tepat di
+     bawahnya, supaya pembaca yang scanning tahu "ini apa" dalam lima detik
+     tanpa menunggu bab Ambang. Hero juga membawa langkah berikutnya —
+     sebelumnya ia tidak punya satu aksi pun. -->
 <Chapter
   tone="light"
   size="tall"
   labelledby="possibility-title"
-  class="border-t-0"
+  class="relative isolate overflow-hidden border-t-0"
 >
+  <!-- Bidang kemungkinan: kisi yang sama dengan panggung localhost, memudar
+       ke bawah. Hero dan artefaknya berbagi satu bahasa visual. -->
+  <div class="possibility-field absolute inset-0 -z-20" aria-hidden="true">
+  </div>
+  <BrandMark
+    class="pointer-events-none absolute -right-28 top-1/2 -z-10 hidden h-[34rem] w-auto -translate-y-1/2 text-primary opacity-[0.045] xl:block"
+  />
+
+  <p class="becoming artifact-label text-primary">{c.eyebrow}</p>
   <h1
     id="possibility-title"
-    class="becoming max-w-[16ch] text-balance font-display text-narrative-xl font-bold tracking-[-0.035em] text-ink"
+    class="becoming mt-6 max-w-[16ch] text-balance font-display text-narrative-xl font-bold tracking-[-0.035em] text-ink"
   >
     {c.title}
   </h1>
 
   <div
-    class="mt-16 grid gap-12 lg:mt-20 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1fr)] lg:items-start lg:gap-20"
+    class="mt-14 grid gap-12 lg:mt-16 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1fr)] lg:items-start lg:gap-20"
   >
-    <p
-      class="becoming becoming-delay-1 max-w-lg text-lg leading-8 text-muted sm:text-xl sm:leading-9"
-    >
-      {c.lead}
-    </p>
+    <div>
+      <p
+        class="becoming becoming-delay-1 max-w-lg text-lg leading-8 text-muted sm:text-xl sm:leading-9"
+      >
+        {c.sub}
+      </p>
+
+      <div
+        class="becoming becoming-delay-2 mt-9 flex flex-wrap items-center gap-3"
+      >
+        <Button href="#ikuti-perkembangan">{c.ctaPrimary}</Button>
+        <Button
+          href={localizePath("/docs", lang)}
+          variant="secondary"
+          prefetch="hover"
+        >
+          {c.ctaSecondary}
+        </Button>
+      </div>
+    </div>
 
     <ArtifactFigure caption={c.caption} class="becoming becoming-delay-2">
       <SourceArtifact

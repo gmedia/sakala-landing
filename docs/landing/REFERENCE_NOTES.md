@@ -284,6 +284,44 @@ rejected wholesale. That was a mistake. The conflict lives only in the brand
 layer; the composition underneath does not conflict with anything and was the
 valuable part. Read a reference at both layers before rejecting it.
 
+## Four external reviews of the v2 build (2026-09)
+
+Reference:
+
+```txt
+Independent reviews of sakala.dev by ChatGPT, Gemini, Grok, and Claude
+(full texts in the v3 planning discussion)
+```
+
+Principle borrowed:
+
+- a poetic identity needs a factual anchor at every decision point;
+- a pre-launch page needs one primary action matched to maturity;
+- personas must be visible on the homepage, not only in the PRD.
+
+How Sakala translates it:
+
+```txt
+hero          → poetic h1 + concrete subheadline + CTA pair
+capture       → follow block: GitHub, changelog RSS, roadmap
+personas      → Untuk Siapa chapter, sourced from PRD §4
+stack question→ analysis artifact (Dockerfile → Railpack → manual)
+model question→ two facts in the Open chapter, no competitor names
+```
+
+What is deliberately NOT copied:
+
+- "stack pills" (Gemini) — no supported-stack list exists in sakala-docs;
+  inventing one would violate the honesty rules;
+- "memaksimalkan yang minimal" (quoted by Grok) — this phrase does not exist
+  anywhere in the documentation; never present it as a documented claim;
+- explicit competitor comparison (Grok) — zero canonical mentions, and a
+  pre-launch product cannot yet win a feature table;
+- email waitlist — requires an external service; the static follow channels
+  are honest and dependency-free.
+
+See `CLARITY_AMENDMENT.md` for the binding rules this produced.
+
 ## Reference rule for agents
 
 When using a reference, document:

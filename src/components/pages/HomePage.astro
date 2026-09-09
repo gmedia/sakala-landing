@@ -2,6 +2,7 @@
 import ChapterClarity from "../landing/ChapterClarity.astro";
 import ChapterDistance from "../landing/ChapterDistance.astro";
 import ChapterFinale from "../landing/ChapterFinale.astro";
+import ChapterForWhom from "../landing/ChapterForWhom.astro";
 import ChapterLife from "../landing/ChapterLife.astro";
 import ChapterManifestation from "../landing/ChapterManifestation.astro";
 import ChapterOpen from "../landing/ChapterOpen.astro";
@@ -34,11 +35,12 @@ const t = useTranslations(lang);
 >
   <StatusNotice t={t} {lang} />
 
-  <ChapterPossibility {t} />
+  <ChapterPossibility {t} {lang} />
   <ChapterDistance {t} />
   <ChapterThreshold {t} />
   <ChapterManifestation {t} />
   <ChapterClarity {t} />
+  <ChapterForWhom {t} />
   <ChapterLife {t} {lang} />
   <ChapterOpen {t} {lang} />
   <ChapterFinale {t} {lang} />

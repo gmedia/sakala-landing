@@ -1,4 +1,5 @@
 ---
+import AnalysisArtifact from "../artifact/AnalysisArtifact.astro";
 import ArtifactFigure from "../artifact/ArtifactFigure.astro";
 import DeploymentArtifact from "../artifact/DeploymentArtifact.astro";
 import Chapter from "./Chapter.astro";
@@ -15,17 +16,39 @@ const c = t.home.manifestation;
 <!-- Bab 04 — Perjalanan. Bab bukti produk utama.
      "I built this." menjadi "Here it is." -->
 <Chapter tone="light" size="tall" labelledby="manifestation-title" thread>
-  <div class="max-w-2xl">
-    <p class="becoming artifact-label text-primary">{c.eyebrow}</p>
-    <h2
-      id="manifestation-title"
-      class="becoming mt-5 text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-ink"
+  <!-- Analisis berjalan sebelum build, jadi artefaknya berdiri sebelum kartu
+       deploy: lead di kiri, panel analisis di kanan. Ia menjawab pertanyaan
+       "bisa deploy stack apa?" dengan mekanisme yang terdokumentasi, bukan
+       daftar framework yang tidak pernah dijanjikan. -->
+  <div
+    class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-20"
+  >
+    <div>
+      <p class="becoming artifact-label text-primary">04 · {c.eyebrow}</p>
+      <h2
+        id="manifestation-title"
+        class="becoming mt-5 max-w-[18ch] text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-ink"
+      >
+        {c.title}
+      </h2>
+      <p
+        class="becoming becoming-delay-1 mt-7 max-w-xl text-lg leading-8 text-muted"
+      >
+        {c.lead}
+      </p>
+    </div>
+
+    <ArtifactFigure
+      caption={c.analysisCaption}
+      class="becoming becoming-delay-1 lg:pt-4"
     >
-      {c.title}
-    </h2>
-    <p class="becoming becoming-delay-1 mt-7 text-lg leading-8 text-muted">
-      {c.lead}
-    </p>
+      <AnalysisArtifact
+        label={c.analysisLabel}
+        rows={c.analysisRows}
+        builderLabel={c.builderLabel}
+        builderSteps={c.builderSteps}
+      />
+    </ArtifactFigure>
   </div>
 
   <ArtifactFigure

@@ -9,6 +9,10 @@ lang: en
 
 # Frequently Asked Questions
 
+## What is Sakala?
+
+Sakala is an open-source deployment platform that carries a project from a Git repository into an application that can be opened and shared. It is initiated by the Sakala Maintainers, supported by GMEDIA as founding sponsor, and still under active development — not yet available as a public service.
+
 ## Can Sakala be used in production yet?
 
 No. Sakala is under active development and is still assembling its product and runtime foundations.

@@ -1,0 +1,46 @@
+---
+import Chapter from "./Chapter.astro";
+import type { Dictionary } from "../../i18n/id";
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+const c = t.home.forWhom;
+---
+
+<!-- Bab 06 — Untuk siapa. Judulnya sengaja lugas dan berkata kunci: setelah
+     lima bab metafora, di sinilah pembaca dijawab langsung "ini untukku atau
+     bukan". Personanya kanonik dari PRD sakala-docs, bukan karangan, dan
+     duduk pada Green Line — bukan grid kartu fitur. -->
+<Chapter tone="soft" labelledby="forwhom-title" thread>
+  <div class="mx-auto max-w-2xl text-center">
+    <p class="becoming artifact-label text-primary">06 · {c.eyebrow}</p>
+    <h2
+      id="forwhom-title"
+      class="becoming mx-auto mt-5 max-w-[24ch] text-balance font-display text-narrative-m font-bold tracking-[-0.025em] text-ink"
+    >
+      {c.title}
+    </h2>
+    <p class="becoming becoming-delay-1 mt-7 text-lg leading-8 text-muted">
+      {c.lead}
+    </p>
+  </div>
+
+  <ul
+    class="green-line green-line-live becoming becoming-delay-2 mx-auto mt-14 max-w-xl list-none space-y-9 p-0 pl-8"
+    style="--line-inset: 2rem"
+  >
+    {
+      c.personas.map((persona) => (
+        <li class="green-line-node green-line-node-live">
+          <p class="font-display text-lg font-semibold text-ink">
+            {persona.name}
+          </p>
+          <p class="mt-1.5 max-w-lg leading-7 text-muted">{persona.text}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Chapter>

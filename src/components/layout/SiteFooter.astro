@@ -111,8 +111,9 @@ const project = [
       className="flex flex-wrap items-center justify-between gap-3 py-5"
     >
       <p class="font-mono text-xs text-on-depth-muted">
-        &copy; {new Date().getFullYear()}
-        {t.footer.rights} · {t.footer.license}
+        &copy; {new Date().getFullYear()}&nbsp;{t.footer.rights} · {
+          t.footer.license
+        }
       </p>
       <p class="font-mono text-xs text-on-depth-subtle">{t.footer.sponsor}</p>
     </Container>
