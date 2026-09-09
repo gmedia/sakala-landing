@@ -1,5 +1,4 @@
 ---
-import Button from "../ui/Button.astro";
 import Chapter from "./Chapter.astro";
 import { links } from "../../data/links";
 import { localizePath, type Lang } from "../../i18n";
@@ -12,11 +11,25 @@ interface Props {
 
 const { t, lang } = Astro.props;
 const c = t.home.finale;
+
+/* Satu aksi utama pre-launch: mengikuti perkembangan. Tiga kanalnya nyata dan
+   tersedia hari ini — bukan pendaftaran untuk layanan yang belum ada. */
+const followHref: Record<string, { href: string; external: boolean }> = {
+  github: { href: links.githubOrganization, external: true },
+  rss: { href: localizePath("/rss.xml", lang), external: false },
+  roadmap: { href: localizePath("/roadmap", lang), external: false },
+};
 ---
 
-<!-- Bab 08 — Penutup yang tenang. Tindakan mengikuti kematangan produk:
-     menjelajah dan membaca, bukan mendaftar atau deploy. -->
-<Chapter tone="light" size="tall" labelledby="finale-title" thread>
+<!-- Bab 09 — Penutup yang tenang. Tindakan mengikuti kematangan produk. -->
+<Chapter
+  id="ikuti-perkembangan"
+  tone="light"
+  size="tall"
+  labelledby="finale-title"
+  thread
+  class="scroll-mt-20"
+>
   <div class="mx-auto max-w-2xl text-center">
     <h2
       id="finale-title"
@@ -27,30 +40,52 @@ const c = t.home.finale;
     <p class="becoming becoming-delay-1 mt-7 text-lg leading-8 text-muted">
       {c.lead}
     </p>
+  </div>
 
-    <div
-      class="becoming becoming-delay-2 mt-11 flex flex-wrap items-center justify-center gap-3"
+  <div class="becoming becoming-delay-2 mx-auto mt-14 max-w-xl">
+    <p class="artifact-label text-center text-primary">{c.followTitle}</p>
+    <p class="mt-3 text-center leading-7 text-muted">{c.followLead}</p>
+
+    <ul
+      class="green-line green-line-live m-0 mt-9 list-none space-y-1 p-0 pl-8"
+      style="--line-inset: 2rem"
     >
-      <Button href={localizePath("/produk", lang)} prefetch="hover">
-        {c.primary}
-      </Button>
-      <Button
+      {
+        c.follow.map((item) => {
+          const target = followHref[item.key];
+          return (
+            <li>
+              <a
+                href={target.href}
+                target={target.external ? "_blank" : undefined}
+                rel={target.external ? "noreferrer" : undefined}
+                data-astro-prefetch={target.external ? undefined : "hover"}
+                class="green-line-node green-line-node-mid green-line-node-live flex min-h-14 items-center justify-between gap-4 py-2 text-ink hover:text-primary-dark"
+              >
+                <span>
+                  <span class="block font-semibold">{item.label}</span>
+                  <span class="mt-0.5 block text-sm text-muted">
+                    {item.note}
+                  </span>
+                </span>
+                <span aria-hidden="true" class="text-muted-2">
+                  {target.external ? "↗" : "→"}
+                </span>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+
+    <p class="becoming becoming-delay-3 mt-10 text-center">
+      <a
         href={localizePath("/docs", lang)}
-        variant="secondary"
-        prefetch="hover"
+        data-astro-prefetch="hover"
+        class="inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
       >
-        {c.secondary}
-      </Button>
-    </div>
-
-    <a
-      href={links.githubOrganization}
-      target="_blank"
-      rel="noreferrer"
-      class="becoming becoming-delay-3 mt-8 inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-muted hover:text-primary-dark"
-    >
-      {c.tertiary}
-      <span aria-hidden="true">&#8599;</span>
-    </a>
+        {c.docs} &rarr;
+      </a>
+    </p>
   </div>
 </Chapter>

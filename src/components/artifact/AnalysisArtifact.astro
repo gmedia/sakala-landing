@@ -1,0 +1,60 @@
+---
+interface Row {
+  k: string;
+  v: string;
+}
+
+interface Props {
+  label: string;
+  rows: readonly Row[];
+  builderLabel: string;
+  builderSteps: readonly string[];
+}
+
+const { label, rows, builderLabel, builderSteps } = Astro.props;
+---
+
+{
+  /* Jawaban untuk "stack apa yang didukung?" tanpa mengarang daftar framework:
+    yang terdokumentasi adalah mekanismenya — Dockerfile milik user, lalu
+    Railpack, lalu pengaturan manual — dan hasil pembacaan yang bisa diperiksa.
+    Isi panelnya diambil verbatim dari contoh di sakala-docs. */
+}
+<div
+  class="artifact overflow-hidden rounded-2xl border border-border bg-surface"
+>
+  <p
+    class="artifact-label border-b border-border bg-background-soft px-5 py-3 text-muted-2"
+  >
+    {label}
+  </p>
+
+  <dl class="m-0 grid gap-y-2.5 px-5 py-5 font-mono text-sm">
+    {
+      rows.map((row) => (
+        <div class="flex items-baseline justify-between gap-6">
+          <dt class="text-muted">{row.k}</dt>
+          <dd class="m-0 text-primary-dark">{row.v}</dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <div class="border-t border-dashed border-border px-5 py-4">
+    <p class="artifact-label text-muted-2">{builderLabel}</p>
+    <ol class="m-0 mt-2.5 flex list-none flex-wrap items-center gap-y-1 p-0">
+      {
+        builderSteps.map((step, index) => (
+          <li class="flex items-center font-mono text-sm text-ink">
+            {index > 0 && (
+              <span aria-hidden="true" class="mx-2.5 text-muted-2">
+                &rarr;
+              </span>
+            )}
+            {step}
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</div>

@@ -95,11 +95,12 @@ Landing creative package
 15. docs/landing/IMPLEMENTATION_REQUIREMENTS.md
 16. docs/landing/AI_AGENT_PLAYBOOK.md
 17. docs/landing/REFERENCE_NOTES.md
+18. docs/landing/CLARITY_AMENDMENT.md
 
 Repository technical references
-18. docs/PROJECT_SEO_AUDIT.md
-19. docs/PROJECT_ASTRO_FEATURES.md
-20. ARCHITECTURE.md
+19. docs/PROJECT_SEO_AUDIT.md
+20. docs/PROJECT_ASTRO_FEATURES.md
+21. ARCHITECTURE.md
 ```
 
 ## Superseded local direction
@@ -154,6 +155,7 @@ Both
 | `IMPLEMENTATION_REQUIREMENTS.md` | Astro/static/performance/accessibility engineering constraints |
 | `AI_AGENT_PLAYBOOK.md`           | exact workflow for an AI agent executing the rebuild           |
 | `REFERENCE_NOTES.md`             | research references and what to learn without copying          |
+| `CLARITY_AMENDMENT.md`           | v3 clarity layer: review findings, fact boundary, CTA rules    |
 
 ## Success condition
 

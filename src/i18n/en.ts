@@ -46,7 +46,9 @@ export const en: Dictionary = {
 
     possibility: {
       title: "Every work begins as a possibility.",
-      lead: "A project can be finished, stored neatly, and running on your own screen. And still, nobody else can open it.",
+      sub: "Sakala is an open-source deployment platform that carries a project from a Git repository into an application that can be opened and shared.",
+      ctaPrimary: "Follow the progress",
+      ctaSecondary: "Read the documentation",
       artifactLabel: "Repository",
       branch: "main",
       commit: "commit a3f9c21",
@@ -64,7 +66,7 @@ export const en: Dictionary = {
     distance: {
       eyebrow: "The distance",
       title: "Not everything finished being made is finished becoming real.",
-      lead: "Running on a laptop proves something works. Not that the world can open it.",
+      lead: "localhost always points back to the machine running it. When someone else opens that address, their browser looks for the application on their own device — and finds nothing.",
       refrain: "I built this.",
       artifactLabel: "Running locally",
       address: "localhost:5173",
@@ -83,7 +85,7 @@ export const en: Dictionary = {
       eyebrow: "The threshold",
       title: "Between possibility and presence, there is a journey.",
       plain:
-        "Sakala is an open-source deployment project that helps carry source from a repository into an application that runs, can be opened, and can be shared.",
+        "The path is real and learnable: a public GitHub repository is read, built through a Dockerfile or Railpack, then given its own public address at *.run.sakala.dev.",
       from: "Possibility / Local",
       through: "Sakala",
       to: "Presence / Public",
@@ -122,6 +124,17 @@ export const en: Dictionary = {
           text: "A public route is activated, and the work has an address.",
         },
       ],
+      analysisLabel: "Repository analysis",
+      analysisRows: [
+        { k: "Detected", v: "Laravel" },
+        { k: "PHP", v: "8.x" },
+        { k: "Builder", v: "Railpack" },
+        { k: "Expected port", v: "8080" },
+      ],
+      builderLabel: "Builder priority",
+      builderSteps: ["Your Dockerfile", "Railpack", "Manual override"],
+      analysisCaption:
+        "The stack is recognized from your own Dockerfile or through Railpack, and the reading can be inspected and changed before the build runs.",
       arrivalLabel: "Reachable",
       domain: "portfolio.run.sakala.dev",
       healthy: "200 · healthy",
@@ -155,6 +168,27 @@ export const en: Dictionary = {
       note: "This shape of explanation describes the direction being pursued.",
     },
 
+    forWhom: {
+      eyebrow: "Who it is for",
+      title:
+        "Open-source deployment for students, beginners, and learning communities.",
+      lead: "Made for people who already keep their work in Git, but do not want to deal with a VPS, SSL, and a reverse proxy just to share it.",
+      personas: [
+        {
+          name: "Students & interns",
+          text: "Coursework and portfolios can be opened by lecturers and recruiters, without building infrastructure from scratch.",
+        },
+        {
+          name: "Lecturers & mentors",
+          text: "Review work without preparing an environment for every project.",
+        },
+        {
+          name: "Beginner developers & communities",
+          text: "Learn deployment from a flow where every stage has a name and can be explained.",
+        },
+      ],
+    },
+
     life: {
       eyebrow: "Continuation",
       title: "Deployment is not the end of the journey.",
@@ -168,8 +202,9 @@ export const en: Dictionary = {
       ],
       onward: "Becomes a template",
       newWork: "New work",
+      plannedLabel: "planned",
       caption:
-        "A living work can give rise to the next one. Items marked as direction are not available yet.",
+        "A living work can give rise to the next one. Items marked planned are not available yet.",
       more: "See the product direction",
     },
 
@@ -183,8 +218,12 @@ export const en: Dictionary = {
         { label: "Architecture", value: "Documented" },
         { label: "Decisions", value: "Recorded" },
         { label: "Contribution", value: "Open" },
+        { label: "Pilot runtime", value: "GMEDIA-supported" },
+        { label: "Self-host", value: "On the roadmap" },
       ],
       factsCaption: "Evidence of openness, not merely a badge.",
+      position:
+        "Sakala is not racing to become an everything cloud. It picks two things and stays with them: a process that can be explained, and deployment that can be learned.",
       human:
         "Technology is a tool. What matters is what people can finally bring into being with it.",
       stewardship:
@@ -195,9 +234,27 @@ export const en: Dictionary = {
     finale: {
       title: "What will you bring into being?",
       lead: "Every work begins as a possibility.",
-      primary: "Explore Sakala",
-      secondary: "Read the docs",
-      tertiary: "View on GitHub",
+      followTitle: "Follow the progress",
+      followLead:
+        "Sakala is built in the open. Every step can be followed from here.",
+      follow: [
+        {
+          key: "github",
+          label: "Follow on GitHub",
+          note: "Star or watch for release news",
+        },
+        {
+          key: "rss",
+          label: "Subscribe to the changelog RSS",
+          note: "Every publicly visible change",
+        },
+        {
+          key: "roadmap",
+          label: "See the roadmap",
+          note: "Direction, not date promises",
+        },
+      ],
+      docs: "Read the documentation",
     },
   },
 

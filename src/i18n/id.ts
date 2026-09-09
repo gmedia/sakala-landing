@@ -50,7 +50,9 @@ export const id = {
 
     possibility: {
       title: "Setiap karya bermula sebagai kemungkinan.",
-      lead: "Sebuah project bisa selesai ditulis, tersimpan rapi, dan berjalan di layar sendiri. Tetapi belum tentu ada seorang pun yang dapat membukanya.",
+      sub: "Sakala adalah platform deployment open-source yang membawa project dari repository Git menjadi aplikasi yang dapat dibuka dan dibagikan.",
+      ctaPrimary: "Ikuti perkembangan",
+      ctaSecondary: "Baca dokumentasi",
       artifactLabel: "Repository",
       branch: "main",
       commit: "commit a3f9c21",
@@ -68,7 +70,7 @@ export const id = {
     distance: {
       eyebrow: "Jarak",
       title: "Tidak semua yang selesai dibuat, selesai diwujudkan.",
-      lead: "Berjalan di laptop membuktikan sesuatu bekerja. Bukan bahwa dunia dapat membukanya.",
+      lead: "localhost selalu menunjuk kembali ke mesin yang menjalankannya. Ketika orang lain membuka alamat itu, browser mereka mencari aplikasinya di perangkat mereka sendiri — dan tidak menemukan apa-apa.",
       refrain: "I built this.",
       artifactLabel: "Berjalan secara lokal",
       address: "localhost:5173",
@@ -87,7 +89,7 @@ export const id = {
       eyebrow: "Ambang",
       title: "Di antara kemungkinan dan wujud, ada sebuah perjalanan.",
       plain:
-        "Sakala adalah project deployment open-source yang membantu membawa source dari repository menjadi aplikasi yang dapat berjalan, dibuka, dan dibagikan.",
+        "Alurnya nyata dan dapat dipelajari: repository GitHub publik dibaca, dibangun lewat Dockerfile atau Railpack, lalu menerima alamat publiknya sendiri di *.run.sakala.dev.",
       from: "Kemungkinan / Lokal",
       through: "Sakala",
       to: "Wujud / Publik",
@@ -126,6 +128,17 @@ export const id = {
           text: "Route publik diaktifkan, dan karya memiliki alamat.",
         },
       ],
+      analysisLabel: "Analisis repository",
+      analysisRows: [
+        { k: "Detected", v: "Laravel" },
+        { k: "PHP", v: "8.x" },
+        { k: "Builder", v: "Railpack" },
+        { k: "Expected port", v: "8080" },
+      ],
+      builderLabel: "Prioritas builder",
+      builderSteps: ["Dockerfile milikmu", "Railpack", "Atur manual"],
+      analysisCaption:
+        "Stack dikenali dari Dockerfile milikmu atau lewat Railpack, dan hasil pembacaannya dapat diperiksa serta diubah sebelum build berjalan.",
       arrivalLabel: "Dapat dijangkau",
       domain: "portfolio.run.sakala.dev",
       healthy: "200 · sehat",
@@ -159,6 +172,27 @@ export const id = {
       note: "Bentuk penjelasan ini menggambarkan arah yang dituju.",
     },
 
+    forWhom: {
+      eyebrow: "Untuk siapa",
+      title:
+        "Deployment open-source untuk mahasiswa, pemula, dan komunitas belajar.",
+      lead: "Dirancang bagi yang sudah menyimpan karyanya di Git, tetapi tidak ingin berurusan dengan VPS, SSL, dan reverse proxy hanya untuk membagikannya.",
+      personas: [
+        {
+          name: "Mahasiswa & intern",
+          text: "Tugas dan portfolio dapat dibuka dosen maupun perekrut, tanpa membangun infrastruktur dari nol.",
+        },
+        {
+          name: "Dosen & mentor",
+          text: "Meninjau hasil kerja tanpa menyiapkan environment untuk setiap project.",
+        },
+        {
+          name: "Developer pemula & komunitas",
+          text: "Belajar deployment dari alur yang setiap tahapnya bernama dan dapat dijelaskan.",
+        },
+      ],
+    },
+
     life: {
       eyebrow: "Kelanjutan",
       title: "Deployment bukan akhir perjalanan.",
@@ -172,8 +206,9 @@ export const id = {
       ],
       onward: "Menjadi template",
       newWork: "Karya baru",
+      plannedLabel: "menyusul",
       caption:
-        "Sebuah karya yang hidup dapat melahirkan karya berikutnya. Bagian bertanda arah belum tersedia.",
+        "Sebuah karya yang hidup dapat melahirkan karya berikutnya. Bagian bertanda menyusul belum tersedia.",
       more: "Lihat arah produk",
     },
 
@@ -187,8 +222,12 @@ export const id = {
         { label: "Arsitektur", value: "Terdokumentasi" },
         { label: "Keputusan", value: "Tercatat" },
         { label: "Kontribusi", value: "Terbuka" },
+        { label: "Runtime pilot", value: "Didukung GMEDIA" },
+        { label: "Self-host", value: "Di roadmap" },
       ],
       factsCaption: "Bukti keterbukaan Sakala, bukan sekadar label.",
+      position:
+        "Sakala tidak berlomba menjadi cloud serba ada. Ia memilih dua hal dan menekuninya: proses yang dapat dijelaskan, dan deployment yang dapat dipelajari.",
       human:
         "Teknologi adalah alat. Yang penting adalah apa yang akhirnya dapat diwujudkan manusia dengannya.",
       stewardship:
@@ -199,9 +238,27 @@ export const id = {
     finale: {
       title: "Apa yang akan kamu wujudkan?",
       lead: "Setiap karya bermula sebagai kemungkinan.",
-      primary: "Jelajahi Sakala",
-      secondary: "Baca Dokumentasi",
-      tertiary: "Lihat di GitHub",
+      followTitle: "Ikuti perkembangan",
+      followLead:
+        "Sakala dibangun terbuka. Setiap langkahnya dapat diikuti dari sini.",
+      follow: [
+        {
+          key: "github",
+          label: "Ikuti di GitHub",
+          note: "Star atau watch untuk kabar rilis",
+        },
+        {
+          key: "rss",
+          label: "Langganan RSS Changelog",
+          note: "Setiap perubahan yang terlihat publik",
+        },
+        {
+          key: "roadmap",
+          label: "Lihat roadmap",
+          note: "Arah, bukan janji tanggal",
+        },
+      ],
+      docs: "Baca dokumentasi",
     },
   },
 

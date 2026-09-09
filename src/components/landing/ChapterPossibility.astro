@@ -1,21 +1,25 @@
 ---
 import ArtifactFigure from "../artifact/ArtifactFigure.astro";
+import Button from "../ui/Button.astro";
 import SourceArtifact from "../artifact/SourceArtifact.astro";
 import Chapter from "./Chapter.astro";
+import { localizePath, type Lang } from "../../i18n";
 import type { Dictionary } from "../../i18n/id";
 
 interface Props {
   t: Dictionary;
+  lang: Lang;
 }
 
-const { t } = Astro.props;
+const { t, lang } = Astro.props;
 const c = t.home.possibility;
 ---
 
 <!-- Bab 01 — Kemungkinan.
-     Netral, lapang, hampir tanpa warna brand. Satu objek fokus.
-     Ditumpuk, bukan dua kolom, supaya headline punya ruang penuh dan tidak
-     bertabrakan dengan artefak pada layar lebar. -->
+     Headline tetap puitis; jangkar faktualnya adalah subheadline tepat di
+     bawahnya, supaya pembaca yang scanning tahu "ini apa" dalam lima detik
+     tanpa menunggu bab Ambang. Hero juga membawa langkah berikutnya —
+     sebelumnya ia tidak punya satu aksi pun. -->
 <Chapter
   tone="light"
   size="tall"
@@ -30,13 +34,28 @@ const c = t.home.possibility;
   </h1>
 
   <div
-    class="mt-16 grid gap-12 lg:mt-20 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1fr)] lg:items-start lg:gap-20"
+    class="mt-14 grid gap-12 lg:mt-16 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1fr)] lg:items-start lg:gap-20"
   >
-    <p
-      class="becoming becoming-delay-1 max-w-lg text-lg leading-8 text-muted sm:text-xl sm:leading-9"
-    >
-      {c.lead}
-    </p>
+    <div>
+      <p
+        class="becoming becoming-delay-1 max-w-lg text-lg leading-8 text-muted sm:text-xl sm:leading-9"
+      >
+        {c.sub}
+      </p>
+
+      <div
+        class="becoming becoming-delay-2 mt-9 flex flex-wrap items-center gap-3"
+      >
+        <Button href="#ikuti-perkembangan">{c.ctaPrimary}</Button>
+        <Button
+          href={localizePath("/docs", lang)}
+          variant="secondary"
+          prefetch="hover"
+        >
+          {c.ctaSecondary}
+        </Button>
+      </div>
+    </div>
 
     <ArtifactFigure caption={c.caption} class="becoming becoming-delay-2">
       <SourceArtifact

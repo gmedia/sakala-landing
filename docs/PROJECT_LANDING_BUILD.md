@@ -1,4 +1,4 @@
-# Konteks Implementasi Landing v2
+# Konteks Implementasi Landing
 
 Dokumen ini menggambarkan **apa yang benar-benar dibangun**, bukan apa yang
 seharusnya dibangun. Arah kreatifnya tetap milik `docs/landing/`, dan bila
@@ -9,13 +9,18 @@ dan tidak lagi berlaku.
 
 ## Susunan beranda
 
-Delapan bab mengikuti satu project melewati hidupnya. Tiap bab adalah satu
+Sembilan bab mengikuti satu project melewati hidupnya. Tiap bab adalah satu
 komponen di `src/components/landing/`, dirangkai oleh `HomePage.astro`.
 
 ```txt
 Possibility → Distance → Threshold → Manifestation
-           → Clarity → Life → Open → Finale
+           → Clarity → Untuk Siapa → Life → Open → Finale
 ```
+
+Lapisan kejelasan v3 (lihat `docs/landing/CLARITY_AMENDMENT.md`): hero membawa
+subheadline konkret dan pasangan CTA, bab Untuk Siapa membawa persona kanonik,
+dan Finale adalah blok follow ber-anchor (`#ikuti-perkembangan`) yang menjadi
+target CTA utama.
 
 `Chapter.astro` memegang permukaan dan jarak vertikalnya. Prop `thread`
 menggambar sambungan Green Line yang melintasi batas bab.
@@ -29,6 +34,7 @@ perlu diunduh.
 | Komponen             | Membawa                                               |
 | -------------------- | ----------------------------------------------------- |
 | `SourceArtifact`     | Repository sebagai kemungkinan yang sudah berbentuk   |
+| `AnalysisArtifact`   | Analisis repo: Dockerfile → Railpack → manual         |
 | `LocalhostArtifact`  | Panggung berkisi dengan jendela yang terkurung        |
 | `ThresholdArtifact`  | Penyeberangan: garis, mark bercincin, konektor        |
 | `DeploymentArtifact` | Tahap dan hasilnya dalam satu bingkai                 |
