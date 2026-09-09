@@ -94,10 +94,10 @@
 
   /* Skala display naratif khusus landing. Console memakai ceiling lebih
      rendah; nilai ini tidak dipakai di dokumentasi. */
-  --text-narrative-xl: clamp(2.5rem, 6.2vw, 5.25rem);
-  --text-narrative-xl--line-height: 1.02;
-  --text-narrative-l: clamp(2rem, 4.6vw, 3.75rem);
-  --text-narrative-l--line-height: 1.06;
+  --text-narrative-xl: clamp(2.75rem, 7vw, 6rem);
+  --text-narrative-xl--line-height: 1;
+  --text-narrative-l: clamp(2.125rem, 5vw, 4.25rem);
+  --text-narrative-l--line-height: 1.04;
   --text-narrative-m: clamp(1.75rem, 3.4vw, 2.75rem);
   --text-narrative-m--line-height: 1.14;
 }
@@ -265,6 +265,36 @@ a {
 .green-line-node-mid::after {
   top: 50%;
   transform: translateY(-50%);
+}
+
+/* Bidang kemungkinan: kertas berkisi yang memudar. Kisi yang sama dengan
+   panggung localhost, sehingga hero dan artefaknya berbagi satu bahasa.
+   Murni dekoratif dan selalu aria-hidden di pemakainya. */
+.possibility-field {
+  background-image:
+    linear-gradient(var(--color-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+  background-size: 42px 42px;
+  opacity: 0.45;
+  mask-image: linear-gradient(to bottom, black 30%, transparent 92%);
+}
+
+.possibility-field-rise {
+  mask-image: linear-gradient(to top, black 30%, transparent 92%);
+}
+
+/* Cahaya lembut di belakang mark pada penyeberangan. Menandai pusat tanpa
+   menutupi apa pun; ditaruh sebagai elemen pertama supaya melukis di bawah. */
+.threshold-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(30rem, 90vw);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(204 251 241 / 12%), transparent 62%);
+  pointer-events: none;
 }
 
 /* Permukaan Threshold dibelah tepat pada titik penyeberangan, sehingga

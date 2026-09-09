@@ -2,12 +2,12 @@ import type { Dictionary } from "./id";
 
 export const en: Dictionary = {
   meta: {
-    siteTitle: "Sakala — Bringing Code to Life as Real Applications",
+    siteTitle: "Sakala — Open-Source Deployment Platform",
     siteDescription:
-      "Sakala is an open-source deployment project that helps source in a repository become an application that runs, can be opened, and can be shared. Still under active development.",
-    homeTitle: "Sakala — Manifesting Code into Reality",
+      "Sakala is an open-source deployment platform that carries source from a repository into an application that runs, can be opened, and can be shared. Still under active development.",
+    homeTitle: "Sakala — Open-Source Deployment Platform",
     homeDescription:
-      "Sakala is an open-source deployment project that helps carry source from a repository into an application that runs, can be opened, and can be shared. Being built in the open.",
+      "Sakala is an open-source deployment platform: carrying a project from a Git repository into an application that can be opened and shared. Manifesting Code into Reality — built in the open.",
     ogAlt: "Sakala logo with the tagline Manifesting Code into Reality",
     skipToContent: "Skip to main content",
   },
@@ -45,6 +45,7 @@ export const en: Dictionary = {
     },
 
     possibility: {
+      eyebrow: "Sakala · Open-source deployment platform",
       title: "Every work begins as a possibility.",
       sub: "Sakala is an open-source deployment platform that carries a project from a Git repository into an application that can be opened and shared.",
       ctaPrimary: "Follow the progress",
@@ -83,7 +84,7 @@ export const en: Dictionary = {
 
     threshold: {
       eyebrow: "The threshold",
-      title: "Between possibility and presence, there is a journey.",
+      title: "Sakala stands between possibility and presence.",
       plain:
         "The path is real and learnable: a public GitHub repository is read, built through a Dockerfile or Railpack, then given its own public address at *.run.sakala.dev.",
       from: "Possibility / Local",
@@ -600,7 +601,7 @@ export const en: Dictionary = {
   footer: {
     tagline: "Manifesting Code into Reality",
     blurb:
-      "An open-source deployment project that helps work move from a repository into a living application.",
+      "An open-source deployment platform that carries work from a repository into a living application.",
     exploreLabel: "Explore",
     projectLabel: "Project",
     rss: "Changelog RSS",

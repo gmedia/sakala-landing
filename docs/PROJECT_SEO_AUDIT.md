@@ -130,6 +130,33 @@ Rekomendasi:
 
 Hindari membuat banyak variasi nama brand yang belum dikenal pengguna.
 
+### P0 - Brand Query "sakala"
+
+Query telanjang `sakala` bersaing dengan makna kamus (sekala/sakala dalam
+tradisi Bali) dan entitas lain bernama serupa. Situs baru muncul bila query
+diberi kualifikasi seperti `gmedia`, `platform`, atau `deployment`. Menang di
+query telanjang adalah kerja entitas, bukan satu perubahan halaman.
+
+Yang sudah dikerjakan on-page:
+
+- title tag homepage membawa kategori: `Sakala — Platform Deployment
+Open-Source` (sebelumnya hanya tagline berbahasa Inggris);
+- h2 bab Ambang membawa brand: "Sakala berdiri di antara kemungkinan dan
+  wujud"; eyebrow hero membawa brand + kategori;
+- Organization schema: `name: "Sakala"`, `description`, `slogan`, dan `sameAs`
+  ke lima repository GitHub; SoftwareApplication mendapat `softwareHelp` dan
+  `keywords`;
+- FAQ dibuka dengan "Apa itu Sakala?" dalam dua bahasa.
+
+Yang berada di luar repository ini dan tetap menentukan:
+
+- verifikasi Search Console dan pantau query `sakala` di laporan performa;
+- backlink dari halaman resmi GMEDIA dengan anchor `Sakala`;
+- deskripsi organisasi dan repository GitHub yang konsisten menyebut
+  "Sakala — platform deployment open-source";
+- konsistensi nama di semua permukaan publik. Entitas baru butuh waktu
+  berminggu-minggu untuk terkonsolidasi; jangan menilai hasilnya harian.
+
 ### P1 - Tambah Konten People-First Berdasarkan Intent Nyata
 
 Saat ini situs memiliki landing, halaman Open Source, changelog, dan sepuluh

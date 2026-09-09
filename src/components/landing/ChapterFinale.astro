@@ -28,8 +28,13 @@ const followHref: Record<string, { href: string; external: boolean }> = {
   size="tall"
   labelledby="finale-title"
   thread
-  class="scroll-mt-20"
+  class="relative isolate overflow-hidden scroll-mt-20"
 >
+  <div
+    class="possibility-field possibility-field-rise absolute inset-0 -z-10"
+    aria-hidden="true"
+  >
+  </div>
   <div class="mx-auto max-w-2xl text-center">
     <h2
       id="finale-title"

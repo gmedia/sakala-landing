@@ -1,5 +1,6 @@
 ---
 import ArtifactFigure from "../artifact/ArtifactFigure.astro";
+import BrandMark from "../brand/BrandMark.astro";
 import Button from "../ui/Button.astro";
 import SourceArtifact from "../artifact/SourceArtifact.astro";
 import Chapter from "./Chapter.astro";
@@ -24,11 +25,20 @@ const c = t.home.possibility;
   tone="light"
   size="tall"
   labelledby="possibility-title"
-  class="border-t-0"
+  class="relative isolate overflow-hidden border-t-0"
 >
+  <!-- Bidang kemungkinan: kisi yang sama dengan panggung localhost, memudar
+       ke bawah. Hero dan artefaknya berbagi satu bahasa visual. -->
+  <div class="possibility-field absolute inset-0 -z-20" aria-hidden="true">
+  </div>
+  <BrandMark
+    class="pointer-events-none absolute -right-28 top-1/2 -z-10 hidden h-[34rem] w-auto -translate-y-1/2 text-primary opacity-[0.045] xl:block"
+  />
+
+  <p class="becoming artifact-label text-primary">{c.eyebrow}</p>
   <h1
     id="possibility-title"
-    class="becoming max-w-[16ch] text-balance font-display text-narrative-xl font-bold tracking-[-0.035em] text-ink"
+    class="becoming mt-6 max-w-[16ch] text-balance font-display text-narrative-xl font-bold tracking-[-0.035em] text-ink"
   >
     {c.title}
   </h1>

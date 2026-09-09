@@ -1,11 +1,11 @@
 export const id = {
   meta: {
-    siteTitle: "Sakala — Membawa Kode Menjadi Aplikasi yang Hidup",
+    siteTitle: "Sakala — Platform Deployment Open-Source",
     siteDescription:
-      "Sakala adalah project deployment open-source yang membantu source dari repository menjadi aplikasi yang dapat berjalan, dibuka, dan dibagikan. Masih dalam pengembangan aktif.",
-    homeTitle: "Sakala — Manifesting Code into Reality",
+      "Sakala adalah platform deployment open-source yang membawa source dari repository menjadi aplikasi yang dapat berjalan, dibuka, dan dibagikan. Masih dalam pengembangan aktif.",
+    homeTitle: "Sakala — Platform Deployment Open-Source",
     homeDescription:
-      "Sakala adalah project deployment open-source yang membantu membawa source dari repository menjadi aplikasi yang dapat berjalan, dibuka, dan dibagikan. Sedang dibangun secara terbuka.",
+      "Sakala adalah platform deployment open-source: membawa project dari repository Git menjadi aplikasi yang dapat dibuka dan dibagikan. Manifesting Code into Reality — dibangun secara terbuka.",
     ogAlt: "Logo Sakala dengan tagline Manifesting Code into Reality",
     skipToContent: "Lewati ke konten utama",
   },
@@ -49,6 +49,7 @@ export const id = {
     },
 
     possibility: {
+      eyebrow: "Sakala · Platform deployment open-source",
       title: "Setiap karya bermula sebagai kemungkinan.",
       sub: "Sakala adalah platform deployment open-source yang membawa project dari repository Git menjadi aplikasi yang dapat dibuka dan dibagikan.",
       ctaPrimary: "Ikuti perkembangan",
@@ -87,7 +88,7 @@ export const id = {
 
     threshold: {
       eyebrow: "Ambang",
-      title: "Di antara kemungkinan dan wujud, ada sebuah perjalanan.",
+      title: "Sakala berdiri di antara kemungkinan dan wujud.",
       plain:
         "Alurnya nyata dan dapat dipelajari: repository GitHub publik dibaca, dibangun lewat Dockerfile atau Railpack, lalu menerima alamat publiknya sendiri di *.run.sakala.dev.",
       from: "Kemungkinan / Lokal",
@@ -604,7 +605,7 @@ export const id = {
   footer: {
     tagline: "Manifesting Code into Reality",
     blurb:
-      "Project deployment open-source yang membantu karya berpindah dari repository menjadi aplikasi yang hidup.",
+      "Platform deployment open-source yang membawa karya dari repository menjadi aplikasi yang hidup.",
     exploreLabel: "Jelajahi",
     projectLabel: "Project",
     rss: "RSS Changelog",

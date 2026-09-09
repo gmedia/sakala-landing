@@ -69,11 +69,20 @@ const siteEntities = [
   {
     "@type": "Organization",
     "@id": "https://sakala.dev/#organization",
-    name: "Sakala Project",
-    alternateName: ["Sakala", "sakala.dev"],
+    name: "Sakala",
+    alternateName: ["Sakala Project", "sakala.dev"],
+    description:
+      "Platform deployment open-source yang membawa project dari repository Git menjadi aplikasi yang dapat dibuka dan dibagikan.",
+    slogan: "Manifesting Code into Reality",
     url: "https://sakala.dev",
     logo: "https://sakala.dev/brand/sakala-lockup-full.svg",
-    sameAs: ["https://github.com/gmedia"],
+    sameAs: [
+      "https://github.com/gmedia",
+      "https://github.com/gmedia/sakala-landing",
+      "https://github.com/gmedia/sakala-console",
+      "https://github.com/gmedia/sakala-api",
+      "https://github.com/gmedia/sakala-agent",
+    ],
   },
   {
     "@type": "Organization",
@@ -100,6 +109,9 @@ const siteEntities = [
     operatingSystem: "Web",
     url: "https://sakala.dev",
     description,
+    softwareHelp: "https://sakala.dev/docs",
+    keywords:
+      "deployment, open source, platform deployment, repository, localhost, aplikasi web",
     license: "https://www.apache.org/licenses/LICENSE-2.0",
     creator: { "@id": "https://sakala.dev/#organization" },
     funder: { "@id": "https://sakala.dev/#gmedia" },
