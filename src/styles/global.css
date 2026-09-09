@@ -114,8 +114,12 @@
   --focus-ring: var(--color-primary);
 }
 
-html {
-  scroll-behavior: smooth;
+/* Scroll halus hanya bagi yang tidak meminta pengurangan gerak. Anchor CTA
+   hero tetap berfungsi; yang berubah hanya animasinya. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {

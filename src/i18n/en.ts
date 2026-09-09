@@ -4,10 +4,10 @@ export const en: Dictionary = {
   meta: {
     siteTitle: "Sakala — Open-Source Deployment Platform",
     siteDescription:
-      "Sakala is an open-source deployment platform that carries source from a repository into an application that runs, can be opened, and can be shared. Still under active development.",
+      "Sakala is an open-source deployment platform that carries source from a repository into an application that can be opened and shared.",
     homeTitle: "Sakala — Open-Source Deployment Platform",
     homeDescription:
-      "Sakala is an open-source deployment platform: carrying a project from a Git repository into an application that can be opened and shared. Manifesting Code into Reality — built in the open.",
+      "Sakala is an open-source deployment platform: carrying a project from a Git repository into an application that can be opened and shared. Built in the open.",
     ogAlt: "Sakala logo with the tagline Manifesting Code into Reality",
     skipToContent: "Skip to main content",
   },

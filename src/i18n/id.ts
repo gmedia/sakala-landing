@@ -2,10 +2,10 @@ export const id = {
   meta: {
     siteTitle: "Sakala — Platform Deployment Open-Source",
     siteDescription:
-      "Sakala adalah platform deployment open-source yang membawa source dari repository menjadi aplikasi yang dapat berjalan, dibuka, dan dibagikan. Masih dalam pengembangan aktif.",
+      "Sakala adalah platform deployment open-source yang membawa source dari repository menjadi aplikasi yang dapat dibuka dan dibagikan.",
     homeTitle: "Sakala — Platform Deployment Open-Source",
     homeDescription:
-      "Sakala adalah platform deployment open-source: membawa project dari repository Git menjadi aplikasi yang dapat dibuka dan dibagikan. Manifesting Code into Reality — dibangun secara terbuka.",
+      "Sakala adalah platform deployment open-source: membawa project dari repository Git menjadi aplikasi yang dapat dibuka dan dibagikan. Dibangun secara terbuka.",
     ogAlt: "Logo Sakala dengan tagline Manifesting Code into Reality",
     skipToContent: "Lewati ke konten utama",
   },
