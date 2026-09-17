@@ -149,28 +149,18 @@ const {
 </div>
 
 <style>
-  /* Mekar lembut di belakang halaman yang sudah hidup. Ia menandai momen
-     "muncul" tanpa menambah teks, dan tidak pernah menutupi isinya. */
+  /* Mekar lembut di belakang halaman yang sudah hidup. Digambar sebagai
+     gradient latar kotak itu sendiri, bukan pseudo-element yang diblur:
+     filter + overflow + border-radius tidak konsisten dipotong antar
+     browser, dan bloom-nya pernah merembes ke kotak URL di atasnya. */
   .arrival-page {
-    /* overflow hidden memotong bloom pada tepi kotak; tanpa itu blur-nya
-       merembes ke kotak URL di atasnya. */
-    overflow: hidden;
-    background: var(--color-surface);
-    isolation: isolate;
     min-height: 9rem;
-  }
-
-  .arrival-page::before {
-    position: absolute;
-    z-index: -1;
-    top: 50%;
-    left: 50%;
-    width: min(16rem, 80%);
-    aspect-ratio: 1;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    content: "";
-    background: var(--color-primary-soft-2);
-    filter: blur(14px);
+    background: radial-gradient(
+        circle at 50% 50%,
+        var(--color-primary-soft-2) 0,
+        var(--color-primary-soft-2) 22%,
+        transparent 58%
+      )
+      var(--color-surface);
   }
 </style>
