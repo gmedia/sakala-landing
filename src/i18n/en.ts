@@ -38,203 +38,196 @@ export const en: Dictionary = {
   },
 
   home: {
-    notice: {
-      label: "Status",
-      text: "Sakala is not available as a public service yet. The flow on this page is the experience being built.",
-      link: "See development status",
+    status: {
+      label: "Pre-launch",
+      text: "Not yet available as a public service. Built in the open.",
+      link: "See the roadmap",
     },
 
     possibility: {
       eyebrow: "Sakala · Open-source deployment platform",
-      title: "Every work begins as a possibility.",
-      sub: "Sakala is an open-source deployment platform that carries a project from a Git repository into an application that can be opened and shared.",
-      ctaPrimary: "Follow the progress",
-      ctaSecondary: "Read the documentation",
-      artifactLabel: "Repository",
+      title: "Every project begins as a possibility.",
+      sub: "Running on a laptop is not the same as being reachable. Sakala takes a project from a Git repository to an application with a public address of its own.",
+      ctaPrimary: "See how it works",
+      ctaSecondary: "View on GitHub",
+      repoLabel: "Repository",
       branch: "main",
-      commit: "commit a3f9c21",
-      files: [
-        "portfolio/",
-        "├── src/",
-        "├── public/",
-        "├── package.json",
-        "└── README.md",
-      ],
-      caption:
-        "A repository holds a possibility: an idea that already has form, but not yet an address.",
-    },
-
-    distance: {
-      eyebrow: "The distance",
-      title: "Not everything finished being made is finished becoming real.",
-      lead: "localhost always points back to the machine running it. When someone else opens that address, their browser looks for the application on their own device — and finds nothing.",
-      refrain: "I built this.",
-      artifactLabel: "Running locally",
+      commit: "a3f9c21",
+      files: ["portfolio/", "├── src/", "├── public/", "├── package.json"],
+      runCommand: "npm run dev",
       address: "localhost:5173",
       appTitle: "Hello, world.",
-      appSub: "It works on this machine.",
+      appSub: "Running fine on this machine.",
       reach: "reachable by: you",
-      observations: [
-        "A repository holds source. The world needs something it can open.",
-        "This project is not broken. It simply has not arrived.",
-      ],
+      refrain: "I built this.",
       caption:
-        "The application runs at an address that only points back to the machine running it.",
+        "The repository keeps the source; localhost proves it runs. Neither gives the work an address anyone else can open.",
     },
 
     threshold: {
-      eyebrow: "The threshold",
+      eyebrow: "Threshold",
       title: "Sakala stands between possibility and presence.",
       plain:
-        "The path is real and learnable: a public GitHub repository is read, built through a Dockerfile or Railpack, then given its own public address at *.run.sakala.dev.",
+        "The flow is real and documented: a public GitHub repository is read, built with a Dockerfile or Railpack, then given a public address of its own at *.run.sakala.dev.",
       from: "Possibility / Local",
       through: "Sakala",
       to: "Presence / Public",
-      fromToken: "github.com/you/karya",
-      toToken: "karya.run.sakala.dev",
-      caption: "Sakala sits exactly at that crossing.",
+      fromToken: "github.com/you/portfolio",
+      toToken: "portfolio.run.sakala.dev",
+      caption:
+        "The upper form of the mark is source; the lower form is presence. Sakala is the space between.",
+      forWhomTitle: "Who it is for",
+      personas: [
+        {
+          name: "Students & interns",
+          text: "Assignments and portfolios open for lecturers and recruiters, without building infrastructure from scratch.",
+        },
+        {
+          name: "Lecturers & mentors",
+          text: "Review work without setting up an environment for every project.",
+        },
+        {
+          name: "Beginners & communities",
+          text: "Learn deployment from a flow where every stage has a name and an explanation.",
+        },
+      ],
     },
 
-    manifestation: {
-      eyebrow: "The journey",
-      title: "Presence is more than a successful build.",
-      lead: "The journey is not finished until the work can actually be reached. Every stage has a name, so you know where it stands.",
-      steps: [
-        {
-          name: "Repository",
-          text: "The source and the exact commit form the starting point.",
-        },
-        {
-          name: "Analyze",
-          text: "The stack is detected, and what was read is shown for you to check.",
-        },
-        {
-          name: "Build",
-          text: "Source becomes an image that can run.",
-        },
-        {
-          name: "Start",
-          text: "The application runs with explicit resource limits.",
-        },
-        {
-          name: "Health",
-          text: "Sakala confirms the application genuinely answers.",
-        },
-        {
-          name: "Reach",
-          text: "A public route is activated, and the work has an address.",
-        },
-      ],
-      analysisLabel: "Repository analysis",
+    journey: {
+      eyebrow: "Journey",
+      title: "Being live is more than a green build.",
+      lead: "The journey is not over until the work can actually be reached. Every stage has a name, so you always know where it stands.",
+      analysisTitle: "Sakala reads your project",
+      analysisSub:
+        "Configuration detected from the repository, editable before the build runs.",
       analysisRows: [
-        { k: "Detected", v: "Laravel" },
-        { k: "PHP", v: "8.x" },
-        { k: "Builder", v: "Railpack" },
-        { k: "Expected port", v: "8080" },
+        { k: "Repository", v: "you/portfolio", ok: false },
+        { k: "Branch", v: "main", ok: false },
+        { k: "Builder", v: "Dockerfile detected", ok: true },
+        { k: "Port", v: "3000", ok: false },
       ],
-      builderLabel: "Builder priority",
-      builderSteps: ["Your Dockerfile", "Railpack", "Manual override"],
+      builderLabel: "Builder order",
+      builderSteps: ["Your Dockerfile", "Railpack", "Manual setup"],
       analysisCaption:
-        "The stack is recognized from your own Dockerfile or through Railpack, and the reading can be inspected and changed before the build runs.",
-      arrivalLabel: "Reachable",
-      domain: "portfolio.run.sakala.dev",
-      healthy: "200 · healthy",
-      arrivalTitle: "Hello, world.",
-      arrivalSub: "No longer only source. Now it is present.",
+        "The stack is recognized from your Dockerfile or through Railpack. The result is there to inspect, not hidden.",
+      deployLabel: "Deployment #1",
+      meta: [
+        { k: "Commit", v: "a3f9c21" },
+        { k: "Branch", v: "main" },
+        { k: "Trigger", v: "Manual deploy" },
+        { k: "Started", v: "08:41:02" },
+      ],
+      stages: [
+        { name: "Cloning repository", time: "08:41:02" },
+        { name: "Analyzing project", time: "08:41:05" },
+        { name: "Building image", time: "08:41:32" },
+        { name: "Starting container", time: "08:41:42" },
+        { name: "Checking health", time: "08:41:49" },
+      ],
+      stateDone: "done",
+      stateRunning: "running",
+      statePending: "pending",
+      arrivalTitle: "Your project is live",
+      arrivalSub: "Finished in 47 seconds. Publicly reachable now.",
+      url: "https://portfolio.run.sakala.dev",
+      open: "Open site",
+      appTitle: "Hello, world.",
       refrain: "Here it is.",
       deployCaption:
-        "Six stages, and their consequence: a work that can be reached.",
-      note: "The address, stages, and states in this section describe the flow being built.",
+        "Five named stages, and their consequence: the same work, now with an address.",
+      note: "Stages, times, and the address show the Console design being built, not a running service.",
     },
 
     clarity: {
       eyebrow: "Clarity",
-      title: "Simple should not have to mean hidden.",
-      lead: "Magic may happen. Mystery does not have to. When something fails, you deserve to know why.",
-      states: [
-        { name: "Repository", ok: true },
-        { name: "Build", ok: true },
-        { name: "Start", ok: true },
-        { name: "Health", ok: false },
+      title: "Simple does not have to mean hidden.",
+      lead: "Magic may happen. Mystery does not have to. When something fails, you deserve to know at which stage, and why.",
+      bannerTitle: "Deployment failed",
+      bannerSub:
+        "Stopped at Checking health. The explanation and the log are below.",
+      stages: [
+        { name: "Cloning repository", time: "08:41:02", state: "done" },
+        { name: "Analyzing project", time: "08:41:05", state: "done" },
+        { name: "Building image", time: "08:41:32", state: "done" },
+        { name: "Starting container", time: "08:41:42", state: "done" },
+        { name: "Checking health", time: "08:42:12", state: "failed" },
       ],
-      stateOk: "ok",
+      stateDone: "done",
       stateFailed: "failed",
-      failureTitle: "Health Check failed",
-      failureBody:
-        "The application started, but did not respond on the expected port.",
+      explainLabel: "What happened",
+      explainTitle:
+        "The app is running, but it listens on port 5173 instead of the expected 3000.",
       checkLabel: "Check",
-      checks: ["bind address", "exposed port", "runtime logs"],
-      caption:
-        "Failure is pinned to a named stage rather than reported as a general error.",
-      note: "This shape of explanation describes the direction being pursued.",
-    },
-
-    forWhom: {
-      eyebrow: "Who it is for",
-      title:
-        "Open-source deployment for students, beginners, and learning communities.",
-      lead: "Made for people who already keep their work in Git, but do not want to deal with a VPS, SSL, and a reverse proxy just to share it.",
-      personas: [
+      checks: [
+        "the PORT variable and bind address",
+        "the port exposed in the Dockerfile",
+        "the runtime log below",
+      ],
+      logLabel: "Log",
+      logs: [
         {
-          name: "Students & interns",
-          text: "Coursework and portfolios can be opened by lecturers and recruiters, without building infrastructure from scratch.",
+          t: "08:41:42",
+          m: "Container started · portfolio@a3f9c21",
+          error: false,
         },
         {
-          name: "Lecturers & mentors",
-          text: "Review work without preparing an environment for every project.",
+          t: "08:41:42",
+          m: "Health check → 127.0.0.1:31042 (port 3000), timeout 30s",
+          error: false,
         },
         {
-          name: "Beginner developers & communities",
-          text: "Learn deployment from a flow where every stage has a name and can be explained.",
+          t: "08:41:45",
+          m: "app: listening on http://localhost:5173",
+          error: false,
+        },
+        {
+          t: "08:42:12",
+          m: "Health check failed: no response on port 3000 after 30s",
+          error: true,
         },
       ],
+      caption:
+        "The failure points to one stage, is explained in plain words, and the log sits right beside it.",
+      note: "This form of explanation shows the Console design being built.",
     },
 
     life: {
       eyebrow: "Continuation",
-      title: "Deployment is not the end of the journey.",
-      lead: "A living work can be opened, shared, learned from, and repaired. Some of it becomes a starting point for someone else.",
+      title: "Deployment is not the end of the story.",
+      lead: "A living work can be opened, shared, learned from, and improved. Some of it becomes a starting point for someone else.",
       root: "A living work",
-      branches: [
-        { name: "Opened", status: "available" },
-        { name: "Shared", status: "available" },
-        { name: "Learned from", status: "direction" },
-        { name: "Repaired", status: "available" },
-      ],
+      branches: ["Opened", "Shared", "Learned from", "Improved"],
       onward: "Becomes a template",
       newWork: "New work",
-      plannedLabel: "planned",
-      caption:
-        "A living work can give rise to the next one. Items marked planned are not available yet.",
+      caption: "A living work can give rise to the next one.",
+      note: "Showcase, templates, and learning are product direction, not yet available.",
       more: "See the product direction",
     },
 
     open: {
-      eyebrow: "In the open",
-      title: "What helps people learn should itself be open to study.",
-      lead: "Sakala's flow, contracts, and technical trade-offs are public so they can be read, corrected, and built on together.",
+      eyebrow: "Open",
+      title: "What helps people learn should itself be open to learning from.",
+      lead: "Sakala's flows, contracts, and technical trade-offs are open so they can be read, corrected, and built on together.",
       facts: [
         { label: "Source", value: "Public" },
         { label: "License", value: "Apache-2.0" },
         { label: "Architecture", value: "Documented" },
         { label: "Decisions", value: "Recorded" },
-        { label: "Contribution", value: "Open" },
-        { label: "Pilot runtime", value: "GMEDIA-supported" },
+        { label: "Contributions", value: "Open" },
+        { label: "Pilot runtime", value: "Supported by GMEDIA" },
         { label: "Self-host", value: "On the roadmap" },
       ],
-      factsCaption: "Evidence of openness, not merely a badge.",
-      position:
-        "Sakala is not racing to become an everything cloud. It picks two things and stays with them: a process that can be explained, and deployment that can be learned.",
+      factsCaption: "Evidence that Sakala is open, not just a label.",
       human:
         "Technology is a tool. What matters is what people can finally bring into being with it.",
       stewardship:
         "Sakala is an open-source project initiated by the Sakala Maintainers and supported by GMEDIA as founding sponsor and infrastructure supporter.",
-      cta: "Read the governance",
+      cta: "Read about governance",
     },
 
     finale: {
-      title: "What will you bring into being?",
-      lead: "Every work begins as a possibility.",
+      title: "What will you bring to life?",
+      lead: "Every project begins as a possibility.",
       followTitle: "Follow the progress",
       followLead:
         "Sakala is built in the open. Every step can be followed from here.",
@@ -252,9 +245,11 @@ export const en: Dictionary = {
         {
           key: "roadmap",
           label: "See the roadmap",
-          note: "Direction, not date promises",
+          note: "Direction, not dates",
         },
       ],
+      latestTitle: "Latest progress",
+      latestAll: "All updates",
       docs: "Read the documentation",
     },
   },

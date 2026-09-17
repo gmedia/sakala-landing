@@ -301,14 +301,17 @@ a {
   pointer-events: none;
 }
 
-/* Permukaan Threshold dibelah tepat pada titik penyeberangan, sehingga
-   perpindahan terlihat bahkan sebelum artefaknya dibaca. */
-.threshold-split {
-  background-image: linear-gradient(
-    to bottom,
-    transparent 0 48%,
-    rgb(204 251 241 / 6%) 48% 100%
-  );
+/* Permukaan Ambang bergradasi dari canvas ke teal pekat pada tepi atasnya:
+   penyeberangan terlihat sebagai warna sebelum artefaknya dibaca. Gradien
+   hanya memakai nilai yang ada, dan selesai jauh sebelum baris teks pertama
+   (padding bab terkecil 7rem), sehingga teks selalu berdiri di atas deep. */
+.threshold-surface {
+  background: linear-gradient(
+      to bottom,
+      var(--color-canvas) 0,
+      var(--color-deep) 5rem
+    )
+    no-repeat var(--color-deep);
 }
 
 /* Langkah berurutan dalam satu proses. Digerbangi atribut yang sama dengan
@@ -324,6 +327,153 @@ a {
 [data-motion="on"] .sequence-step.is-present {
   opacity: 1;
   transform: none;
+}
+
+/* ---------- tahap deployment ----------
+   Tahap tidak sekadar muncul; ia berubah keadaan. Keadaannya dihitung dari
+   urutan: tahap yang sudah `is-present` selesai, tahap tepat sesudahnya
+   sedang berjalan, sisanya menunggu. Tanpa JavaScript semua tahap selesai,
+   jadi keadaan akhirnya selalu terbaca. Tiap keadaan membawa teksnya
+   sendiri; warna dan ikon hanya menegaskan. */
+.stage {
+  --stage-ring: var(--color-border-strong);
+  --stage-fill: transparent;
+  --stage-mark: transparent;
+  --stage-line: var(--color-border);
+  position: relative;
+}
+
+.stage-dot {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1.5px solid var(--stage-ring);
+  border-radius: 999px;
+  color: var(--stage-mark);
+  background: var(--stage-fill);
+  transition:
+    background-color 300ms ease,
+    border-color 300ms ease,
+    color 300ms ease;
+}
+
+/* Garis yang menyambungkan satu tahap ke tahap berikutnya. Terisi teal
+   ketika tahapnya selesai: inilah Green Line yang berjalan. */
+.stage + .stage::before {
+  position: absolute;
+  top: -1.25rem;
+  left: calc(1rem - 0.75px);
+  width: 1.5px;
+  height: 1.25rem;
+  content: "";
+  background: var(--stage-line);
+  transition: background-color 300ms ease;
+}
+
+.stage-time,
+.stage-state-done,
+.stage-state-running,
+.stage-state-pending {
+  display: none;
+}
+
+/* Tahap hanya memakai `.sequence-step` untuk urutan; ia tidak boleh ikut
+   memudar, karena keadaan menunggu pun harus terlihat. */
+[data-motion="on"] .stage.sequence-step {
+  opacity: 1;
+  transform: none;
+}
+
+/* Tanpa JavaScript tidak ada `data-motion`, dan semua tahap dianggap
+   selesai lewat aturan ini. Dengan JavaScript, `.is-present` mengambil
+   alih satu per satu. */
+html:not([data-motion="on"]) .stage,
+.stage.is-present {
+  --stage-ring: var(--color-primary);
+  --stage-fill: var(--color-primary);
+  --stage-mark: #fff;
+}
+
+html:not([data-motion="on"]) .stage + .stage::before,
+.stage.is-present + .stage.is-present::before {
+  background: var(--color-primary);
+}
+
+html:not([data-motion="on"]) .stage .stage-time,
+.stage.is-present .stage-time,
+html:not([data-motion="on"]) .stage .stage-state-done,
+.stage.is-present .stage-state-done {
+  display: inline;
+}
+
+[data-motion="on"] .stage.is-present + .stage:not(.is-present) {
+  --stage-ring: var(--color-spark);
+  --stage-fill: var(--color-spark-soft);
+  --stage-mark: var(--color-spark-text);
+}
+
+[data-motion="on"] .stage:not(.is-present) .stage-state-pending,
+[data-motion="on"]
+  .stage.is-present
+  + .stage:not(.is-present)
+  .stage-state-running {
+  display: inline;
+}
+
+[data-motion="on"]
+  .stage.is-present
+  + .stage:not(.is-present)
+  .stage-state-pending {
+  display: none;
+}
+
+[data-motion="on"] .stage:not(.is-present) .stage-name {
+  color: var(--color-muted-2);
+}
+
+/* Keadaan tetap untuk artefak diagnostik: tidak ada yang berjalan lagi.
+   Spesifisitasnya sengaja di atas aturan "sedang berjalan", karena tahap
+   gagal selalu berdiri tepat setelah tahap yang selesai. */
+.stage.stage-failed,
+[data-motion="on"] .stage.is-present + .stage.stage-failed {
+  --stage-ring: var(--color-error);
+  --stage-fill: var(--color-error);
+  --stage-mark: #fff;
+}
+
+.surface-depth .stage.stage-failed,
+.surface-depth [data-motion="on"] .stage.is-present + .stage.stage-failed,
+[data-motion="on"] .surface-depth .stage.is-present + .stage.stage-failed {
+  --stage-ring: var(--color-error-on-depth);
+  --stage-fill: transparent;
+  --stage-mark: var(--color-error-on-depth);
+}
+
+[data-motion="on"] .stage.stage-failed .stage-name {
+  color: inherit;
+}
+
+/* ---------- mark yang merakit diri ----------
+   Bentuk atas adalah source, bentuk bawah adalah wujud. Keduanya digambar
+   berurutan lewat stroke-dashoffset; tanpa gerak, mark utuh sejak awal. */
+.mark-assemble path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+[data-motion="on"] .mark-assemble .sequence-step {
+  opacity: 1;
+  transform: none;
+}
+
+[data-motion="on"] .mark-assemble .sequence-step path {
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-motion="on"] .mark-assemble .sequence-step.is-present path {
+  stroke-dashoffset: 0;
 }
 
 /* ---------- artefak ---------- */
@@ -360,7 +510,11 @@ a {
 
 /* ---------- motion ----------
    Tidak ada yang bergerak kecuali sesuatu sedang menjadi.
-   Hanya satu hal menjadi dalam satu waktu. */
+   Hanya satu hal menjadi dalam satu waktu.
+
+   `.becoming` hanya dipakai artefak. Teks tampil statis: heading yang
+   memudar masuk tidak menjelaskan perubahan apa pun, dan hanya menunda
+   pembacaan. */
 
 /* Digerbangi atribut yang hanya dipasang skrip inline ketika JavaScript
    berjalan dan pengguna tidak meminta pengurangan gerak. Tanpa JavaScript

@@ -1,9 +1,9 @@
 ---
 import ArtifactFigure from "../artifact/ArtifactFigure.astro";
-import BrandMark from "../brand/BrandMark.astro";
+import PossibilityArtifact from "../artifact/PossibilityArtifact.astro";
 import Button from "../ui/Button.astro";
-import SourceArtifact from "../artifact/SourceArtifact.astro";
 import Chapter from "./Chapter.astro";
+import { links } from "../../data/links";
 import { localizePath, type Lang } from "../../i18n";
 import type { Dictionary } from "../../i18n/id";
 
@@ -14,66 +14,73 @@ interface Props {
 
 const { t, lang } = Astro.props;
 const c = t.home.possibility;
+const s = t.home.status;
 ---
 
 <!-- Bab 01 — Kemungkinan.
-     Headline tetap puitis; jangkar faktualnya adalah subheadline tepat di
-     bawahnya, supaya pembaca yang scanning tahu "ini apa" dalam lima detik
-     tanpa menunggu bab Ambang. Hero juga membawa langkah berikutnya —
-     sebelumnya ia tidak punya satu aksi pun. -->
+     Headline puitis, jangkar faktualnya subheadline tepat di bawahnya.
+     Status kematangan ada di sini sebagai chip, bukan pita di atas header:
+     ia tetap terbaca, tetapi bukan kalimat pertama yang dibaca pengunjung.
+     Teks tampil statis; hanya artefaknya yang menjadi. -->
 <Chapter
   tone="light"
   size="tall"
   labelledby="possibility-title"
   class="relative isolate overflow-hidden border-t-0"
 >
-  <!-- Bidang kemungkinan: kisi yang sama dengan panggung localhost, memudar
-       ke bawah. Hero dan artefaknya berbagi satu bahasa visual. -->
+  <!-- Bidang kemungkinan: kisi yang memudar ke bawah. Netral, tanpa teal;
+       teal baru masuk di bab Ambang. -->
   <div class="possibility-field absolute inset-0 -z-20" aria-hidden="true">
   </div>
-  <BrandMark
-    class="pointer-events-none absolute -right-28 top-1/2 -z-10 hidden h-[34rem] w-auto -translate-y-1/2 text-primary opacity-[0.045] xl:block"
-  />
 
-  <p class="becoming artifact-label text-primary">{c.eyebrow}</p>
+  <p class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+    <span class="artifact-label text-primary">{c.eyebrow}</span>
+    <span
+      class="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-2.5 py-1 text-xs text-muted"
+    >
+      <span class="size-1.5 rounded-full bg-spark" aria-hidden="true"></span>
+      <span class="font-semibold text-spark-text">{s.label}</span>
+      <span class="hidden sm:inline">· {s.text}</span>
+      <a
+        href={localizePath("/roadmap", lang)}
+        data-astro-prefetch="hover"
+        class="font-medium text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
+      >
+        {s.link}
+      </a>
+    </span>
+  </p>
   <h1
     id="possibility-title"
-    class="becoming mt-6 max-w-[16ch] text-balance font-display text-narrative-xl font-bold tracking-[-0.035em] text-ink"
+    class="mt-6 max-w-[16ch] text-balance font-display text-narrative-xl font-bold tracking-[-0.035em] text-ink"
   >
     {c.title}
   </h1>
-
-  <div
-    class="mt-14 grid gap-12 lg:mt-16 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1fr)] lg:items-start lg:gap-20"
+  <p
+    class="mt-7 max-w-2xl text-lg leading-8 text-muted sm:text-xl sm:leading-9"
   >
-    <div>
-      <p
-        class="becoming becoming-delay-1 max-w-lg text-lg leading-8 text-muted sm:text-xl sm:leading-9"
-      >
-        {c.sub}
-      </p>
+    {c.sub}
+  </p>
 
-      <div
-        class="becoming becoming-delay-2 mt-9 flex flex-wrap items-center gap-3"
-      >
-        <Button href="#ikuti-perkembangan">{c.ctaPrimary}</Button>
-        <Button
-          href={localizePath("/docs", lang)}
-          variant="secondary"
-          prefetch="hover"
-        >
-          {c.ctaSecondary}
-        </Button>
-      </div>
-    </div>
-
-    <ArtifactFigure caption={c.caption} class="becoming becoming-delay-2">
-      <SourceArtifact
-        label={c.artifactLabel}
-        branch={c.branch}
-        commit={c.commit}
-        files={c.files}
-      />
-    </ArtifactFigure>
+  <div class="mt-9 flex flex-wrap items-center gap-3">
+    <Button href="#perjalanan">{c.ctaPrimary}</Button>
+    <Button href={links.githubOrganization} variant="secondary" external>
+      {c.ctaSecondary} &#8599;
+    </Button>
   </div>
+
+  <ArtifactFigure caption={c.caption} class="becoming mt-14 lg:mt-16">
+    <PossibilityArtifact
+      repoLabel={c.repoLabel}
+      branch={c.branch}
+      commit={c.commit}
+      files={c.files}
+      runCommand={c.runCommand}
+      address={c.address}
+      appTitle={c.appTitle}
+      appSub={c.appSub}
+      reach={c.reach}
+      refrain={c.refrain}
+    />
+  </ArtifactFigure>
 </Chapter>

@@ -1,0 +1,79 @@
+---
+import AnalysisArtifact from "../artifact/AnalysisArtifact.astro";
+import ArtifactFigure from "../artifact/ArtifactFigure.astro";
+import DeploymentArtifact from "../artifact/DeploymentArtifact.astro";
+import Chapter from "./Chapter.astro";
+import type { Dictionary } from "../../i18n/id";
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+const c = t.home.journey;
+---
+
+<!-- Bab 03 — Perjalanan. Bab bukti produk utama dan target CTA hero.
+     "I built this." menjadi "Here it is." Analisis berjalan sebelum build,
+     jadi kartunya berdiri di samping lead; deployment yang berjalan tahap
+     demi tahap adalah signature sequence halaman ini. -->
+<Chapter
+  id="perjalanan"
+  tone="light"
+  size="tall"
+  labelledby="journey-title"
+  thread
+  class="scroll-mt-16"
+>
+  <div
+    class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-20"
+  >
+    <div>
+      <p class="artifact-label text-primary">03 · {c.eyebrow}</p>
+      <h2
+        id="journey-title"
+        class="mt-5 max-w-[18ch] text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-ink"
+      >
+        {c.title}
+      </h2>
+      <p class="mt-7 max-w-xl text-lg leading-8 text-muted">{c.lead}</p>
+    </div>
+
+    <ArtifactFigure caption={c.analysisCaption} class="becoming lg:pt-4">
+      <AnalysisArtifact
+        title={c.analysisTitle}
+        sub={c.analysisSub}
+        rows={c.analysisRows}
+        builderLabel={c.builderLabel}
+        builderSteps={c.builderSteps}
+      />
+    </ArtifactFigure>
+  </div>
+
+  <ArtifactFigure
+    caption={c.deployCaption}
+    note={c.note}
+    class="becoming mt-16"
+  >
+    <DeploymentArtifact
+      label={c.deployLabel}
+      meta={c.meta}
+      stages={c.stages}
+      stateDone={c.stateDone}
+      stateRunning={c.stateRunning}
+      statePending={c.statePending}
+      arrivalTitle={c.arrivalTitle}
+      arrivalSub={c.arrivalSub}
+      url={c.url}
+      open={c.open}
+      appTitle={c.appTitle}
+    />
+  </ArtifactFigure>
+
+  <p
+    class="mt-10 font-display text-2xl font-semibold text-primary-dark"
+    lang="en"
+  >
+    &ldquo;{c.refrain}&rdquo;
+  </p>
+</Chapter>

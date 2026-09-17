@@ -14,36 +14,34 @@ const { t, lang } = Astro.props;
 const c = t.home.life;
 ---
 
-<!-- Bab 06 — Kelanjutan. Explore dan Learn muncul sebagai akibat dari
-     karya yang hidup, bukan sebagai grid fitur. -->
+<!-- Bab 05 — Kelanjutan. Explore dan Learn muncul sebagai akibat dari
+     karya yang hidup, bukan grid fitur. Kematangannya dinyatakan satu kali
+     di catatan figure: belum ada satu pun yang tersedia hari ini. -->
 <Chapter tone="soft" labelledby="life-title" thread>
   <!-- Terpusat, karena percabangannya menyebar ke dua arah dan butuh
        seluruh lebar bab untuk terbaca sebagai percabangan. -->
   <div class="mx-auto max-w-2xl text-center">
-    <p class="becoming artifact-label text-primary">07 · {c.eyebrow}</p>
+    <p class="artifact-label text-primary">05 · {c.eyebrow}</p>
     <h2
       id="life-title"
-      class="becoming mx-auto mt-5 max-w-[18ch] text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-ink"
+      class="mx-auto mt-5 max-w-[18ch] text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-ink"
     >
       {c.title}
     </h2>
-    <p class="becoming becoming-delay-1 mt-7 text-lg leading-8 text-muted">
-      {c.lead}
-    </p>
+    <p class="mt-7 text-lg leading-8 text-muted">{c.lead}</p>
   </div>
 
   <ArtifactFigure
     caption={c.caption}
+    note={c.note}
     align="center"
-    class="becoming becoming-delay-1 mt-16"
+    class="becoming mt-16"
   >
     <LineageArtifact
       root={c.root}
       branches={c.branches}
       onward={c.onward}
       newWork={c.newWork}
-      directionLabel={c.plannedLabel}
-      directionKey="direction"
     />
   </ArtifactFigure>
 
@@ -51,7 +49,7 @@ const c = t.home.life;
     <a
       href={localizePath("/produk", lang)}
       data-astro-prefetch="hover"
-      class="becoming becoming-delay-2 inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
+      class="inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
     >
       {c.more} &rarr;
     </a>

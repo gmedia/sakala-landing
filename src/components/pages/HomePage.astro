@@ -1,14 +1,10 @@
 ---
 import ChapterClarity from "../landing/ChapterClarity.astro";
-import ChapterDistance from "../landing/ChapterDistance.astro";
-import ChapterFinale from "../landing/ChapterFinale.astro";
-import ChapterForWhom from "../landing/ChapterForWhom.astro";
+import ChapterJourney from "../landing/ChapterJourney.astro";
 import ChapterLife from "../landing/ChapterLife.astro";
-import ChapterManifestation from "../landing/ChapterManifestation.astro";
 import ChapterOpen from "../landing/ChapterOpen.astro";
 import ChapterPossibility from "../landing/ChapterPossibility.astro";
 import ChapterThreshold from "../landing/ChapterThreshold.astro";
-import StatusNotice from "../landing/StatusNotice.astro";
 import LandingLayout from "../../layouts/LandingLayout.astro";
 import { useTranslations, type Lang } from "../../i18n";
 
@@ -24,8 +20,9 @@ const t = useTranslations(lang);
   The Life of a Project
   Possibility → Presence → Continuation
 
-  Halaman mengikuti satu project konseptual melewati hidupnya. Ia bukan
-  katalog fitur, dan bukan PRD yang dipadatkan.
+  Enam bab mengikuti satu project konseptual melewati hidupnya. Tiap bab
+  satu artefak yang berubah keadaan; teks tampil statis. Ia bukan katalog
+  fitur, dan bukan PRD yang dipadatkan.
 -->
 <LandingLayout
   lang={lang}
@@ -33,15 +30,10 @@ const t = useTranslations(lang);
   description={t.meta.homeDescription}
   availableLocales={["id", "en"]}
 >
-  <StatusNotice t={t} {lang} />
-
   <ChapterPossibility {t} {lang} />
-  <ChapterDistance {t} />
   <ChapterThreshold {t} />
-  <ChapterManifestation {t} />
+  <ChapterJourney {t} />
   <ChapterClarity {t} />
-  <ChapterForWhom {t} />
   <ChapterLife {t} {lang} />
   <ChapterOpen {t} {lang} />
-  <ChapterFinale {t} {lang} />
 </LandingLayout>

@@ -40,50 +40,33 @@ export const id = {
   },
 
   /** Homepage mengikuti satu project melewati hidupnya.
-   *  Possibility → Presence → Continuation. */
+   *  Possibility → Presence → Continuation. Enam bab; tiap bab satu artefak
+   *  yang berubah keadaan. Nama tahap deployment mengikuti Console Wave 1. */
   home: {
-    notice: {
-      label: "Status",
-      text: "Sakala belum tersedia sebagai layanan publik. Alur di halaman ini adalah pengalaman yang sedang dibangun.",
-      link: "Lihat status pengembangan",
+    status: {
+      label: "Pre-launch",
+      text: "Belum tersedia sebagai layanan publik. Dibangun terbuka.",
+      link: "Lihat roadmap",
     },
 
     possibility: {
       eyebrow: "Sakala · Platform deployment open-source",
       title: "Setiap karya bermula sebagai kemungkinan.",
-      sub: "Sakala adalah platform deployment open-source yang membawa project dari repository Git menjadi aplikasi yang dapat dibuka dan dibagikan.",
-      ctaPrimary: "Ikuti perkembangan",
-      ctaSecondary: "Baca dokumentasi",
-      artifactLabel: "Repository",
+      sub: "Berjalan di laptop bukan berarti dapat dijangkau. Sakala membawa project dari repository Git menjadi aplikasi dengan alamat publiknya sendiri.",
+      ctaPrimary: "Lihat cara kerjanya",
+      ctaSecondary: "Lihat di GitHub",
+      repoLabel: "Repository",
       branch: "main",
-      commit: "commit a3f9c21",
-      files: [
-        "portfolio/",
-        "├── src/",
-        "├── public/",
-        "├── package.json",
-        "└── README.md",
-      ],
-      caption:
-        "Sebuah repository menyimpan kemungkinan: ide yang sudah punya bentuk, tetapi belum punya alamat.",
-    },
-
-    distance: {
-      eyebrow: "Jarak",
-      title: "Tidak semua yang selesai dibuat, selesai diwujudkan.",
-      lead: "localhost selalu menunjuk kembali ke mesin yang menjalankannya. Ketika orang lain membuka alamat itu, browser mereka mencari aplikasinya di perangkat mereka sendiri — dan tidak menemukan apa-apa.",
-      refrain: "I built this.",
-      artifactLabel: "Berjalan secara lokal",
+      commit: "a3f9c21",
+      files: ["portfolio/", "├── src/", "├── public/", "├── package.json"],
+      runCommand: "npm run dev",
       address: "localhost:5173",
       appTitle: "Halo, dunia.",
       appSub: "Berjalan baik di mesin ini.",
       reach: "dapat dibuka oleh: kamu",
-      observations: [
-        "Repository menyimpan source. Dunia membutuhkan sesuatu yang dapat dibuka.",
-        "Project ini tidak rusak. Ia hanya belum sampai.",
-      ],
+      refrain: "I built this.",
       caption:
-        "Aplikasi berjalan pada alamat yang hanya menunjuk kembali ke perangkat yang menjalankannya.",
+        "Repository menyimpan source, localhost membuktikan ia berjalan. Keduanya belum memberi karya ini alamat yang dapat dibuka orang lain.",
     },
 
     threshold: {
@@ -94,90 +77,11 @@ export const id = {
       from: "Kemungkinan / Lokal",
       through: "Sakala",
       to: "Wujud / Publik",
-      fromToken: "github.com/kamu/karya",
-      toToken: "karya.run.sakala.dev",
-      caption: "Sakala berada tepat pada perpindahan itu.",
-    },
-
-    manifestation: {
-      eyebrow: "Perjalanan",
-      title: "Wujud bukan sekadar build yang berhasil.",
-      lead: "Perjalanan belum selesai sampai karya benar-benar dapat dijangkau. Setiap tahap punya nama, sehingga kamu tahu di mana posisinya.",
-      steps: [
-        {
-          name: "Repository",
-          text: "Source dan commit yang tepat menjadi titik berangkat.",
-        },
-        {
-          name: "Analyze",
-          text: "Stack dikenali, dan hasil pembacaannya ditampilkan untuk diperiksa.",
-        },
-        {
-          name: "Build",
-          text: "Source diubah menjadi image yang dapat dijalankan.",
-        },
-        {
-          name: "Start",
-          text: "Aplikasi dijalankan dengan batas resource yang jelas.",
-        },
-        {
-          name: "Health",
-          text: "Sakala memastikan aplikasi benar-benar menjawab.",
-        },
-        {
-          name: "Reach",
-          text: "Route publik diaktifkan, dan karya memiliki alamat.",
-        },
-      ],
-      analysisLabel: "Analisis repository",
-      analysisRows: [
-        { k: "Detected", v: "Laravel" },
-        { k: "PHP", v: "8.x" },
-        { k: "Builder", v: "Railpack" },
-        { k: "Expected port", v: "8080" },
-      ],
-      builderLabel: "Prioritas builder",
-      builderSteps: ["Dockerfile milikmu", "Railpack", "Atur manual"],
-      analysisCaption:
-        "Stack dikenali dari Dockerfile milikmu atau lewat Railpack, dan hasil pembacaannya dapat diperiksa serta diubah sebelum build berjalan.",
-      arrivalLabel: "Dapat dijangkau",
-      domain: "portfolio.run.sakala.dev",
-      healthy: "200 · sehat",
-      arrivalTitle: "Halo, dunia.",
-      arrivalSub: "Sekarang bukan lagi sekadar source. Sekarang ia hadir.",
-      refrain: "Here it is.",
-      deployCaption:
-        "Enam tahap, dan akibatnya: karya yang sudah dapat dijangkau.",
-      note: "Alamat, tahap, dan status pada bagian ini menggambarkan alur yang sedang dibangun.",
-    },
-
-    clarity: {
-      eyebrow: "Terang",
-      title: "Sederhana tidak harus berarti tersembunyi.",
-      lead: "Magic boleh terjadi. Misteri tidak harus. Ketika sesuatu gagal, kamu berhak tahu mengapa.",
-      states: [
-        { name: "Repository", ok: true },
-        { name: "Build", ok: true },
-        { name: "Start", ok: true },
-        { name: "Health", ok: false },
-      ],
-      stateOk: "berhasil",
-      stateFailed: "gagal",
-      failureTitle: "Health Check gagal",
-      failureBody:
-        "Aplikasi berhasil dijalankan, tetapi tidak menjawab pada port yang diharapkan.",
-      checkLabel: "Periksa",
-      checks: ["alamat bind", "port yang diekspos", "log runtime"],
+      fromToken: "github.com/kamu/portfolio",
+      toToken: "portfolio.run.sakala.dev",
       caption:
-        "Kegagalan ditunjuk pada tahap tertentu, bukan dilaporkan sebagai kesalahan umum.",
-      note: "Bentuk penjelasan ini menggambarkan arah yang dituju.",
-    },
-
-    forWhom: {
-      eyebrow: "Untuk siapa",
-      title:
-        "Deployment open-source untuk mahasiswa, pemula, dan komunitas belajar.",
-      lead: "Dirancang bagi yang sudah menyimpan karyanya di Git, tetapi tidak ingin berurusan dengan VPS, SSL, dan reverse proxy hanya untuk membagikannya.",
+        "Bentuk atas mark adalah source, bentuk bawah adalah wujud. Sakala adalah ruang di antaranya.",
+      forWhomTitle: "Untuk siapa",
       personas: [
         {
           name: "Mahasiswa & intern",
@@ -194,22 +98,114 @@ export const id = {
       ],
     },
 
+    journey: {
+      eyebrow: "Perjalanan",
+      title: "Wujud bukan sekadar build yang berhasil.",
+      lead: "Perjalanan belum selesai sampai karya benar-benar dapat dijangkau. Setiap tahap punya nama, jadi kamu selalu tahu di mana posisinya.",
+      analysisTitle: "Sakala membaca proyekmu",
+      analysisSub:
+        "Konfigurasi terdeteksi dari repository, dan dapat diubah sebelum build berjalan.",
+      analysisRows: [
+        { k: "Repository", v: "kamu/portfolio", ok: false },
+        { k: "Branch", v: "main", ok: false },
+        { k: "Builder", v: "Dockerfile terdeteksi", ok: true },
+        { k: "Port", v: "3000", ok: false },
+      ],
+      builderLabel: "Urutan builder",
+      builderSteps: ["Dockerfile milikmu", "Railpack", "Atur manual"],
+      analysisCaption:
+        "Stack dikenali dari Dockerfile milikmu atau lewat Railpack. Hasil pembacaannya dapat diperiksa, bukan disembunyikan.",
+      deployLabel: "Deployment #1",
+      meta: [
+        { k: "Commit", v: "a3f9c21" },
+        { k: "Branch", v: "main" },
+        { k: "Trigger", v: "Deploy manual" },
+        { k: "Dimulai", v: "08:41:02" },
+      ],
+      stages: [
+        { name: "Mengambil repository", time: "08:41:02" },
+        { name: "Membaca proyek", time: "08:41:05" },
+        { name: "Membangun image", time: "08:41:32" },
+        { name: "Menjalankan container", time: "08:41:42" },
+        { name: "Memeriksa kesehatan", time: "08:41:49" },
+      ],
+      stateDone: "selesai",
+      stateRunning: "sedang berjalan",
+      statePending: "menunggu",
+      arrivalTitle: "Proyekmu sudah hidup",
+      arrivalSub: "Selesai dalam 47 detik. Dapat dibuka publik sekarang.",
+      url: "https://portfolio.run.sakala.dev",
+      open: "Buka situs",
+      appTitle: "Halo, dunia.",
+      refrain: "Here it is.",
+      deployCaption:
+        "Lima tahap bernama, dan akibatnya: karya yang sama, kini punya alamat.",
+      note: "Tahap, waktu, dan alamat menggambarkan rancangan Console yang sedang dibangun, bukan layanan yang sudah berjalan.",
+    },
+
+    clarity: {
+      eyebrow: "Terang",
+      title: "Sederhana tidak harus berarti tersembunyi.",
+      lead: "Magic boleh terjadi. Misteri tidak harus. Ketika sesuatu gagal, kamu berhak tahu di tahap mana, dan mengapa.",
+      bannerTitle: "Deployment gagal",
+      bannerSub:
+        "Berhenti di tahap Memeriksa kesehatan. Penjelasan dan log ada di bawah.",
+      stages: [
+        { name: "Mengambil repository", time: "08:41:02", state: "done" },
+        { name: "Membaca proyek", time: "08:41:05", state: "done" },
+        { name: "Membangun image", time: "08:41:32", state: "done" },
+        { name: "Menjalankan container", time: "08:41:42", state: "done" },
+        { name: "Memeriksa kesehatan", time: "08:42:12", state: "failed" },
+      ],
+      stateDone: "selesai",
+      stateFailed: "gagal",
+      explainLabel: "Yang terjadi",
+      explainTitle:
+        "Aplikasi berjalan, tetapi mendengarkan di port 5173, bukan 3000 yang diharapkan.",
+      checkLabel: "Periksa",
+      checks: [
+        "variabel PORT dan alamat bind",
+        "port yang diekspos di Dockerfile",
+        "log runtime di bawah",
+      ],
+      logLabel: "Log",
+      logs: [
+        {
+          t: "08:41:42",
+          m: "Container started · portfolio@a3f9c21",
+          error: false,
+        },
+        {
+          t: "08:41:42",
+          m: "Health check → 127.0.0.1:31042 (port 3000), timeout 30s",
+          error: false,
+        },
+        {
+          t: "08:41:45",
+          m: "app: listening on http://localhost:5173",
+          error: false,
+        },
+        {
+          t: "08:42:12",
+          m: "Health check failed: no response on port 3000 after 30s",
+          error: true,
+        },
+      ],
+      caption:
+        "Kegagalan ditunjuk pada satu tahap, dijelaskan dalam bahasa manusia, dan lognya ada di tempat yang sama.",
+      note: "Bentuk penjelasan ini menggambarkan rancangan Console yang sedang dibangun.",
+    },
+
     life: {
       eyebrow: "Kelanjutan",
       title: "Deployment bukan akhir perjalanan.",
       lead: "Karya yang hidup dapat dibuka, dibagikan, dipelajari, dan diperbaiki. Sebagiannya menjadi titik awal bagi orang lain.",
       root: "Karya yang hidup",
-      branches: [
-        { name: "Dibuka", status: "available" },
-        { name: "Dibagikan", status: "available" },
-        { name: "Dipelajari", status: "direction" },
-        { name: "Diperbaiki", status: "available" },
-      ],
+      branches: ["Dibuka", "Dibagikan", "Dipelajari", "Diperbaiki"],
       onward: "Menjadi template",
       newWork: "Karya baru",
-      plannedLabel: "menyusul",
-      caption:
-        "Sebuah karya yang hidup dapat melahirkan karya berikutnya. Bagian bertanda menyusul belum tersedia.",
+      caption: "Sebuah karya yang hidup dapat melahirkan karya berikutnya.",
+      note: "Showcase, template, dan pembelajaran adalah arah produk, belum tersedia.",
       more: "Lihat arah produk",
     },
 
@@ -227,8 +223,6 @@ export const id = {
         { label: "Self-host", value: "Di roadmap" },
       ],
       factsCaption: "Bukti keterbukaan Sakala, bukan sekadar label.",
-      position:
-        "Sakala tidak berlomba menjadi cloud serba ada. Ia memilih dua hal dan menekuninya: proses yang dapat dijelaskan, dan deployment yang dapat dipelajari.",
       human:
         "Teknologi adalah alat. Yang penting adalah apa yang akhirnya dapat diwujudkan manusia dengannya.",
       stewardship:
@@ -259,6 +253,8 @@ export const id = {
           note: "Arah, bukan janji tanggal",
         },
       ],
+      latestTitle: "Perkembangan terbaru",
+      latestAll: "Semua pembaruan",
       docs: "Baca dokumentasi",
     },
   },

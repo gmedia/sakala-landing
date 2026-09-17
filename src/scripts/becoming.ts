@@ -48,11 +48,16 @@ if (!motionOn || !supported) {
    * jadi tahapnya dinyalakan berurutan, bukan serentak.
    */
   const step = 240;
+  /** Jeda per langkah bisa diatur lewat nilai atribut, karena proses yang
+   *  perlu dibaca (tahap deployment) berjalan lebih lambat daripada urutan
+   *  yang hanya perlu terlihat. */
+  const stepFor = (el: Element): number =>
+    Number((el as HTMLElement).dataset.sequence) || step;
   const progress = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
-        presentSteps(entry.target, step);
+        presentSteps(entry.target, stepFor(entry.target));
         progress.unobserve(entry.target);
       }
     },
@@ -80,7 +85,7 @@ if (!motionOn || !supported) {
           (el) => !el.classList.contains("is-present"),
         );
         if (!stranded || !inViewport(seq)) continue;
-        presentSteps(seq, step);
+        presentSteps(seq, stepFor(seq));
         progress.unobserve(seq);
       }
     },
