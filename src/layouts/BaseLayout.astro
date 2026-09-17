@@ -1,6 +1,7 @@
 ---
 import { Font } from "astro:assets";
 import "../styles/global.css";
+import { ogImageFor } from "../data/og";
 import {
   defaultLang,
   getAlternates,
@@ -29,7 +30,6 @@ interface Props {
 
 const {
   lang = defaultLang,
-  image = "/og/default.png",
   canonical = new URL(Astro.url.pathname, Astro.site),
   noindex = false,
   pageType = "WebPage",
@@ -44,10 +44,12 @@ const description = Astro.props.description ?? t.meta.siteDescription;
 const imageAlt = Astro.props.imageAlt ?? t.meta.ogAlt;
 
 const canonicalUrl = canonical.toString();
-const imageUrl = new URL(image, Astro.site).toString();
 const robotsContent = noindex ? "noindex, follow" : "index, follow";
 const htmlLang = languages[lang].htmlLang;
 const basePath = stripLocale(Astro.url.pathname);
+/* Preview per halaman bila ada; beranda dan halaman lain memakai default. */
+const image = Astro.props.image ?? ogImageFor(basePath, lang);
+const imageUrl = new URL(image, Astro.site).toString();
 const alternates = noindex ? [] : getAlternates(basePath, availableLocales);
 const isHomePage = basePath === "/" || basePath === "";
 
