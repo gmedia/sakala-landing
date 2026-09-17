@@ -20,6 +20,13 @@ const breadcrumbs = [
   { label: lang === "en" ? "Home" : "Beranda", href: localizePath("/", lang) },
   { label: o.crumb },
 ];
+
+/* Jalur kontribusi yang benar-benar terbuka hari ini. */
+const contributeHref: Record<string, { href: string; external: boolean }> = {
+  issues: { href: links.githubIssues, external: true },
+  docs: { href: localizePath("/docs/teknis", lang), external: false },
+  build: { href: links.repositories.landing, external: true },
+};
 ---
 
 <LandingLayout
@@ -132,42 +139,60 @@ const breadcrumbs = [
           controlLabel={o.controlLabel}
           dataLabel={o.dataLabel}
           roles={o.repoRoles}
+          note={o.topologyNote}
         />
       </ArtifactFigure>
     </Container>
   </section>
 
+  <!-- Bagian ini pernah berjudul "Contributor awal" dan berisi janji daftar
+       yang belum ada. Diganti tiga jalur yang bisa ditempuh hari ini;
+       nama contributor dicatat di CONTRIBUTORS.md setelah nyata dan disetujui. -->
   <section class="py-20 sm:py-24">
     <Container>
       <div
-        class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] lg:gap-16"
+        class="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-16"
       >
         <div>
           <h2
             class="font-display text-narrative-m font-bold tracking-[-0.025em] text-ink"
           >
-            {o.contributorsTitle}
+            {o.contributeTitle}
           </h2>
           <p class="mt-5 max-w-xl text-lg leading-8 text-muted">
-            {o.contributorsLead}
+            {o.contributeLead}
           </p>
-          <a
-            href={links.githubIssues}
-            target="_blank"
-            rel="noreferrer"
-            class="mt-7 inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
-          >
-            {o.contributeCta} &rarr;
-          </a>
         </div>
 
-        <ul class="m-0 flex list-none flex-wrap gap-2 p-0 lg:pt-3">
+        <ul
+          class="green-line green-line-live m-0 list-none space-y-1 p-0 pl-8 lg:pt-3"
+          style="--line-inset: 2rem"
+        >
           {
-            o.contributorAreas.map((area) => (
-              <li class="rounded-lg border border-border bg-surface px-3 py-2 font-mono text-xs text-primary-dark">
-                {area}
-              </li>
-            ))
+            o.contributePaths.map((path) => {
+              const target = contributeHref[path.key];
+              return (
+                <li>
+                  <a
+                    href={target.href}
+                    target={target.external ? "_blank" : undefined}
+                    rel={target.external ? "noreferrer" : undefined}
+                    data-astro-prefetch={target.external ? undefined : "hover"}
+                    class="green-line-node green-line-node-mid green-line-node-live flex min-h-14 items-center justify-between gap-4 py-2 text-ink hover:text-primary-dark"
+                  >
+                    <span>
+                      <span class="block font-semibold">{path.label}</span>
+                      <span class="mt-0.5 block text-sm text-muted">
+                        {path.note}
+                      </span>
+                    </span>
+                    <span aria-hidden="true" class="text-muted-2">
+                      {target.external ? "↗" : "→"}
+                    </span>
+                  </a>
+                </li>
+              );
+            })
           }
         </ul>
       </div>

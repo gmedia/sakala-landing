@@ -29,6 +29,12 @@ Identitas tetap. Kejelasan bertambah.
   (GitHub, RSS changelog, roadmap) — bukan pendaftaran untuk layanan yang
   belum ada.
 
+> Catatan v4 (2026-09-17): butir 3 dan 6 di bawah disesuaikan oleh
+> `V4_AUDIT_AND_DIRECTION.md` §5.1 — persona menjadi strip di bab Ambang,
+> dan CTA primer hero menuju bab Perjalanan (`#perjalanan`); blok follow
+> tetap ada sebagai penutup ber-anchor dan aksi sekunder hero adalah GitHub.
+> Batas fakta dan prinsip lainnya tetap mengikat.
+
 ## Perubahan yang diikat amandemen ini
 
 1. Hero membawa subheadline konkret + pasangan CTA. Hero tanpa langkah

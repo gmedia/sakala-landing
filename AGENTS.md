@@ -31,6 +31,7 @@ docs/landing/IMPLEMENTATION_REQUIREMENTS.md
 docs/landing/AI_AGENT_PLAYBOOK.md
 docs/landing/REFERENCE_NOTES.md
 docs/landing/CLARITY_AMENDMENT.md
+docs/landing/V4_AUDIT_AND_DIRECTION.md
 ```
 
 For SEO and Astro technical decisions, also read:

@@ -21,9 +21,14 @@ const items = document.querySelectorAll<HTMLElement>(".becoming");
 const sequences = document.querySelectorAll<HTMLElement>("[data-sequence]");
 
 function presentSteps(sequence: Element, stepDelay = 0): void {
+  /* Urutan yang duduk di dalam artefak yang baru saja muncul menunggu
+   * artefaknya selesai muncul dulu, supaya hanya satu hal yang menjadi
+   * pada satu waktu. */
+  const lead =
+    stepDelay > 0 && sequence.closest(".becoming:not(.is-present)") ? 480 : 0;
   sequence.querySelectorAll(".sequence-step").forEach((el, index) => {
     if (stepDelay === 0) present(el);
-    else window.setTimeout(() => present(el), index * stepDelay);
+    else window.setTimeout(() => present(el), lead + index * stepDelay);
   });
 }
 
@@ -48,11 +53,16 @@ if (!motionOn || !supported) {
    * jadi tahapnya dinyalakan berurutan, bukan serentak.
    */
   const step = 240;
+  /** Jeda per langkah bisa diatur lewat nilai atribut, karena proses yang
+   *  perlu dibaca (tahap deployment) berjalan lebih lambat daripada urutan
+   *  yang hanya perlu terlihat. */
+  const stepFor = (el: Element): number =>
+    Number((el as HTMLElement).dataset.sequence) || step;
   const progress = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
-        presentSteps(entry.target, step);
+        presentSteps(entry.target, stepFor(entry.target));
         progress.unobserve(entry.target);
       }
     },
@@ -80,7 +90,7 @@ if (!motionOn || !supported) {
           (el) => !el.classList.contains("is-present"),
         );
         if (!stranded || !inViewport(seq)) continue;
-        presentSteps(seq, step);
+        presentSteps(seq, stepFor(seq));
         progress.unobserve(seq);
       }
     },

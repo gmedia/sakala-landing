@@ -4,9 +4,23 @@ interface Props {
   dataLabel: string;
   publicLabel: string;
   roles: Record<string, string>;
+  /** Kalimat penegas boundary. Datang dari pemakainya supaya halaman
+   *  Inggris tidak menyisipkan kalimat Indonesia. */
+  note: string;
+  /** Tingkat heading kelompok mengikuti konteks pemakainya: h3 di bawah h2
+   *  halaman, h4 di dalam dokumen yang sudah punya h3. */
+  headingLevel?: "h3" | "h4";
 }
 
-const { controlLabel, dataLabel, publicLabel, roles } = Astro.props;
+const {
+  controlLabel,
+  dataLabel,
+  publicLabel,
+  roles,
+  note,
+  headingLevel = "h3",
+} = Astro.props;
+const Heading = headingLevel;
 
 /** Pengelompokan mengikuti ARCHITECTURE.md §4: apa yang memegang policy versus
  *  apa yang memegang eksekusi berhak istimewa. */
@@ -28,9 +42,9 @@ const groups = [
             : "border-border bg-surface",
         ]}
       >
-        <h4 class="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-muted-2">
+        <Heading class="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-muted-2">
           {group.label}
-        </h4>
+        </Heading>
         <ul class="m-0 mt-3 list-none space-y-2.5 p-0">
           {group.repos.map((repo) => (
             <li>
@@ -49,6 +63,5 @@ const groups = [
 <p
   class="mt-3 rounded-lg border border-dashed border-border-strong px-4 py-2.5 font-mono text-xs text-muted"
 >
-  API tidak pernah menyentuh Docker socket. Hanya Agent yang menjalankan operasi
-  runtime berhak istimewa.
+  {note}
 </p>

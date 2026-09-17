@@ -22,6 +22,7 @@ Arsitektur Sakala disusun untuk menjaga kebijakan produk di control plane, mengi
   class="my-8"
 >
   <RepoTopology
+    note="API tidak pernah menyentuh Docker socket. Hanya Agent yang menjalankan operasi runtime berhak istimewa."
     publicLabel="Publik"
     controlLabel="Control plane"
     dataLabel="Data plane"

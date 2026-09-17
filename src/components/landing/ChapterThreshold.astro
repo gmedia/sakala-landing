@@ -12,32 +12,30 @@ const { t } = Astro.props;
 const c = t.home.threshold;
 ---
 
-<!-- Bab 03 — Ambang. Satu-satunya transisi dramatis di halaman ini.
-     Di sinilah Green Teal masuk dan menjadi bermakna. -->
+<!-- Bab 02 — Ambang. Satu-satunya transisi dramatis di halaman ini; di
+     sinilah Green Teal masuk dan menjadi bermakna. Permukaannya bergradasi
+     dari canvas ke teal pekat, supaya penyeberangan terlihat sebagai warna
+     sebelum dibaca. Persona duduk di bawah kalimat polos: setelah "ini apa",
+     langsung "ini untukku?". -->
 <Chapter
   tone="deep"
   size="tall"
   labelledby="threshold-title"
   thread
-  class="threshold-split"
+  class="threshold-surface"
 >
-  <!-- Terpusat dan selebar bab, karena garis ambangnya harus benar-benar
-       melintasi halaman. Dijepit dalam kolom sempit, penyeberangannya
-       kehilangan makna. -->
   <div class="text-center">
-    <p class="becoming artifact-label text-on-deep-label">03 · {c.eyebrow}</p>
+    <p class="artifact-label text-on-deep-label">02 · {c.eyebrow}</p>
     <h2
       id="threshold-title"
-      class="becoming mx-auto mt-5 max-w-[18ch] text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-on-deep"
+      class="mx-auto mt-5 max-w-[18ch] text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-on-deep"
     >
       {c.title}
     </h2>
 
     <!-- Kalimat penjelas biasa. Ada supaya filosofi tidak menjadi kabur,
          dan supaya mesin pencari menemukan penjelasan yang jelas. -->
-    <p
-      class="becoming becoming-delay-1 mx-auto mt-9 max-w-2xl text-lg leading-8 text-on-deep"
-    >
+    <p class="mx-auto mt-9 max-w-2xl text-lg leading-8 text-on-deep">
       {c.plain}
     </p>
   </div>
@@ -46,7 +44,7 @@ const c = t.home.threshold;
     caption={c.caption}
     tone="deep"
     align="center"
-    class="becoming becoming-delay-2 mt-16 lg:mt-20"
+    class="becoming mt-16 lg:mt-20"
   >
     <ThresholdArtifact
       from={c.from}
@@ -56,4 +54,22 @@ const c = t.home.threshold;
       toToken={c.toToken}
     />
   </ArtifactFigure>
+
+  <div class="mt-20 border-t border-deep-border pt-10">
+    <h3 class="artifact-label text-on-deep-label">{c.forWhomTitle}</h3>
+    <ul class="m-0 mt-6 grid list-none gap-8 p-0 sm:grid-cols-3 sm:gap-6">
+      {
+        c.personas.map((persona) => (
+          <li>
+            <p class="font-display text-base font-semibold text-on-deep">
+              {persona.name}
+            </p>
+            <p class="mt-1.5 text-sm leading-6 text-on-deep-muted">
+              {persona.text}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </Chapter>

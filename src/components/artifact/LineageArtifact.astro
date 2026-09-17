@@ -1,20 +1,15 @@
 ---
-interface Branch {
-  name: string;
-  status: string;
-}
-
 interface Props {
   root: string;
-  branches: readonly Branch[];
+  /** Kelanjutan sebagai akibat, bukan daftar fitur berstatus. Kematangannya
+   *  dinyatakan satu kali lewat catatan figure, karena belum ada satu pun
+   *  yang tersedia hari ini. */
+  branches: readonly string[];
   onward: string;
   newWork: string;
-  directionLabel: string;
-  directionKey: string;
 }
 
-const { root, branches, onward, newWork, directionLabel, directionKey } =
-  Astro.props;
+const { root, branches, onward, newWork } = Astro.props;
 
 /* Konektor digambar dari posisi node yang dihitung, bukan angka tetap,
    supaya grafnya tetap benar bila jumlah cabang berubah. */
@@ -35,7 +30,7 @@ const converge = branches.map(
   /* Percabangan, bukan daftar. Satu karya yang hidup menyebar ke beberapa
     kelanjutan, lalu berkumpul kembali menjadi titik awal karya berikutnya.
     Bentuk itu yang membawa artinya; daftar vertikal tidak membawanya.
-    Cabang yang belum tersedia ditandai teks, bukan hanya warna. */
+    Kematangannya dinyatakan di catatan figure, bukan per cabang. */
 }
 <div class="relative">
   {
@@ -79,13 +74,8 @@ const converge = branches.map(
       {
         branches.map((branch) => (
           <li class="flex justify-center">
-            <span class="inline-flex min-h-11 flex-wrap items-center justify-center gap-x-2.5 gap-y-1 rounded-xl border border-border bg-surface px-4 py-2.5 text-center">
-              <span class="text-ink">{branch.name}</span>
-              {branch.status === directionKey && (
-                <span class="rounded-full border border-border px-2 py-0.5 font-mono text-[0.65rem] uppercase tracking-[0.1em] text-muted-2">
-                  {directionLabel}
-                </span>
-              )}
+            <span class="inline-flex min-h-11 items-center justify-center rounded-xl border border-border bg-surface px-4 py-2.5 text-center text-ink">
+              {branch}
             </span>
           </li>
         ))

@@ -1,0 +1,80 @@
+---
+interface Props {
+  repoLabel: string;
+  branch: string;
+  commit: string;
+  files: readonly string[];
+  runCommand: string;
+  address: string;
+  appTitle: string;
+  appSub: string;
+  reach: string;
+  refrain: string;
+}
+
+const {
+  repoLabel,
+  branch,
+  commit,
+  files,
+  runCommand,
+  address,
+  appTitle,
+  appSub,
+  reach,
+  refrain,
+} = Astro.props;
+---
+
+{
+  /* Dua keadaan yang sama-sama sah, dalam satu bingkai: repository menyimpan
+    source, localhost membuktikan ia berjalan. Konektor di tengah membawa
+    perintahnya. Yang tidak ada di sini adalah alamat yang bisa dibuka orang
+    lain, dan ketiadaan itulah yang diceritakan bab berikutnya. */
+}
+<div
+  class="artifact grid overflow-hidden rounded-2xl border border-border bg-surface sm:grid-cols-[minmax(0,0.9fr)_auto_minmax(0,1.1fr)]"
+>
+  <div class="min-w-0">
+    <div
+      class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-border px-5 py-3"
+    >
+      <span class="artifact-label text-muted-2">{repoLabel}</span>
+      <span class="font-mono text-xs text-muted-2">{branch} · {commit}</span>
+    </div>
+    <pre
+      class="m-0 overflow-x-auto px-5 py-5 font-mono text-sm leading-7 text-ink">{files.join("\n")}</pre>
+  </div>
+
+  <div
+    class="flex items-center justify-center gap-2 border-y border-border bg-background-soft px-4 py-2 font-mono text-xs text-muted sm:flex-col sm:border-x sm:border-y-0 sm:py-4"
+  >
+    <span aria-hidden="true" class="text-muted-2 sm:hidden">&darr;</span>
+    <span aria-hidden="true" class="hidden text-muted-2 sm:block">&rarr;</span>
+    <span>{runCommand}</span>
+  </div>
+
+  <div class="flex min-w-0 flex-col bg-depth p-5">
+    <p class="font-mono text-xs text-on-depth-muted">{address}</p>
+    <div
+      class="mt-4 grid min-h-32 flex-1 place-items-center rounded-xl border border-depth-border px-4 py-6 text-center"
+    >
+      <div>
+        <p class="font-display text-xl font-semibold text-on-depth sm:text-2xl">
+          {appTitle}
+        </p>
+        <p class="mt-2 text-sm text-on-depth-muted">{appSub}</p>
+      </div>
+    </div>
+    <div class="mt-4 flex flex-wrap items-center justify-between gap-2">
+      <p class="font-mono text-xs text-on-depth-subtle" lang="en">
+        &ldquo;{refrain}&rdquo;
+      </p>
+      <p
+        class="rounded-full border border-depth-border px-3 py-1.5 font-mono text-xs text-on-depth-muted"
+      >
+        {reach}
+      </p>
+    </div>
+  </div>
+</div>

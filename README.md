@@ -47,6 +47,7 @@ npm run format:check # memeriksa format
 npm run check        # type/content/Astro check
 npm run build        # check kemudian static build
 npm run preview      # pratinjau hasil build
+node scripts/og/generate.mjs   # social preview per halaman (jalankan bila judul berubah)
 ```
 
 Setelah `npm install`, script `prepare` mengaktifkan hook Husky. Commit akan menjalankan `lint-staged` agar file Astro, TypeScript, Markdown, JSON, dan CSS yang staged diformat dengan Prettier.

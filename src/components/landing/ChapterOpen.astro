@@ -1,8 +1,10 @@
 ---
+import { getCollection } from "astro:content";
 import ArtifactFigure from "../artifact/ArtifactFigure.astro";
 import OpenProofArtifact from "../artifact/OpenProofArtifact.astro";
 import Chapter from "./Chapter.astro";
-import { localizePath, type Lang } from "../../i18n";
+import { links } from "../../data/links";
+import { languages, localizePath, type Lang } from "../../i18n";
 import type { Dictionary } from "../../i18n/id";
 
 interface Props {
@@ -12,58 +14,168 @@ interface Props {
 
 const { t, lang } = Astro.props;
 const c = t.home.open;
+const f = t.home.finale;
+
+/* Satu aksi utama pre-launch: mengikuti perkembangan. Tiga kanalnya nyata dan
+   tersedia hari ini — bukan pendaftaran untuk layanan yang belum ada. */
+const followHref: Record<string, { href: string; external: boolean }> = {
+  github: { href: links.githubOrganization, external: true },
+  rss: { href: localizePath("/rss.xml", lang), external: false },
+  roadmap: { href: localizePath("/roadmap", lang), external: false },
+};
+
+/* Bukti bahwa project ini bergerak: tiga pembaruan terakhir, dari collection
+   yang sama dengan halaman changelog. Tanpa fallback bahasa. */
+const latest = (await getCollection("changelog"))
+  .filter((entry) => entry.data.lang === lang)
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
+  .slice(0, 3);
+
+const date = new Intl.DateTimeFormat(languages[lang].htmlLang, {
+  dateStyle: "medium",
+});
+const changelogPath = localizePath("/changelog", lang);
 ---
 
-<!-- Bab 07 — Terbuka dan manusia. Kembali dari sistem menuju orang.
-     Keyakinan disertai bukti, bukan sekadar lencana open source. -->
-<Chapter tone="light" labelledby="open-title" thread>
+<!-- Bab 06 — Terbuka, lalu penutup. Kembali dari sistem menuju orang:
+     keyakinan disertai bukti, lalu pertanyaan penutup dan satu aksi yang
+     sesuai kematangan produk. -->
+<Chapter tone="light" size="tall" labelledby="open-title" thread>
   <div
     class="grid gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] lg:gap-20"
   >
     <div>
-      <p class="becoming artifact-label text-primary">08 · {c.eyebrow}</p>
+      <p class="artifact-label text-primary">06 · {c.eyebrow}</p>
       <h2
         id="open-title"
-        class="becoming mt-5 max-w-[18ch] text-balance font-display text-narrative-m font-bold tracking-[-0.025em] text-ink"
+        class="mt-5 max-w-[18ch] text-balance font-display text-narrative-m font-bold tracking-[-0.025em] text-ink"
       >
         {c.title}
       </h2>
-      <p
-        class="becoming becoming-delay-1 mt-7 max-w-md text-lg leading-8 text-muted"
-      >
-        {c.lead}
-      </p>
-
-      <p class="becoming becoming-delay-1 mt-5 max-w-md leading-7 text-muted">
-        {c.position}
-      </p>
+      <p class="mt-7 max-w-md text-lg leading-8 text-muted">{c.lead}</p>
 
       <p
-        class="becoming becoming-delay-2 mt-10 max-w-md border-l-2 border-spark pl-5 font-display text-xl leading-8 text-ink"
+        class="mt-10 max-w-md border-l-2 border-spark pl-5 font-display text-xl leading-8 text-ink"
       >
         {c.human}
       </p>
 
-      <p
-        class="becoming becoming-delay-3 mt-8 max-w-md text-sm leading-7 text-muted-2"
-      >
+      <p class="mt-8 max-w-md text-sm leading-7 text-muted-2">
         {c.stewardship}
       </p>
 
       <a
         href={localizePath("/open-source", lang)}
         data-astro-prefetch="hover"
-        class="becoming becoming-delay-3 mt-6 inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
+        class="mt-6 inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
       >
         {c.cta} &rarr;
       </a>
     </div>
 
-    <ArtifactFigure
-      caption={c.factsCaption}
-      class="becoming becoming-delay-1 lg:pt-14"
-    >
+    <ArtifactFigure caption={c.factsCaption} class="becoming lg:pt-14">
       <OpenProofArtifact facts={c.facts} />
     </ArtifactFigure>
+  </div>
+
+  <!-- Penutup. Anchor tetap #ikuti-perkembangan supaya tautan lama berlaku. -->
+  <div
+    id="ikuti-perkembangan"
+    class="mt-28 scroll-mt-20 border-t border-border pt-20 sm:mt-36 sm:pt-24"
+  >
+    <div class="mx-auto max-w-2xl text-center">
+      <h2
+        id="finale-title"
+        class="text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-ink"
+      >
+        {f.title}
+      </h2>
+      <p class="mt-7 text-lg leading-8 text-muted">{f.lead}</p>
+    </div>
+
+    <div
+      class="becoming mx-auto mt-14 grid max-w-4xl gap-12 lg:grid-cols-2 lg:gap-16"
+    >
+      <div>
+        <h3 class="artifact-label text-primary">{f.followTitle}</h3>
+        <p class="mt-3 leading-7 text-muted">{f.followLead}</p>
+        <ul
+          class="green-line green-line-live m-0 mt-7 list-none space-y-1 p-0 pl-8"
+          style="--line-inset: 2rem"
+        >
+          {
+            f.follow.map((item) => {
+              const target = followHref[item.key];
+              return (
+                <li>
+                  <a
+                    href={target.href}
+                    target={target.external ? "_blank" : undefined}
+                    rel={target.external ? "noreferrer" : undefined}
+                    data-astro-prefetch={target.external ? undefined : "hover"}
+                    class="green-line-node green-line-node-mid green-line-node-live flex min-h-14 items-center justify-between gap-4 py-2 text-ink hover:text-primary-dark"
+                  >
+                    <span>
+                      <span class="block font-semibold">{item.label}</span>
+                      <span class="mt-0.5 block text-sm text-muted">
+                        {item.note}
+                      </span>
+                    </span>
+                    <span aria-hidden="true" class="text-muted-2">
+                      {target.external ? "↗" : "→"}
+                    </span>
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="artifact-label text-primary">{f.latestTitle}</h3>
+        <ol class="m-0 mt-6 list-none divide-y divide-border p-0">
+          {
+            latest.map((entry) => (
+              <li class="py-3.5">
+                <a
+                  href={`${changelogPath}#v-${entry.data.version}`}
+                  data-astro-prefetch="hover"
+                  class="group block"
+                >
+                  <time
+                    class="block font-mono text-xs text-muted-2"
+                    datetime={entry.data.publishedAt.toISOString()}
+                  >
+                    {date.format(entry.data.publishedAt)} · v
+                    {entry.data.version}
+                  </time>
+                  <span class="mt-1 block font-semibold text-ink group-hover:text-primary-dark">
+                    {entry.data.title}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+        <a
+          href={changelogPath}
+          data-astro-prefetch="hover"
+          class="mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
+        >
+          {f.latestAll} &rarr;
+        </a>
+      </div>
+    </div>
+
+    <p class="mt-12 text-center">
+      <a
+        href={localizePath("/docs", lang)}
+        data-astro-prefetch="hover"
+        class="inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
+      >
+        {f.docs} &rarr;
+      </a>
+    </p>
   </div>
 </Chapter>
