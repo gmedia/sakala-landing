@@ -23,6 +23,7 @@ Sakala's architecture keeps product policy in the control plane, isolates privil
   class="my-8"
 >
   <RepoTopology
+    note="The API never touches the Docker socket. Only the Agent performs privileged runtime operations."
     publicLabel="Public"
     controlLabel="Control plane"
     dataLabel="Data plane"

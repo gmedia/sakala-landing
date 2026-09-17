@@ -554,18 +554,28 @@ export const en: Dictionary = {
       agent: "Runtime executor that performs work on a node.",
       infra: "Runtime, networking, and routing reference.",
     },
-    contributorsTitle: "Early contributors",
-    contributorsLead:
-      "Names are listed once the contribution is real and the person agrees to being named. Contribution is not only code.",
-    contributorAreas: [
-      "Product & Design",
-      "Frontend",
-      "Backend & Platform",
-      "Documentation",
-      "Testing",
-      "Community",
+    contributeTitle: "How to contribute",
+    contributeLead:
+      "No need to wait for the product. These three paths are open today, and contribution is not only code.",
+    contributePaths: [
+      {
+        key: "issues",
+        label: "Open an issue or a discussion",
+        note: "Report what is wrong, propose what is missing, ask what is unclear.",
+      },
+      {
+        key: "docs",
+        label: "Read and correct the documentation",
+        note: "The technical documentation is open to be read, tested, and fixed.",
+      },
+      {
+        key: "build",
+        label: "Run this site locally",
+        note: "The landing repository can be cloned, built, and sent a pull request.",
+      },
     ],
-    contributeCta: "See where to contribute",
+    topologyNote:
+      "The API never touches the Docker socket. Only the Agent performs privileged runtime operations.",
   },
 
   changelogPage: {

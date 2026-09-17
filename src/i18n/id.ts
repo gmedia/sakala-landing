@@ -559,18 +559,28 @@ export const id = {
       agent: "Executor runtime yang menjalankan pekerjaan pada node.",
       infra: "Referensi runtime, networking, dan routing.",
     },
-    contributorsTitle: "Contributor awal",
-    contributorsLead:
-      "Nama akan dicatat setelah kontribusinya nyata dan contributor menyetujui pencantumannya. Kontribusi bukan hanya kode.",
-    contributorAreas: [
-      "Product & Design",
-      "Frontend",
-      "Backend & Platform",
-      "Dokumentasi",
-      "Testing",
-      "Komunitas",
+    contributeTitle: "Cara berkontribusi",
+    contributeLead:
+      "Tidak perlu menunggu produknya jadi. Tiga jalur ini terbuka hari ini, dan kontribusi bukan hanya kode.",
+    contributePaths: [
+      {
+        key: "issues",
+        label: "Buka issue atau diskusi",
+        note: "Laporkan yang keliru, usulkan yang kurang, tanyakan yang belum jelas.",
+      },
+      {
+        key: "docs",
+        label: "Baca dan koreksi dokumentasi",
+        note: "Dokumentasi teknis dibuka untuk dibaca, diuji, dan diperbaiki.",
+      },
+      {
+        key: "build",
+        label: "Jalankan situs ini secara lokal",
+        note: "Repository landing dapat di-clone, dibangun, dan dikirimi pull request.",
+      },
     ],
-    contributeCta: "Lihat ruang kontribusi",
+    topologyNote:
+      "API tidak pernah menyentuh Docker socket. Hanya Agent yang menjalankan operasi runtime berhak istimewa.",
   },
 
   changelogPage: {

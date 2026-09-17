@@ -26,6 +26,7 @@ The **data plane** owns execution: checkout, build, container lifecycle, resourc
   class="my-8"
 >
   <RepoTopology
+    note="The API never touches the Docker socket. Only the Agent performs privileged runtime operations."
     publicLabel="Public"
     controlLabel="Control plane"
     dataLabel="Data plane"
