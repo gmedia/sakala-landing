@@ -12,6 +12,8 @@ import SequenceFlow from "../../../../components/diagram/SequenceFlow.astro";
 
 # How the Sakala Agent Works
 
+> **Canonical source:** [Sakala Architecture](/en/docs/proyek/architecture) · [ADR](/en/docs/proyek/adr)
+
 The Sakala Agent is a Rust process running on a runtime node. Its job is to take work from the Sakala API, perform the permitted operations on the node, then report heartbeats, events, logs, and results back.
 
 The Agent is not a web server and accepts no commands directly from a browser. All communication starts from the Agent toward the API.

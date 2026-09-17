@@ -14,7 +14,7 @@ This document applies to AI agents, Codex, automation tools, and contributors wo
 
 ## Source of truth
 
-Project-level Sakala documentation remains authoritative for philosophy, product, scope, architecture, and governance.
+Project-level Sakala documentation remains authoritative for philosophy, product, scope, architecture, and governance. Since 2026-09-17 it lives in this repository as the canonical `proyek` track (`src/content/docs/proyek/`, published at `/docs/proyek`). There is no separate docs repository; changes there are project decisions and are reviewed by maintainers (`.github/CODEOWNERS`).
 
 For landing-specific creative work, read:
 

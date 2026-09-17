@@ -8,6 +8,8 @@ order: 4
 
 # Keamanan
 
+> **Sumber kanonik:** [Security Principles](/docs/proyek/security)
+
 Halaman ini adalah **baseline keamanan project**, bukan program keamanan production yang lengkap. Sakala masih dibangun, dan sebagian hal di bawah masih berupa aturan yang dipegang, bukan sistem yang sudah diaudit.
 
 ## Batas hak istimewa

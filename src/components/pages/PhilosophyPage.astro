@@ -25,7 +25,19 @@ const breadcrumbs = [
   availableLocales={["id", "en"]}
   {breadcrumbs}
 >
-  <PageHeader eyebrow={p.eyebrow} title={p.title} lead={p.lead} {breadcrumbs} />
+  <PageHeader eyebrow={p.eyebrow} title={p.title} lead={p.lead} {breadcrumbs}>
+    <!-- Halaman ini adaptasi; sumbernya di jalur Proyek. -->
+    <p class="mt-8 text-sm text-muted">
+      <span class="artifact-label text-muted-2">{t.source.label}</span>
+      <a
+        href={localizePath("/docs/proyek/philosophy", lang)}
+        data-astro-prefetch="hover"
+        class="ml-3 font-mono text-xs text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
+      >
+        {p.sourceTitle} &rarr;
+      </a>
+    </p>
+  </PageHeader>
 
   <section class="border-b border-border bg-background-soft py-20 sm:py-24">
     <Container>

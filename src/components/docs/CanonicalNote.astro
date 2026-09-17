@@ -1,0 +1,38 @@
+---
+import type { CollectionEntry } from "astro:content";
+import type { Lang } from "../../i18n";
+
+interface Props {
+  doc: CollectionEntry<"docs">;
+  lang: Lang;
+}
+
+const { doc, lang } = Astro.props;
+const { canonical, lang: sourceLang } = doc.data;
+const foreign = canonical && sourceLang !== lang;
+
+const copy = {
+  id: {
+    canonical: "Dokumen kanonik project. Perubahan di sini adalah keputusan.",
+    foreign:
+      "Ditulis dalam bahasa Inggris dan sengaja tidak diterjemahkan, supaya sumbernya tunggal.",
+  },
+  en: {
+    canonical: "Canonical project document. A change here is a decision.",
+    foreign:
+      "Written in Indonesian and deliberately not translated, so there is a single source.",
+  },
+}[lang];
+---
+
+{
+  /* Pembaca harus tahu dua hal sebelum membaca: ini sumber kebenaran, dan
+    bahasanya mungkin bukan bahasa halaman. Keduanya diucapkan, bukan
+    disiratkan. */
+  canonical && (
+    <p class="mb-8 flex flex-wrap items-center gap-x-3 gap-y-1 border-l-2 border-primary pl-4 text-sm leading-6 text-muted">
+      <span class="font-semibold text-primary-dark">{copy.canonical}</span>
+      {foreign && <span>{copy.foreign}</span>}
+    </p>
+  )
+}

@@ -1,14 +1,20 @@
 ---
+import { localizePath, type Lang } from "../../i18n";
+
 interface Fact {
   label: string;
   value: string;
+  /** Bukti yang bisa dibuka. Nilai tanpa tautan tetap fakta, tetapi nilai
+   *  bertautan bisa diverifikasi, dan itulah bedanya bukti dengan label. */
+  href?: string;
 }
 
 interface Props {
   facts: readonly Fact[];
+  lang: Lang;
 }
 
-const { facts } = Astro.props;
+const { facts, lang } = Astro.props;
 ---
 
 <!-- Keyakinan disertai bukti. Nilainya faktual dan dapat diperiksa. -->
@@ -19,7 +25,19 @@ const { facts } = Astro.props;
     facts.map((fact) => (
       <div class="grid gap-1 bg-surface px-5 py-3.5 sm:grid-cols-[9rem_1fr] sm:items-baseline">
         <dt class="artifact-label text-muted-2">{fact.label}</dt>
-        <dd class="m-0 font-mono text-sm text-ink">{fact.value}</dd>
+        <dd class="m-0 font-mono text-sm text-ink">
+          {fact.href ? (
+            <a
+              href={localizePath(fact.href, lang)}
+              data-astro-prefetch="hover"
+              class="text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
+            >
+              {fact.value} &rarr;
+            </a>
+          ) : (
+            fact.value
+          )}
+        </dd>
       </div>
     ))
   }

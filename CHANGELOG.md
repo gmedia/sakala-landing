@@ -8,6 +8,9 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) dan pr
 
 ### Added
 
+- Jalur dokumentasi **Proyek** (`/docs/proyek`): 15 dokumen kanonik Sakala terbit di situs ini dalam bahasa aslinya; situs menjadi sumber kebenaran, tanpa repository docs terpisah. `CODEOWNERS` mewajibkan tinjauan maintainer di jalur itu.
+- Halaman **Sistem Desain** (`/docs/teknis/sistem-desain`, ID + EN): token warna dengan rasio kontras, tipografi, spasi, kosakata status, aturan artefak.
+- Tautan sumber kanonik di Filosofi, Roadmap, dokumentasi teknis; fakta "Arsitektur" dan "Keputusan" di beranda dan Open Source kini bertautan.
 - Beranda v4: enam bab dengan artefak yang berubah keadaan; deployment berjalan tahap demi tahap dan mark menggambar dirinya di bab Ambang.
 - Artefak bergrammar rancangan Console Wave 1 (analisis, timeline deployment, log kegagalan, kartu project) berlabel _design direction_.
 - Social preview per halaman lewat `scripts/og/generate.mjs`, digambar dari font situs tanpa browser.

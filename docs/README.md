@@ -8,12 +8,18 @@ yang tampil di situs berada pada `src/content/docs/`, bukan di sini.
 Ketika dua dokumen bertentangan, yang di atas menang.
 
 ```txt
-1. Dokumentasi project Sakala      sakala-docs
-2. Sakala Design System            Figma
+1. Dokumen project Sakala          src/content/docs/proyek/  (terbit di /docs/proyek)
+2. Sakala Design System            Figma; ringkasan publik di /docs/teknis/sistem-desain
 3. docs/landing/                   arah kreatif landing
 4. docs/PROJECT_*.md               keputusan teknis repository
 5. Implementasi saat ini           src/
 ```
+
+Sejak 2026-09-17 dokumen project (PHILOSOPHY, VISION, PRD, MVP, ARCHITECTURE,
+ADR, ROADMAP, dan seterusnya) hidup di repository ini sebagai jalur `proyek`
+dan diterbitkan di situs. Tidak ada repository `sakala-docs` terpisah; situs
+inilah sumber kebenarannya. Perubahan di jalur itu ditinjau maintainer
+(`.github/CODEOWNERS`).
 
 Implementasi berada di urutan terakhir. Sesuatu tidak menjadi benar hanya
 karena ia sudah ada di dalam kode.

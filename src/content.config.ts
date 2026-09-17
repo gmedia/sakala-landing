@@ -12,7 +12,9 @@ const docs = defineCollection({
      * memakai Sakala tidak tercampur dengan internal runtime. Jalur
      * `referensi` muncul di kedua sidebar.
      */
-    track: z.enum(["panduan", "teknis", "referensi"]).default("panduan"),
+    track: z
+      .enum(["panduan", "teknis", "proyek", "referensi"])
+      .default("panduan"),
     /** Label kelompok di dalam satu jalur. */
     section: z.string(),
     /** Urutan di dalam jalur. */
@@ -20,6 +22,12 @@ const docs = defineCollection({
     /** Bahasa dokumen. Tidak ada fallback: jalur bahasa yang belum
      *  diterjemahkan tidak akan muncul di sidebar bahasa itu. */
     lang: z.enum(["id", "en"]).default("id"),
+    /**
+     * Dokumen kanonik project (jalur `proyek`). Ia adalah sumber kebenaran,
+     * jadi ditampilkan di kedua route bahasa dalam bahasa aslinya, bukan
+     * diterjemahkan. `lang` di sini berarti bahasa penulisannya.
+     */
+    canonical: z.boolean().default(false),
   }),
 });
 

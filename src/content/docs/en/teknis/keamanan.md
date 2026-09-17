@@ -9,6 +9,8 @@ lang: en
 
 # Security
 
+> **Canonical source:** [Security Principles](/en/docs/proyek/security)
+
 This page is a **project security baseline**, not a complete production security programme. Sakala is still being built, and some of what follows is a rule being held rather than an audited system.
 
 ## Privilege boundary

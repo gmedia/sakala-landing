@@ -649,13 +649,15 @@ html:not([data-motion="on"]) .stage .stage-state-done,
   text-decoration-color: var(--color-primary);
 }
 
+/* Tabel token dan parameter punya empat kolom; lebar penuh dengan kolom
+   otomatis membuatnya terbaca tanpa memotong nilai. */
 .prose-sakala table {
-  width: min(100%, 32rem);
+  width: 100%;
   margin-block: 1.5rem;
   border-collapse: collapse;
   border-radius: 0.75rem;
   font-size: 0.925rem;
-  table-layout: fixed;
+  table-layout: auto;
 }
 
 .prose-sakala th,
