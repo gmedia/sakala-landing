@@ -582,21 +582,20 @@ membuka branch `feat/landing-v4`.
 Semua langkah §9 dikerjakan dalam satu iterasi di branch `feat/landing-v4`,
 karena aset Figma sudah tersedia sebelum eksekusi dimulai.
 
-| Langkah                                  | Status | Catatan                                                                                                                                   |
-| ---------------------------------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| 1 Gerak dipindah dari teks ke artefak    | ✓      | 37 → 8 elemen `.becoming`, 3 urutan                                                                                                       |
-| 2 Struktur 9 → 6 bab, copy dipangkas     | ✓      | Kamus `home` ditulis ulang di dua bahasa; jumlah kata tidak turun karena artefak membawa teks produk                                      |
-| 3 Signature sequence + mark merakit diri | ✓      | CSS + `data-sequence`; keadaan tahap dihitung dari urutan; tanpa JS semua selesai                                                         |
-| 4 Changelog terbaru + OG per halaman     | ✓      | `scripts/og/generate.mjs`, 12 PNG, `src/data/og.ts`                                                                                       |
-| 5 Cara berkontribusi + heading fix       | ✓      | Sekaligus memperbaiki kebocoran bahasa di `/en/open-source`                                                                               |
-| 6 Artefak UI Console design direction    | ✓      | Analisis, deployment, kegagalan (beranda); kartu project (`/produk`)                                                                      |
-| 7 Verifikasi                             | ◐      | `format:check`, `check`, `build`, `audit_html.py`, `contrast.py` lulus. **Tinjauan visual 320/768/1280 belum** — lingkungan tanpa browser |
-| 8 Dokumentasi + changelog                | ✓      | `PROJECT_LANDING_BUILD.md` ditulis ulang; entri changelog 0.7.0 dua bahasa                                                                |
+| Langkah                                  | Status | Catatan                                                                                                                                                                                                                                                                                   |
+| ---------------------------------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1 Gerak dipindah dari teks ke artefak    | ✓      | 37 → 8 elemen `.becoming`, 3 urutan                                                                                                                                                                                                                                                       |
+| 2 Struktur 9 → 6 bab, copy dipangkas     | ✓      | Kamus `home` ditulis ulang di dua bahasa; jumlah kata tidak turun karena artefak membawa teks produk                                                                                                                                                                                      |
+| 3 Signature sequence + mark merakit diri | ✓      | CSS + `data-sequence`; keadaan tahap dihitung dari urutan; tanpa JS semua selesai                                                                                                                                                                                                         |
+| 4 Changelog terbaru + OG per halaman     | ✓      | `scripts/og/generate.mjs`, 12 PNG, `src/data/og.ts`                                                                                                                                                                                                                                       |
+| 5 Cara berkontribusi + heading fix       | ✓      | Sekaligus memperbaiki kebocoran bahasa di `/en/open-source`                                                                                                                                                                                                                               |
+| 6 Artefak UI Console design direction    | ✓      | Analisis, deployment, kegagalan (beranda); kartu project (`/produk`)                                                                                                                                                                                                                      |
+| 7 Verifikasi                             | ✓      | `format:check`, `check`, `build`, `audit_html.py`, `contrast.py` lulus; screenshot headless 1440/390 px + keadaan tengah animasi diperiksa. Temuan visual (bloom bocor ke kotak URL, overflow kolom arrival di mobile, kisi penutup terpotong, centang di tahap belum selesai) diperbaiki |
+| 8 Dokumentasi + changelog                | ✓      | `PROJECT_LANDING_BUILD.md` ditulis ulang; entri changelog 0.7.0 dua bahasa                                                                                                                                                                                                                |
 
 Yang berubah dari rencana §5.1: panel analisis tetap terlihat di samping
 lead, bukan di balik `<details>` — ia menjawab pertanyaan "stack apa" yang
 diikat `CLARITY_AMENDMENT.md` #4 dan tidak layak disembunyikan.
 
-Tinjauan visual manual adalah pekerjaan yang tersisa sebelum PR di-merge:
-320 px, 768 px, 1280 px+, keyboard, `prefers-reduced-motion`, JS mati, ID
-dan EN.
+Yang tersisa sebelum PR di-merge: uji di perangkat nyata, keyboard, dan
+pembaca layar; screenshot headless tidak menggantikan itu.
