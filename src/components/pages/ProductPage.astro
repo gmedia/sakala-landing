@@ -1,4 +1,6 @@
 ---
+import ArtifactFigure from "../artifact/ArtifactFigure.astro";
+import ProjectCardsArtifact from "../artifact/ProjectCardsArtifact.astro";
 import Button from "../ui/Button.astro";
 import Container from "../ui/Container.astro";
 import PageHeader from "../ui/PageHeader.astro";
@@ -74,6 +76,29 @@ const breadcrumbs = [
           ))
         }
       </ol>
+    </Container>
+  </section>
+
+  <!-- Bukti rancangan, berlabel: kartu project dari Dashboard Wave 1. -->
+  <section class="border-b border-border py-20 sm:py-24">
+    <Container>
+      <div
+        class="grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-start lg:gap-16"
+      >
+        <div>
+          <h2
+            class="font-display text-narrative-m font-bold tracking-[-0.025em] text-ink"
+          >
+            {p.cardsTitle}
+          </h2>
+          <p class="mt-5 max-w-md text-lg leading-8 text-muted">
+            {p.cardsLead}
+          </p>
+        </div>
+        <ArtifactFigure caption={p.cardsCaption} note={p.cardsNote}>
+          <ProjectCardsArtifact cards={p.cards} action={p.cardsAction} />
+        </ArtifactFigure>
+      </div>
     </Container>
   </section>
 

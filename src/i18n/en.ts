@@ -406,6 +406,40 @@ export const en: Dictionary = {
         ],
       },
     ],
+    cardsTitle: "What it looks like in the Console",
+    cardsLead:
+      "The Console design puts status first: every project shows at a glance whether it is live, being built, or failed.",
+    cards: [
+      {
+        name: "portfolio",
+        repo: "you/portfolio",
+        state: "live",
+        stateLabel: "Live",
+        body: "Hello, world.",
+        time: "2 hours ago",
+      },
+      {
+        name: "final-project",
+        repo: "you/final-project",
+        state: "deploying",
+        stateLabel: "Deploying",
+        body: "Building image…",
+        time: "started 1 minute ago",
+      },
+      {
+        name: "notes-api",
+        repo: "you/notes-api",
+        state: "failed",
+        stateLabel: "Failed",
+        body: "Health check failed",
+        time: "yesterday",
+      },
+    ],
+    cardsAction: "View details",
+    cardsCaption:
+      "Project cards on the Dashboard: name, repository, state, preview, and one action.",
+    cardsNote:
+      "Console Wave 1 design, rebuilt as an illustration. Not a screenshot of a running product.",
     boundaryTitle: "What we deliberately avoid becoming",
     boundaryLead:
       "Keeping an identity matters more than chasing feature parity.",

@@ -1,0 +1,65 @@
+---
+interface Card {
+  name: string;
+  repo: string;
+  /** Kunci keadaan: live | deploying | failed. Labelnya datang dari kamus. */
+  state: string;
+  stateLabel: string;
+  body: string;
+  time: string;
+}
+
+interface Props {
+  cards: readonly Card[];
+  action: string;
+}
+
+const { cards, action } = Astro.props;
+
+const chip: Record<string, string> = {
+  live: "border-primary-soft bg-primary-soft-2 text-primary-dark",
+  deploying: "border-spark-soft bg-spark-soft text-spark-text",
+  failed: "border-border bg-background-soft text-error",
+};
+---
+
+{
+  /* Kartu project dari Dashboard Console Wave 1: nama, repository, chip
+    keadaan, pratinjau, waktu, dan satu aksi. Tiga keadaan berdampingan
+    supaya terlihat bahwa status adalah elemen pertama, bukan hiasan.
+    Chrome Console (sidebar, filter, pagination) sengaja tidak ikut. */
+}
+<ul class="m-0 grid list-none gap-3 p-0 sm:grid-cols-3">
+  {
+    cards.map((card) => (
+      <li class="flex flex-col rounded-xl border border-border bg-surface p-4">
+        <div class="flex items-start justify-between gap-3">
+          <div class="min-w-0">
+            <p class="truncate font-display text-sm font-semibold text-ink">
+              {card.name}
+            </p>
+            <p class="truncate font-mono text-xs text-muted-2">{card.repo}</p>
+          </div>
+          <span
+            class:list={[
+              "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2 py-0.5 font-mono text-[0.65rem]",
+              chip[card.state] ?? chip.failed,
+            ]}
+          >
+            <span class="size-1.5 rounded-full bg-current" aria-hidden="true" />
+            {card.stateLabel}
+          </span>
+        </div>
+        <p class="mt-4 grid min-h-20 flex-1 place-items-center rounded-lg border border-dashed border-border px-3 text-center text-xs text-muted">
+          {card.body}
+        </p>
+        <div class="mt-4 flex items-center justify-between gap-3">
+          <span class="font-mono text-[0.65rem] text-muted-2">{card.time}</span>
+          <span class="rounded-md border border-border-strong px-2 py-1 text-[0.65rem] font-semibold text-ink">
+            {action}
+          </span>
+        </div>
+      </li>
+    ))
+  }
+</ul>

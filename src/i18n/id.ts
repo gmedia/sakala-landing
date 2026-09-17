@@ -411,6 +411,40 @@ export const id = {
         ],
       },
     ],
+    cardsTitle: "Seperti apa di Console",
+    cardsLead:
+      "Rancangan Console mengutamakan status: setiap project langsung memperlihatkan apakah ia hidup, sedang dibangun, atau gagal.",
+    cards: [
+      {
+        name: "portfolio",
+        repo: "kamu/portfolio",
+        state: "live",
+        stateLabel: "Live",
+        body: "Halo, dunia.",
+        time: "2 jam lalu",
+      },
+      {
+        name: "tugas-akhir",
+        repo: "kamu/tugas-akhir",
+        state: "deploying",
+        stateLabel: "Deploying",
+        body: "Membangun image…",
+        time: "dimulai 1 menit lalu",
+      },
+      {
+        name: "api-catatan",
+        repo: "kamu/api-catatan",
+        state: "failed",
+        stateLabel: "Failed",
+        body: "Health check gagal",
+        time: "kemarin",
+      },
+    ],
+    cardsAction: "Lihat detail",
+    cardsCaption:
+      "Kartu project di Dashboard: nama, repository, keadaan, pratinjau, dan satu aksi.",
+    cardsNote:
+      "Rancangan Console Wave 1, dibangun ulang sebagai ilustrasi. Bukan tangkapan layar produk yang berjalan.",
     boundaryTitle: "Yang sengaja tidak dikejar",
     boundaryLead:
       "Menjaga identitas lebih penting daripada mengejar kesetaraan fitur.",
