@@ -283,10 +283,6 @@ a {
   mask-image: linear-gradient(to bottom, black 30%, transparent 92%);
 }
 
-.possibility-field-rise {
-  mask-image: linear-gradient(to top, black 30%, transparent 92%);
-}
-
 /* Cahaya lembut di belakang mark pada penyeberangan. Menandai pusat tanpa
    menutupi apa pun; ditaruh sebagai elemen pertama supaya melukis di bawah. */
 .threshold-glow {
@@ -430,6 +426,12 @@ html:not([data-motion="on"]) .stage .stage-state-done,
 
 [data-motion="on"] .stage:not(.is-present) .stage-name {
   color: var(--color-muted-2);
+}
+
+/* Tanda centang hanya milik tahap yang selesai. Tahap yang berjalan cukup
+   ditandai cincinnya; teks keadaannya sudah menyebut "sedang berjalan". */
+[data-motion="on"] .stage:not(.is-present) .stage-dot > span {
+  visibility: hidden;
 }
 
 /* Keadaan tetap untuk artefak diagnostik: tidak ada yang berjalan lagi.

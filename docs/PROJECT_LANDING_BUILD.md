@@ -168,10 +168,10 @@ Montserrat; `PRODUCT_ARTIFACTS.md` §2 yang berlaku di sini.
 
 - Ramp penuh Burnt Orange dan Eerie Black belum tersedia di Figma. Hanya
   nilai anchor yang dipakai; tidak ada shade yang dikarang.
-- Komposisi belum diverifikasi lewat screenshot di 320/768/1280 px pada
-  iterasi v4 (lingkungan build tidak punya browser). Diverifikasi lewat HTML
-  hasil build, `astro check`, dan `audit_html.py`; tinjauan visual manual
-  tetap wajib sebelum rilis.
+- Komposisi diverifikasi lewat screenshot headless di 1440 px dan 390 px,
+  termasuk keadaan tengah animasi (mark setengah tergambar, tahap "sedang
+  berjalan"). Belum diuji di perangkat nyata maupun pembaca layar; itu
+  tinjauan manual yang tetap layak sebelum rilis.
 - Jumlah kata beranda (±1.250) tidak turun dari v3 karena artefak kini
   membawa teks produk (tahap, log, changelog); prosa naratifnya yang
   berkurang.

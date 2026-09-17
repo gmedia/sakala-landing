@@ -77,7 +77,7 @@ const {
 
   <div
     data-sequence="480"
-    class="grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]"
+    class="grid min-w-0 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]"
   >
     <ol
       class="m-0 list-none space-y-5 border-b border-border p-6 sm:p-8 lg:border-b-0 lg:border-r"
@@ -106,7 +106,7 @@ const {
       }
     </ol>
 
-    <div class="sequence-step flex flex-col gap-4 p-6 sm:p-8">
+    <div class="sequence-step flex min-w-0 flex-col gap-4 p-6 sm:p-8">
       <div
         class="flex items-start gap-4 rounded-xl border border-primary-soft bg-primary-soft-2 px-4 py-4"
       >
@@ -125,9 +125,9 @@ const {
       </div>
 
       <div
-        class="flex items-center justify-between gap-3 rounded-xl border border-border px-4 py-3"
+        class="flex min-w-0 flex-wrap items-center justify-between gap-x-3 gap-y-2 rounded-xl border border-border px-4 py-3"
       >
-        <span class="min-w-0 truncate font-mono text-sm text-primary-dark">
+        <span class="min-w-0 break-all font-mono text-sm text-primary-dark">
           {url}
         </span>
         <span
@@ -152,6 +152,9 @@ const {
   /* Mekar lembut di belakang halaman yang sudah hidup. Ia menandai momen
      "muncul" tanpa menambah teks, dan tidak pernah menutupi isinya. */
   .arrival-page {
+    /* overflow hidden memotong bloom pada tepi kotak; tanpa itu blur-nya
+       merembes ke kotak URL di atasnya. */
+    overflow: hidden;
     background: var(--color-surface);
     isolation: isolate;
     min-height: 9rem;
@@ -160,11 +163,14 @@ const {
   .arrival-page::before {
     position: absolute;
     z-index: -1;
-    width: min(18rem, 90%);
+    top: 50%;
+    left: 50%;
+    width: min(16rem, 80%);
     aspect-ratio: 1;
+    transform: translate(-50%, -50%);
     border-radius: 50%;
     content: "";
     background: var(--color-primary-soft-2);
-    filter: blur(10px);
+    filter: blur(14px);
   }
 </style>
