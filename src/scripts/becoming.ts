@@ -21,9 +21,14 @@ const items = document.querySelectorAll<HTMLElement>(".becoming");
 const sequences = document.querySelectorAll<HTMLElement>("[data-sequence]");
 
 function presentSteps(sequence: Element, stepDelay = 0): void {
+  /* Urutan yang duduk di dalam artefak yang baru saja muncul menunggu
+   * artefaknya selesai muncul dulu, supaya hanya satu hal yang menjadi
+   * pada satu waktu. */
+  const lead =
+    stepDelay > 0 && sequence.closest(".becoming:not(.is-present)") ? 480 : 0;
   sequence.querySelectorAll(".sequence-step").forEach((el, index) => {
     if (stepDelay === 0) present(el);
-    else window.setTimeout(() => present(el), index * stepDelay);
+    else window.setTimeout(() => present(el), lead + index * stepDelay);
   });
 }
 

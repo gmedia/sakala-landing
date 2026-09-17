@@ -156,6 +156,7 @@ Both
 | `AI_AGENT_PLAYBOOK.md`           | exact workflow for an AI agent executing the rebuild           |
 | `REFERENCE_NOTES.md`             | research references and what to learn without copying          |
 | `CLARITY_AMENDMENT.md`           | v3 clarity layer: review findings, fact boundary, CTA rules    |
+| `V4_AUDIT_AND_DIRECTION.md`      | proposal (review): site-wide audit, v4 direction, assets, refs |
 
 ## Success condition
 
