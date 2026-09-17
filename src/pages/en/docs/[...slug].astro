@@ -1,12 +1,17 @@
 ---
 import { getCollection, render, type CollectionEntry } from "astro:content";
+import CanonicalNote from "../../../components/docs/CanonicalNote.astro";
 import DocsLayout from "../../../layouts/DocsLayout.astro";
 import { getDocLocales, hubIds } from "../../../data/docs";
 
 export async function getStaticPaths() {
   const docs = await getCollection("docs");
   return docs
-    .filter((doc) => doc.data.lang === "en" && !hubIds.includes(doc.id))
+    .filter(
+      (doc) =>
+        (doc.data.lang === "en" || doc.data.canonical) &&
+        !hubIds.includes(doc.id),
+    )
     .map((doc) => ({
       params: { slug: doc.id.replace(/^en\//, "") },
       props: { doc },
@@ -30,7 +35,8 @@ const availableLocales = await getDocLocales(doc.id);
   breadcrumbLabel={doc.data.title}
   {availableLocales}
 >
-  <article class="prose-sakala">
+  <CanonicalNote doc={doc} lang="en" />
+  <article class="prose-sakala" lang={doc.data.lang}>
     <Content />
   </article>
 </DocsLayout>

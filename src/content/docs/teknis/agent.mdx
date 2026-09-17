@@ -11,6 +11,8 @@ import SequenceFlow from "../../../components/diagram/SequenceFlow.astro";
 
 # Cara Kerja Sakala Agent
 
+> **Sumber kanonik:** [Sakala Architecture](/docs/proyek/architecture) · [ADR](/docs/proyek/adr)
+
 Sakala Agent adalah proses Rust yang berjalan pada runtime node. Tugasnya mengambil pekerjaan dari Sakala API, menjalankan operasi yang diizinkan pada node, lalu melaporkan heartbeat, event, log, dan hasil kembali ke API.
 
 Agent bukan web server dan tidak menerima perintah langsung dari browser. Semua komunikasi dimulai dari agent menuju API.

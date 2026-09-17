@@ -56,6 +56,8 @@ Setelah `npm install`, script `prepare` mengaktifkan hook Husky. Commit akan men
 
 - `src/components/landing/`: bagian-bagian landing page.
 - `src/content/docs/`: dokumentasi publik berbasis content collection.
+  Jalur `proyek/` memuat dokumen kanonik project (sumber kebenaran Sakala);
+  `en/` memuat versi bahasa Inggris untuk jalur yang diterjemahkan.
 - `src/layouts/`: layout SEO, landing, dan dokumentasi.
 - `src/pages/`: route statis `/`, `/tentang`, `/governance`, `/docs`,
   `/changelog`, `/rss.xml`, serta `/404`.
@@ -69,8 +71,9 @@ dan itulah sumber kebenaran untuk rebuild homepage berikutnya. Keputusan
 teknis repository berada di [`docs/`](docs/README.md).
 
 Urutan otoritasnya dijelaskan pada [`docs/README.md`](docs/README.md).
-Ringkasnya: dokumentasi project Sakala, lalu Design System, lalu
-`docs/landing/`, lalu keputusan teknis, baru implementasi.
+Ringkasnya: dokumen project Sakala (`src/content/docs/proyek/`, terbit di
+`/docs/proyek`), lalu Design System, lalu `docs/landing/`, lalu keputusan
+teknis, baru implementasi.
 
 ## Governance dan Sponsor
 

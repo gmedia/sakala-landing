@@ -19,6 +19,7 @@ export const en: Dictionary = {
     docs: "Documentation",
     roadmap: "Roadmap",
     openSource: "Open Source",
+    projectDocs: "Project documents",
     changelog: "Changelog",
     github: "GitHub",
     console: "Sign in",
@@ -26,6 +27,10 @@ export const en: Dictionary = {
     close: "Close",
     languageLabel: "Choose language",
     docsNoteForEnglish: null,
+  },
+
+  source: {
+    label: "Canonical source",
   },
 
   status: {
@@ -211,8 +216,12 @@ export const en: Dictionary = {
       facts: [
         { label: "Source", value: "Public" },
         { label: "License", value: "Apache-2.0" },
-        { label: "Architecture", value: "Documented" },
-        { label: "Decisions", value: "Recorded" },
+        {
+          label: "Architecture",
+          value: "Documented",
+          href: "/docs/proyek/architecture",
+        },
+        { label: "Decisions", value: "Recorded", href: "/docs/proyek/adr" },
         { label: "Contributions", value: "Open" },
         { label: "Pilot runtime", value: "Supported by GMEDIA" },
         { label: "Self-host", value: "On the roadmap" },
@@ -261,6 +270,7 @@ export const en: Dictionary = {
     crumb: "Philosophy",
     eyebrow: "Philosophy",
     title: "Code is not where the work ends.",
+    sourceTitle: "Sakala Philosophy (PHILOSOPHY)",
     lead: "Code is possibility: an idea that has been given structure, and something waiting to be made real. Sakala exists at the boundary between possibility and presence.",
     arcTitle: "Three stages underneath everything",
     arc: [
@@ -463,6 +473,7 @@ export const en: Dictionary = {
     crumb: "Roadmap",
     eyebrow: "Roadmap",
     title: "Direction, not a promise of dates.",
+    sourceTitle: "Sakala Roadmap (ROADMAP)",
     lead: "Sakala runs three parallel views that are related but never perfectly in sync: product, design, and engineering.",
     horizonLabel: "Horizon",
     horizons: [
@@ -522,8 +533,17 @@ export const en: Dictionary = {
     factsTitle: "Project facts",
     facts: [
       { label: "License", value: "Apache License 2.0" },
-      { label: "Stewardship", value: "Sakala Maintainers" },
+      {
+        label: "Stewardship",
+        value: "Sakala Maintainers",
+        href: "/docs/proyek/governance",
+      },
       { label: "Founding sponsor", value: "GMEDIA · PT Media Sarana Data" },
+      {
+        label: "Project documents",
+        value: "Published on this site",
+        href: "/docs/proyek",
+      },
     ],
     sponsorTitle: "The limits of the sponsor's role",
     sponsorLead:

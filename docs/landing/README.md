@@ -75,7 +75,7 @@ The Green Line of Life
 Read in this order:
 
 ```text
-Project-level Sakala docs
+Project-level Sakala docs (src/content/docs/proyek/, published at /docs/proyek)
 1. PHILOSOPHY
 2. VISION
 3. PRD

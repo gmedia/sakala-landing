@@ -1,0 +1,530 @@
+---
+title: "Sakala Architecture"
+description: "Project-level architecture baseline: repository topology, control plane vs data plane, agent communication, builder, runtime topology, invariants."
+track: proyek
+section: sistem
+order: 5
+lang: en
+canonical: true
+---
+
+import DiagramFigure from "../../../components/diagram/DiagramFigure.astro";
+import SequenceFlow from "../../../components/diagram/SequenceFlow.astro";
+import SystemDiagram from "../../../components/diagram/SystemDiagram.astro";
+
+# Sakala Architecture
+
+> Project-level architecture baseline — 2026-08-15
+
+## 1. Architecture Goals
+
+Sakala architecture should:
+
+- keep product/business policy in the control plane;
+- isolate privileged runtime operations in the Agent;
+- allow Console and API to evolve independently;
+- keep MVP deployment simple;
+- leave a path to multi-node without building it prematurely;
+- make deployment observable and recoverable;
+- minimize privileged surface area.
+
+## 2. Repository Topology
+
+```text
+sakala-landing
+→ Astro public site
+
+sakala-console
+→ SvelteKit first-party dashboard
+
+sakala-api
+→ Laravel control plane
+
+sakala-agent
+→ Rust runtime executor
+
+sakala-infra
+→ runtime/infrastructure reference
+
+sakala-dashboard
+→ archived legacy monolith
+```
+
+Potential future:
+
+```text
+sakala
+→ distribution/self-host installer/meta repo
+```
+
+## 3. High-Level Architecture
+
+<DiagramFigure
+  caption="Direction of communication between browser, control plane, and data plane."
+  alt="The browser reaches the landing and the console. The console talks to the API as control plane, which stores state in PostgreSQL and Valkey and emits realtime updates through Reverb. The agent polls the API outbound for commands, reports events and logs, and drives Docker, the builder, and Caddy on the runtime host, producing the user application container that Caddy routes to."
+  class="my-8"
+>
+  <SystemDiagram
+    controlPlaneLabel="control plane"
+    dataPlaneLabel="data plane"
+    agentLabel="Agent"
+    appLabel="run.sakala.dev"
+    browserLabel="Browser"
+  />
+</DiagramFigure>
+
+## 4. Control Plane vs Data Plane
+
+### Control Plane — `sakala-api`
+
+Owns:
+
+- identity;
+- authentication;
+- project;
+- deployment metadata;
+- desired state;
+- environment/secrets metadata;
+- resource policy;
+- domains metadata;
+- integration state;
+- AgentNode/AgentCommand;
+- events/log persistence;
+- audit;
+- future workspace/services/billing metadata.
+
+Must not:
+
+- access Docker socket;
+- run user containers;
+- perform `docker build`;
+- mutate host Caddy directly from HTTP request;
+- become remote shell.
+
+### Data Plane — `sakala-agent`
+
+Owns privileged execution:
+
+- checkout;
+- workspace;
+- process execution;
+- builder;
+- image;
+- container lifecycle;
+- resource enforcement;
+- logs;
+- health;
+- runtime routing;
+- cleanup.
+
+## 5. Console Architecture
+
+Stack:
+
+```text
+SvelteKit
+Svelte 5
+TypeScript
+Tailwind CSS v4
+TanStack Svelte Query
+Zod
+```
+
+MVP mode:
+
+```text
+Static SPA
+```
+
+Domain:
+
+```text
+app.sakala.dev
+```
+
+Rules:
+
+- pages compose feature modules;
+- server state via TanStack Query;
+- UI state via Svelte runes/stores;
+- business decisions stay in API;
+- no direct runtime calls;
+- no direct DB;
+- native fetch wrapper is sufficient initially.
+
+Suggested structure:
+
+```text
+src/
+├── lib/
+│   ├── api/
+│   ├── components/
+│   ├── features/
+│   ├── realtime/
+│   ├── stores/
+│   ├── types/
+│   └── utils/
+└── routes/
+```
+
+## 6. API Architecture
+
+Stack:
+
+```text
+Laravel 13
+PostgreSQL
+Valkey/Redis
+Sanctum
+Socialite
+Reverb
+```
+
+Request flow:
+
+```text
+HTTP
+→ Controller
+→ Form Request
+→ Policy
+→ Data
+→ Action
+→ Model / Service / Event / Job
+→ Resource
+→ JSON
+```
+
+Responsibilities:
+
+```text
+Controller
+→ thin HTTP entrypoint
+
+Request
+→ validate/normalize
+
+Policy
+→ authorization
+
+Data
+→ typed payload
+
+Action
+→ one business use case
+
+Service
+→ technical/external capability
+
+Model
+→ persistence
+
+Event
+→ fact
+
+Listener
+→ side effect
+
+Job
+→ async/retryable work
+
+Resource
+→ stable output contract
+```
+
+API namespaces:
+
+```text
+/api/auth/*
+/api/app/*
+/api/admin/*
+/api/agent/v1/*
+/webhooks/github/*
+```
+
+## 7. Authentication
+
+### Console
+
+```text
+Sanctum SPA cookie/session
+```
+
+### GitHub OAuth
+
+```text
+Console
+→ API GitHub redirect
+→ GitHub
+→ API callback
+→ session
+→ Console
+```
+
+### Agent
+
+```text
+Authorization: Bearer <agent-token>
+X-Agent-Id: <agent-id>
+```
+
+### Future CLI/Public API
+
+Scoped bearer/API tokens.
+
+## 8. Agent Architecture
+
+Mental model:
+
+```text
+protocol
+→ language
+
+core
+→ brain/orchestration
+
+runtime
+→ hands/feet/host implementation
+
+app
+→ bootstrap/wiring
+```
+
+Dependency direction:
+
+```text
+sakala-agent-core
+→ sakala-agent-protocol
+
+sakala-agent-runtime
+→ sakala-agent-core ports
+→ sakala-agent-protocol
+
+apps/sakala-agent
+→ core + runtime
+```
+
+Core must not execute Docker/Caddy commands directly.
+
+Runtime implements core-defined ports.
+
+## 9. Agent Communication
+
+MVP model:
+
+```text
+HTTP polling + PostgreSQL-backed command source
+```
+
+<DiagramFigure
+  caption="Deployment command flow between Console, API, PostgreSQL, Agent, and the runtime host."
+  alt="The console asks the API to deploy. The API creates a deployment and an agent command in PostgreSQL. The agent polls for commands, claims one, builds, runs, and routes on the host, streams events and logs to the API, which updates the console in realtime, and finally reports complete or fail."
+  class="my-8"
+>
+  <SequenceFlow
+    actors={["Console", "API", "Agent", "Runtime host"]}
+    steps={[
+      { from: "Console", to: "API", action: "deploy project" },
+      { from: "API", to: "API", action: "create Deployment and AgentCommand" },
+      { from: "Agent", to: "API", action: "poll commands" },
+      { from: "Agent", to: "API", action: "claim command" },
+      { from: "Agent", to: "Runtime host", action: "build / run / route" },
+      { from: "Agent", to: "API", action: "events and logs" },
+      { from: "Agent", to: "API", action: "complete or fail" },
+    ]}
+  />
+</DiagramFigure>
+
+Candidate endpoints:
+
+```text
+POST /api/agent/v1/register
+POST /api/agent/v1/heartbeat
+GET  /api/agent/v1/commands
+POST /api/agent/v1/commands/{id}/claim
+POST /api/agent/v1/commands/{id}/events
+POST /api/agent/v1/commands/{id}/logs
+POST /api/agent/v1/commands/{id}/complete
+POST /api/agent/v1/commands/{id}/fail
+```
+
+## 10. Builder Architecture
+
+Priority:
+
+```text
+Dockerfile
+→ Railpack
+→ Manual override
+```
+
+Analyze:
+
+```text
+checkout
+→ Sakala scanner
+→ railpack info
+→ stack preview
+```
+
+Deploy:
+
+```text
+checkout exact commit
+→ Dockerfile build
+OR
+→ railpack prepare
+→ BuildKit/buildx + railpack frontend
+→ image
+```
+
+Do not run redundant `info → plan → prepare` for normal deploy.
+
+## 11. Resource Ownership
+
+```text
+sakala-api
+→ product resource policy
+
+sakala-agent
+→ enforcement
+
+agent local config
+→ node hard safety guard
+```
+
+Agent must not know product-plan semantics such as Free/Pro.
+
+If requested resources exceed node hard maximum, explicit failure is preferred over silent major clamp.
+
+## 12. MVP Runtime Topology
+
+```text
+Internet
+  └── Caddy on host
+        ├── static Landing
+        ├── static Console
+        ├── API container        127.0.0.1:8080
+        └── user containers      127.0.0.1:31xxx
+
+Agent (systemd) ── Docker Engine ── API · PostgreSQL · Valkey · user containers
+Agent (systemd) ── Caddy route files (validate + reload)
+```
+
+Host:
+
+```text
+Caddy
+Docker Engine
+Sakala Agent systemd
+static Landing
+static Console
+deployment/GitOps scripts
+```
+
+Docker:
+
+```text
+Sakala API
+PostgreSQL
+Valkey/Redis
+User app containers
+```
+
+## 13. Domain Routing
+
+```text
+sakala.dev
+→ landing
+
+app.sakala.dev
+→ console
+
+api.sakala.dev
+→ API container
+
+*.run.sakala.dev
+→ user app route
+```
+
+User app binds localhost:
+
+```text
+127.0.0.1:31xxx
+```
+
+MVP route management:
+
+```text
+write Caddy route file atomically
+→ caddy validate
+→ reload
+```
+
+Future:
+
+```text
+Caddy Admin API
+→ Sakala Router
+→ multiple gateways
+```
+
+## 14. Deployment Consistency
+
+A Deployment is an attempt.
+
+The currently healthy application should not be destroyed too early during a new deployment.
+
+Desired future behavior:
+
+```text
+build candidate
+→ start candidate
+→ route/health candidate
+→ switch active
+→ retire previous
+```
+
+MVP may implement a simpler version, but architecture should avoid conflating:
+
+```text
+Project
+= current container
+```
+
+## 15. Future Multi-Node Path
+
+Do not build now.
+
+```text
+Single Runtime Node
+→ Multiple Runtime Nodes
+→ Placement metadata
+→ Node labels/capabilities
+→ Drain
+→ Gateway separation
+→ Sakala Router
+→ Home region
+→ Multi-region
+```
+
+Future node roles:
+
+```text
+runtime
+gateway
+control-plane
+```
+
+Node join may eventually be orchestrated by Sakala CLI/distribution repo.
+
+## 16. Architecture Invariants
+
+These should require an explicit ADR to change:
+
+1. API never directly accesses Docker socket.
+2. Agent is the privileged runtime boundary.
+3. Product resource policy belongs to control plane.
+4. Console does not own business policy.
+5. API-agent wire contract is versioned.
+6. Repository code is not merged back into a single Inertia dashboard by convenience.
+7. MVP stays simple until validation justifies distributed complexity.

@@ -17,6 +17,7 @@ export const id = {
     docs: "Dokumentasi",
     roadmap: "Roadmap",
     openSource: "Open Source",
+    projectDocs: "Dokumen project",
     changelog: "Changelog",
     github: "GitHub",
     /* Belum dipakai. CTA "Masuk" dicabut dari header selama Sakala belum
@@ -27,6 +28,12 @@ export const id = {
     close: "Tutup",
     languageLabel: "Pilih bahasa",
     docsNoteForEnglish: null as string | null,
+  },
+
+  /** Tautan ke dokumen kanonik di jalur Proyek. Dipakai halaman adaptasi
+   *  supaya pembaca selalu bisa menemukan sumbernya. */
+  source: {
+    label: "Sumber kanonik",
   },
 
   /** Label status dipakai bersama di seluruh situs. */
@@ -216,8 +223,12 @@ export const id = {
       facts: [
         { label: "Source", value: "Publik" },
         { label: "Lisensi", value: "Apache-2.0" },
-        { label: "Arsitektur", value: "Terdokumentasi" },
-        { label: "Keputusan", value: "Tercatat" },
+        {
+          label: "Arsitektur",
+          value: "Terdokumentasi",
+          href: "/docs/proyek/architecture",
+        },
+        { label: "Keputusan", value: "Tercatat", href: "/docs/proyek/adr" },
         { label: "Kontribusi", value: "Terbuka" },
         { label: "Runtime pilot", value: "Didukung GMEDIA" },
         { label: "Self-host", value: "Di roadmap" },
@@ -266,6 +277,7 @@ export const id = {
     crumb: "Filosofi",
     eyebrow: "Filosofi",
     title: "Kode bukan akhir dari sebuah karya.",
+    sourceTitle: "Filosofi Sakala (PHILOSOPHY)",
     lead: "Kode adalah kemungkinan: ide yang telah mendapat struktur, dan sesuatu yang menunggu untuk diwujudkan. Sakala hadir pada batas antara kemungkinan dan wujud.",
     arcTitle: "Tiga tahap yang menjadi dasar",
     arc: [
@@ -468,6 +480,7 @@ export const id = {
     crumb: "Roadmap",
     eyebrow: "Roadmap",
     title: "Arah, bukan janji tanggal.",
+    sourceTitle: "Roadmap Sakala (ROADMAP)",
     lead: "Sakala memakai tiga pandangan yang berjalan paralel dan tidak selalu sinkron: produk, desain, dan engineering.",
     horizonLabel: "Horizon",
     horizons: [
@@ -527,8 +540,17 @@ export const id = {
     factsTitle: "Fakta project",
     facts: [
       { label: "Lisensi", value: "Apache License 2.0" },
-      { label: "Stewardship", value: "Sakala Maintainers" },
+      {
+        label: "Stewardship",
+        value: "Sakala Maintainers",
+        href: "/docs/proyek/governance",
+      },
       { label: "Founding sponsor", value: "GMEDIA · PT Media Sarana Data" },
+      {
+        label: "Dokumen project",
+        value: "Terbit di situs ini",
+        href: "/docs/proyek",
+      },
     ],
     sponsorTitle: "Batas peran sponsor",
     sponsorLead:

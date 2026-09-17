@@ -1,7 +1,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import { defaultLang, type Lang } from "../i18n";
 
-export type DocTrack = "panduan" | "teknis";
+export type DocTrack = "panduan" | "teknis" | "proyek";
 
 /**
  * Dua jalur dokumentasi yang berdiri sendiri. Jalur pertama menjelaskan
@@ -23,6 +23,11 @@ const trackCopy = {
       title: "Dokumentasi Teknis",
       blurb: "Untuk yang ingin memahami atau ikut membangun.",
     },
+    proyek: {
+      label: "Proyek",
+      title: "Dokumen Project",
+      blurb: "Sumber kebenaran: filosofi, PRD, arsitektur, ADR, roadmap.",
+    },
   },
   en: {
     panduan: {
@@ -35,15 +40,32 @@ const trackCopy = {
       title: "Technical Documentation",
       blurb: "For people who want to understand or help build it.",
     },
+    proyek: {
+      label: "Project",
+      title: "Project Documents",
+      blurb: "Source of truth: philosophy, PRD, architecture, ADRs, roadmap.",
+    },
   },
 } as const;
+
+/**
+ * Kelompok di jalur `proyek`. Dokumen kanonik tampil di kedua bahasa, jadi
+ * frontmatter `section`-nya memakai kunci ini dan labelnya diterjemahkan di
+ * sini, bukan ditulis di tiap berkas.
+ */
+const projectSections: Record<string, Record<Lang, string>> = {
+  arah: { id: "Arah", en: "Direction" },
+  sistem: { id: "Sistem", en: "System" },
+  rencana: { id: "Rencana", en: "Plans" },
+  kerjasama: { id: "Kerja sama", en: "Working together" },
+};
 
 export function getTrackMeta(track: DocTrack, lang: Lang) {
   return { ...trackCopy[lang][track], href: trackHref(track, lang) };
 }
 
 export function trackHref(track: DocTrack, lang: Lang): string {
-  const base = track === "teknis" ? "/docs/teknis" : "/docs";
+  const base = track === "panduan" ? "/docs" : `/docs/${track}`;
   return lang === defaultLang ? base : `/${lang}${base}`;
 }
 
@@ -57,23 +79,32 @@ export type DocLink = {
 export type DocGroup = { section: string; items: DocLink[] };
 
 /** Halaman hub tiap jalur dirender oleh route tersendiri, bukan `[...slug]`. */
-export const hubIds = ["index", "teknis", "en", "en/teknis"];
+export const hubIds = [
+  "index",
+  "teknis",
+  "proyek",
+  "en",
+  "en/teknis",
+  "en/proyek",
+];
 
-/** `en/teknis/konsep` menjadi `/en/docs/teknis/konsep`. */
-export function docHref(id: string): string {
+/** `en/teknis/konsep` menjadi `/en/docs/teknis/konsep`. Dokumen kanonik
+ *  (`proyek/*`) tidak punya salinan per bahasa, jadi route-nya mengikuti
+ *  bahasa halaman yang memintanya. */
+export function docHref(id: string, lang: Lang = defaultLang): string {
   const isEnglish = id === "en" || id.startsWith("en/");
   const rest = isEnglish ? id.replace(/^en\/?/, "") : id;
-  const prefix = isEnglish ? "/en/docs" : "/docs";
+  const prefix = isEnglish || lang === "en" ? "/en/docs" : "/docs";
   if (rest === "" || rest === "index") return prefix;
   return `${prefix}/${rest}`;
 }
 
-function toLink(entry: CollectionEntry<"docs">): DocLink {
+function toLink(entry: CollectionEntry<"docs">, lang: Lang): DocLink {
   return {
     id: entry.id,
     title: entry.data.title,
     description: entry.data.description,
-    href: docHref(entry.id),
+    href: docHref(entry.id, entry.data.canonical ? lang : defaultLang),
   };
 }
 
@@ -84,12 +115,16 @@ export async function getTrackGroups(
   const entries = await getCollection("docs");
   // Halaman hub sudah diwakili pemilih jalur, jadi ia tidak diulang sebagai
   // item daftar di bawahnya.
-  const selected = entries.filter(
-    (entry) =>
+  // Jalur proyek berisi dokumen kanonik saja: ia tampil di kedua bahasa dan
+  // tidak dicampur dengan referensi terjemahan.
+  const selected = entries.filter((entry) => {
+    if (hubIds.includes(entry.id)) return false;
+    if (track === "proyek") return entry.data.track === "proyek";
+    return (
       entry.data.lang === lang &&
-      !hubIds.includes(entry.id) &&
-      (entry.data.track === track || entry.data.track === "referensi"),
-  );
+      (entry.data.track === track || entry.data.track === "referensi")
+    );
+  });
 
   const ordered = selected.sort((a, b) => {
     const weight = (entry: CollectionEntry<"docs">) =>
@@ -100,10 +135,13 @@ export async function getTrackGroups(
 
   const groups: DocGroup[] = [];
   for (const entry of ordered) {
-    const section = entry.data.section;
+    const section =
+      track === "proyek"
+        ? (projectSections[entry.data.section]?.[lang] ?? entry.data.section)
+        : entry.data.section;
     const last = groups.at(-1);
-    if (last && last.section === section) last.items.push(toLink(entry));
-    else groups.push({ section, items: [toLink(entry)] });
+    if (last && last.section === section) last.items.push(toLink(entry, lang));
+    else groups.push({ section, items: [toLink(entry, lang)] });
   }
   return groups;
 }
@@ -118,7 +156,9 @@ export async function getTrackSequence(
 }
 
 export function trackFromPath(pathname: string): DocTrack {
-  return pathname.includes("/docs/teknis") ? "teknis" : "panduan";
+  if (pathname.includes("/docs/teknis")) return "teknis";
+  if (pathname.includes("/docs/proyek")) return "proyek";
+  return "panduan";
 }
 
 export function langFromDocPath(pathname: string): Lang {
@@ -131,6 +171,9 @@ export function langFromDocPath(pathname: string): Lang {
  */
 export async function getDocLocales(id: string): Promise<Lang[]> {
   const entries = await getCollection("docs");
+  // Dokumen kanonik terbit di kedua route.
+  if (entries.some((entry) => entry.id === id && entry.data.canonical))
+    return ["id", "en"];
   const bare = id.replace(/^en\/?/, "") || "index";
   const has = (lang: Lang) =>
     entries.some((entry) => {
