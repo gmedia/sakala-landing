@@ -20,9 +20,6 @@ export const id = {
     projectDocs: "Dokumen project",
     changelog: "Changelog",
     github: "GitHub",
-    /* Belum dipakai. CTA "Masuk" dicabut dari header selama Sakala belum
-       tersedia sebagai layanan publik; label dan links.console disimpan agar
-       tinggal dihidupkan kembali saat public beta dibuka. */
     console: "Masuk",
     menu: "Menu",
     close: "Tutup",

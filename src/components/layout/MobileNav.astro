@@ -1,5 +1,7 @@
 ---
+import Button from "../ui/Button.astro";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
+import { links } from "../../data/links";
 import { getMainNavigation } from "../../data/navigation";
 import type { Lang } from "../../i18n";
 import type { Dictionary } from "../../i18n/id";
@@ -92,6 +94,7 @@ const navigation = getMainNavigation(lang, t);
         pathname={basePath}
         label={t.nav.languageLabel}
       />
+      <Button href={links.console} class="px-4 py-2">{t.nav.console}</Button>
     </div>
   </nav>
 </details>
