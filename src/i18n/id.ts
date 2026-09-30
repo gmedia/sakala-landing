@@ -483,33 +483,38 @@ export const id = {
     horizons: [
       {
         name: "Manifestasi",
-        status: "building",
-        text: "Identitas, project, analisis repository, build, deploy, log, domain bawaan, health, dan redeploy.",
+        status: "testing",
+        text: "Identitas, project, analisis repository, build, deploy, log, domain bawaan, health, redeploy, kuota pilot, dan kontrol admin.",
+      },
+      {
+        name: "Gate pilot publik",
+        status: "next",
+        text: "Isolasi workload, sleep otomatis dan batas build, dokumen hukum, penanganan abuse, serta bukti dan biaya dari pilot.",
+      },
+      {
+        name: "Learn minimal",
+        status: "next",
+        text: "Kelas, peserta lewat CSV, penugasan dengan tenggat, ringkasan untuk pengajar, dan siklus hidup project setelah kelas selesai.",
+      },
+      {
+        name: "Self-host satu node",
+        status: "direction",
+        text: "Installer yang bisa diulang dengan gVisor aktif, supaya institusi bisa menjalankan Sakala di servernya sendiri.",
       },
       {
         name: "Operasi yang andal",
-        status: "next",
-        text: "Custom domain, pemulihan deployment, log runtime, metrik, dan auto-deploy lewat webhook.",
+        status: "direction",
+        text: "Custom domain, pemulihan dan rollback, metrik dasar, auto-deploy lewat webhook, dan repository privat.",
       },
       {
         name: "Explore dan ekosistem",
         status: "direction",
-        text: "Showcase, profil creator, template, koleksi, dan silsilah project.",
+        text: "Dimulai dari koleksi terkurasi, lalu showcase, template, profil creator, dan silsilah project.",
       },
       {
-        name: "Kolaborasi dan belajar",
+        name: "Kolaborasi, layanan, platform",
         status: "direction",
-        text: "Workspace, anggota, peran, kelas, penugasan, dan alur magang.",
-      },
-      {
-        name: "Layanan pendukung",
-        status: "direction",
-        text: "PostgreSQL terkelola, Redis, object storage, worker, dan observability yang lebih kaya.",
-      },
-      {
-        name: "Platform",
-        status: "direction",
-        text: "CLI, API publik, installer self-host, dan runtime multi-node.",
+        text: "Workspace dan peran, layanan data terkelola, CLI, API publik, dan runtime multi-node.",
       },
     ],
     designTitle: "Status desain dan engineering dipisah",

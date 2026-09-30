@@ -49,6 +49,13 @@ alur kerjanya, dimulai dari Phase 0 — Audit sebelum menyentuh kode.
 Ketiganya tetap berlaku. Aturan spesifik soal routing i18n, provider font
 `local`, dan prefetch selektif tinggal di sini, bukan di `AGENTS.md`.
 
+### `proposals/` — usulan yang belum diputuskan
+
+Audit, riset, dan usulan arah yang masih menunggu keputusan project lead.
+Setelah diputuskan, isinya masuk ke dokumen kanonik di
+`src/content/docs/proyek/` lewat PR tersendiri, dan file proposalnya tetap
+di sini sebagai jejak alasan.
+
 ### `archive/` — sudah disupersede
 
 Berisi arah kreatif dari rebuild sebelumnya. Dokumen di sana **tidak lagi

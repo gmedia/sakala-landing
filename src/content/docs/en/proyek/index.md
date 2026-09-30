@@ -17,8 +17,12 @@ changes here are reviewed by the maintainers. The other pages on this site
 of these documents.
 
 Documents are shown in the language they were written in and are
-deliberately not translated, so that there is a single source. Some are in
-Indonesian, some in English; each page says which.
+deliberately not translated, so that there is a single source. The rule:
+**product-direction** documents (Philosophy, Vision, PRD, MVP, Roadmap, Design
+Strategy, Sakala Learn, Sakala Explore) are written in Indonesian;
+**system and community** documents (Architecture, ADR, Security, Platform
+Operations, Governance, Contributing, Glossary) are written in English. Each
+page says which.
 
 ## Order of authority
 
@@ -68,4 +72,6 @@ Propose it through a pull request to this site's repository; the
 Architecture changes that move a boundary are recorded as a new ADR, not
 only as a changed sentence in `ARCHITECTURE`.
 
-Documentation baseline: 2026-08-15, moved to this site on 2026-09-17.
+Documentation baseline: 15 August 2026, moved to this site on 17 September
+2026, and matured on 1 October 2026 (PRD 6.0, ADR-014 to ADR-017, language
+rule).

@@ -16,8 +16,11 @@ ditinjau oleh maintainer. Halaman lain di situs ini — [Filosofi](/filosofi),
 yang lebih naratif dari dokumen-dokumen ini.
 
 Dokumen ditampilkan dalam bahasa aslinya dan sengaja tidak diterjemahkan,
-supaya sumbernya tunggal. Sebagian ditulis dalam Bahasa Indonesia, sebagian
-dalam bahasa Inggris; tiap halaman menyebutkan bahasanya.
+supaya sumbernya tunggal. Aturannya: dokumen **arah produk** (Filosofi, Visi,
+PRD, MVP, Roadmap, Strategi Desain, Sakala Learn, Sakala Explore) ditulis
+dalam Bahasa Indonesia; dokumen **sistem dan komunitas** (Architecture, ADR,
+Security, Platform Operations, Governance, Contributing, Glossary) ditulis
+dalam bahasa Inggris. Tiap halaman menyebutkan bahasanya.
 
 ## Urutan otoritas
 
@@ -67,5 +70,6 @@ penyuntingan. Ajukan lewat pull request ke repository situs ini; jalur
 arsitektur yang menggeser boundary dicatat sebagai ADR baru, bukan hanya
 mengubah kalimat di `ARCHITECTURE`.
 
-Baseline dokumentasi: 2026-08-15, dipindahkan ke situs ini pada
-2026-09-17.
+Baseline dokumentasi: 15 Agustus 2026, dipindahkan ke situs ini pada
+17 September 2026, dan dimatangkan pada 1 Oktober 2026 (PRD 6.0, ADR-014
+sampai ADR-017, aturan bahasa).

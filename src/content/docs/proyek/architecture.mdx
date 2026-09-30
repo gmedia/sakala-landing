@@ -1,6 +1,6 @@
 ---
 title: "Sakala Architecture"
-description: "Project-level architecture baseline: repository topology, control plane vs data plane, agent communication, builder, runtime topology, invariants."
+description: "Project-level architecture: repository topology, control plane vs data plane, agent communication, builder, current and target runtime topology, domain routing, and invariants."
 track: proyek
 section: sistem
 order: 5
@@ -31,31 +31,24 @@ Sakala architecture should:
 ## 2. Repository Topology
 
 ```text
-sakala-landing
-→ Astro public site
-
-sakala-console
-→ SvelteKit first-party dashboard
-
-sakala-api
-→ Laravel control plane
-
-sakala-agent
-→ Rust runtime executor
-
-sakala-infra
-→ runtime/infrastructure reference
-
-sakala-dashboard
-→ archived legacy monolith
+sakala-landing      Astro public site; home of the canonical project documents
+sakala-console      SvelteKit first-party console
+sakala-api          Laravel control plane
+sakala-agent        Rust runtime executor
+sakala-infra        runtime and infrastructure reference, local playground
+sakala-dashboard    archived legacy monolith
 ```
 
 Potential future:
 
 ```text
-sakala
-→ distribution/self-host installer/meta repo
+sakala              distribution: self-host installer, manifests, CLI bootstrap
 ```
+
+Application repositories own their Dockerfiles; CI builds and publishes
+images on a version tag. How the hosted service is deployed on its
+infrastructure is operated privately by the infrastructure provider and is
+not part of the public repositories (GOVERNANCE §9).
 
 ## 3. High-Level Architecture
 
@@ -396,39 +389,48 @@ Agent must not know product-plan semantics such as Free/Pro.
 
 If requested resources exceed node hard maximum, explicit failure is preferred over silent major clamp.
 
-## 12. MVP Runtime Topology
+## 12. Runtime Topology
+
+### Current (MVP and pilot)
+
+One host runs everything:
 
 ```text
 Internet
-  └── Caddy on host
-        ├── static Landing
-        ├── static Console
-        ├── API container        127.0.0.1:8080
-        └── user containers      127.0.0.1:31xxx
+  └── edge proxy (TLS)
+        ├── Landing and Console (static)
+        ├── API and realtime
+        └── *.run.sakala.dev → runtime router → user containers
 
-Agent (systemd) ── Docker Engine ── API · PostgreSQL · Valkey · user containers
-Agent (systemd) ── Caddy route files (validate + reload)
+Containers on an internal network (rootless Docker)
+  API and its workers · PostgreSQL · Valkey · object storage
+  runtime router · user containers
+
+Sakala Agent — host service with access to the rootless Docker socket,
+               git, buildx, and railpack; writes route files that the
+               runtime router reads
 ```
 
-Host:
+Production images are built in CI and pinned by digest; the host pulls a
+reviewed release rather than building from source, and rollback is reverting
+that release.
+
+### Target (before public registration)
+
+[ADR-014](/docs/proyek/adr) separates user workloads from the control plane:
 
 ```text
-Caddy
-Docker Engine
-Sakala Agent systemd
-static Landing
-static Console
-deployment/GitOps scripts
+App node        host Caddy · Landing · Console · API · Reverb · workers
+                PostgreSQL · Valkey · object storage
+
+Runtime node    host Caddy (runtime edge) · runtime Caddy · Sakala Agent
+                rootless Docker with gVisor (runsc) for user containers
+                no control-plane service, no database
 ```
 
-Docker:
-
-```text
-Sakala API
-PostgreSQL
-Valkey/Redis
-User app containers
-```
+The runtime node reaches the API only over HTTPS as an agent. User
+containers get an egress policy that blocks the app node, cloud metadata
+endpoints, and SMTP.
 
 ## 13. Domain Routing
 
@@ -528,3 +530,6 @@ These should require an explicit ADR to change:
 5. API-agent wire contract is versioned.
 6. Repository code is not merged back into a single Inertia dashboard by convenience.
 7. MVP stays simple until validation justifies distributed complexity.
+8. User workloads never share a host with control-plane services or their
+   data once registration is public (ADR-014).
+9. Hosted and self-host run the same code under the same licence (ADR-017).

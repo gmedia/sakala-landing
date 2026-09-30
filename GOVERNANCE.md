@@ -1,25 +1,21 @@
 # Governance
 
-Sakala is an open-source deployment project developed with transparent roadmap, public documentation, and community contribution.
+The canonical governance of the Sakala project is published at:
 
-## Project Stewardship
+**https://sakala.dev/docs/proyek/governance**
 
-During the early MVP phase, Sakala is maintained by the initial maintainer team with support from GMEDIA as founding sponsor and infrastructure supporter.
+Its source lives in this repository at
+[`src/content/docs/proyek/governance.md`](src/content/docs/proyek/governance.md).
+It covers stewardship, the sponsor boundary, roles and how to become a
+maintainer, how decisions are made, sustainability, licences and design files,
+the Sakala name, and the code of conduct.
 
-## Sponsor Role
+This file is kept only as a pointer, so that there is one governance document
+rather than two that can drift apart.
 
-Sponsors may support infrastructure, domain, development resources, documentation, community programs, education pilots, or long-term maintenance.
+## Ringkas
 
-Sponsors do not automatically control technical decisions, roadmap priority, license changes, contributor rights, or community direction.
-
-## Technical Decisions
-
-Technical decisions are made by maintainers through public issues, pull requests, discussions, documentation updates, and roadmap notes.
-
-## License
-
-Sakala is licensed under the Apache License 2.0.
-
-## Future Governance
-
-As Sakala grows beyond MVP and receives broader community contribution, the project may move to a dedicated community organization and adopt a more formal maintainer and governance model.
+Sakala adalah project deployment open-source yang diinisiasi oleh Sakala
+Maintainers dan didukung oleh GMEDIA sebagai founding sponsor dan
+infrastructure supporter. Kode berlisensi Apache License 2.0. Detail lengkap
+ada di tautan di atas.
