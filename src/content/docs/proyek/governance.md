@@ -1,6 +1,6 @@
 ---
 title: "Governance"
-description: "Stewardship, the sponsor boundary, roles and how to become a maintainer, how decisions are made and disagreements resolved, the Sakala name, sustainability, and working culture."
+description: "Stewardship, the sponsor boundary, roles and how to become a maintainer, how decisions are made and disagreements resolved, sustainability, licences for code and design assets, the Sakala name, and working culture."
 track: proyek
 section: kerjasama
 order: 13
@@ -140,16 +140,43 @@ Commitments:
   what they provide. Additional sponsors, grants, or a fiscal host may be
   added; none may acquire control beyond §5.
 
-## 7. The Sakala name
+## 7. Licences, design assets, and the Sakala name
 
-The code is open under Apache 2.0. The name "Sakala" and its logo identify
-this project.
+Sakala has three kinds of material, and each has its own terms.
+
+| Material                                                                                                          | Licence                                      |
+| ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| Source code in every Sakala repository                                                                            | Apache License 2.0                           |
+| Documentation and design assets: the canonical documents, the design system, mockups, diagrams, and illustrations | Creative Commons Attribution 4.0 (CC BY 4.0) |
+| The name "Sakala", the Sakala logo and mark                                                                       | Not licensed; governed by the rules below    |
+
+CC BY 4.0 lets anyone copy, adapt, and reuse documentation and design assets,
+including commercially, as long as they credit Sakala and link to the source.
+Apache 2.0 does not grant rights to the project's trademarks (section 6 of
+the licence); this section states how the name and logo may be used.
+
+### Design files
+
+Design work made for Sakala is a contribution to the project, on the same
+footing as code. The working Figma file is currently hosted in the GMEDIA
+workspace. The target is a Figma team held in the name of the Sakala project,
+with more than one maintainer as owner, so that the design outlives any single
+account or sponsor arrangement (§6). Until that transfer is agreed with
+GMEDIA, the design system is published through its public summary on the
+[Design System](/docs/teknis/sistem-desain) page, and screens are shared as
+exported frames in the issue or pull request that discusses them.
+
+### The name and logo
 
 - Anyone may use the name to refer to Sakala, to say they run it, or to say
   their work is built for it.
+- Anyone may show the unmodified logo to link to or talk about Sakala, for
+  example in an article, a talk, or a list of tools.
 - A modified distribution or a hosted service run by someone else must not
   present itself as the official Sakala or imply endorsement. "Powered by
   Sakala" is fine; "Sakala Cloud" by another party is not.
+- Do not alter the logo, combine it with another mark, or use it as the
+  logo of another product.
 - Institutions that self-host may say "Sakala at <institution>".
 - Questions go to the maintainers.
 

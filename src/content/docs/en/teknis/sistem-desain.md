@@ -21,6 +21,8 @@ None of this is secret: it is already in the CSS shipped to every browser.
 Publishing it makes UI contributions consistent from the start instead of
 corrected afterwards.
 
+This page is licensed under CC BY 4.0. The Sakala name and logo are excluded; their use is governed by [Governance §7](/en/docs/proyek/governance).
+
 ## Brand anchors
 
 Three canonical colors from the Sakala Design System. Other values derive
