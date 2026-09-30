@@ -106,8 +106,10 @@ syarat berikut terpenuhi.
    untuk project tanpa trafik dan batas jumlah build per jam
    ([ADR-015](/docs/proyek/adr)).
 3. **Dokumen hukum.** Syarat layanan, kebijakan penggunaan yang wajar, dan
-   pemberitahuan privasi sesuai UU PDP terbit di situs dan disetujui saat
-   pendaftaran.
+   pemberitahuan privasi sesuai UU PDP terbit di situs. Syarat layanan dan
+   kebijakan penggunaan disetujui saat pendaftaran; pemberitahuan privasi
+   ditampilkan dan diketahui pengguna saat pendaftaran, tetapi tidak dijadikan
+   persetujuan sebagai dasar pemrosesan.
 4. **Penanganan abuse.** Ada alamat pelaporan abuse yang dipantau, dan
    alurnya tertulis di [Platform Operations](/docs/proyek/platform-operations),
    termasuk target waktu suspend.
