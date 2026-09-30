@@ -1,8 +1,7 @@
 ---
 title: This site becomes the source of truth for project documents
 description: Sakala's fifteen canonical documents — philosophy, vision, PRD, MVP, architecture, ADRs, roadmap, governance — are now published on the Project track, and a design-system page is open to contributors.
-version: "0.8.0"
-publishedAt: 2026-09-17
+publishedAt: 2026-09-17T18:00:00+07:00
 lang: en
 ---
 

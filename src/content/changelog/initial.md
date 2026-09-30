@@ -1,7 +1,6 @@
 ---
 title: Fondasi website Sakala
 description: Landing page, dokumentasi awal, dan sistem visual light-first diperkenalkan.
-version: "0.1.0"
 publishedAt: 2026-05-23
 lang: id
 ---

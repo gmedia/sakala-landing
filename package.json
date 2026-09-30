@@ -2,7 +2,7 @@
   "name": "sakala-landing",
   "private": true,
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "engines": {
     "node": ">=22.12.0"
   },

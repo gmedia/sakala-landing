@@ -1,8 +1,7 @@
 ---
 title: Six chapters and artifacts that change state
 description: The homepage is condensed from nine chapters to six, motion moves from text to artifacts, and the deployment now actually runs stage by stage using the Console design's grammar.
-version: "0.7.0"
-publishedAt: 2026-09-17
+publishedAt: 2026-09-17T12:00:00+07:00
 lang: en
 ---
 

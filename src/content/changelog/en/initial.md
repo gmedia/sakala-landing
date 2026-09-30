@@ -1,7 +1,6 @@
 ---
 title: Foundation of the Sakala website
 description: Landing page, initial documentation, and a light-first visual system are introduced.
-version: "0.1.0"
 publishedAt: 2026-05-23
 lang: en
 ---

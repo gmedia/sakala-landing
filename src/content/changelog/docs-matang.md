@@ -1,7 +1,6 @@
 ---
 title: Dokumen project dimatangkan, dengan arah yang lebih tegas
 description: Sakala kini jelas masuk lewat pendidikan, tersedia sebagai hosted dan self-host dengan kode yang sama, dan punya syarat tertulis sebelum pendaftaran dibuka untuk umum.
-version: "0.9.0"
 publishedAt: 2026-10-01
 lang: id
 ---

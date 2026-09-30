@@ -1,7 +1,6 @@
 ---
 title: Homepage disusun ulang mengikuti The Life of a Project
 description: Landing kini mengikuti satu project melewati hidupnya, dari kemungkinan menuju wujud dan kelanjutan, dengan halaman filosofi, produk, dan roadmap tersendiri.
-version: "0.4.0"
 publishedAt: 2026-08-31
 lang: id
 ---

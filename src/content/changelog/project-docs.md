@@ -1,8 +1,7 @@
 ---
 title: Situs ini menjadi sumber kebenaran dokumen project
 description: Lima belas dokumen kanonik Sakala — filosofi, visi, PRD, MVP, arsitektur, ADR, roadmap, governance — kini terbit di jalur Proyek, dan halaman sistem desain dibuka untuk kontributor.
-version: "0.8.0"
-publishedAt: 2026-09-17
+publishedAt: 2026-09-17T18:00:00+07:00
 lang: id
 ---
 

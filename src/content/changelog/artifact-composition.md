@@ -1,7 +1,6 @@
 ---
 title: Artefak diperdalam, dan dokumentasi berhenti menjanjikan yang belum ada
 description: Ilustrasi beranda disusun ulang agar bentuknya sendiri yang membawa makna, dan halaman dokumentasi yang menjanjikan pemakaian dicabut selama Sakala belum tersedia.
-version: "0.5.0"
 publishedAt: 2026-08-31
 lang: id
 ---

@@ -1,7 +1,6 @@
 ---
 title: Lapisan kejelasan di atas narasi yang sudah ada
 description: Hero mendapat penjelasan konkret dan langkah berikutnya, persona pengguna tampil di beranda, dan mengikuti perkembangan menjadi satu aksi utama.
-version: "0.6.0"
 publishedAt: 2026-09-09
 lang: id
 ---

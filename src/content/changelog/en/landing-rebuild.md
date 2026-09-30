@@ -1,7 +1,6 @@
 ---
 title: Site rebuilt, documentation deepened, and now bilingual
 description: A visual direction that follows the Console, technical diagrams that explain the infrastructure, a domain glossary, and support for Indonesian and English.
-version: "0.3.0"
 publishedAt: 2026-08-29
 lang: en
 ---

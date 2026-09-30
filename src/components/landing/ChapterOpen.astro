@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import ArtifactFigure from "../artifact/ArtifactFigure.astro";
 import OpenProofArtifact from "../artifact/OpenProofArtifact.astro";
 import Chapter from "./Chapter.astro";
+import { changelogAnchor } from "../../data/changelog";
 import { links } from "../../data/links";
 import { languages, localizePath, type Lang } from "../../i18n";
 import type { Dictionary } from "../../i18n/id";
@@ -139,7 +140,7 @@ const changelogPath = localizePath("/changelog", lang);
             latest.map((entry) => (
               <li class="py-3.5">
                 <a
-                  href={`${changelogPath}#v-${entry.data.version}`}
+                  href={`${changelogPath}#${changelogAnchor(entry)}`}
                   data-astro-prefetch="hover"
                   class="group block"
                 >
@@ -147,8 +148,7 @@ const changelogPath = localizePath("/changelog", lang);
                     class="block font-mono text-xs text-muted-2"
                     datetime={entry.data.publishedAt.toISOString()}
                   >
-                    {date.format(entry.data.publishedAt)} · v
-                    {entry.data.version}
+                    {date.format(entry.data.publishedAt)}
                   </time>
                   <span class="mt-1 block font-semibold text-ink group-hover:text-primary-dark">
                     {entry.data.title}
