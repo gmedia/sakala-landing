@@ -221,9 +221,8 @@ Dockerfile.
 **Caddy Route.** The per-project hostname-to-upstream route file written by
 the agent and served by the runtime Caddy.
 
-**Release Pin.** The production image digests committed in
-`sakala-deployment/releases/production.env`. A release is a reviewed commit; a
-rollback is its revert.
+**Release Pin.** The image digests a production release is made of. A release
+is a reviewed change to the pins; a rollback is its revert.
 
 **Platform Console.** The maintainer-facing operational surface.
 

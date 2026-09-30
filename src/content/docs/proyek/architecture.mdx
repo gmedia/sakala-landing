@@ -35,8 +35,6 @@ sakala-landing      Astro public site; home of the canonical project documents
 sakala-console      SvelteKit first-party console
 sakala-api          Laravel control plane
 sakala-agent        Rust runtime executor
-sakala-deployment   runtime composition, host integration, and release pins
-                    for staging and production
 sakala-infra        runtime and infrastructure reference, local playground
 sakala-dashboard    archived legacy monolith
 ```
@@ -47,9 +45,10 @@ Potential future:
 sakala              distribution: self-host installer, manifests, CLI bootstrap
 ```
 
-`sakala-deployment` holds no application source and no secrets. Application
-repositories own their Dockerfiles; CI builds and publishes images on a
-version tag; `sakala-deployment` pins those images by digest.
+Application repositories own their Dockerfiles; CI builds and publishes
+images on a version tag. How the hosted service is deployed on its
+infrastructure is operated privately by the infrastructure provider and is
+not part of the public repositories (GOVERNANCE §9).
 
 ## 3. High-Level Architecture
 
@@ -394,30 +393,27 @@ If requested resources exceed node hard maximum, explicit failure is preferred o
 
 ### Current (MVP and pilot)
 
-One VM runs everything. As described by `sakala-deployment`:
+One host runs everything:
 
 ```text
 Internet
-  └── host Caddy (TLS edge, wildcard via DNS-01)
-        ├── Landing (static container)
-        ├── Console (static container)
-        ├── API (PHP-FPM + Nginx)         loopback only
-        ├── Reverb (/app/* WebSocket)     loopback only
-        ├── object storage reads (GET/HEAD /storage/*)
-        └── *.run.sakala.dev → runtime Caddy (loopback) → user containers
+  └── edge proxy (TLS)
+        ├── Landing and Console (static)
+        ├── API and realtime
+        └── *.run.sakala.dev → runtime router → user containers
 
-Docker (rootless, internal network)
-  API · queue worker · scheduler · Reverb · PostgreSQL · Valkey · RustFS
-  runtime Caddy · user containers (sakala-runtime network)
+Containers on an internal network (rootless Docker)
+  API and its workers · PostgreSQL · Valkey · object storage
+  runtime router · user containers
 
-Sakala Agent — host binary under systemd, rootless Docker socket,
-               git, buildx, railpack; writes route files read-only-mounted
-               into runtime Caddy
+Sakala Agent — host service with access to the rootless Docker socket,
+               git, buildx, and railpack; writes route files that the
+               runtime router reads
 ```
 
-Production never builds on the host. Images are built in CI and pinned by
-digest in `releases/production.env`; a timer on the host pulls the pin,
-migrates, rolls out, and records the pin only after health checks pass.
+Production images are built in CI and pinned by digest; the host pulls a
+reviewed release rather than building from source, and rollback is reverting
+that release.
 
 ### Target (before public registration)
 

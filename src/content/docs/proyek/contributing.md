@@ -130,7 +130,6 @@ sakala-landing      site and canonical documents
 sakala-console      console
 sakala-api          control plane
 sakala-agent        runtime executor
-sakala-deployment   composition and release pins
 sakala-infra        runtime reference
 ```
 

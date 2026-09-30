@@ -33,7 +33,7 @@ Autentikasi → Onboarding → Buat project → Analisis repository → Konfigur
 ## Wajib ada
 
 Status per 1 Oktober 2026 berdasarkan kode di repository `sakala-api`,
-`sakala-agent`, `sakala-console`, dan `sakala-deployment`.
+`sakala-agent`, dan `sakala-console`, serta pengujian di staging.
 
 | Area          | Kebutuhan                                                                                                                                     | Status                                                           |
 | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
@@ -83,7 +83,7 @@ Syarat tambahan:
 - deployment yang gagal punya alasan yang berguna dan menunjuk tahapnya;
 - dokumentasi menjelaskan deploy pertama;
 - pemasangan bisa diulang dari environment bersih dengan langkah yang
-  terdokumentasi (`sakala-deployment`).
+  terdokumentasi.
 
 ## Gate sebelum pendaftaran dibuka untuk umum
 
