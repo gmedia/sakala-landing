@@ -1,9 +1,10 @@
 # Dokumen hukum Sakala hosted (draf)
 
 Tiga dokumen dibutuhkan sebelum pendaftaran Sakala hosted dibuka untuk umum
-(syarat nomor 3 di gate pilot publik, MVP.md). Karena production sudah
-berjalan dan tombol "Masuk" sudah aktif di situs, ketiganya sebaiknya terbit
-secepat mungkin, bahkan untuk pilot terbatas.
+(syarat nomor 3 di gate pilot publik, MVP.md). Per 1 Oktober 2026 pendaftaran
+di production belum dibuka karena masalah kredensial autentikasi. Waktu itu
+sebaiknya dipakai untuk menyelesaikan ketiganya, supaya begitu autentikasi
+beres, pendaftaran tidak tertahan oleh dokumen hukum.
 
 | Dokumen               | Status             | Catatan                                                                                                                          |
 | --------------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------- |

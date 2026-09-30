@@ -339,7 +339,9 @@ berjalan sebagian. Detail di [Platform Operations](/docs/proyek/platform-operati
 
 ## 10. Identitas dan akun
 
-- Login dengan GitHub OAuth dan email dengan verifikasi. Status: berjalan.
+- Login dengan GitHub OAuth dan email dengan verifikasi. Status: dibangun.
+  Di production masih ada masalah kredensial autentikasi, sehingga pendaftaran
+  belum dibuka.
 - Sesi Console memakai cookie Sanctum, bukan JWT ([ADR-003](/docs/proyek/adr)).
 - Onboarding menanyakan profil pengguna. Pilihan saat ini adalah developer,
   devops, architect, dan lainnya. Untuk pasar pertama, pilihan mahasiswa atau

@@ -35,18 +35,23 @@ Autentikasi → Onboarding → Buat project → Analisis repository → Konfigur
 Status per 1 Oktober 2026 berdasarkan kode di repository `sakala-api`,
 `sakala-agent`, `sakala-console`, dan `sakala-deployment`.
 
-| Area          | Kebutuhan                                                                                                                                     | Status   |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| Identitas     | GitHub OAuth, email dengan verifikasi, sesi Console, logout, onboarding dengan peran                                                          | berjalan |
-| Console       | Dashboard, buat project, detail project, variabel dan secret, detail deployment, log build, notifikasi                                        | berjalan |
-| Project       | Repository GitHub publik, branch, nama dan slug, domain bawaan, analisis stack, deteksi Dockerfile dan Railpack, konfigurasi yang bisa diubah | berjalan |
-| Deployment    | Record deployment, state, event, log, deploy dan redeploy manual, satu web workload, build, run, route, health check, sukses dan gagal        | berjalan |
-| Agent         | Identitas, heartbeat, poll, claim dengan lease, event, log, complete, fail, protokol berversi                                                 | berjalan |
-| Runtime       | Docker rootless, build Dockerfile, fallback Railpack, batas resource, port localhost, route Caddy, health check, cleanup                      | berjalan |
-| Kuota         | Kuota pilot tertulis dan ditegakkan ([PRD §9.2](/docs/proyek/prd))                                                                            | berjalan |
-| Kontrol admin | Stop dan suspend project, dengan alasan dan jejak audit                                                                                       | berjalan |
-| Infrastruktur | Caddy host, Docker Engine, agent via systemd, API, PostgreSQL, Valkey, object storage, Console dan Landing statis, DNS wildcard runtime       | berjalan |
-| Rilis         | Image dibangun di CI, dipin per digest, rollback lewat revert                                                                                 | berjalan |
+| Area          | Kebutuhan                                                                                                                                     | Status                                                           |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Identitas     | GitHub OAuth, email dengan verifikasi, sesi Console, logout, onboarding dengan profil                                                         | dibangun; di production masih ada masalah kredensial autentikasi |
+| Console       | Dashboard, buat project, detail project, variabel dan secret, detail deployment, log build, notifikasi                                        | berjalan                                                         |
+| Project       | Repository GitHub publik, branch, nama dan slug, domain bawaan, analisis stack, deteksi Dockerfile dan Railpack, konfigurasi yang bisa diubah | berjalan                                                         |
+| Deployment    | Record deployment, state, event, log, deploy dan redeploy manual, satu web workload, build, run, route, health check, sukses dan gagal        | berjalan                                                         |
+| Agent         | Identitas, heartbeat, poll, claim dengan lease, event, log, complete, fail, protokol berversi                                                 | berjalan                                                         |
+| Runtime       | Docker rootless, build Dockerfile, fallback Railpack, batas resource, port localhost, route Caddy, health check, cleanup                      | berjalan                                                         |
+| Kuota         | Kuota pilot tertulis dan ditegakkan ([PRD §9.2](/docs/proyek/prd))                                                                            | berjalan                                                         |
+| Kontrol admin | Stop dan suspend project, dengan alasan dan jejak audit                                                                                       | berjalan                                                         |
+| Infrastruktur | Caddy host, Docker Engine, agent via systemd, API, PostgreSQL, Valkey, object storage, Console dan Landing statis, DNS wildcard runtime       | berjalan                                                         |
+| Rilis         | Image dibangun di CI, dipin per digest, rollback lewat revert                                                                                 | berjalan                                                         |
+
+Ringkasnya, MVP **belum selesai**. Jalur deploy dari repository sampai URL
+publik sudah terbukti di staging, tetapi belum matang dan belum dipakai
+pengguna pilot. Di production, pendaftaran belum dibuka karena masalah
+kredensial autentikasi yang masih diperbaiki.
 
 ## Sengaja tidak dibangun untuk MVP
 
