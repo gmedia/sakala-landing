@@ -1,7 +1,6 @@
 ---
 title: Framing governance dan sponsor diperjelas
 description: Narasi Sakala diperbarui agar lebih jelas sebagai project open-source yang didukung GMEDIA sebagai sponsor pendiri.
-version: "0.2.0"
 publishedAt: 2026-06-18
 lang: id
 ---

@@ -1,7 +1,6 @@
 ---
 title: Homepage rebuilt around The Life of a Project
 description: The landing now follows one project through its life, from possibility into presence and continuation, with dedicated philosophy, product, and roadmap pages.
-version: "0.4.0"
 publishedAt: 2026-08-31
 lang: en
 ---

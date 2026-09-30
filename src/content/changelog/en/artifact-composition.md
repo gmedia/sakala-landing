@@ -1,7 +1,6 @@
 ---
 title: Artifacts deepened, and the docs stop promising what does not exist
 description: The homepage illustrations were rebuilt so their construction carries the meaning, and documentation pages that promised usage were withdrawn while Sakala is not yet available.
-version: "0.5.0"
 publishedAt: 2026-08-31
 lang: en
 ---

@@ -1,7 +1,6 @@
 ---
 title: Project documents matured, with a clearer direction
 description: Sakala now clearly enters through education, is offered as hosted and self-host from the same code, and has written conditions before registration opens to everyone.
-version: "0.9.0"
 publishedAt: 2026-10-01
 lang: en
 ---

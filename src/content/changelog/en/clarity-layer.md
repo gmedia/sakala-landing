@@ -1,7 +1,6 @@
 ---
 title: A clarity layer over the existing narrative
 description: The hero gains a concrete explanation and a next step, user personas appear on the homepage, and following the progress becomes the single primary action.
-version: "0.6.0"
 publishedAt: 2026-09-09
 lang: en
 ---

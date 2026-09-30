@@ -1,8 +1,7 @@
 ---
 title: Enam bab dan artefak yang berubah keadaan
 description: Beranda dipadatkan dari sembilan bab menjadi enam, gerak dipindah dari teks ke artefak, dan deployment kini benar-benar berjalan tahap demi tahap dengan grammar rancangan Console.
-version: "0.7.0"
-publishedAt: 2026-09-17
+publishedAt: 2026-09-17T12:00:00+07:00
 lang: id
 ---
 

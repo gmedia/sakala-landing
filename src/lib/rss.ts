@@ -1,3 +1,4 @@
+import { changelogAnchor } from "../data/changelog";
 import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
 import { localizePath, type Lang } from "../i18n";
@@ -39,11 +40,14 @@ export async function buildChangelogFeed(lang: Lang, site: URL | undefined) {
     title: meta[lang].title,
     description: meta[lang].description,
     site,
+    // Link item berisi fragment (#slug); trailing slash akan jatuh di
+    // belakang fragment dan membuat anchor-nya tidak cocok.
+    trailingSlash: false,
     items: entries.map((entry) => ({
       title: entry.data.title,
       description: entry.data.description,
       pubDate: entry.data.publishedAt,
-      link: `${changelogPath}#v-${entry.data.version}`,
+      link: `${changelogPath}#${changelogAnchor(entry)}`,
     })),
     customData: `<language>${meta[lang].language}</language>`,
   });

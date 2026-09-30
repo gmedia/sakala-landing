@@ -36,7 +36,6 @@ const changelog = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    version: z.string(),
     publishedAt: z.coerce.date(),
     /** Entri diterbitkan per bahasa. Tidak ada fallback: versi bahasa yang
      *  belum ditulis tidak akan muncul. */
