@@ -479,33 +479,38 @@ export const en: Dictionary = {
     horizons: [
       {
         name: "Manifestation",
-        status: "building",
-        text: "Identity, projects, repository analysis, build, deploy, logs, generated domain, health, and redeploy.",
+        status: "testing",
+        text: "Identity, projects, repository analysis, build, deploy, logs, generated domain, health, redeploy, pilot quotas, and admin controls.",
+      },
+      {
+        name: "Public pilot gate",
+        status: "next",
+        text: "Workload isolation, idle sleep and build limits, legal documents, abuse handling, and evidence and costs from the pilot.",
+      },
+      {
+        name: "Minimal Learn",
+        status: "next",
+        text: "Classes, participants via CSV, assignments with deadlines, an overview for instructors, and what happens to projects after a class ends.",
+      },
+      {
+        name: "Single-node self-host",
+        status: "direction",
+        text: "A repeatable installer with gVisor on by default, so institutions can run Sakala on their own servers.",
       },
       {
         name: "Reliable operation",
-        status: "next",
-        text: "Custom domains, deployment recovery, runtime logs, metrics, and webhook auto-deploy.",
+        status: "direction",
+        text: "Custom domains, recovery and rollback, basic metrics, webhook auto-deploy, and private repositories.",
       },
       {
         name: "Explore and ecosystem",
         status: "direction",
-        text: "Showcase, creator profiles, templates, collections, and project lineage.",
+        text: "Starting from curated collections, then showcases, templates, creator profiles, and project lineage.",
       },
       {
-        name: "Collaboration and learning",
+        name: "Collaboration, services, platform",
         status: "direction",
-        text: "Workspaces, members, roles, classrooms, assignments, and internship flow.",
-      },
-      {
-        name: "Developer services",
-        status: "direction",
-        text: "Managed PostgreSQL, Redis, object storage, workers, and richer observability.",
-      },
-      {
-        name: "Platform",
-        status: "direction",
-        text: "CLI, public API, self-host installer, and multi-node runtime.",
+        text: "Workspaces and roles, managed data services, CLI, public API, and multi-node runtime.",
       },
     ],
     designTitle: "Design and engineering status stay separate",

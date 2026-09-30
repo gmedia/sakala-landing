@@ -1,214 +1,138 @@
 ---
-title: "Design Strategy"
-description: "Current design coverage, the Explore wave, domain management, platform operations, and the handoff standard."
+title: "Strategi Desain"
+description: "Cakupan desain saat ini, utang desain yang tercatat, gelombang desain berikutnya dalam urutan baru, standar handoff, dan prinsip UI produk."
 track: proyek
 section: rencana
-order: 9
-lang: en
+order: 10
+lang: id
 canonical: true
 ---
 
-# Design Strategy
+# Strategi Desain Sakala
 
-> Product design may lead engineering. Design is not a hidden engineering commitment.
+> Desain produk boleh mendahului engineering. Desain bukan komitmen
+> engineering yang tersembunyi.
 
-## Design Source
+## Sumber desain
 
-Current primary design workspace:
+Sakala Design System di Figma (akses tim). Ringkasan publik token, tipografi,
+kosakata status, dan aturan artefak ada di
+[Sistem Desain](/docs/teknis/sistem-desain). Bila keduanya berbeda, Figma yang
+menang dan halaman publik yang diperbaiki.
 
-```text
-Sakala Design System — Figma (team access)
-```
+Dokumen ini mencatat arah desain di tingkat produk, bukan spesifikasi piksel.
 
-This document records product-level design direction, not pixel-level Figma specification.
+## 1. Cakupan saat ini
 
-## 1. Current Coverage
-
-Wave 1 is reported complete:
-
-```text
-Login & Register
-GitHub OAuth
-Account Verification
-Onboarding
-Dashboard
-Create Project
-Deployment Detail
-Build Logs
-Project Detail
-Variables / Secrets
-Profile
-Settings
-Notifications
-```
-
-UI/UX no longer needs to wait for engineering to finish those screens before exploring the next product horizon.
-
-## 2. Next Focus — Sakala Explore
-
-Why Explore first:
-
-- differentiates Sakala from generic PaaS dashboards;
-- connects philosophy, open source, portfolio, internship, and education;
-- can be explored without waiting for runtime implementation;
-- creates a richer reason for Sakala to exist beyond "deploy without VPS".
-
-Required explorations:
+Gelombang 1 selesai dan sebagian besar sudah dibangun di Console:
 
 ```text
-Explore Home
-Project Showcase List
-Project Showcase Detail
-Template List
-Template Detail
-Creator Profile
-Collection Detail
-Publish to Showcase
-Submit as Template
-Template Review State
-Featured State
-Rejected / Needs Changes State
+Login dan daftar · GitHub OAuth · Verifikasi akun · Onboarding · Dashboard
+Buat project · Detail deployment · Log build · Detail project
+Variabel dan secret · Profil · Pengaturan · Notifikasi
 ```
 
-## 3. Explore UX Questions
+## 2. Utang desain yang tercatat
 
-Design should answer:
+Ditemukan saat layar Gelombang 1 dipakai sebagai acuan artefak di situs
+(September 2026). Dicatat supaya diselesaikan bersama, bukan untuk menilai
+siapa pun.
 
-- What makes a public project worth opening?
-- How do we show creator attribution without becoming a social network?
-- What is the difference between `Deploy` and `Use Template`?
-- How does a project become a template?
-- How does a collection communicate context such as internship or workshop?
-- How does a creator opt out of public listing?
-- How do we show source, live app, stack, license, and provenance clearly?
-- What moderation state is visible to submitter?
-- How does a template explain required env/services before deploy?
+| Temuan                                                                               | Dampak                                          | Arah perbaikan                                                                      |
+| ------------------------------------------------------------------------------------ | ----------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Token teks sekunder `#A2A2A2` di atas `#FBFBFB` hanya 2,47:1                         | Timestamp dan label gagal WCAG AA (butuh 4,5:1) | Naikkan token, misalnya ke nilai `muted-2` di Sistem Desain (5,17:1)                |
+| Token sukses `#39DA8A` dipakai sebagai teks (1,82:1)                                 | Teks status sukses sulit dibaca                 | Pakai varian gelap `#248A57` atau lebih gelap untuk teks                            |
+| Nama tahap deployment bercampur bahasa ("Cloning repository", "Menganalisis proyek") | Kosakata tidak konsisten dalam satu daftar      | Satu bahasa per antarmuka; nama tahap kanonik di [Glosarium](/docs/proyek/glossary) |
+| Log memakai Montserrat                                                               | Kolom dan timestamp sulit dipindai              | Monospace untuk log, sesuai Sistem Desain                                           |
+| Contoh slug berspasi (`Sakala 2.run.sakala.dev`)                                     | Contoh yang tidak mungkin terjadi               | Contoh slug memakai tanda hubung (`sakala-2`)                                       |
 
-## 4. Wave 3 — Domain Management
+## 3. Gelombang berikutnya
 
-Screens/states:
+Urutan mengikuti [Roadmap](/docs/proyek/roadmap).
+
+### Gelombang 2 — Learn
+
+Layar dan state: tautan undangan kelas, unggah peserta lewat CSV, buat kelas,
+buat penugasan dengan template dan tenggat, ringkasan kelas untuk pengajar,
+tampilan per peserta (repository, URL, deployment terakhir, log), kunci
+pengumpulan, arsip kelas, pindahkan project ke akun pribadi.
+
+Pertanyaan yang harus dijawab desain:
+
+- Bagaimana pengajar melihat 30 peserta sekaligus tanpa membuka 30 halaman?
+- Bagaimana kategori kegagalan terbanyak terlihat dalam satu layar?
+- Apa yang dilihat peserta tentang data dirinya yang terlihat oleh pengajar?
+- Bagaimana kelas yang sudah selesai terasa "diarsipkan", bukan "dihapus"?
+
+### Gelombang 3 — Pilot publik
+
+Halaman project yang sedang tidur dan sedang bangun, tampilan kuota dan
+sisanya, project yang di-suspend beserta alasan dan jalur banding,
+persetujuan syarat layanan saat mendaftar, dan pengaturan hapus akun.
+
+Prinsip: sleep adalah perilaku yang diharapkan, bukan kegagalan. Copy-nya
+harus membuat itu jelas.
+
+### Gelombang 4 — Domain dan operasi
 
 ```text
-Generated Domain
-Custom Domain
-Add Domain
-DNS Instructions
-Pending Verification
-Verified
-TLS Provisioning
-Active
-Failure
-Primary Domain
-Alias
-Redirect
-Remove Domain
+Domain bawaan · Custom domain · Tambah domain · Instruksi DNS
+Menunggu verifikasi · Terverifikasi · TLS · Aktif · Gagal
+Domain utama · Alias · Redirect · Hapus domain
 ```
 
-Design principle:
+Prinsip: kompleksitas DNS dijelaskan, bukan dilempar ke pengguna. Status domain
+bisa ditampilkan sebagai `DNS ✓ · TLS ✓ · Route ✓ · Aplikasi ✓`.
 
-> DNS complexity should be explained, not dumped on the user.
+### Gelombang 5 — Platform Console
 
-A domain status can conceptually show:
+Overview, node, deployment, analitik kegagalan, laporan abuse, moderasi,
+masukan. Hindari template admin CRUD generik. Detail di
+[Platform Operations](/docs/proyek/platform-operations).
 
-```text
-DNS    ✓
-TLS    ✓
-Route  ✓
-App    ✓
-```
+### Gelombang 6 — Explore
 
-## 5. Wave 4 — Platform Operations
+Dimulai dari halaman koleksi, detail project dalam koleksi, dan profil
+creator sebagai portfolio. Detail di [Sakala Explore](/docs/proyek/feature-explore).
 
-See `PLATFORM_OPERATIONS.md`.
+### Gelombang 7 — Layanan terkelola
 
-Prioritize:
+PostgreSQL, Redis atau Valkey, object storage, worker dan queue, pemakaian,
+kredensial dan pemasangan layanan.
 
-- overview;
-- nodes;
-- deployments;
-- failure analytics;
-- moderation;
-- feedback.
+## 4. Standar handoff
 
-Avoid generic CRUD admin template.
+Setiap fitur yang siap diimplementasikan menyertakan:
 
-## 6. Wave 5 — Collaboration & Learn
+- pengguna sasaran dan tujuannya;
+- route atau konteks;
+- state normal, kosong, memuat, error, gagal sebagian, tidak berizin;
+- konfirmasi untuk aksi destruktif;
+- perilaku responsif (minimal 320 px dan desktop);
+- data dan aksi yang dibutuhkan;
+- copy final dalam bahasa antarmuka;
+- catatan interaksi atau prototipe;
+- pengecekan kontras untuk setiap pasangan warna baru.
 
-Explore:
+## 5. Prinsip UI produk
 
-- workspace;
-- member invite;
-- role;
-- classroom;
-- assignment;
-- participant project;
-- mentor/instructor dashboard;
-- showcase handoff.
+**Ramah, tetapi tidak kekanak-kanakan.** Jelaskan kompleksitas dengan bahasa
+yang jelas.
 
-Boundary:
+**Berorientasi developer, tetapi tidak mengintimidasi.** Detail teknis dibuka
+bertahap.
 
-```text
-Learn ≠ LMS
-```
+**Status adalah elemen utama.** Deployment, health, DNS, verifikasi,
+moderasi, sleep, dan suspend harus terbaca, dan tidak hanya lewat warna.
 
-## 7. Design Handoff Standard
+**Log adalah alat, bukan hiasan.** Monospace, timestamp, level, pencarian,
+salin, dan baris error yang ditandai.
 
-Every implementation-ready feature should provide:
+**Satu bahasa per antarmuka.** Istilah teknis yang lazim boleh tetap bahasa
+Inggris (deploy, build, log), tetapi kalimatnya utuh dalam satu bahasa.
 
-- target user;
-- user goal;
-- route/context;
-- normal state;
-- empty state;
-- loading state;
-- error state;
-- partial failure;
-- permission denied;
-- destructive confirmation;
-- responsive behavior;
-- required data;
-- required actions;
-- copy;
-- interaction/prototype notes.
+**Aksesibilitas.** Keyboard, fokus terlihat, kontras WCAG 2.2 AA, label
+semantik.
 
-## 8. Product UI Principles
-
-### Friendly but not childish
-
-Explain complexity using clear language.
-
-### Developer-oriented but not intimidating
-
-Use technical detail progressively.
-
-### Status is a first-class UI element
-
-Deployment, health, DNS, verification, and moderation must be readable.
-
-### Logs are tools, not decoration
-
-Terminal/log UI must prioritize searchability and error comprehension.
-
-### Accessibility
-
-- keyboard;
-- visible focus;
-- contrast;
-- semantic labels;
-- status not only color.
-
-### Identity
-
-Avoid generic SaaS admin appearance where possible.
-
-Sakala should feel like:
-
-```text
-a place where projects become real
-```
-
-not merely:
-
-```text
-a database admin dashboard
-```
+**Identitas.** Sakala terasa seperti tempat karya menjadi nyata, bukan
+sekadar dashboard admin database.

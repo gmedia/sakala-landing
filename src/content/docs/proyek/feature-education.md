@@ -1,172 +1,216 @@
 ---
 title: "Sakala Learn"
-description: "Classroom, assignment, and internship workflows built from generic primitives. Not an LMS."
+description: "Pasar pertama Sakala: kelas, penugasan, dan magang yang dibangun dari primitif umum. Bukan LMS. Termasuk roster, integrasi LMS, siklus hidup project, data peserta, dan rencana pilot."
 track: proyek
 section: rencana
 order: 11
-lang: en
+lang: id
 canonical: true
 ---
 
 # Sakala Learn
 
-> **Status:** Future product pillar  
-> **Principle:** deployment learning, not LMS
+> **Status:** pilar prioritas setelah MVP ([Roadmap Horizon B](/docs/proyek/roadmap))
+> **Prinsip:** belajar deployment, bukan LMS
 
-## 1. Product Thesis
+## 1. Tesis
 
-Software education often stops at source code.
+Pendidikan pemrograman sering berhenti di source code. Tugas dikumpulkan
+sebagai repository atau file ZIP, lalu dinilai tanpa pernah dijalankan.
 
-Sakala Learn focuses on the next step:
-
-```text
-Source
-→ Deployment
-→ Live Application
-→ Review
-```
-
-A student should be able to say:
+Sakala Learn fokus pada langkah berikutnya:
 
 ```text
-Here is my source.
-Here is my running application.
+Source → Deployment → Aplikasi hidup → Tinjauan
 ```
 
-## 2. Boundary
-
-Sakala should not own:
-
-- attendance;
-- curriculum;
-- lecture material;
-- quiz;
-- exam;
-- full grading;
-- student administration.
-
-Those belong to LMS/SIS products.
-
-Sakala may integrate with them later.
-
-## 3. Core Objects
-
-Potential domain:
+Seorang peserta harus bisa berkata:
 
 ```text
-Workspace
-└── Classroom / Program
-    ├── Instructors / Mentors
-    ├── Participants
-    ├── Assignments
-    └── Projects / Submissions
+Ini source-ku.
+Ini aplikasiku yang berjalan.
 ```
 
-Assignment may include:
+## 2. Kenapa sekarang
 
-- title;
-- description;
-- starter template;
-- repository requirement;
-- resource policy;
-- required service;
-- deadline;
-- deployment requirement;
-- showcase permission.
+Dua alat kelas pemrograman yang banyak dipakai sudah berhenti. Replit menutup
+Teams for Education pada 1 Agustus 2024. GitHub Classroom dihentikan pada
+28 Agustus 2026, setelah dipakai 3,73 juta siswa dan pengajar di lebih dari
+305.000 kelas. Classroom memberi repository per peserta dan autograding
+lewat GitHub Actions, tetapi tidak pernah memberi aplikasi yang hidup.
 
-## 4. Student Flow
+Pengajar yang dulu memakainya sedang mencari pengganti. Sebagian pengganti
+yang ditawarkan berbayar dan berfokus pada IDE di browser. Sakala mengisi
+bagian yang tidak diisi siapa pun: setiap peserta punya aplikasi yang hidup,
+dan pengajar bisa melihat kenapa aplikasi itu gagal.
+
+Pelajaran dari kedua penutupan itu juga mengikat desain Learn: institusi butuh
+jaminan bahwa alatnya tidak hilang di tengah semester. Karena itu Learn
+berjalan sama di Sakala hosted dan self-host ([ADR-017](/docs/proyek/adr)).
+
+## 3. Batas
+
+Sakala tidak mengelola presensi, kurikulum, materi kuliah, kuis, ujian, nilai
+akhir, dan administrasi mahasiswa. Semua itu milik LMS dan sistem informasi
+akademik.
+
+Sakala mengelola:
 
 ```text
-Join
-→ Open Assignment
-→ Use Template / Connect Repo
-→ Develop
-→ Deploy
-→ Fix Failures
-→ Submit
-→ Optional Showcase
+Penugasan → Source → Deploy → Aplikasi hidup → Pengumpulan → Tinjauan teknis
 ```
 
-## 5. Instructor Flow
+Autograding bukan fokus awal. Pengajar yang membutuhkan test otomatis tetap
+bisa memakai GitHub Actions di repository peserta; Sakala menampilkan
+hasilnya bila ada, bukan menggantikannya.
+
+## 4. Objek inti
 
 ```text
-Create Classroom
-→ Create Assignment
-→ Choose Template
-→ Invite Participants
-→ Observe Deployment Status
-→ Open Source
-→ Open Live App
-→ Review
+Workspace (institusi atau program)
+└── Kelas
+    ├── Pengajar dan mentor
+    ├── Peserta
+    ├── Penugasan
+    └── Project dan pengumpulan
 ```
 
-Overview example:
+Penugasan memuat: judul, deskripsi, template awal opsional, syarat repository,
+kebijakan resource, layanan yang dibutuhkan, tenggat, syarat deployment
+(misalnya "harus sehat sebelum tenggat"), dan izin masuk koleksi.
+
+## 5. Alur peserta
 
 ```text
-24 Participants
-
-18 Healthy
- 3 Build Failed
- 2 In Progress
- 1 Not Started
+Bergabung lewat tautan kelas → Buka penugasan
+→ Pakai template atau hubungkan repository → Kembangkan → Deploy
+→ Perbaiki kegagalan → Kumpulkan → (opsional) Masuk koleksi
 ```
 
-## 6. Internship / PKL
-
-Do not create a separate hardcoded "Internship engine".
-
-Compose generic primitives:
+## 6. Alur pengajar
 
 ```text
-Workspace
-+ Collection
-+ Template
-+ Assignment
-+ Showcase
+Buat kelas → Masukkan peserta → Buat penugasan → Pilih template
+→ Pantau status deployment → Buka source → Buka aplikasi → Tinjau
 ```
 
-Example:
+Contoh ringkasan kelas:
 
 ```text
-GMEDIA Internship
+24 peserta
+
+18 sehat
+ 3 gagal build
+ 2 sedang berjalan
+ 1 belum mulai
 ```
 
-Output:
+Dari ringkasan, pengajar bisa langsung melihat kategori kegagalan
+terbanyak. Bila delapan peserta gagal di tahap yang sama, itu tanda materinya
+perlu diulang, bukan delapan masalah terpisah.
 
-- live project;
-- source;
-- creator attribution;
-- program collection;
-- optional featured status;
-- optional template candidate.
+## 7. Memasukkan peserta
 
-## 7. Resource Policy
+Urutan yang dituju:
 
-Education can eventually define:
+1. **Tautan undangan kelas.** Peserta masuk dengan akun Sakala biasa.
+2. **Unggah CSV** berisi nama, email, dan NIM atau nomor peserta. Peserta yang
+   belum punya akun menerima undangan.
+3. **Integrasi LMS lewat LTI 1.3**, untuk institusi yang memakai Moodle atau
+   LMS lain. Ini arah, bukan kebutuhan awal.
+
+Sakala tidak menyinkronkan data akademik lain dari LMS.
+
+## 8. Kebijakan resource
+
+Kelas mendefinisikan batasnya sendiri, di atas mekanisme kuota yang sama
+dengan pengguna biasa ([ADR-015](/docs/proyek/adr)):
 
 ```text
-CPU
-Memory
-Max Projects
-Allowed Services
-Expiration
-Always-on policy
+CPU · Memori · Jumlah project per peserta · Layanan yang diizinkan
+Masa berlaku · Kebijakan selalu hidup atau boleh tidur
 ```
 
-This makes infrastructure predictable and teaches realistic constraints.
+Batas yang jelas membuat infrastruktur bisa diprediksi dan mengajarkan
+batasan yang realistis.
 
-## 8. Why This Matters
+## 9. Siklus hidup setelah kelas selesai
 
-Sakala becomes a bridge between:
+Pertanyaan yang harus dijawab sebelum kelas pertama: apa yang terjadi pada
+30 aplikasi setelah semester berakhir?
+
+| Tahap                     | Yang terjadi                                                                                    |
+| ------------------------- | ----------------------------------------------------------------------------------------------- |
+| Selama kelas              | Project berjalan dengan kebijakan resource kelas                                                |
+| Setelah tenggat           | Pengajar bisa mengunci project sebagai versi yang dikumpulkan                                   |
+| Kelas diarsipkan          | Project tidur dan tetap bisa dibangunkan untuk ditinjau, selama masa arsip yang diatur pengajar |
+| Peserta ingin melanjutkan | Project dipindahkan ke akun pribadi peserta dan mengikuti kuota pribadinya                      |
+| Masa arsip habis          | Project dihentikan; source tetap di repository peserta, konfigurasi bisa diekspor               |
+
+Prinsipnya sama dengan filosofi Berbagi: karya tidak harus berakhir ketika
+tugasnya selesai. Peserta memutuskan apakah karyanya berlanjut.
+
+## 10. Data peserta
+
+Institusi yang menjalankan kelas adalah pihak yang menentukan tujuan
+pemrosesan data peserta. Sakala hosted memproses data itu atas nama kelas.
+Konsekuensinya, sesuai UU PDP:
+
+- data yang dikumpulkan terbatas pada yang dipakai: nama, email, nomor
+  peserta, akun GitHub, dan project;
+- pengajar hanya melihat data peserta di kelasnya;
+- nilai atau penilaian tidak disimpan di Sakala;
+- peserta bisa melihat data apa yang dilihat pengajarnya;
+- kelas yang diarsipkan mengikuti masa simpan yang tertulis, lalu data
+  kelasnya dihapus.
+
+Institusi yang ingin data peserta tidak keluar dari infrastrukturnya memakai
+self-host.
+
+## 11. Magang dan PKL
+
+Tidak ada "mesin magang" yang dibuat khusus. Magang disusun dari primitif
+umum:
 
 ```text
-learning to code
+Workspace + Kelas + Template + Penugasan + Koleksi
 ```
 
-and:
+Contoh: program magang GMEDIA. Keluarannya: aplikasi yang hidup, source,
+attribution creator, koleksi program, status unggulan opsional, dan kandidat
+template untuk angkatan berikutnya.
+
+## 12. Rencana pilot
+
+Pilot pertama berjalan di program yang dikendalikan sendiri sebelum kerja sama
+resmi dengan institusi, karena institusi pendidikan lambat mengambil keputusan
+dan pemakaiannya musiman.
+
+1. **Program magang GMEDIA** — satu angkatan, satu kelas, dua sampai tiga
+   penugasan.
+2. **Satu sampai dua dosen yang sudah dikenal** — satu mata kuliah
+   pemrograman web, satu semester.
+3. **Satu institusi self-host** — setelah installer satu node tersedia.
+
+Yang diukur, selain metrik di [PRD §13](/docs/proyek/prd):
+
+- persentase peserta dengan aplikasi sehat sebelum tenggat;
+- jumlah pertanyaan teknis ke pengajar per peserta, dibandingkan kelas
+  sebelumnya;
+- apakah pengajar mau memakai Sakala lagi di semester berikutnya.
+
+## 13. Kenapa ini penting
+
+Sakala menjadi jembatan antara:
 
 ```text
-learning to ship software
+belajar menulis kode
 ```
 
-That is distinct educational value without turning Sakala into an LMS.
+dan:
+
+```text
+belajar mengirim software
+```
+
+Itu nilai pendidikan yang khas, tanpa menjadikan Sakala sebuah LMS.

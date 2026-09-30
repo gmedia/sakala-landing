@@ -1,6 +1,6 @@
 ---
 title: "Glossary"
-description: "The shared domain language: project, deployment, workload, template, collection, control plane, agent node, and more."
+description: "The shared domain language and the canonical lists: deployment states, stage names, failure categories, runtime states, quotas, and the terms used by the product, the runtime, Learn, and Explore."
 track: proyek
 section: kerjasama
 order: 15
@@ -10,192 +10,241 @@ canonical: true
 
 # Glossary
 
-Consistent language prevents accidental architecture.
+Consistent language prevents accidental architecture. This page also owns the
+canonical lists that other documents, the Console, and the site refer to. When
+code and this page disagree, the code is checked first; if the code is right,
+this page is corrected.
 
-## Project
+## Canonical lists
 
-Long-lived user product object.
+### Deployment states
 
-Owns source configuration, deployments, variables/secrets, domains, and future services.
-
-## Source / Repository
-
-Git source connected to a Project.
-
-## Project Analysis
-
-Inspection of source to determine stack/build/runtime hints.
-
-## Deployment
-
-One attempt to manifest a source revision into a running workload.
-
-A Project may have many Deployments.
-
-## Active Deployment
-
-Deployment currently serving the project/environment.
-
-## Workload / Service
-
-A runnable unit.
-
-Current:
+Source: `DeploymentStatus` in `sakala-api`.
 
 ```text
-Web Service
+queued → cloning → analyzing → building → deploying → routing → health_checking
+       → succeeded | failed | cancelled
 ```
 
-Future:
+### Stage names shown to users
+
+Five named stages, grouped from the states above. Each interface uses one
+language throughout.
+
+| State(s)               | Indonesian            | English            |
+| ---------------------- | --------------------- | ------------------ |
+| `queued`, `cloning`    | Mengambil repository  | Cloning repository |
+| `analyzing`            | Membaca proyek        | Analyzing project  |
+| `building`             | Membangun image       | Building image     |
+| `deploying`, `routing` | Menjalankan container | Starting container |
+| `health_checking`      | Memeriksa kesehatan   | Checking health    |
+
+Stage status words: `selesai / done`, `sedang berjalan / running`,
+`menunggu / pending`, `gagal / failed`.
+
+### Failure categories
+
+Source: `DeploymentFailureCategory` in `sakala-api`.
 
 ```text
-Worker
-Cron
-Static Site
+checkout · build · start · health · route · timeout · resource · node
+scheduling · unknown
 ```
 
-## Environment
+### Runtime states of a project
 
-Future isolated context such as:
+Source: `RuntimeStatus` in `sakala-api`.
 
 ```text
-Production
-Preview
-Development
+not_deployed · deploying · running · stopped · failed · crashed
 ```
 
-Contains its own deployment/config/domain relationship.
+### Project states
 
-## Variable
-
-Non-secret runtime configuration.
-
-## Secret
-
-Sensitive configuration requiring encryption/redaction.
-
-## Generated Domain
-
-Sakala-provided runtime hostname:
+Source: `ProjectStatus` in `sakala-api`.
 
 ```text
-<slug>.run.sakala.dev
+draft · active · failed · suspended
 ```
 
-## Custom Domain
+### Capability status (product documents)
 
-User-owned domain mapped to a Sakala workload.
+```text
+berjalan / running · dibangun / building · dirancang / designed · arah / direction
+```
 
-## Template
+### Public status (site)
 
-Reusable project starting point designed for deployment or code reuse.
+```text
+available · building · testing · next · direction · unavailable
+```
 
-## Showcase
+## Product
 
-Publicly discoverable presentation of a project/live application.
+**Project.** A long-lived product object. Owns source configuration,
+deployments, variables and secrets, domains, and future services.
 
-## Creator
+**Source / Repository.** The Git source connected to a project. Public GitHub
+repositories today; private ones through a GitHub App.
 
-Human or organization attributed to project/template work.
+**Project Analysis.** Inspection of the source to determine stack, build,
+start, and port hints, shown to the user before building.
 
-## Collection
+**Deployment.** One attempt to manifest a source revision into a running
+workload. A project has many deployments.
 
-Curated grouping of projects/templates/creators.
+**Active Deployment.** The deployment currently serving the project.
 
-Examples: internship cohort, workshop, official starters.
+**Workload / Service.** A runnable unit. Current: Web Service. Future: Worker,
+Cron, Static Site.
+
+**Environment.** Future isolated context such as Production, Preview, or
+Development, with its own deployment, configuration, and domain.
+
+**Variable.** Non-secret runtime configuration.
+
+**Secret.** Sensitive configuration, encrypted at rest and redacted from logs.
+
+**Generated Domain.** The Sakala-provided hostname `<slug>.run.sakala.dev`.
+Some slugs are reserved (`api`, `app`, `admin`, `status`, and others). See
+ADR-016 for the proposed separate domain.
+
+**Custom Domain.** A user-owned domain mapped to a workload.
+
+## Hosting and policy
+
+**Hosted.** Sakala run on infrastructure provided by GMEDIA, with a published
+free quota. Capacity above the quota is GMEDIA's cloud service (ADR-017).
+
+**Self-host.** Sakala run by an institution or individual on its own servers,
+with its own quota. Same code and licence as hosted.
+
+**Quota.** Product-level limit set by the API: projects per user, active
+deployments, and per-container memory, CPU, and PIDs. Hosted defaults are in
+PRD §9.2.
+
+**Resource Policy.** The requested and effective CPU, memory, and similar
+limits decided by the API for a deployment.
+
+**Hard Safety Limit.** A node-local maximum the agent will not exceed,
+regardless of the requested policy.
+
+**Sleep.** Stopping an idle workload while keeping its configuration, to be
+woken on the next request (ADR-015). Expected behaviour, not a failure.
+
+**Stop.** An admin or owner action that stops a project's workload.
+
+**Suspend.** An admin action that stops a project and prevents it from
+serving, with a recorded reason and an appeal path. Used for abuse.
+
+**Abuse Report.** A report that a hosted project is used for phishing,
+malware, mining, spam, or other prohibited use. Handled by the process in
+PLATFORM_OPERATIONS §6.
+
+**Usage Signal.** A recorded event used for product validation and abuse
+detection: deployment attempt, successful deployment, active projects,
+rejected limits, agent failure, repeated build failure, manual intervention.
+
+## Learn
+
+**Class / Program.** A group of instructors and participants working on
+assignments. Not an LMS.
+
+**Assignment.** A software-delivery task, optionally with a starter template,
+a deadline, a deployment requirement, and a resource policy.
+
+**Roster.** The list of participants in a class, added by invitation link or
+CSV, and later LTI.
+
+**Submission.** The project version a participant hands in; can be locked by
+the instructor after the deadline.
 
 ## Explore
 
-Public discovery layer containing Projects, Templates, Creators, and Collections.
+**Template.** A reusable starting point designed for deployment or code
+reuse.
 
-## Workspace
+**Showcase.** A publicly discoverable presentation of a project, opted into by
+its owner.
 
-Ownership/collaboration boundary containing projects and members.
+**Creator.** A person or organization attributed to projects and templates.
 
-## Classroom / Program
+**Collection.** A curated group of projects, templates, and creators, for
+example an internship cohort or a workshop.
 
-Future Learn capability for assignment/deployment workflow.
+**Lineage.** The recorded relationship between a project and the template or
+project it was derived from.
 
-Not an LMS.
+**Explore.** The public discovery layer of projects, templates, creators, and
+collections.
 
-## Assignment
+## Collaboration
 
-Definition of a software-delivery task, optionally connected to a Template and resource policy.
+**Workspace.** An ownership and collaboration boundary containing projects
+and members.
 
-## Control Plane
+## System
 
-`sakala-api` and its state/policy/orchestration responsibilities.
+**Control Plane.** `sakala-api` and its state, policy, and orchestration
+responsibilities.
 
-## Data Plane / Runtime
+**Data Plane / Runtime.** Infrastructure that executes builds and workloads.
 
-Infrastructure that executes builds and workloads.
+**App Node.** The host that runs the control plane: API, database, cache,
+object storage, Console, and Landing.
 
-## Agent Node
+**Runtime Node.** A host capable of running user workloads through the Sakala
+Agent. ADR-014 requires it to be separate from the app node before public
+registration.
 
-Registered Sakala Agent identity.
+**Gateway Node.** Future host responsible for public ingress and routing.
 
-## Runtime Node
+**Agent Node.** A registered Sakala Agent identity (`agent-<uuid7>`) with a
+protocol revision and a status (ready, degraded, draining, drained,
+maintenance).
 
-Host capable of running user workloads through Sakala Agent.
+**AgentCommand.** A control-plane instruction claimed and executed by an
+agent under a lease.
 
-## Gateway Node
+**Lease.** The time an agent holds a claimed command before the control plane
+treats it as abandoned.
 
-Future host responsible for public ingress/routing.
+**Runtime Class.** The container runtime used for user workloads (for example
+`runsc` for gVisor). See ADR-014.
 
-## AgentCommand
+**Builder.** The mechanism that turns source into a runnable image. Priority:
+Dockerfile, Railpack, manual.
 
-Control-plane instruction claimed/executed by an Agent.
+**Railpack.** The automatic build-plan system Sakala uses when there is no
+Dockerfile.
 
-## Resource Policy
+**Caddy Route.** The per-project hostname-to-upstream route file written by
+the agent and served by the runtime Caddy.
 
-Product-level requested/effective CPU/RAM/etc decided by API.
+**Release Pin.** The production image digests committed in
+`sakala-deployment/releases/production.env`. A release is a reviewed commit; a
+rollback is its revert.
 
-## Hard Safety Limit
+**Platform Console.** The maintainer-facing operational surface.
 
-Node-local maximum Agent will not exceed.
+**Sakala Distribution.** The future installer and self-host layer, possibly a
+repository named `sakala`.
 
-## Builder
+**CLI.** A future human and operator command-line interface. Not the agent.
 
-Mechanism that turns source into runnable image.
+## Process
 
-Current priority:
+**Design Ready.** The UX/UI has enough definition for handoff. Does not mean
+engineering is committed.
 
-```text
-Dockerfile
-Railpack
-Manual
-```
+**Engineering Committed.** A feature explicitly prioritized for
+implementation.
 
-## Railpack
+**MVP.** The strict validation milestone in MVP.md, not the full definition of
+Sakala.
 
-Automatic project build-plan system used by Sakala when appropriate.
+**Public Pilot Gate.** The six conditions in MVP.md that must hold before
+registration opens to everyone.
 
-## Caddy Route
-
-MVP runtime hostname-to-local-upstream routing configuration.
-
-## Platform Console
-
-Maintainer-facing operational/admin product surface.
-
-## Sakala Distribution
-
-Future installer/self-hosting layer, potentially a repository named `sakala`.
-
-## CLI
-
-Future human/operator command-line interface. Not the Agent.
-
-## Design Ready
-
-UX/UI has enough definition for handoff/review.
-
-Does not mean engineering is committed.
-
-## Engineering Committed
-
-Feature has been explicitly prioritized for implementation.
-
-## MVP
-
-Strict validation milestone defined in `MVP.md`, not the full definition of Sakala.
+**ADR.** An Architecture Decision Record; a numbered, dated decision with its
+status.

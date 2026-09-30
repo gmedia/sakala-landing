@@ -1,304 +1,162 @@
 ---
-title: "Sakala Roadmap"
-description: "Product horizons A–F, engineering phases 0–8, design waves 1–6, validation gates, and the anti-roadmap."
+title: "Roadmap Sakala"
+description: "Horizon produk dalam urutan baru, fase engineering dengan statusnya, gelombang desain, gate sebelum setiap horizon dimulai, dan anti-roadmap."
 track: proyek
 section: rencana
-order: 8
-lang: en
+order: 9
+lang: id
 canonical: true
 ---
 
-# Sakala Roadmap
+# Roadmap Sakala
 
-> Roadmap is directional, not a promise of dates.
+> Roadmap adalah arah, bukan janji tanggal.
 
-Sakala uses three parallel views:
+Sakala memakai tiga pandangan yang berjalan paralel dan tidak selalu sinkron:
+produk, desain, dan engineering. Nama pilar mengikuti [Visi](/docs/proyek/vision).
 
-```text
-Product Roadmap
-Design Roadmap
-Engineering Roadmap
-```
+## Perubahan dari versi sebelumnya
 
-They are related but not synchronized one-to-one.
+Per 1 Oktober 2026, urutan horizon diubah mengikuti keputusan pasar pertama
+([PRD §3](/docs/proyek/prd)):
 
-## 1. Product Roadmap
+- **Learn** (kelas minimal) naik dari Horizon D ke horizon kedua setelah
+  Manifestasi.
+- **Self-host satu node** naik dari Horizon F ke horizon ketiga
+  ([ADR-017](/docs/proyek/adr)).
+- **Explore** turun setelah self-host dan dimulai dari koleksi yang dikurasi.
+- Ditambahkan gate **Pilot publik** sebelum pendaftaran dibuka untuk umum.
 
-### Horizon A — Manifestation
+## 1. Roadmap produk
 
-```text
-Repository
-→ Deploy
-→ Public URL
-```
-
-Capabilities:
-
-- identity/auth;
-- onboarding;
-- project;
-- repository analysis;
-- build;
-- deploy;
-- logs;
-- variables/secrets;
-- generated domain;
-- health;
-- redeploy.
-
-### Horizon B — Reliable Operation
-
-- custom domain;
-- deployment recovery;
-- runtime logs;
-- metrics;
-- webhook auto-deploy;
-- private repository;
-- usage/resource visibility.
-
-### Horizon C — Explore & Ecosystem
-
-- showcase;
-- creator profile;
-- templates;
-- collections;
-- template submission;
-- featured;
-- project lineage;
-- Deploy to Sakala.
-
-### Horizon D — Collaboration & Learn
-
-- workspace;
-- members;
-- roles;
-- collections by organization;
-- classroom;
-- assignment;
-- internship/workshop workflow.
-
-### Horizon E — Developer Services
-
-- managed PostgreSQL;
-- Redis/Valkey;
-- Object Storage;
-- worker/queue;
-- backup/restore;
-- richer observability.
-
-### Horizon F — Platformization
-
-- CLI;
-- public API;
-- self-host installer;
-- node join/drain/upgrade;
-- multi-node runtime;
-- gateway/router.
-
-## 2. Engineering Roadmap
-
-### Phase 0 — Foundation
-
-- repositories split;
-- basic CI;
-- branch protection;
-- design system foundation;
-- API/Agent architecture.
-
-### Phase 1 — Auth & Console Foundation
-
-- auth contract;
-- GitHub OAuth;
-- email auth if committed;
-- verification if committed;
-- session;
-- onboarding;
-- dashboard integration.
-
-### Phase 2 — Project Lifecycle
-
-- project CRUD;
-- repo validation;
-- stack analysis;
-- generated domain;
-- variables/secrets;
-- project detail API integration.
-
-### Phase 3 — Deployment Contract
-
-- deployment model;
-- events/logs;
-- state machine;
-- realtime;
-- deployment detail integration.
-
-### Phase 4 — Connected Agent
-
-- register/identity;
-- heartbeat;
-- poll;
-- claim;
-- events/logs;
-- complete/fail;
-- auth/idempotency.
-
-### Phase 5 — Real Runtime
-
-- checkout;
-- Dockerfile;
-- Railpack;
-- container;
-- limits;
-- Caddy;
-- health;
-- logs;
-- cleanup.
-
-### Phase 6 — End-to-End MVP
+### Horizon A — Manifestasi
 
 ```text
-Browser
-→ API
-→ Agent
-→ Runtime
-→ Public URL
+Repository → Deploy → URL publik
 ```
 
-### Phase 7 — Pilot Hardening
+Identitas, onboarding, project, analisis repository, build, deploy, log,
+variabel dan secret, domain bawaan, health check, redeploy, kuota pilot,
+kontrol admin.
 
-- failure categories;
-- documentation;
-- safeguards;
-- validation metrics;
-- operational tooling minimum.
+**Status:** sebagian besar berjalan di production. Lihat [MVP](/docs/proyek/mvp).
 
-### Phase 8 — Post-MVP Selection
+### Gate — Pilot publik
 
-Choose based on real signal:
+Syarat sebelum pendaftaran dibuka untuk umum, dirinci di
+[MVP](/docs/proyek/mvp): isolasi workload ([ADR-014](/docs/proyek/adr)), sleep
+otomatis dan batas build ([ADR-015](/docs/proyek/adr)), dokumen hukum,
+penanganan abuse, bukti dari pilot, dan estimasi biaya.
 
-- custom domain;
-- webhook;
-- GitHub App/private repo;
-- rollback;
-- Explore;
-- workspace;
-- self-hosting;
-- managed database.
+### Horizon B — Learn minimal
 
-## 3. Design Roadmap
+- kelas dengan pengajar dan peserta, peserta dimasukkan lewat CSV;
+- penugasan dengan template awal opsional dan tenggat;
+- ringkasan kelas untuk pengajar;
+- satu tampilan per peserta: repository, URL, deployment terakhir, log;
+- kebijakan resource per kelas;
+- siklus hidup project setelah kelas selesai.
 
-### Wave 1 — Core Product Journey
+Detail di [Sakala Learn](/docs/proyek/feature-education).
 
-**Status: DONE / Design Ready**
+### Horizon C — Self-host satu node
+
+- installer satu node yang bisa diulang, dengan versi yang di-pin dan
+  checksum;
+- gVisor aktif secara default;
+- dokumentasi pemasangan manual;
+- panduan untuk pengelola lab institusi;
+- repository distribusi `sakala` ([ADR-013](/docs/proyek/adr)).
+
+### Horizon D — Operasi yang andal
+
+- custom domain dengan verifikasi DNS dan TLS;
+- pemulihan deployment dan rollback ke versi sebelumnya;
+- metrik dasar;
+- auto-deploy dari push lewat webhook;
+- repository privat lewat GitHub App;
+- visibilitas pemakaian dan kuota.
+
+### Horizon E — Explore dan ekosistem
+
+Dimulai dari koleksi yang dikurasi maintainer (misalnya hasil satu angkatan
+magang), lalu showcase, template, profil creator, silsilah project, dan
+"Deploy to Sakala". Detail di [Sakala Explore](/docs/proyek/feature-explore).
+
+### Horizon F — Kolaborasi
+
+Workspace, anggota, peran, dan koleksi milik organisasi.
+
+### Horizon G — Layanan developer
+
+PostgreSQL, Redis atau Valkey, object storage terkelola, worker dan queue,
+backup dan restore, observability yang lebih kaya.
+
+### Horizon H — Platformisasi
+
+CLI, API publik, node join, drain, dan upgrade, runtime multi-node, gateway
+dan router.
+
+## 2. Roadmap engineering
+
+| Fase | Isi                                                                                       | Status per 1 Okt 2026  |
+| ---- | ----------------------------------------------------------------------------------------- | ---------------------- |
+| 0    | Pemisahan repository, CI dasar, branch protection, fondasi design system                  | selesai                |
+| 1    | Kontrak auth, GitHub OAuth, email dan verifikasi, sesi, onboarding                        | selesai                |
+| 2    | Siklus project, validasi repository, analisis stack, domain bawaan, variabel dan secret   | selesai                |
+| 3    | Model deployment, event dan log, state machine, realtime                                  | selesai                |
+| 4    | Agent terhubung: register, heartbeat, poll, claim, lease, event, log, protokol berversi   | selesai                |
+| 5    | Runtime nyata: checkout, Dockerfile, Railpack, container, batas, Caddy, health, cleanup   | selesai                |
+| 6    | MVP end-to-end: browser, API, agent, runtime, URL publik                                  | berjalan di production |
+| 7    | Penguatan pilot: kategori kegagalan, dokumentasi, pengaman, metrik validasi, alat operasi | sedang dikerjakan      |
+| 8    | Gate pilot publik: isolasi, sleep, batas build, dokumen hukum, abuse                      | berikutnya             |
+| 9    | Learn minimal                                                                             | berikutnya             |
+| 10   | Installer self-host satu node                                                             | berikutnya             |
+
+## 3. Roadmap desain
+
+| Gelombang | Isi                                                                                                                                                                           | Status                                 |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| 1         | Perjalanan produk inti: login, OAuth, verifikasi, onboarding, dashboard, buat project, detail deployment, log build, detail project, variabel, profil, pengaturan, notifikasi | selesai, sebagian besar sudah dibangun |
+| 2         | Learn: kelas, penugasan, ringkasan pengajar, tampilan peserta, masuknya peserta lewat CSV                                                                                     | berikutnya                             |
+| 3         | Pilot publik: halaman sleep dan bangun, kuota, suspend dan banding, persetujuan syarat layanan                                                                                | berikutnya                             |
+| 4         | Domain dan operasi: custom domain, DNS, TLS, health runtime, error yang lebih kaya                                                                                            | nanti                                  |
+| 5         | Platform Console: overview, node, kegagalan, abuse, moderasi, masukan                                                                                                         | nanti                                  |
+| 6         | Explore: koleksi terkurasi, showcase, template, profil creator                                                                                                                | nanti                                  |
+| 7         | Layanan terkelola                                                                                                                                                             | nanti                                  |
+
+Rincian per gelombang ada di [Design Strategy](/docs/proyek/design-strategy).
+
+## 4. Gate sebelum horizon dimulai
+
+Horizon baru tidak dimulai hanya karena desainnya selesai. Pertimbangkan:
 
 ```text
-Login & Register
-GitHub OAuth
-Account Verification
-Onboarding
-Dashboard
-Create Project
-Deployment Detail
-Build Logs
-Project Detail
-Variables / Secrets
-Profile
-Settings
-Notifications
+Kebutuhan pengguna yang terbukti
++ Daya ungkit produk
++ Biaya engineering
++ Biaya operasional
++ Kesiapan arsitektur
 ```
 
-### Wave 2 — Explore & Ecosystem
+Contoh:
 
-**Recommended next**
+- Learn dimulai setelah gate pilot publik, karena kelas membawa puluhan
+  pengguna sekaligus.
+- Self-host dimulai setelah ADR-014 berjalan di hosted, supaya installer
+  membawa isolasi yang sama.
+- Layanan data terkelola menunggu model operasional, backup, keamanan,
+  biaya, dan permintaan yang kuat.
+- Multi-region menunggu sampai batas satu region dan multi-node benar-benar
+  terlihat.
 
-- Explore home;
-- showcase listing;
-- showcase detail;
-- template listing;
-- template detail;
-- Use Template / Deploy;
-- creator profile;
-- collection detail;
-- publish to showcase;
-- submit as template;
-- moderation/review states.
+## 5. Anti-roadmap
 
-### Wave 3 — Domains & Operation
+Jangan memprioritaskan berdasarkan checklist kesetaraan fitur, iri pada
+tangkapan layar pesaing, kegembiraan teknologi, "kayaknya keren", atau desain
+yang sudah selesai saja.
 
-- generated domain management;
-- custom domain;
-- DNS instruction;
-- verification;
-- TLS;
-- alias/redirect;
-- runtime health;
-- richer log/error states.
+Prioritaskan berdasarkan satu pertanyaan:
 
-### Wave 4 — Platform Operations Console
-
-- platform overview;
-- users/projects/deployments;
-- node health;
-- capacity;
-- failure analytics;
-- moderation;
-- feedback;
-- announcements.
-
-### Wave 5 — Collaboration & Learn
-
-- workspace;
-- members;
-- invite;
-- role;
-- classroom;
-- assignment;
-- internship/workshop;
-- instructor/mentor overview.
-
-### Wave 6 — Managed Services
-
-- PostgreSQL;
-- Redis/Valkey;
-- Object Storage;
-- worker/queue;
-- usage;
-- service credentials/attachment.
-
-## 4. Validation Gates
-
-A new engineering horizon should not start only because its design is complete.
-
-Consider:
-
-```text
-User Demand
-+
-Product Leverage
-+
-Engineering Cost
-+
-Operational Cost
-+
-Architecture Readiness
-```
-
-Examples:
-
-- Explore can be designed early because it has low dependency on runtime internals and high identity value.
-- Managed PostgreSQL should wait for operational model, backup/security expectations, cost, and strong demand.
-- Multi-region should wait until real one-region/multi-node constraints are observed.
-
-## 5. Anti-Roadmap
-
-Do not prioritize by:
-
-- feature parity checklist;
-- competitor screenshot envy;
-- technology excitement;
-- "would be cool";
-- UI completion alone.
-
-Prioritize by:
-
-> Does this strengthen Sakala's core journey and validated user need?
+> Apakah ini memperkuat perjalanan inti Sakala dan kebutuhan pengguna yang
+> sudah terbukti?

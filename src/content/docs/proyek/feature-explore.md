@@ -1,315 +1,201 @@
 ---
 title: "Sakala Explore"
-description: "Templates, showcase, creator profiles, collections, and project lineage as a product pillar, not a social network."
+description: "Showcase, template, profil creator, koleksi, dan silsilah project sebagai pilar produk, bukan jejaring sosial. Dimulai dari koleksi terkurasi, dengan model moderasi yang realistis untuk tim kecil."
 track: proyek
 section: rencana
-order: 10
-lang: en
+order: 12
+lang: id
 canonical: true
 ---
 
 # Sakala Explore
 
-> **Product Pillar:** Explore & Ecosystem  
-> **Direction:** differentiation candidate
+> **Pilar:** Explore dan ekosistem
+> **Posisi:** pembeda Sakala, dimulai setelah Learn dan self-host ([Roadmap Horizon E](/docs/proyek/roadmap))
 
-## 1. Why Explore Exists
+## 1. Kenapa Explore ada
 
-Deployment answers:
+Deployment menjawab:
 
-> How does my code become a living application?
+> Bagaimana kodeku menjadi aplikasi yang hidup?
 
-Explore answers:
+Explore menjawab:
 
-> What happens after a work becomes real?
+> Apa yang terjadi setelah sebuah karya menjadi nyata?
 
-Sakala Explore allows projects to:
+Explore membuat project bisa dilihat, diberi attribution ke pembuatnya,
+menginspirasi orang lain, menjadi template, masuk koleksi, dan tetap hidup
+setelah kelas atau magang selesai.
 
-- be seen;
-- be attributed to creators;
-- inspire others;
-- become templates;
-- become part of collections;
-- continue living after class/internship/project completion.
+## 2. Pelajaran dari platform lain
 
-## 2. Information Architecture
+**Glitch** adalah platform yang paling mirip visi Explore: komunitas, remix,
+dan karya yang saling melahirkan. Pada Mei 2025 Glitch mengumumkan bahwa
+hosting project dan profil pengguna berhenti pada 8 Juli 2025, dengan alasan
+biaya operasional dan penyalahgunaan. Fitur komunitas terbuka menambah nilai,
+tetapi juga menambah biaya moderasi dan permukaan abuse.
+
+**Railway** membayar pembuat template 25 persen dari pemakaian yang berasal
+dari template mereka, dan sudah membayar hampir $1 juta. Template yang bagus
+lahir dari insentif yang jelas.
+
+Dua pelajaran itu menentukan urutan Explore di Sakala: mulai dari koleksi yang
+dikurasi, beri insentif yang sesuai konteks Sakala, dan buka unggahan publik
+hanya setelah moderasi terbukti sanggup.
+
+## 3. Tahapan
+
+| Tahap | Isi                                                                                              | Siapa yang mengisi            |
+| ----- | ------------------------------------------------------------------------------------------------ | ----------------------------- |
+| 1     | **Koleksi terkurasi**: hasil satu angkatan magang atau satu kelas, template resmi Sakala         | Maintainer dan pengajar       |
+| 2     | **Showcase atas izin**: pemilik project memilih menampilkan project-nya; ditinjau sebelum tampil | Pengguna, ditinjau maintainer |
+| 3     | **Template komunitas**: pengguna mengajukan project sebagai template; ditinjau dan diverifikasi  | Pengguna, ditinjau maintainer |
+| 4     | **Silsilah dan remix**: project yang lahir dari template atau project lain                       | Otomatis dari metadata        |
+
+Tahap berikutnya dibuka hanya bila tahap sebelumnya bisa dimoderasi dalam
+target waktu di [Platform Operations](/docs/proyek/platform-operations).
+
+## 4. Arsitektur informasi
 
 ```text
 Explore
-├── Projects
-├── Templates
-├── Creators
-└── Collections
+├── Project
+├── Template
+├── Creator
+└── Koleksi
 ```
 
-Possible public routes:
+Kandidat route publik: `/explore`, `/projects`, `/templates`, `/@username`,
+`/collections/:slug`. Skema URL final adalah keputusan desain dan SEO.
+
+## 5. Showcase project
+
+Tampil di Explore hanya atas pilihan pemilik:
 
 ```text
-/explore
-/projects
-/templates
-/@username
-/collections/:slug
+Tidak terdaftar (default) · Showcase publik
 ```
 
-Exact URL scheme remains a design/SEO decision.
+URL runtime yang publik tidak otomatis membuat project bisa ditemukan di
+Explore.
 
-## 3. Public Project Showcase
+Metadata showcase: judul, deskripsi, creator, gambar sampul, kategori, tag,
+stack, URL aplikasi, URL source, lisensi, koleksi, waktu deploy, dan relasi
+template.
 
-Project listing is opt-in.
+Aksi: buka aplikasi, lihat source, dan (bersyarat) pakai sebagai titik awal.
 
-Suggested visibility:
+## 6. Profil creator
+
+Profil creator berorientasi portfolio, bukan jejaring sosial. Menampilkan
+nama, avatar, bio atau peran opsional, project publik, template, karya
+unggulan, dan koleksi.
+
+Yang sengaja tidak dijadikan inti: jumlah pengikut, pesan langsung, feed
+umum, dan grafik sosial ([ADR-011](/docs/proyek/adr)). Identitas creator
+dibangun dari karyanya.
+
+## 7. Template
+
+Kategori: resmi, komunitas, pendidikan, organisasi, starter, aplikasi, contoh.
+
+Metadata: judul, deskripsi, pembuat, organisasi atau koleksi, repository,
+demo, stack, kategori, tag, tingkat kesulitan, variabel dan layanan yang
+dibutuhkan, petunjuk resource, lisensi, status verifikasi, gambar sampul.
+
+Dua aksi yang harus jelas bedanya di UX:
 
 ```text
-Unlisted
-Public Showcase
+Deploy:        Template → Konfigurasi → Buat project → Deploy
+Pakai template: Template → Buat atau fork repository → Ubah source → Hubungkan dan deploy nanti
 ```
 
-A runtime URL being public does not automatically mean it is discoverable in Explore.
-
-Showcase metadata:
-
-- title;
-- description;
-- creator;
-- cover;
-- category;
-- tags;
-- stack;
-- live URL;
-- source URL;
-- license;
-- collection;
-- created/deployed metadata;
-- template relation.
-
-Actions:
+### Siklus hidup template
 
 ```text
-Open App
-View Source
-Use as Starting Point   future / conditional
+Project → Ajukan sebagai template → Pemeriksaan otomatis
+→ Tinjauan maintainer → Perlu perubahan / Disetujui → Terbit → (opsional) Unggulan
 ```
 
-## 4. Creator Profile
+Pemeriksaan otomatis: repository bisa diakses, lisensi dan README ada, bisa
+di-deploy, variabel yang dibutuhkan dideklarasikan, tidak ada secret, demo
+sehat, attribution valid.
 
-Creator is portfolio-first.
+### Insentif
 
-Show:
+Sakala belum menjual kapasitas sendiri, jadi insentifnya bukan uang. Yang
+bisa diberikan:
 
-- name;
-- avatar;
-- short bio/role optional;
-- public projects;
-- templates;
-- featured work;
-- collections.
+- attribution yang terlihat di setiap project turunan;
+- status template resmi atau terverifikasi;
+- pengakuan institusi, misalnya template resmi program magang atau mata
+  kuliah;
+- jumlah project yang lahir dari template, ditampilkan di profil creator.
 
-Do not make these core:
+Bila kelak GMEDIA menjual kapasitas cloud, bagi hasil untuk pembuat template
+bisa dipertimbangkan, sebagai keputusan GMEDIA sebagai penyedia
+infrastruktur ([Governance §5](/docs/proyek/governance)).
 
-- follower count;
-- DM;
-- generic post feed;
-- social graph.
+## 8. Koleksi
 
-Creator identity should be earned primarily through artifacts.
+Koleksi adalah primitif organisasi yang bisa dipakai ulang, supaya fitur
+"magang" atau "showcase kampus" tidak di-hardcode ke platform.
 
-## 5. Templates
+Contoh: Sakala Official Starters, Magang GMEDIA, Showcase PKL SMK, Workshop
+Web kampus, Community Picks.
 
-Template categories:
+Isi koleksi: judul, slug, pemilik atau organisasi, deskripsi, sampul,
+visibilitas, project, template, creator, dan metadata program opsional.
+
+## 9. Silsilah project
+
+Metadata:
 
 ```text
-Official
-Community
-Education
-Organization
-Starter
-Application
-Example
+derived_from_template
+remixed_from_project
 ```
 
-Template metadata:
+Contoh UX: "Berdasarkan Laravel API Starter". Tujuannya satu kalimat dari
+filosofi Sakala: karya melahirkan karya.
+
+## 10. Loop magang dan PKL
 
 ```text
-title
-description
-author
-organization/collection
-repository
-demo
-stack
-category
-tags
-difficulty
-variables
-services
-resource hint
-license
-verified status
-cover
+Penugasan magang → Template awal → Project peserta → Deploy
+→ Tinjauan mentor → Koleksi program → Kandidat template → Angkatan berikutnya
 ```
 
-### Deploy
+Karya peserta magang punya kehidupan setelah hari presentasi.
+
+## 11. Moderasi
+
+Maintainer membutuhkan: template yang menunggu, perlu perubahan,
+disetujui atau ditolak, project yang dilaporkan, kandidat unggulan, tinjauan
+koleksi, serta masalah abuse, hak cipta, atau lisensi.
+
+Creator membutuhkan: status pengajuan, masukan, ubah dan ajukan ulang, serta
+menarik project dari daftar.
+
+Setiap keputusan meninggalkan jejak audit. Konten yang dilaporkan sebagai
+abuse ditangani lewat alur di [Platform Operations §6](/docs/proyek/platform-operations),
+bukan antrean moderasi Explore.
+
+## 12. Metrik
+
+Berguna: project yang terbit, template yang terbit, jumlah deploy dari
+template, project turunan template, creator yang menerbitkan, partisipasi
+koleksi, dan waktu tinjauan moderasi.
+
+Hindari menjadikan metrik sosial yang semu sebagai tujuan produk.
+
+## 13. Lingkup desain berikutnya
+
+Mengikuti tahapan di §3, desain dimulai dari:
 
 ```text
-Template
-→ Configure
-→ Create Project
-→ Deploy
+Halaman koleksi · Detail project dalam koleksi · Profil creator (portfolio)
 ```
 
-### Use Template
-
-```text
-Template
-→ Create/Fork Repository
-→ User edits source
-→ Connect/Deploy later
-```
-
-The difference must be explicit in UX.
-
-## 6. Template Lifecycle
-
-```text
-Project
-→ Submit as Template
-→ Automated Checks
-→ Maintainer Review
-→ Needs Changes / Approved
-→ Published
-→ Featured optional
-```
-
-Checks can eventually include:
-
-- repository accessible;
-- license present;
-- README present;
-- deployable;
-- required variables declared;
-- secrets absent;
-- demo healthy;
-- attribution valid.
-
-## 7. Collections
-
-Collection is a reusable organizational primitive.
-
-Examples:
-
-```text
-Sakala Official Starters
-GMEDIA Internship
-SMKN 2 PKL Showcase
-UTY Web Workshop
-Jogja Dev Meetup
-Community Picks
-```
-
-Collection fields:
-
-- title;
-- slug;
-- owner/organization;
-- description;
-- cover;
-- visibility;
-- projects;
-- templates;
-- creators;
-- date/program metadata optional.
-
-This prevents hardcoding "internship feature" or "campus showcase" into platform internals.
-
-## 8. Project Lineage
-
-Future:
-
-```text
-Template A
-├── Project B
-├── Project C
-└── Project D
-```
-
-Metadata candidates:
-
-```text
-derived_from_template_id
-remixed_from_project_id
-```
-
-Potential UX:
-
-```text
-Based on Laravel API Starter
-```
-
-Purpose:
-
-> Karya melahirkan karya.
-
-## 9. Internship / PKL Loop
-
-```text
-Internship Assignment
-→ Starter Template
-→ Intern Project
-→ Deploy
-→ Mentor Review
-→ Public Showcase
-→ Candidate Template
-→ Future Cohort
-```
-
-This gives intern output a life beyond presentation day.
-
-## 10. Moderation
-
-Admin needs:
-
-- pending templates;
-- needs changes;
-- approved/rejected;
-- reported project;
-- featured candidate;
-- collection review;
-- abuse/IP/license concern.
-
-Creator needs:
-
-- submission status;
-- feedback;
-- edit/resubmit;
-- remove listing.
-
-## 11. Metrics
-
-Useful:
-
-- projects published;
-- templates published;
-- template deploy/use count;
-- projects derived from templates;
-- creators publishing;
-- collection participation.
-
-Avoid making social vanity metrics the product objective.
-
-## 12. Design Scope Next
-
-Recommended immediate UI/UX work:
-
-```text
-Explore Home
-Showcase List
-Showcase Detail
-Template List
-Template Detail
-Creator Profile
-Collection Detail
-Publish Project
-Submit Template
-Moderation Status
-```
+Lalu, bila tahap 2 dan 3 dibuka: publikasi project, pengajuan template,
+status moderasi, daftar dan detail template, beranda Explore.
