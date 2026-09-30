@@ -20,7 +20,7 @@ Yang tertulis di sini bukan rahasia: semuanya sudah ada di CSS yang dikirim
 ke setiap browser. Menerbitkannya membuat kontribusi UI konsisten sejak
 awal, bukan dikoreksi belakangan.
 
-Isi halaman ini berlisensi CC BY 4.0. Nama dan logo Sakala tidak termasuk; pemakaiannya diatur [Governance §7](/docs/proyek/governance).
+Nama dan logo Sakala tidak termasuk lisensi repository ini; pemakaiannya diatur [Governance §7](/docs/proyek/governance).
 
 ## Anchor brand
 

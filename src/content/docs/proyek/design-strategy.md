@@ -48,9 +48,36 @@ siapa pun.
 
 ## 3. Gelombang berikutnya
 
-Urutan mengikuti [Roadmap](/docs/proyek/roadmap).
+Urutan desain tidak harus sama dengan urutan engineering di
+[Roadmap](/docs/proyek/roadmap). Desain boleh mendahului, tetapi urutan di
+bawah adalah urutan kerja tim desain yang sedang berlaku.
 
-### Gelombang 2 — Learn
+### Gelombang 2 — Platform Console (sedang dikerjakan)
+
+Pilot tidak bisa diamati tanpa alat untuk maintainer. Layar: overview
+platform, pengguna, project, deployment, node runtime, analitik kegagalan,
+laporan abuse, dan masukan. Hindari template admin CRUD generik. Detail di
+[Platform Operations](/docs/proyek/platform-operations).
+
+Pertanyaan yang harus dijawab desain:
+
+- Dari satu layar, apakah maintainer tahu platform sehat atau tidak?
+- Bagaimana node yang `degraded` atau `offline` langsung terlihat?
+- Bagaimana kategori kegagalan terbanyak dan trennya terbaca tanpa membuka
+  deployment satu per satu?
+- Bagaimana alur suspend terasa hati-hati: alasan wajib, konfirmasi, jejak
+  audit, dan pemberitahuan ke pemilik?
+
+### Gelombang 3 — Pilot publik
+
+Halaman project yang sedang tidur dan sedang bangun, tampilan kuota dan
+sisanya, project yang di-suspend beserta alasan dan jalur banding,
+persetujuan syarat layanan saat mendaftar, dan pengaturan hapus akun.
+
+Prinsip: sleep adalah perilaku yang diharapkan, bukan kegagalan. Copy-nya
+harus membuat itu jelas.
+
+### Gelombang 4 — Learn
 
 Layar dan state: tautan undangan kelas, unggah peserta lewat CSV, buat kelas,
 buat penugasan dengan template dan tenggat, ringkasan kelas untuk pengajar,
@@ -64,16 +91,10 @@ Pertanyaan yang harus dijawab desain:
 - Apa yang dilihat peserta tentang data dirinya yang terlihat oleh pengajar?
 - Bagaimana kelas yang sudah selesai terasa "diarsipkan", bukan "dihapus"?
 
-### Gelombang 3 — Pilot publik
+Desain Learn selesai sebelum engineering Learn dimulai (Roadmap Horizon B),
+karena engineering Learn menunggu gate pilot publik.
 
-Halaman project yang sedang tidur dan sedang bangun, tampilan kuota dan
-sisanya, project yang di-suspend beserta alasan dan jalur banding,
-persetujuan syarat layanan saat mendaftar, dan pengaturan hapus akun.
-
-Prinsip: sleep adalah perilaku yang diharapkan, bukan kegagalan. Copy-nya
-harus membuat itu jelas.
-
-### Gelombang 4 — Domain dan operasi
+### Gelombang 5 — Domain dan operasi
 
 ```text
 Domain bawaan · Custom domain · Tambah domain · Instruksi DNS
@@ -83,12 +104,6 @@ Domain utama · Alias · Redirect · Hapus domain
 
 Prinsip: kompleksitas DNS dijelaskan, bukan dilempar ke pengguna. Status domain
 bisa ditampilkan sebagai `DNS ✓ · TLS ✓ · Route ✓ · Aplikasi ✓`.
-
-### Gelombang 5 — Platform Console
-
-Overview, node, deployment, analitik kegagalan, laporan abuse, moderasi,
-masukan. Hindari template admin CRUD generik. Detail di
-[Platform Operations](/docs/proyek/platform-operations).
 
 ### Gelombang 6 — Explore
 

@@ -140,9 +140,10 @@ koleksi. Keduanya memakai primitif yang sama.
 
 ## Model penyediaan
 
-Sakala tersedia sebagai **hosted** (runtime disediakan GMEDIA, dengan kuota
-yang tertulis) dan **self-host** (dijalankan institusi atau individu di
+Sakala dituju tersedia sebagai **hosted** (runtime disediakan GMEDIA, dengan
+kuota yang tertulis) dan **self-host** (dijalankan institusi atau individu di
 servernya sendiri). Keduanya memakai kode yang sama dan lisensi yang sama.
+Hari ini baru hosted yang sedang dibangun.
 Detail dan prinsipnya ada di [PRD §7](/docs/proyek/prd).
 
 ## Model pertumbuhan

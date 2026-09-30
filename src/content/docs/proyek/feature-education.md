@@ -39,10 +39,12 @@ Teams for Education pada 1 Agustus 2024. GitHub Classroom dihentikan pada
 305.000 kelas. Classroom memberi repository per peserta dan autograding
 lewat GitHub Actions, tetapi tidak pernah memberi aplikasi yang hidup.
 
-Pengajar yang dulu memakainya sedang mencari pengganti. Sebagian pengganti
-yang ditawarkan berbayar dan berfokus pada IDE di browser. Sakala mengisi
-bagian yang tidak diisi siapa pun: setiap peserta punya aplikasi yang hidup,
-dan pengajar bisa melihat kenapa aplikasi itu gagal.
+Hipotesisnya, sebagian pengajar yang dulu memakainya sedang mencari
+pengganti, termasuk di Indonesia. Ini belum divalidasi: belum diketahui berapa
+yang sudah memilih alternatif dan berapa yang masih mencari (lihat asumsi di
+[PRD §12](/docs/proyek/prd)). Bila hipotesis itu benar, Sakala bisa mengisi
+bagian yang belum diisi pengganti yang ada: setiap peserta punya aplikasi yang
+hidup, dan pengajar bisa melihat kenapa aplikasi itu gagal.
 
 Pelajaran dari kedua penutupan itu juga mengikat desain Learn: institusi butuh
 jaminan bahwa alatnya tidak hilang di tengah semester. Karena itu Learn
@@ -152,9 +154,14 @@ tugasnya selesai. Peserta memutuskan apakah karyanya berlanjut.
 
 ## 10. Data peserta
 
-Institusi yang menjalankan kelas adalah pihak yang menentukan tujuan
-pemrosesan data peserta. Sakala hosted memproses data itu atas nama kelas.
-Konsekuensinya, sesuai UU PDP:
+Siapa yang menjadi pengendali dan siapa yang menjadi prosesor data kelas
+menurut UU PDP belum ditetapkan di dokumen ini. Hubungannya bisa campuran:
+untuk sebagian data Sakala hosted mungkin memproses atas instruksi institusi,
+sedangkan untuk akun, keamanan, penanganan abuse, dan operasi, Sakala punya
+tujuan pemrosesan sendiri. Pembagiannya ditetapkan dalam perjanjian kelas dan
+Pemberitahuan Privasi setelah legal review.
+
+Yang sudah menjadi prinsip produk, apa pun hasil pembagian itu:
 
 - data yang dikumpulkan terbatas pada yang dipakai: nama, email, nomor
   peserta, akun GitHub, dan project;

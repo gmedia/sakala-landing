@@ -90,7 +90,10 @@ nyata dan contributor memberikan persetujuan.
 
 ## Kontribusi
 
-Sakala Landing menggunakan Apache License 2.0. Baca
+Kode dan dokumentasi di repository ini berlisensi Apache License 2.0. Nama
+dan logo Sakala tidak termasuk dalam lisensi itu; pemakaiannya diatur
+[Governance §7](https://sakala.dev/docs/proyek/governance) dan dijelaskan di
+[NOTICE](NOTICE). Baca
 [CONTRIBUTING.md](CONTRIBUTING.md) dan
 [keputusan fitur Astro](docs/PROJECT_ASTRO_FEATURES.md) sebelum membuat pull
 request, lalu ikuti Conventional Commits.

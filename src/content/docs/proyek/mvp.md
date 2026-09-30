@@ -92,9 +92,16 @@ MVP yang selesai belum berarti siap dibuka untuk siapa saja. Pilot terbatas
 terpenuhi. Pendaftaran terbuka untuk umum baru boleh dibuka setelah keenam
 syarat berikut terpenuhi.
 
-1. **Isolasi.** Workload pengguna berjalan di host runtime yang terpisah dari
-   API dan database, dengan runtime container tersandbox, sesuai
-   [ADR-014](/docs/proyek/adr).
+1. **Isolasi.** Syarat ini sama dengan yang dituntut
+   [Security §2](/docs/proyek/security) dan [ADR-014](/docs/proyek/adr), dan
+   baru terpenuhi bila keempatnya ada:
+   - workload pengguna berjalan di host runtime yang terpisah dari API dan
+     database;
+   - container pengguna berjalan dengan runtime tersandbox (gVisor);
+   - container pengguna punya egress policy yang memblokir akses ke app node,
+     endpoint metadata cloud, dan SMTP;
+   - build yang mengeksekusi source dan Dockerfile pengguna berjalan di jalur
+     isolasi tersendiri, bukan di daemon runtime.
 2. **Kuota lengkap.** Selain kuota yang sudah berjalan, ada sleep otomatis
    untuk project tanpa trafik dan batas jumlah build per jam
    ([ADR-015](/docs/proyek/adr)).

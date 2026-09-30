@@ -18,11 +18,12 @@ mencatat kuota pilot yang sudah berjalan beserta asumsi, risiko, dan target
 metriknya. Sakala Learn naik ke horizon kedua di roadmap, dan self-host satu
 node ke horizon ketiga.
 
-Empat keputusan arsitektur baru tercatat: workload pengguna dipisahkan dari
-control plane dan dijalankan dengan gVisor, project yang tidak dipakai akan
-tidur, domain publik bersama diperlakukan sebagai aset reputasi, dan versi
-hosted serta self-host memakai kode dan lisensi yang sama. MVP kini punya
-enam syarat tertulis sebelum pendaftaran dibuka untuk umum.
+Tiga keputusan arsitektur baru dan satu usulan tercatat. Sebelum pendaftaran
+dibuka untuk umum, workload pengguna wajib dipisahkan dari control plane dan
+dijalankan dengan gVisor; hari ini keduanya masih satu host. Project yang
+tidak dipakai akan tidur. Versi hosted dan self-host memakai kode dan lisensi
+yang sama. Domain publik bersama diusulkan diperlakukan sebagai aset reputasi.
+MVP kini punya enam syarat tertulis sebelum pendaftaran dibuka untuk umum.
 
 Governance mendapat jalur menjadi maintainer, cara mengambil keputusan saat
 tidak sepakat, kebijakan nama Sakala, dan komitmen keberlanjutan. Dokumen arah

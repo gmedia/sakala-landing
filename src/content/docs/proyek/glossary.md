@@ -67,6 +67,14 @@ Source: `ProjectStatus` in `sakala-api`.
 draft · active · failed · suspended
 ```
 
+### Runtime node states
+
+Source: `AgentNodeStatus` in `sakala-api`.
+
+```text
+ready · busy · degraded · draining · drained · maintenance · offline
+```
+
 ### Capability status (product documents)
 
 ```text
@@ -114,7 +122,8 @@ ADR-016 for the proposed separate domain.
 ## Hosting and policy
 
 **Hosted.** Sakala run on infrastructure provided by GMEDIA, with a published
-free quota. Capacity above the quota is GMEDIA's cloud service (ADR-017).
+free quota. GMEDIA may offer capacity above the quota as its own cloud
+service, subject to its business decision (ADR-017).
 
 **Self-host.** Sakala run by an institution or individual on its own servers,
 with its own quota. Same code and licence as hosted.
@@ -200,8 +209,7 @@ registration.
 **Gateway Node.** Future host responsible for public ingress and routing.
 
 **Agent Node.** A registered Sakala Agent identity (`agent-<uuid7>`) with a
-protocol revision and a status (ready, degraded, draining, drained,
-maintenance).
+protocol revision and a status from the node states list above.
 
 **AgentCommand.** A control-plane instruction claimed and executed by an
 agent under a lease.

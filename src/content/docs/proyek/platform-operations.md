@@ -61,7 +61,7 @@ Feedback · Announcements · Audit · Settings
 
 ## 4. Runtime nodes
 
-Node detail: name, status (ready, degraded, draining, drained, maintenance),
+Node detail: name, status (the runtime node states in the [Glossary](/docs/proyek/glossary)),
 agent version and protocol revision, last heartbeat, CPU, RAM, disk,
 active and building workloads, queued and failed commands in 24 hours,
 capabilities, labels, and later region.
@@ -71,16 +71,9 @@ and an audit record.
 
 ## 5. Deployment failure analytics
 
-Each failed deployment carries one category. The canonical list is the
-`DeploymentFailureCategory` enum in `sakala-api`, mirrored in the
-[Glossary](/docs/proyek/glossary):
-
-```text
-checkout · build · start · health · route · timeout · resource · node
-scheduling · unknown
-```
-
-The agent reports finer failure codes (for example `runtime_disk_pressure`,
+Each failed deployment carries one category from the failure categories list
+in the [Glossary](/docs/proyek/glossary), which mirrors the
+`DeploymentFailureCategory` enum in `sakala-api`. The agent reports finer failure codes (for example `runtime_disk_pressure`,
 `runtime_cancelled`); they map onto these categories.
 
 Show top failures, affected stacks, recent examples, and the trend. This is

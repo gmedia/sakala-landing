@@ -71,11 +71,13 @@ Repository
 → Diperbaiki
 ```
 
-Nilai perluasan, sesuai pilar di [Visi](/docs/proyek/vision):
+Perjalanan yang lebih luas, setelah karya hidup:
 
 ```text
-Create → Manifest → Operate → Learn → Explore → Collaborate → Platform
+Repository → Manifest → Operate → Learn → Share / Grow
 ```
+
+Daftar pilar produk dan urutan prioritasnya dipegang [Visi](/docs/proyek/vision).
 
 ## 3. Pasar pertama
 
@@ -174,19 +176,26 @@ GMEDIA = founding sponsor dan infrastructure supporter
 Hindari framing "Sakala by GMEDIA", "produk GMEDIA", atau "platform tertutup
 milik GMEDIA". Detailnya di [Governance](/docs/proyek/governance).
 
-## 7. Model penyediaan dan biaya
+## 7. Model penyediaan yang dituju
 
-Sakala tersedia dalam dua bentuk yang memakai kode yang sama.
+Sakala dituju tersedia dalam dua bentuk yang memakai kode yang sama. Hari ini
+baru bentuk hosted yang sedang dibangun; self-host masih berstatus arah
+(§9.7).
 
 **Sakala hosted.** Runtime disediakan oleh infrastruktur GMEDIA. Setiap
-pengguna mendapat kuota pilot yang tertulis dan ditegakkan (§9.2). Kebutuhan
-di atas kuota nantinya dipenuhi lewat layanan cloud GMEDIA yang berbayar.
-Pembayaran itu adalah hubungan antara pengguna dan GMEDIA sebagai penyedia
-infrastruktur, bukan penjualan lisensi Sakala.
+pengguna mendapat kuota pilot yang tertulis dan ditegakkan (§9.2). Kapasitas
+di atas kuota **dapat** ditawarkan GMEDIA sebagai layanan cloud berbayar,
+tergantung keputusan bisnis GMEDIA. Bila ditawarkan, pembayaran itu adalah
+hubungan antara pengguna dan GMEDIA sebagai penyedia infrastruktur, bukan
+penjualan lisensi Sakala.
 
 **Sakala self-host.** Institusi atau individu menjalankan Sakala di server
 miliknya, dengan kuota yang diatur sendiri. Tidak ada fitur yang dikunci di
 balik lisensi berbayar.
+
+Yang diputuskan project Sakala adalah prinsip di bawah. Apakah dan bagaimana
+GMEDIA menjual kapasitas adalah keputusan GMEDIA, dan menjadi dependensi,
+bukan bagian dari keputusan ini.
 
 Prinsip yang mengikat keduanya:
 
@@ -194,7 +203,7 @@ Prinsip yang mengikat keduanya:
 - tidak ada fitur inti yang hanya tersedia di versi hosted;
 - batas kuota hosted selalu tertulis di situs, bisa ditebak, dan tidak diubah
   diam-diam;
-- keputusan harga layanan cloud GMEDIA tidak mengubah roadmap atau lisensi
+- bila GMEDIA menjual kapasitas, harganya tidak mengubah roadmap atau lisensi
   Sakala (lihat batas peran sponsor di Governance).
 
 ## 8. Prinsip produk

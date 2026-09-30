@@ -358,8 +358,9 @@ process in PLATFORM_OPERATIONS.
 ### Context
 
 The hosted service runs on infrastructure provided by GMEDIA. Its capacity is
-finite, and paid capacity above the free quota will be offered as GMEDIA's
-cloud service. Institutions in the first market want to run Sakala on their
+finite. GMEDIA may offer paid capacity above the free quota as its own cloud
+service; whether and how it does so is GMEDIA's business decision and is not
+decided by this ADR. Institutions in the first market want to run Sakala on their
 own servers and want assurance it will not disappear. Other projects show two
 failure modes: a hosted-only platform that closes (Replit Education, GitHub
 Classroom), and an open-source project that later moves features behind a
@@ -371,16 +372,19 @@ separate licence and loses trust.
   the same code.
 - No core feature is reserved for the hosted service or placed under a
   different licence.
-- Payment for hosted capacity above the free quota is a relationship between
-  the user and GMEDIA as infrastructure provider. It does not buy a Sakala
-  licence and does not buy influence over the roadmap.
+- If GMEDIA offers paid capacity above the free quota, that payment is a
+  relationship between the user and GMEDIA as infrastructure provider. It
+  does not buy a Sakala licence and does not buy influence over the roadmap.
 - Self-host installation for a single node is promoted from Horizon F to the
   horizon after Learn in the roadmap.
 
 ### Consequences
 
 - Features that only make sense for the hosted service (billing integration
-  with GMEDIA, for example) live behind configuration, not behind a licence.
+  with GMEDIA, should it exist) live behind configuration, not behind a
+  licence.
+- Dependency: any paid capacity requires an explicit business decision by
+  GMEDIA. Until then, the hosted service offers only the free quota.
 - GOVERNANCE records the sponsor boundary for pricing decisions.
 - ADR-013 (distribution repository) becomes the delivery vehicle for
   self-host and moves from Proposed toward Accepted when installer work

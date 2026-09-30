@@ -119,7 +119,9 @@ The project documents on this site's `proyek` track are decisions, not notes.
   PLATFORM_OPERATIONS, GOVERNANCE, CONTRIBUTING, GLOSSARY) are written in
   English; product-direction documents (PHILOSOPHY, VISION, PRD, MVP, ROADMAP,
   DESIGN_STRATEGY, FEATURE_EDUCATION, FEATURE_EXPLORE) are written in
-  Indonesian. Do not mix languages inside one document.
+  Indonesian. New prose follows the document's language. Historical ADR
+  entries (ADR-001 to ADR-013) and quoted canonical phrases, such as the
+  working-culture lines in GOVERNANCE, may stay in their original language.
 - A list that already has an owner (product pillars in VISION, deployment
   states and failure categories in GLOSSARY) is linked, not copied.
 
@@ -164,5 +166,5 @@ Update the relevant docs with the code.
 
 ## Conduct
 
-Every repository carries `CODE_OF_CONDUCT.md`, and it applies wherever people
+Every repository must carry `CODE_OF_CONDUCT.md`, and it applies wherever people
 act on behalf of Sakala. See [Governance §10](/docs/proyek/governance).

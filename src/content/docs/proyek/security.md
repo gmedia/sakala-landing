@@ -131,8 +131,9 @@ Indonesia's Personal Data Protection Law (UU PDP), fully in force since
 - allow a user to delete their account and projects;
 - report a qualifying personal-data breach to affected users and the
   authority within 72 hours;
-- for classes, treat the institution as the party that decides why student
-  data is processed, and record that in the class agreement.
+- for classes, record in the class agreement and the privacy notice which
+  party acts as controller and which as processor for each kind of data;
+  this is set after legal review, not in product documents.
 
 Self-host operators are responsible for the personal data on their own
 installation.

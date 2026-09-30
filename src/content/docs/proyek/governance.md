@@ -1,6 +1,6 @@
 ---
 title: "Governance"
-description: "Stewardship, the sponsor boundary, roles and how to become a maintainer, how decisions are made and disagreements resolved, sustainability, licences for code and design assets, the Sakala name, and working culture."
+description: "Stewardship, the sponsor boundary, roles and how to become a maintainer, how decisions are made and disagreements resolved, sustainability, licences and design files, the Sakala name, and working culture."
 track: proyek
 section: kerjasama
 order: 13
@@ -84,6 +84,12 @@ a private notice and can return by asking. Emeritus maintainers are thanked in
 discussion) that receives no substantive objection within five working days
 from a maintainer is accepted. Silence is consent; it is not a veto.
 
+**Exception: security and emergencies.** A security fix, an abuse takedown,
+or an action needed to stop an ongoing incident does not wait for lazy
+consensus. The maintainer or security reviewer acts, then records the action
+and its reason within two working days so other maintainers can review it
+after the fact.
+
 **When maintainers disagree.** The discussion continues in public on the pull
 request or ADR. If it does not converge within a further five working days,
 any maintainer can call a vote among maintainers. A simple majority decides;
@@ -109,8 +115,9 @@ Sponsors do not, by sponsorship alone, control:
 - who becomes a maintainer.
 
 **Hosted capacity and pricing.** GMEDIA provides the hosted runtime and may
-sell capacity above the free quota as its own cloud service
-([ADR-017](/docs/proyek/adr)). GMEDIA sets that price. The price does not buy
+offer capacity above the free quota as its own cloud service
+([ADR-017](/docs/proyek/adr)). Whether to offer it, and at what price, is
+GMEDIA's decision. The price does not buy
 a Sakala licence, does not buy features unavailable to self-host users, and
 does not move items on the roadmap. The free quota published for the hosted
 service is a maintainer decision, taken with GMEDIA because GMEDIA bears its
@@ -133,38 +140,46 @@ Commitments:
   institutions can keep running Sakala.
 - **The hosted free quota is written down** and changes are announced in
   advance ([ADR-015](/docs/proyek/adr)).
-- **If the hosted service must end**, users get at least 90 days' notice, an
-  export of their project configuration, and redirects where technically
-  possible.
+- **If the hosted service is shut down as a planned decision** under the
+  project's or the sponsor's control, users get at least 90 days' notice, an
+  export of their project configuration, and redirects, where legally and
+  technically possible. An incident, a legal order, or a sponsor's failure may
+  make that notice impossible; in those cases users are told as early as the
+  situation allows.
 - **Funding sources are public.** Sponsors are listed in `SPONSORS.md` with
   what they provide. Additional sponsors, grants, or a fiscal host may be
   added; none may acquire control beyond §5.
 
 ## 7. Licences, design assets, and the Sakala name
 
-Sakala has three kinds of material, and each has its own terms.
+| Material                                                                                                 | Terms today                                                  |
+| -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| Source code and documentation in the Sakala repositories, including the canonical documents on this site | Apache License 2.0, as stated in each repository's `LICENSE` |
+| Design files outside the repositories (the Figma design system and mockups)                              | Not yet under an open licence; see "Design files" below      |
+| The name "Sakala", the Sakala logo and mark                                                              | Not licensed; governed by the rules below                    |
 
-| Material                                                                                                          | Licence                                      |
-| ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| Source code in every Sakala repository                                                                            | Apache License 2.0                           |
-| Documentation and design assets: the canonical documents, the design system, mockups, diagrams, and illustrations | Creative Commons Attribution 4.0 (CC BY 4.0) |
-| The name "Sakala", the Sakala logo and mark                                                                       | Not licensed; governed by the rules below    |
-
-CC BY 4.0 lets anyone copy, adapt, and reuse documentation and design assets,
-including commercially, as long as they credit Sakala and link to the source.
-Apache 2.0 does not grant rights to the project's trademarks (section 6 of
-the licence); this section states how the name and logo may be used.
+The Apache License 2.0 does not grant permission to use the project's trade
+names or trademarks (section 6 of the licence). The rules below state how the
+name and logo may be used.
 
 ### Design files
 
-Design work made for Sakala is a contribution to the project, on the same
-footing as code. The working Figma file is currently hosted in the GMEDIA
-workspace. The target is a Figma team held in the name of the Sakala project,
-with more than one maintainer as owner, so that the design outlives any single
-account or sponsor arrangement (§6). Until that transfer is agreed with
-GMEDIA, the design system is published through its public summary on the
-[Design System](/docs/teknis/sistem-desain) page, and screens are shared as
-exported frames in the issue or pull request that discusses them.
+Design work made for Sakala is intended to be a contribution to the project,
+on the same footing as code. Two things are still open and need agreement
+with GMEDIA and the people who made the designs:
+
+1. **Where the files live.** The working Figma file is hosted in the GMEDIA
+   workspace. The target is a Figma team held in the name of the Sakala
+   project, with more than one maintainer as owner, so the design outlives any
+   single account or sponsor arrangement (§6).
+2. **Which licence applies.** The target is Creative Commons Attribution 4.0
+   (CC BY 4.0) for the design system and mockups, which lets anyone reuse them
+   with credit. It applies only after the contributors of that work agree.
+
+Until then, the design system is published through its textual summary on the
+[Design System](/docs/teknis/sistem-desain) page, which is part of this
+repository and therefore Apache 2.0, and screens are shared as exported frames
+in the issue or pull request that discusses them.
 
 ### The name and logo
 
@@ -209,7 +224,8 @@ people's development and the security of running systems should not be.
 
 ## 10. Code of conduct
 
-Every Sakala repository carries `CODE_OF_CONDUCT.md`. It applies to
+Every Sakala repository must carry `CODE_OF_CONDUCT.md`; a repository that
+has not added it yet is covered by the same code in the meantime. It applies to
 repositories, discussions, events, and any space where people act on behalf of
 Sakala. Reports go privately to the maintainers; a maintainer involved in a
 report does not take part in handling it.

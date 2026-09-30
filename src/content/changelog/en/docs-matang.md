@@ -18,11 +18,12 @@ users actually consider, and records the pilot quotas already in place along
 with assumptions, risks, and target metrics. Sakala Learn moves to the second
 horizon of the roadmap, and single-node self-host to the third.
 
-Four new architecture decisions are recorded: user workloads are separated
-from the control plane and run under gVisor, unused projects will sleep, the
-shared public domain is treated as a reputation asset, and hosted and
-self-host share the same code and licence. The MVP now has six written
-conditions before registration opens to everyone.
+Three new architecture decisions and one proposal are recorded. Before
+registration opens to everyone, user workloads must be separated from the
+control plane and run under gVisor; today they still share one host. Unused
+projects will sleep. Hosted and self-host share the same code and licence.
+Treating the shared public domain as a reputation asset is proposed. The MVP
+now has six written conditions before registration opens to everyone.
 
 Governance gains a path to becoming a maintainer, a way to decide when
 maintainers disagree, a policy for the Sakala name, and sustainability
