@@ -16,12 +16,14 @@ Cara merilis:
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-10-01
+
 ### Changed
 
 - `CHANGELOG.md` disusun ulang per rilis, dan `package.json` mengikuti versi
-  tag terakhir.
+  tag terakhir (#24).
 - Changelog situs tidak lagi menampilkan nomor versi; setiap entri memakai
-  tanggal dan anchor berdasarkan slug entri.
+  tanggal dan anchor berdasarkan slug entri (#24).
 
 ## [0.2.0] - 2026-10-01
 
@@ -85,7 +87,8 @@ sampai workflow release (#1 sampai #21).
   Source (#19).
 - Dependency diperbarui ke versi terbaru (#13).
 
-[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/gmedia/sakala-landing/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/gmedia/sakala-landing/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/gmedia/sakala-landing/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/gmedia/sakala-landing/releases/tag/v0.1.0
