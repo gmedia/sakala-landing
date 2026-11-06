@@ -283,6 +283,34 @@ user container reaches the control plane and every user's data.
 - Self-host documentation states that running without gVisor is supported for
   trusted single-owner installations only.
 
+### Update 2026-11-06: rootful Docker with `runsc` on runtime nodes
+
+The maintainer decided that runtime nodes run **rootful Docker with `runsc`**.
+This replaces rootless Docker on runtime nodes, which the context above
+describes as the state at the time. The feature is ready, but it is not yet
+enabled in production.
+
+Reasons:
+
+- Under rootless Docker, `runsc` only starts with `--ignore-cgroups`, and with
+  that flag per-workload limits stop applying. In the test, a 512 MiB allocation
+  succeeded inside a 256 MiB limit, `--cpus 0.5` used 196% CPU, and
+  `--pids-limit 32` passed at 117 PIDs. One tenant could exhaust the whole node.
+- Under rootful Docker, all three limits apply. On the staging node (KVM VM
+  without nested virtualization, kernel 7.0, cgroup v2, `runsc`
+  release-20261102.0, platform `systrap`), a 200 MB allocation inside a 64 MiB
+  limit ended with exit 137, and `--cpus 0.5` measured about 55%.
+- The cost is a daemon running as root, so access to its socket equals root on
+  that node. Decision 1 already keeps runtime nodes apart from the control plane,
+  which bounds that cost to the node, and gVisor becomes the main isolation
+  boundary.
+
+The compatibility measurement in Consequences still stands: small Node and PHP
+applications ran under `systrap`, but performance and compatibility of Laravel,
+Express, and Next.js are not measured yet. Measurements live in
+`sakala-agent/docs/RUNTIME_HARDENING.md`. Moving a node is described in the
+`sakala-deployment` README.
+
 ## ADR-015 — Quotas Are Product Policy; Idle Projects Sleep
 
 **Status:** Accepted (quotas in place; idle sleep and build rate limit required before public registration)

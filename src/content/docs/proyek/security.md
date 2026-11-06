@@ -40,7 +40,10 @@ runtime directly.
 
 User code is untrusted code. Current measures:
 
-- rootless Docker on runtime nodes;
+- rootless Docker on runtime nodes today. The decided target is rootful Docker
+  with `runsc`, ready as a feature but not yet enabled in production, because
+  per-workload limits do not apply under `runsc` on rootless Docker
+  ([ADR-014](/docs/proyek/adr));
 - per-container memory, CPU, and PID limits, with node hard ceilings the agent
   enforces regardless of the requested profile;
 - build, start, and command deadlines, with process-group termination;

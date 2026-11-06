@@ -72,4 +72,5 @@ mengubah kalimat di `ARCHITECTURE`.
 
 Baseline dokumentasi: 15 Agustus 2026, dipindahkan ke situs ini pada
 17 September 2026, dan dimatangkan pada 1 Oktober 2026 (PRD 6.0, ADR-014
-sampai ADR-017, aturan bahasa).
+sampai ADR-017, aturan bahasa). Tabel status di MVP, Roadmap, dan PRD §9.3
+diperbarui per 6 November 2026.
