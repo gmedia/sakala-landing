@@ -674,6 +674,26 @@ html:not([data-motion="on"]) .stage .stage-state-done,
   font-weight: 650;
 }
 
+/* Tabel dokumen hukum berisi kalimat, bukan nilai pendek. Kata tidak boleh
+   terpotong, jadi di layar sempit tabelnya digulir, bukan dihimpit. */
+.legal-prose th,
+.legal-prose td {
+  overflow-wrap: break-word;
+  vertical-align: top;
+}
+
+@media (max-width: 47.99rem) {
+  .legal-prose table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .legal-prose th,
+  .legal-prose td {
+    min-width: 11rem;
+  }
+}
+
 .prose-sakala blockquote {
   margin-block: 1.5rem;
   border-left: 3px solid var(--color-primary);

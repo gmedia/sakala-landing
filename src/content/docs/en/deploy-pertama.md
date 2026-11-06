@@ -33,6 +33,8 @@ Open the Console at `app.sakala.dev`. If you have no account, open the **Daftar*
 
 If you choose email, enter your email, full name, and a password of at least 8 characters, then press **Buat Akun**. Open the verification link we send, then log in with **Lanjutkan dengan Email**.
 
+When you sign up, or first log in with GitHub or Google, you are asked to accept the [Terms of Service](/en/syarat) and the [Acceptable Use Policy](/en/penggunaan-wajar). The [Privacy Notice](/en/privasi) explains how Sakala processes your data. All three are published in Indonesian, and the Indonesian text governs.
+
 **What you should see:** after opening the link, **Verifikasi Email Berhasil** (email verified). After logging in, you are taken straight to onboarding.
 
 No email? Check your spam folder, then press **Kirim ulang email verifikasi** (resend the verification email).

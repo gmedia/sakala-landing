@@ -82,9 +82,9 @@ growing is a place where Sakala stops helping.
 
 ## 6. Abuse handling
 
-This process is a precondition for public registration (MVP gate). Until the
-dedicated abuse contact exists, reports arrive through the channel in
-[Security §14](/docs/proyek/security).
+This process is a precondition for public registration (MVP gate). Reports
+arrive at `abuse@sakala.dev`, published in the
+[acceptable use policy](/penggunaan-wajar) together with the steps below.
 
 ### Sources
 
@@ -106,7 +106,7 @@ dedicated abuse contact exists, reports arrive through the channel in
 | 7    | Record the outcome in the audit log; update detection rules if the case was not caught automatically | at close                           |
 
 Suspension stops traffic and sleeps the workload; it does not delete data.
-Deletion follows the retention rules in the privacy notice.
+Deletion follows the retention rules in the [privacy notice](/privasi).
 
 ### Principles
 

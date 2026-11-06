@@ -18,6 +18,10 @@ Cara merilis:
 
 ### Added
 
+- Pemberitahuan Privasi, Syarat Layanan, dan Kebijakan Penggunaan Wajar di
+  `/privasi`, `/syarat`, dan `/penggunaan-wajar`, ditautkan dari footer. Route
+  `/en/...` menampilkan teks Indonesia, dengan catatan bahwa teks itulah yang
+  berlaku.
 - Panduan [Deploy Pertamamu](src/content/docs/deploy-pertama.md),
   [Menyiapkan Dockerfile](src/content/docs/dockerfile.md),
   [Menghubungkan Database Eksternal](src/content/docs/database-eksternal.md),

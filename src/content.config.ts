@@ -43,4 +43,14 @@ const changelog = defineCollection({
   }),
 });
 
-export const collections = { docs, changelog };
+/** Dokumen hukum. Judul ada di kamus i18n, dan tanggal berlaku ada di
+ *  src/data/legal.ts supaya ketiganya berubah dari satu tempat. */
+const legal = defineCollection({
+  loader: glob({ pattern: "*.md", base: "./src/content/legal" }),
+  schema: z.object({
+    /** Harus sama dengan versi yang disimpan API saat pengguna menyetujui. */
+    version: z.string(),
+  }),
+});
+
+export const collections = { docs, changelog, legal };

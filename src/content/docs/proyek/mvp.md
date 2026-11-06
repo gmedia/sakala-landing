@@ -130,8 +130,16 @@ syarat berikut terpenuhi.
 6. **Biaya.** Estimasi biaya runtime per workload per bulan dan kapasitas yang
    disediakan GMEDIA tercatat, termasuk batasnya.
 
-Status gate per 6 November 2026: syarat 1 sampai 6 belum terpenuhi. Kuota
-pilot dan suspend oleh admin sudah menjadi fondasi untuk syarat 2 dan 4.
+Status gate per 6 November 2026: syarat 1, 2, 5, dan 6 belum terpenuhi, dan
+syarat 3 dan 4 baru sebagian. Kuota pilot dan suspend oleh admin sudah menjadi
+fondasi untuk syarat 2 dan 4.
+
+Untuk syarat 3, [Pemberitahuan Privasi](/privasi), [Syarat Layanan](/syarat),
+dan [Kebijakan Penggunaan Wajar](/penggunaan-wajar) sudah ditulis untuk terbit
+di situs. Persetujuan saat pendaftaran sudah ada di kode API dan Console, dan
+berlaku setelah versi itu di-deploy. Untuk syarat 4, alamat `abuse@sakala.dev`
+dan alurnya sudah tertulis, sedangkan pemantauan alamat itu masih perlu
+dipastikan maintainer.
 
 Untuk syarat 1, runtime tersandbox gVisor **siap sebagai fitur, tetapi belum
 diaktifkan di production**. Maintainer memutuskan runtime node memakai Docker

@@ -32,4 +32,8 @@ Sakala tetap dikembangkan sebagai project open-source dengan roadmap, dokumentas
 
 ## Di mana saya melaporkan masalah?
 
-Gunakan [issue pada repository Sakala Landing](https://github.com/gmedia/sakala-landing/issues) untuk masalah website dan dokumentasi. Untuk isu keamanan, ikuti [kebijakan keamanan repository](https://github.com/gmedia/sakala-landing/security/policy).
+Gunakan [issue pada repository Sakala Landing](https://github.com/gmedia/sakala-landing/issues) untuk masalah website dan dokumentasi. Untuk isu keamanan, ikuti [kebijakan keamanan repository](https://github.com/gmedia/sakala-landing/security/policy). Untuk aplikasi di `*.run.sakala.dev` yang berbahaya, laporkan ke `abuse@sakala.dev` seperti dijelaskan di [Kebijakan Penggunaan Wajar](/penggunaan-wajar).
+
+## Di mana dokumen hukum Sakala?
+
+Ada tiga: [Pemberitahuan Privasi](/privasi), [Syarat Layanan](/syarat), dan [Kebijakan Penggunaan Wajar](/penggunaan-wajar).

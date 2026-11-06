@@ -29,7 +29,7 @@ Animasi kecil pada catatan dan titik alur hanya menggunakan CSS dan menghormati 
 
 ## Content Collections
 
-Koleksi `docs` menghasilkan route dokumentasi dan validasi frontmatter. Koleksi `changelog` menyediakan pembaruan publik yang terstruktur. Blog atau tutorial dapat ditambahkan sebagai collection baru setelah kebutuhan editorial jelas.
+Koleksi `docs` menghasilkan route dokumentasi dan validasi frontmatter. Koleksi `changelog` menyediakan pembaruan publik yang terstruktur. Koleksi `legal` berisi tiga dokumen hukum yang terbit di `/privasi`, `/syarat`, dan `/penggunaan-wajar`; tanggal berlakunya hanya ada di `src/data/legal.ts`, dan route `/en/...` menampilkan teks Indonesia yang sama seperti dokumen kanonik. Blog atau tutorial dapat ditambahkan sebagai collection baru setelah kebutuhan editorial jelas.
 
 ## SEO dan Domain
 

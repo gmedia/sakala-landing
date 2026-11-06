@@ -2,6 +2,7 @@
 import BrandLockup from "../brand/BrandLockup.astro";
 import Container from "../ui/Container.astro";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
+import { legalIds } from "../../data/legal";
 import { links } from "../../data/links";
 import { isBilingual } from "../../data/navigation";
 import { localizePath, stripLocale, type Lang } from "../../i18n";
@@ -30,13 +31,18 @@ const project = [
   { label: t.footer.rss, href: localizePath("/rss.xml", lang) },
   { label: t.nav.github, href: links.githubOrganization, external: true },
 ];
+
+const legal = legalIds.map((id) => ({
+  label: t.legal.documents[id].title,
+  href: localizePath(`/${id}`, lang),
+}));
 ---
 
 <!-- Penutup yang tenang di permukaan Eerie Black. Ia menutup halaman tanpa
      bersaing dengan bab Ambang yang memakai teal pekat. -->
 <footer class="surface-depth">
   <Container
-    className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.5fr_auto_auto]"
+    className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.5fr_auto_auto_auto]"
   >
     <div>
       <BrandLockup class="h-7 w-auto text-on-depth" title="Sakala" />
@@ -99,6 +105,27 @@ const project = [
                     &#8599;
                   </span>
                 )}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <nav aria-label={t.footer.legalLabel}>
+      <p class="font-display text-sm font-semibold text-on-depth">
+        {t.footer.legalLabel}
+      </p>
+      <ul class="m-0 mt-4 list-none space-y-2.5 p-0">
+        {
+          legal.map((item) => (
+            <li>
+              <a
+                class="text-sm text-on-depth-muted hover:text-on-depth"
+                href={item.href}
+                data-astro-prefetch="hover"
+              >
+                {item.label}
               </a>
             </li>
           ))

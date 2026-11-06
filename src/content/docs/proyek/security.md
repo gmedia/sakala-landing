@@ -92,8 +92,8 @@ platform default.
 
 ### What is not allowed
 
-The acceptable use policy lists it in full. The categories the platform
-actively detects and removes are:
+The [acceptable use policy](/penggunaan-wajar) lists it in full. The categories
+the platform removes when it finds them are:
 
 - phishing and credential harvesting;
 - malware, command-and-control, and drive-by downloads;
@@ -114,7 +114,7 @@ actively detects and removes are:
 | Idle sleep and build rate limit                | required before public registration ([ADR-015](/docs/proyek/adr)) |
 | Egress policy for user containers              | required before public registration                               |
 | Separate registrable domain for user content   | proposed ([ADR-016](/docs/proyek/adr))                            |
-| Published abuse contact and takedown process   | required before public registration                               |
+| Published abuse contact and takedown process   | published ([acceptable use policy](/penggunaan-wajar))            |
 
 The takedown process, with target times, is owned by
 [Platform Operations](/docs/proyek/platform-operations).
@@ -127,7 +127,7 @@ Indonesia's Personal Data Protection Law (UU PDP), fully in force since
 17 October 2024. The baseline:
 
 - collect only what the product uses; do not add tracking to the Console;
-- publish a privacy notice that states what is collected, why, how long it is
+- publish a [privacy notice](/privasi) that states what is collected, why, how long it is
   kept, and how to request access or deletion;
 - keep deployment logs for a bounded period (7 days by default) and prune
   usage signals (30 days by default);
@@ -195,7 +195,6 @@ reporting on the affected repository. Maintainers enable that feature on every
 Sakala repository and aim to acknowledge a report within three working days.
 
 **Abuse.** A project hosted on Sakala that is used for phishing, malware, or
-other abuse is reported to the abuse contact published on the site. Until that
-contact is published, reports go through the same private vulnerability
-channel. Publishing a monitored abuse contact is a precondition for public
-registration.
+other abuse is reported to `abuse@sakala.dev`, published in the
+[acceptable use policy](/penggunaan-wajar). Keeping that contact monitored is a
+precondition for public registration.

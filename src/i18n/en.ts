@@ -672,5 +672,33 @@ export const en: Dictionary = {
     rights: "Sakala Contributors",
     license: "Apache-2.0",
     sponsor: "Founding sponsor: GMEDIA",
+    legalLabel: "Legal",
+  },
+  legal: {
+    eyebrow: "Legal document",
+    effectiveSince: "In effect since",
+    version: "Version",
+    governingNote:
+      "Written in Indonesian and deliberately not translated, so there is a single source. The Indonesian text below is the one that governs.",
+    documents: {
+      privasi: {
+        title: "Privacy Notice",
+        heading: "Sakala Privacy Notice",
+        description:
+          "The personal data the Sakala service processes, why, how long it is kept, who else processes it, and your rights. Published in Indonesian.",
+      },
+      syarat: {
+        title: "Terms of Service",
+        heading: "Sakala Terms of Service",
+        description:
+          "The terms for using the Sakala service during its pilot: what you get, its limits, your responsibilities, and suspension. Published in Indonesian.",
+      },
+      "penggunaan-wajar": {
+        title: "Acceptable Use Policy",
+        heading: "Sakala Acceptable Use Policy",
+        description:
+          "What is not allowed on Sakala, how reports are handled, how to report, and how to appeal. Published in Indonesian.",
+      },
+    },
   },
 };

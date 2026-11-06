@@ -32,6 +32,8 @@ Buka Console di `app.sakala.dev`. Kalau belum punya akun, buka halaman **Daftar*
 
 Kalau memilih email, isi email, nama lengkap, dan kata sandi minimal 8 karakter, lalu tekan **Buat Akun**. Buka tautan verifikasi yang kami kirim, lalu masuk dengan **Lanjutkan dengan Email**.
 
+Saat mendaftar, atau saat pertama kali masuk lewat GitHub atau Google, kamu diminta menyetujui [Syarat Layanan](/syarat) dan [Kebijakan Penggunaan Wajar](/penggunaan-wajar). Cara Sakala memproses datamu dijelaskan di [Pemberitahuan Privasi](/privasi).
+
 **Yang seharusnya terlihat:** setelah tautan dibuka, muncul **Verifikasi Email Berhasil**. Setelah masuk, kamu langsung dibawa ke onboarding.
 
 Email tidak datang? Cek folder spam, lalu tekan **Kirim ulang email verifikasi**.
