@@ -14,7 +14,7 @@ Sakala adalah platform deployment open-source yang membawa project dari reposito
 
 ## Apakah Sakala dapat langsung dipakai production?
 
-Belum. Sakala berada dalam tahap pengembangan aktif dan saat ini menyusun foundation produk serta runtime.
+Belum. Sakala masih dalam pengembangan aktif dan belum dibuka untuk umum. Jalur deploy-nya sudah ada, tetapi belum teruji bersama pengguna pilot atau di production.
 
 ## Apakah platform ini hanya untuk mahasiswa?
 

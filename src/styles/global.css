@@ -688,6 +688,7 @@ html:not([data-motion="on"]) .stage .stage-state-done,
   color: var(--color-primary-dark);
   font-family: var(--font-mono);
   font-size: 0.92em;
+  overflow-wrap: anywhere;
 }
 
 .prose-sakala pre {

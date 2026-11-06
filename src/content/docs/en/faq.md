@@ -15,7 +15,7 @@ Sakala is an open-source deployment platform that carries a project from a Git r
 
 ## Can Sakala be used in production yet?
 
-No. Sakala is under active development and is still assembling its product and runtime foundations.
+No. Sakala is under active development and is not open to the public yet. Its deployment path exists, but has not been tested with pilot users or in production.
 
 ## Is this only for students?
 
