@@ -110,6 +110,6 @@ For a pilot, a host Caddy can still act as a static outer edge forwarding traffi
 
 The MVP Agent foundation covers connected polling, the command lifecycle, project inspection, Dockerfile and Railpack builds, container resource guards, health checks, Caddy routes, reconciliation, and reporting.
 
-That means the executor foundation can be exercised as a system. It does not mean the hosted Sakala service is production ready. A pilot still needs matching Agent API endpoints, node provisioning, secret management, observability, backups, and end-to-end operational testing.
+That means the executor foundation can be exercised as a system. It does not mean the hosted Sakala service is production ready. The Agent API endpoints now exist in `sakala-api`. A pilot still needs node provisioning, secret management, observability, backups, and end-to-end operational testing.
 
 The full implementation and technical contract live in the [`sakala-agent`](https://github.com/gmedia/sakala-agent) repository.

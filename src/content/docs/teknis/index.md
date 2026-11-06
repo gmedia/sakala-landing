@@ -33,3 +33,5 @@ Bila sebuah bagian masih berupa rencana, hal itu dinyatakan di halaman terkait.
 ## Sumber yang lebih dalam
 
 Dokumen arsitektur, keputusan teknis, dan roadmap lengkap berada pada repository project. Halaman-halaman di sini adalah ringkasan yang dijaga tetap sejalan dengannya.
+
+Kalau ingin ikut mengerjakan, mulai dari [Start Contributing](/docs/proyek/start-contributing), yang memetakan repository, perintah quality, dan cara memilih pekerjaan.

@@ -56,7 +56,7 @@ Bahasa yang konsisten mencegah arsitektur yang tidak disengaja. Istilah di halam
 
 **AgentCommand** — Instruksi control plane yang diklaim lalu dieksekusi oleh Agent.
 
-**Builder** — Mekanisme yang mengubah source menjadi image yang dapat dijalankan. Urutannya: Dockerfile, lalu Railpack, lalu konfigurasi manual.
+**Builder** — Mekanisme yang mengubah source menjadi image yang dapat dijalankan. Urutannya: Dockerfile, lalu Railpack.
 
 **Railpack** — Sistem build plan otomatis yang dipakai Sakala ketika repository tidak menyediakan Dockerfile.
 

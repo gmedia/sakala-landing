@@ -57,7 +57,7 @@ The minimum enforced on user workloads:
 - memory limit;
 - process count limit where available;
 - build and start timeouts;
-- loopback port binding;
+- no application port published to the host;
 - filesystem and workspace isolation;
 - cleanup afterwards.
 

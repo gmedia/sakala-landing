@@ -56,7 +56,7 @@ Minimum yang diberlakukan pada workload pengguna:
 - batas memori;
 - batas jumlah proses bila tersedia;
 - timeout build dan start;
-- pengikatan port pada loopback;
+- tidak ada port aplikasi yang dipublikasikan ke host;
 - isolasi filesystem dan workspace;
 - pembersihan setelah selesai.
 
