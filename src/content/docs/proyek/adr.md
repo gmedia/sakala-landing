@@ -1,6 +1,6 @@
 ---
 title: "Architecture Decision Records"
-description: "Architecture and product decisions with their status, context, alternatives, and consequences — from separating console and API to workload isolation, quotas, the shared public domain, and the hosted plus self-host model."
+description: "Architecture and product decisions with their status, context, alternatives, and consequences — from separating console and API to workload isolation, quotas, the shared public domain, the hosted plus self-host model, and workspace ownership."
 track: proyek
 section: sistem
 order: 6
@@ -417,3 +417,82 @@ separate licence and loses trust.
 - ADR-013 (distribution repository) becomes the delivery vehicle for
   self-host and moves from Proposed toward Accepted when installer work
   starts.
+
+## ADR-018 — Workspace Ownership and Limit Profiles
+
+**Status:** Accepted (API foundation in progress; admin API and Console follow)
+
+Tracked in [sakala-api#122](https://github.com/gmedia/sakala-api/issues/122).
+
+### Context
+
+Today every project belongs to one personal account, and limits apply per
+account. A real case does not fit: interns from a partner campus build
+`facility-reporting` for GMEDIA. It should be deployed under the GMEDIA
+organisation, GMEDIA must control who can deploy and the team's resource
+limits, and access to the repository must not depend on one intern's personal
+account. Classroom resource policy (ADR-015, FEATURE_EDUCATION) also needs
+limits per class rather than per user.
+
+### Decision
+
+- Every project is owned by a workspace. Every user has exactly one personal
+  workspace, created at registration; existing users are backfilled by
+  migration and their projects move into it. The user column on a project
+  stays as the creator. Creating a project without naming a workspace uses the
+  personal workspace, so solo use feels unchanged.
+- A team is a workspace of type `team` with three roles: `owner` (manage
+  members, invitations, and settings), `member` (create, deploy, and manage
+  the team's projects, including environment variables), and `viewer` (read
+  only; never sees secret values). Sakala admins keep their existing powers. A
+  member who leaves or is removed loses access at once; projects stay with the
+  workspace. A team always keeps at least one owner; the last owner cannot
+  leave or be demoted.
+- Any user with a verified email may create team workspaces, capped per user
+  (default 2 owned teams, from configuration). An admin can raise one user's
+  cap. The cap stops people multiplying quota by creating teams.
+- Members join through email invitations that carry a role, a single-use
+  token stored only as a hash, and an expiry (default 7 days).
+- Resource limits come from reusable limit profiles (for example "Pilot",
+  "Magang GMEDIA", "Kelas") attached to a workspace: max projects, max running
+  containers, max concurrent deployments, per-project memory and CPU caps, and
+  a builds-per-hour field reserved for the build rate limit
+  ([sakala-api#124](https://github.com/gmedia/sakala-api/issues/124)).
+  Personal and team workspaces use the same mechanism. A workspace without a
+  profile uses the default for its type from configuration, which equals
+  today's pilot limits, so nothing changes for existing users. Limits count
+  per workspace, never per member, and are enforced under a row lock on the
+  workspace.
+- GitHub access for team projects:
+  - a public repository needs no person, so deploys keep working when the
+    creator leaves;
+  - a private repository connected through a GitHub App installation on an
+    organisation account is accessed through that installation and does not
+    depend on any person; the organisation controls which repositories the
+    installation sees;
+  - a private repository from an installation on a personal GitHub account
+    stays tied to its creator, who must still be an owner or member of the
+    team and still able to read the repository. When the creator leaves,
+    deploys of that repository stop with `REPOSITORY_ACCESS_REVOKED` until the
+    team reconnects it through an organisation installation.
+
+  Personal workspace projects keep today's rule: the owner must still have
+  access.
+
+- Deleting an account deletes the personal workspace and its projects as
+  before and removes memberships. It is refused with `LAST_WORKSPACE_OWNER`
+  while the user is the last owner of a team that still has projects; an empty
+  team they solely own is deleted with the account.
+
+### Consequences
+
+- The admin API for profiles and workspaces, then the Console (workspace
+  switcher, members page, owner shown on projects), follow in later changes.
+  The API stays backward compatible (additive fields only), so the current
+  Console keeps working.
+- Audit events record membership, role, invitation, and limit-profile changes.
+- A team project from an organisation installation keeps deploying after its
+  creator leaves the GitHub organisation, as long as the installation still
+  includes the repository. Removing the repository from the installation is
+  the organisation's lever.
+- Moving a project between workspaces is not part of this decision.
