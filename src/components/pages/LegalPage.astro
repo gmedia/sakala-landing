@@ -57,13 +57,11 @@ const breadcrumbs = [
     <div class="max-w-3xl">
       <!-- Teks Indonesia adalah sumber tunggal, seperti dokumen kanonik jalur
            proyek. Route /en menampilkannya apa adanya dan mengatakannya. -->
-      {
-        copy.governingNote && (
-          <p class="mb-8 border-l-2 border-primary pl-4 text-sm leading-6 text-muted">
-            {copy.governingNote}
-          </p>
-        )
-      }
+      {copy.governingNote && (
+        <p class="mb-8 border-l-2 border-primary pl-4 text-sm leading-6 text-muted">
+          {copy.governingNote}
+        </p>
+      )}
       <article class="prose-sakala legal-prose" lang="id">
         <Content />
       </article>

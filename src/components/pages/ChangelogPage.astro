@@ -54,50 +54,48 @@ const breadcrumbs = [
 
   <section class="py-20 sm:py-24">
     <Container>
-      {
-        entries.length === 0 ? (
-          <p class="rounded-2xl border border-border bg-surface px-6 py-8 text-center text-muted">
-            {c.empty}
-          </p>
-        ) : (
-          /* Changelog adalah kelanjutan project itu sendiri, jadi ia memakai
+      {entries.length === 0 ? (
+        <p class="rounded-2xl border border-border bg-surface px-6 py-8 text-center text-muted">
+          {c.empty}
+        </p>
+      ) : (
+        /* Changelog adalah kelanjutan project itu sendiri, jadi ia memakai
              garis yang sama dengan bab Kelanjutan di beranda. Entri terbaru
              berada di simpul teratas. */
-          <ol
-            class="green-line m-0 list-none space-y-12 p-0 pl-8"
-            style="--line-inset: 2rem"
-          >
-            {entries.map((entry, index) => (
-              <li
-                id={changelogAnchor(entry)}
-                class:list={[
-                  "green-line-node scroll-mt-28",
-                  index === 0 && "green-line-node-live",
-                ]}
-              >
-                <div class="grid gap-2 md:grid-cols-[10rem_1fr] md:gap-8">
-                  <div>
-                    <time
-                      class="block font-mono text-sm font-semibold text-primary-dark"
-                      datetime={entry.data.publishedAt.toISOString()}
-                    >
-                      {date.format(entry.data.publishedAt)}
-                    </time>
-                  </div>
-                  <div>
-                    <h2 class="font-display text-xl font-semibold tracking-tight text-ink">
-                      {entry.data.title}
-                    </h2>
-                    <p class="mt-3 max-w-2xl leading-7 text-muted">
-                      {entry.data.description}
-                    </p>
-                  </div>
+        <ol
+          class="green-line m-0 list-none space-y-12 p-0 pl-8"
+          style="--line-inset: 2rem"
+        >
+          {entries.map((entry, index) => (
+            <li
+              id={changelogAnchor(entry)}
+              class:list={[
+                "green-line-node scroll-mt-28",
+                index === 0 && "green-line-node-live",
+              ]}
+            >
+              <div class="grid gap-2 md:grid-cols-[10rem_1fr] md:gap-8">
+                <div>
+                  <time
+                    class="block font-mono text-sm font-semibold text-primary-dark"
+                    datetime={entry.data.publishedAt.toISOString()}
+                  >
+                    {date.format(entry.data.publishedAt)}
+                  </time>
                 </div>
-              </li>
-            ))}
-          </ol>
-        )
-      }
+                <div>
+                  <h2 class="font-display text-xl font-semibold tracking-tight text-ink">
+                    {entry.data.title}
+                  </h2>
+                  <p class="mt-3 max-w-2xl leading-7 text-muted">
+                    {entry.data.description}
+                  </p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      )}
     </Container>
   </section>
 </LandingLayout>

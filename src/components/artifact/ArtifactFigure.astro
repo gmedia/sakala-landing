@@ -38,16 +38,14 @@ const style = {
 }[tone];
 ---
 
-{
-  /* Artefak di sini dibangun dari HTML semantik: daftar berurutan, teks status,
+{/* Artefak di sini dibangun dari HTML semantik: daftar berurutan, teks status,
     nama tahap, alamat. Pembaca layar sudah menerimanya sebagai isi. Ringkasan
     sr-only tambahan hanya membuat semuanya terbaca dua kali, jadi
 
       artefak semantik + figcaption yang terlihat = representasi yang aksesibel
 
     Bila suatu saat ada artefak yang murni visual, misalnya SVG tanpa teks,
-    barulah ia butuh padanan tekstual tersendiri. */
-}
+    barulah ia butuh padanan tekstual tersendiri. */}
 <figure class:list={["not-prose m-0", className]}>
   <slot />
   <figcaption
@@ -59,17 +57,15 @@ const style = {
   >
     {caption}
   </figcaption>
-  {
-    note && (
-      <p
-        class:list={[
-          "mt-3 border-l-2 pl-3 font-mono text-[0.7rem] leading-5",
-          style.note,
-          centered && "mx-auto max-w-xl",
-        ]}
-      >
-        {note}
-      </p>
-    )
-  }
+  {note && (
+    <p
+      class:list={[
+        "mt-3 border-l-2 pl-3 font-mono text-[0.7rem] leading-5",
+        style.note,
+        centered && "mx-auto max-w-xl",
+      ]}
+    >
+      {note}
+    </p>
+  )}
 </figure>

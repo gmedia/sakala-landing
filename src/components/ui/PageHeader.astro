@@ -18,9 +18,7 @@ const { eyebrow, title, lead, breadcrumbs = [] } = Astro.props;
   <Container className="py-16 sm:py-20 lg:py-24">
     {breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} />}
     <p class="mt-8 artifact-label text-primary">{eyebrow}</p>
-    <h1
-      class="mt-5 max-w-3xl text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-ink"
-    >
+    <h1 class="mt-5 max-w-3xl text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-ink">
       {title}
     </h1>
     {lead && <p class="mt-7 max-w-2xl text-lg leading-8 text-muted">{lead}</p>}

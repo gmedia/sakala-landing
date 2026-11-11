@@ -88,43 +88,40 @@ const c =
     y2="128"
     stroke={c.node}
     stroke-width="1"
-    stroke-dasharray="5 6"></line>
+    stroke-dasharray="5 6"
+  ></line>
 
-  {
-    nodes.map((n) => (
-      <g>
-        <rect
-          x={n.x}
-          y={n.y}
-          width={n.w}
-          height={n.h}
-          rx="10"
-          fill={c.nodeFill}
-          stroke={n.accent ? c.accent : c.node}
-          stroke-width={n.accent ? 2 : 1.25}
-        />
-        <text
-          x={n.x + n.w / 2}
-          y={n.y + n.h / 2 + 4.5}
-          text-anchor="middle"
-          font-family="var(--font-mono)"
-          font-size="13"
-          fill={c.text}
-        >
-          {n.label}
-        </text>
-      </g>
-    ))
-  }
+  {nodes.map((n) => (
+    <g>
+      <rect
+        x={n.x}
+        y={n.y}
+        width={n.w}
+        height={n.h}
+        rx="10"
+        fill={c.nodeFill}
+        stroke={n.accent ? c.accent : c.node}
+        stroke-width={n.accent ? 2 : 1.25}
+      />
+      <text
+        x={n.x + n.w / 2}
+        y={n.y + n.h / 2 + 4.5}
+        text-anchor="middle"
+        font-family="var(--font-mono)"
+        font-size="13"
+        fill={c.text}
+      >
+        {n.label}
+      </text>
+    </g>
+  ))}
 
-  {
-    arrows.map((a) => (
-      <g>
-        <path d={a.line} stroke={c.soft} stroke-width="1.5" />
-        <path d={a.head} fill={c.soft} />
-      </g>
-    ))
-  }
+  {arrows.map((a) => (
+    <g>
+      <path d={a.line} stroke={c.soft} stroke-width="1.5" />
+      <path d={a.head} fill={c.soft} />
+    </g>
+  ))}
 
   <text
     x="394"

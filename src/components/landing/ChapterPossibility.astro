@@ -30,14 +30,14 @@ const s = t.home.status;
 >
   <!-- Bidang kemungkinan: kisi yang memudar ke bawah. Netral, tanpa teal;
        teal baru masuk di bab Ambang. -->
-  <div class="possibility-field absolute inset-0 -z-20" aria-hidden="true">
-  </div>
+  <div
+    class="possibility-field absolute inset-0 -z-20"
+    aria-hidden="true"
+  ></div>
 
   <p class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
     <span class="artifact-label text-primary">{c.eyebrow}</span>
-    <span
-      class="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-2.5 py-1 text-xs text-muted"
-    >
+    <span class="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-2.5 py-1 text-xs text-muted">
       <span class="size-1.5 rounded-full bg-spark" aria-hidden="true"></span>
       <span class="font-semibold text-spark-text">{s.label}</span>
       <span class="hidden sm:inline">· {s.text}</span>
@@ -56,9 +56,7 @@ const s = t.home.status;
   >
     {c.title}
   </h1>
-  <p
-    class="mt-7 max-w-2xl text-lg leading-8 text-muted sm:text-xl sm:leading-9"
-  >
+  <p class="mt-7 max-w-2xl text-lg leading-8 text-muted sm:text-xl sm:leading-9">
     {c.sub}
   </p>
 

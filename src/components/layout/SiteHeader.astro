@@ -30,9 +30,7 @@ const navigation = getMainNavigation(lang, t);
   sehingga header gelap dari landing sebelumnya tidak diteruskan. Permukaan
   gelap kini ditentukan narasi, bukan kebiasaan.
 -->
-<header
-  class="sticky top-0 z-30 border-b border-border bg-canvas/90 backdrop-blur"
->
+<header class="sticky top-0 z-30 border-b border-border bg-canvas/90 backdrop-blur">
   <Container className="flex h-16 items-center justify-between gap-4 sm:h-18">
     <SakalaLogo
       lang={lang}
@@ -41,25 +39,23 @@ const navigation = getMainNavigation(lang, t);
     />
 
     <nav class="hidden items-center gap-7 lg:flex" aria-label={t.nav.label}>
-      {
-        navigation.map((item) => (
-          <a
-            href={item.href}
-            target={item.external ? "_blank" : undefined}
-            rel={item.external ? "noreferrer" : undefined}
-            data-astro-prefetch={item.external ? undefined : "hover"}
-            aria-current={currentPath === item.href ? "page" : undefined}
-            class:list={[
-              "inline-flex min-h-11 items-center border-b-2 text-sm font-medium hover:text-primary-dark",
-              currentPath === item.href
-                ? "border-primary text-primary-dark"
-                : "border-transparent text-muted",
-            ]}
-          >
-            {item.label}
-          </a>
-        ))
-      }
+      {navigation.map((item) => (
+        <a
+          href={item.href}
+          target={item.external ? "_blank" : undefined}
+          rel={item.external ? "noreferrer" : undefined}
+          data-astro-prefetch={item.external ? undefined : "hover"}
+          aria-current={currentPath === item.href ? "page" : undefined}
+          class:list={[
+            "inline-flex min-h-11 items-center border-b-2 text-sm font-medium hover:text-primary-dark",
+            currentPath === item.href
+              ? "border-primary text-primary-dark"
+              : "border-transparent text-muted",
+          ]}
+        >
+          {item.label}
+        </a>
+      ))}
     </nav>
 
     <!-- CTA primer aktif sejak console tersedia di app.sakala.dev. -->
@@ -69,7 +65,9 @@ const navigation = getMainNavigation(lang, t);
         pathname={switchPath}
         label={t.nav.languageLabel}
       />
-      <Button href={links.console} class="px-4 py-2">{t.nav.console}</Button>
+      <Button href={links.console} class="px-4 py-2">
+        {t.nav.console}
+      </Button>
     </div>
 
     <MobileNav

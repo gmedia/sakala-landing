@@ -40,20 +40,14 @@ const {
 } = Astro.props;
 ---
 
-{
-  /* Alat diagnosis dengan grammar Deployment Detail (gagal) dari Console
+{/* Alat diagnosis dengan grammar Deployment Detail (gagal) dari Console
     Wave 1: banner yang menyebut tahapnya, timeline yang berhenti di satu
     tahap, penjelasan dalam bahasa manusia, dan log yang menunjuk barisnya.
     Semuanya dalam satu kartu supaya hubungannya terlihat, bukan ditebak.
     Tidak ada yang berjalan di sini; keadaannya tetap. Status tidak pernah
-    disampaikan lewat warna saja. */
-}
-<div
-  class="artifact overflow-hidden rounded-2xl border border-depth-border bg-depth-surface"
->
-  <div
-    class="flex items-start gap-4 border-b border-depth-border px-5 py-4 sm:px-6"
-  >
+    disampaikan lewat warna saja. */}
+<div class="artifact overflow-hidden rounded-2xl border border-depth-border bg-depth-surface">
+  <div class="flex items-start gap-4 border-b border-depth-border px-5 py-4 sm:px-6">
     <span
       class="grid size-9 shrink-0 place-items-center rounded-full border border-error-on-depth text-sm text-error-on-depth"
       aria-hidden="true"
@@ -69,39 +63,35 @@ const {
   </div>
 
   <div class="grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
-    <ol
-      class="m-0 list-none space-y-5 border-b border-depth-border p-5 sm:p-6 lg:border-b-0 lg:border-r"
-    >
-      {
-        stages.map((stage) => {
-          const failed = stage.state === "failed";
-          return (
-            <li
-              class:list={[
-                "stage flex items-start gap-4",
-                failed ? "stage-failed" : "is-present",
-              ]}
-            >
-              <span class="stage-dot shrink-0" aria-hidden="true">
-                <span class="text-xs">{failed ? "✕" : "✓"}</span>
+    <ol class="m-0 list-none space-y-5 border-b border-depth-border p-5 sm:p-6 lg:border-b-0 lg:border-r">
+      {stages.map((stage) => {
+        const failed = stage.state === "failed";
+        return (
+          <li
+            class:list={[
+              "stage flex items-start gap-4",
+              failed ? "stage-failed" : "is-present",
+            ]}
+          >
+            <span class="stage-dot shrink-0" aria-hidden="true">
+              <span class="text-xs">{failed ? "✕" : "✓"}</span>
+            </span>
+            <span class="min-w-0 pt-1">
+              <span class="block font-display text-base font-semibold leading-6 text-on-depth">
+                {stage.name}
               </span>
-              <span class="min-w-0 pt-1">
-                <span class="block font-display text-base font-semibold leading-6 text-on-depth">
-                  {stage.name}
-                </span>
-                <span
-                  class:list={[
-                    "mt-0.5 block font-mono text-xs",
-                    failed ? "text-error-on-depth" : "text-on-depth-muted",
-                  ]}
-                >
-                  {stage.time} · {failed ? stateFailed : stateDone}
-                </span>
+              <span
+                class:list={[
+                  "mt-0.5 block font-mono text-xs",
+                  failed ? "text-error-on-depth" : "text-on-depth-muted",
+                ]}
+              >
+                {stage.time} · {failed ? stateFailed : stateDone}
               </span>
-            </li>
-          );
-        })
-      }
+            </span>
+          </li>
+        );
+      })}
     </ol>
 
     <div class="p-5 sm:p-6">
@@ -111,41 +101,35 @@ const {
       </p>
       <p class="artifact-label mt-6 text-on-depth-muted">{checkLabel}</p>
       <ul class="m-0 mt-2.5 list-none space-y-1.5 p-0">
-        {
-          checks.map((check) => (
-            <li class="font-mono text-sm text-on-depth-muted">
-              <span aria-hidden="true" class="text-on-depth-subtle">
-                &rarr;{" "}
-              </span>
-              {check}
-            </li>
-          ))
-        }
+        {checks.map((check) => (
+          <li class="font-mono text-sm text-on-depth-muted">
+            <span aria-hidden="true" class="text-on-depth-subtle">
+              &rarr;{" "}
+            </span>
+            {check}
+          </li>
+        ))}
       </ul>
     </div>
   </div>
 
   <div class="border-t border-depth-border bg-depth px-5 py-4 sm:px-6">
     <p class="artifact-label text-on-depth-subtle">{logLabel}</p>
-    <ol
-      class="m-0 mt-3 list-none space-y-1.5 overflow-x-auto p-0 font-mono text-xs leading-5 sm:text-sm"
-    >
-      {
-        logs.map((line) => (
-          <li class="whitespace-nowrap">
-            <span
-              class:list={[
-                line.error ? "text-error-on-depth" : "text-on-depth-subtle",
-              ]}
-            >
-              [{line.t}]
-            </span>{" "}
-            <span class={line.error ? "text-on-depth" : "text-on-depth-muted"}>
-              {line.m}
-            </span>
-          </li>
-        ))
-      }
+    <ol class="m-0 mt-3 list-none space-y-1.5 overflow-x-auto p-0 font-mono text-xs leading-5 sm:text-sm">
+      {logs.map((line) => (
+        <li class="whitespace-nowrap">
+          <span
+            class:list={[
+              line.error ? "text-error-on-depth" : "text-on-depth-subtle",
+            ]}
+          >
+            [{line.t}]
+          </span>{" "}
+          <span class={line.error ? "text-on-depth" : "text-on-depth-muted"}>
+            {line.m}
+          </span>
+        </li>
+      ))}
     </ol>
   </div>
 </div>

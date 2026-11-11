@@ -15,38 +15,36 @@ const label = lang === "en" ? "Documentation type" : "Jenis dokumentasi";
 
 <nav aria-label={label} class={className}>
   <ul class="m-0 grid list-none gap-1 p-0">
-    {
-      tracks.map((key) => {
-        const meta = getTrackMeta(key, lang);
-        const isCurrent = key === current;
-        return (
-          <li>
-            <a
-              href={meta.href}
-              data-astro-prefetch="hover"
-              aria-current={isCurrent ? "true" : undefined}
+    {tracks.map((key) => {
+      const meta = getTrackMeta(key, lang);
+      const isCurrent = key === current;
+      return (
+        <li>
+          <a
+            href={meta.href}
+            data-astro-prefetch="hover"
+            aria-current={isCurrent ? "true" : undefined}
+            class:list={[
+              "block rounded-lg border px-3 py-2.5",
+              isCurrent
+                ? "border-border-strong bg-surface"
+                : "border-transparent hover:border-border",
+            ]}
+          >
+            <span
               class:list={[
-                "block rounded-lg border px-3 py-2.5",
-                isCurrent
-                  ? "border-border-strong bg-surface"
-                  : "border-transparent hover:border-border",
+                "block text-sm font-semibold",
+                isCurrent ? "green-line-dot text-ink" : "text-muted",
               ]}
             >
-              <span
-                class:list={[
-                  "block text-sm font-semibold",
-                  isCurrent ? "green-line-dot text-ink" : "text-muted",
-                ]}
-              >
-                {meta.title}
-              </span>
-              <span class="mt-0.5 block text-xs leading-5 text-muted">
-                {meta.blurb}
-              </span>
-            </a>
-          </li>
-        );
-      })
-    }
+              {meta.title}
+            </span>
+            <span class="mt-0.5 block text-xs leading-5 text-muted">
+              {meta.blurb}
+            </span>
+          </a>
+        </li>
+      );
+    })}
   </ul>
 </nav>
