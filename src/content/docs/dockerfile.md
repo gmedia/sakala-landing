@@ -102,7 +102,9 @@ Jalankan dari folder yang berisi Dockerfile. Flag `--cap-drop` dan `--security-o
 ```bash
 docker build -t halo-sakala .
 docker run -d --name halo-sakala -e PORT=3000 -p 127.0.0.1:3000:3000 \
-  --cap-drop ALL --security-opt no-new-privileges \
+  --cap-drop ALL --cap-add CHOWN --cap-add DAC_OVERRIDE --cap-add FOWNER --cap-add FSETID \
+  --cap-add KILL --cap-add SETGID --cap-add SETUID --cap-add NET_BIND_SERVICE \
+  --security-opt no-new-privileges \
   --memory 256m --cpus 0.5 --pids-limit 128 \
   halo-sakala
 curl -i http://127.0.0.1:3000/
@@ -122,7 +124,9 @@ Lalu pastikan aplikasinya benar-benar membaca `PORT`, dengan menjalankannya di p
 ```bash
 docker rm -f halo-sakala
 docker run -d --name halo-sakala -e PORT=8123 -p 127.0.0.1:8123:8123 \
-  --cap-drop ALL --security-opt no-new-privileges \
+  --cap-drop ALL --cap-add CHOWN --cap-add DAC_OVERRIDE --cap-add FOWNER --cap-add FSETID \
+  --cap-add KILL --cap-add SETGID --cap-add SETUID --cap-add NET_BIND_SERVICE \
+  --security-opt no-new-privileges \
   halo-sakala
 curl -i http://127.0.0.1:8123/
 docker rm -f halo-sakala
@@ -174,14 +178,16 @@ Dockerfile
 .dockerignore
 ```
 
-Image `nginx` biasa tidak bisa dipakai di sini. Saat dicoba dengan pembatasan di atas, ia berhenti dengan pesan `chown(...) failed (1: Operation not permitted)`. Karena itu contoh ini memakai `nginxinc/nginx-unprivileged`.
+Image `nginx` biasa juga bisa dipakai, asal tetap memakai template di atas supaya nginx mendengarkan di `${PORT}`. Tanpa template, nginx mendengarkan di port 80 dan deploy gagal dengan [`runtime_app_not_listening`](/docs/deploy-gagal#runtime_app_not_listening). Contoh ini memakai `nginxinc/nginx-unprivileged` karena prosesnya tidak berjalan sebagai root sama sekali.
 
 Coba di laptop:
 
 ```bash
 VITE_API_URL=https://api.contoh.test docker build --secret id=VITE_API_URL,env=VITE_API_URL -t halo-vite .
 docker run -d --name halo-vite -e PORT=3000 -p 127.0.0.1:3000:3000 \
-  --cap-drop ALL --security-opt no-new-privileges \
+  --cap-drop ALL --cap-add CHOWN --cap-add DAC_OVERRIDE --cap-add FOWNER --cap-add FSETID \
+  --cap-add KILL --cap-add SETGID --cap-add SETUID --cap-add NET_BIND_SERVICE \
+  --security-opt no-new-privileges \
   --memory 256m --cpus 0.5 --pids-limit 128 \
   halo-vite
 curl -i http://127.0.0.1:3000/
@@ -251,14 +257,15 @@ Setelah itu buka project di Console, lalu tekan **Deploy sekarang** atau **Redep
 
 Deploy yang gagal tidak mengganti versi yang sedang melayani. Kalau project-mu pernah berhasil di-deploy, versi lama tetap bisa dibuka selama kamu memperbaikinya. Kesalahan yang paling sering:
 
-| Yang terjadi                                               | Kode                                                                                                   |
-| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Aplikasi mendengarkan di `localhost` atau port tetap       | [`runtime_app_not_listening`](/docs/deploy-gagal#runtime_app_not_listening)                            |
-| Ada variabel `PORT` di project dengan nilai yang berbeda   | [`runtime_port_conflict`](/docs/deploy-gagal#runtime_port_conflict)                                    |
-| Aplikasi berhenti saat mulai, misalnya image `nginx` biasa | [`runtime_app_crashed`](/docs/deploy-gagal#runtime_app_crashed)                                        |
-| `/` selalu menjawab 5xx                                    | [`runtime_app_unhealthy`](/docs/deploy-gagal#runtime_app_unhealthy)                                    |
-| `npm ci` gagal karena `package-lock.json` tidak ter-commit | [`runtime_build_failed`](/docs/deploy-gagal#runtime_build_failed)                                      |
-| Berkas bernama `dockerfile` dengan huruf kecil             | Tidak ada kode khusus. Lihat [Dockerfile tidak terpakai](/docs/deploy-gagal#dockerfile-tidak-terpakai) |
+| Yang terjadi                                                  | Kode                                                                                                   |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Aplikasi mendengarkan di `localhost` atau port tetap          | [`runtime_app_not_listening`](/docs/deploy-gagal#runtime_app_not_listening)                            |
+| Ada variabel `PORT` di project dengan nilai yang berbeda      | [`runtime_port_conflict`](/docs/deploy-gagal#runtime_port_conflict)                                    |
+| nginx masih mendengarkan di port 80, tanpa template `${PORT}` | [`runtime_app_not_listening`](/docs/deploy-gagal#runtime_app_not_listening)                            |
+| Aplikasi berhenti saat mulai                                  | [`runtime_app_crashed`](/docs/deploy-gagal#runtime_app_crashed)                                        |
+| `/` selalu menjawab 5xx                                       | [`runtime_app_unhealthy`](/docs/deploy-gagal#runtime_app_unhealthy)                                    |
+| `npm ci` gagal karena `package-lock.json` tidak ter-commit    | [`runtime_build_failed`](/docs/deploy-gagal#runtime_build_failed)                                      |
+| Berkas bernama `dockerfile` dengan huruf kecil                | Tidak ada kode khusus. Lihat [Dockerfile tidak terpakai](/docs/deploy-gagal#dockerfile-tidak-terpakai) |
 
 ## Langkah berikutnya
 

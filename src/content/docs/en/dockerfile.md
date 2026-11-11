@@ -103,7 +103,9 @@ Run this from the folder with the Dockerfile. The `--cap-drop` and `--security-o
 ```bash
 docker build -t halo-sakala .
 docker run -d --name halo-sakala -e PORT=3000 -p 127.0.0.1:3000:3000 \
-  --cap-drop ALL --security-opt no-new-privileges \
+  --cap-drop ALL --cap-add CHOWN --cap-add DAC_OVERRIDE --cap-add FOWNER --cap-add FSETID \
+  --cap-add KILL --cap-add SETGID --cap-add SETUID --cap-add NET_BIND_SERVICE \
+  --security-opt no-new-privileges \
   --memory 256m --cpus 0.5 --pids-limit 128 \
   halo-sakala
 curl -i http://127.0.0.1:3000/
@@ -123,7 +125,9 @@ Then confirm the application really reads `PORT`, by running it on another port:
 ```bash
 docker rm -f halo-sakala
 docker run -d --name halo-sakala -e PORT=8123 -p 127.0.0.1:8123:8123 \
-  --cap-drop ALL --security-opt no-new-privileges \
+  --cap-drop ALL --cap-add CHOWN --cap-add DAC_OVERRIDE --cap-add FOWNER --cap-add FSETID \
+  --cap-add KILL --cap-add SETGID --cap-add SETUID --cap-add NET_BIND_SERVICE \
+  --security-opt no-new-privileges \
   halo-sakala
 curl -i http://127.0.0.1:8123/
 docker rm -f halo-sakala
@@ -175,14 +179,16 @@ Dockerfile
 .dockerignore
 ```
 
-The regular `nginx` image does not work here. When tried under the restrictions above, it stopped with `chown(...) failed (1: Operation not permitted)`. That is why this example uses `nginxinc/nginx-unprivileged`.
+The regular `nginx` image works too, as long as you keep the template above so nginx listens on `${PORT}`. Without it, nginx listens on port 80 and the deploy fails with [`runtime_app_not_listening`](/en/docs/deploy-gagal#runtime_app_not_listening). This example uses `nginxinc/nginx-unprivileged` because its processes never run as root at all.
 
 Try it on your laptop:
 
 ```bash
 VITE_API_URL=https://api.contoh.test docker build --secret id=VITE_API_URL,env=VITE_API_URL -t halo-vite .
 docker run -d --name halo-vite -e PORT=3000 -p 127.0.0.1:3000:3000 \
-  --cap-drop ALL --security-opt no-new-privileges \
+  --cap-drop ALL --cap-add CHOWN --cap-add DAC_OVERRIDE --cap-add FOWNER --cap-add FSETID \
+  --cap-add KILL --cap-add SETGID --cap-add SETUID --cap-add NET_BIND_SERVICE \
+  --security-opt no-new-privileges \
   --memory 256m --cpus 0.5 --pids-limit 128 \
   halo-vite
 curl -i http://127.0.0.1:3000/
@@ -256,7 +262,8 @@ A failed deploy does not replace the version being served. If your project has d
 | -------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
 | The application listens on `localhost` or a fixed port         | [`runtime_app_not_listening`](/en/docs/deploy-gagal#runtime_app_not_listening)         |
 | The project has a `PORT` variable with a different value       | [`runtime_port_conflict`](/en/docs/deploy-gagal#runtime_port_conflict)                 |
-| The application stops on start, like the regular `nginx` image | [`runtime_app_crashed`](/en/docs/deploy-gagal#runtime_app_crashed)                     |
+| nginx still listens on port 80, without the `${PORT}` template | [`runtime_app_not_listening`](/en/docs/deploy-gagal#runtime_app_not_listening)         |
+| The application stops on start                                 | [`runtime_app_crashed`](/en/docs/deploy-gagal#runtime_app_crashed)                     |
 | `/` always answers 5xx                                         | [`runtime_app_unhealthy`](/en/docs/deploy-gagal#runtime_app_unhealthy)                 |
 | `npm ci` fails because `package-lock.json` was not committed   | [`runtime_build_failed`](/en/docs/deploy-gagal#runtime_build_failed)                   |
 | A file named `dockerfile` in lowercase                         | No specific code. See [Dockerfile not used](/en/docs/deploy-gagal#dockerfile-not-used) |
