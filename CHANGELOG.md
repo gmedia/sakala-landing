@@ -16,6 +16,16 @@ Cara merilis:
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-11-11
+
+### Changed
+
+- Panduan [Menyiapkan Dockerfile](src/content/docs/dockerfile.md) dan
+  [Saat Deploy Gagal](src/content/docs/deploy-gagal.md) mengikuti agent v0.4.0:
+  image `nginx` biasa kini bisa dipakai asal mendengarkan di `${PORT}` lewat
+  template, tabel kegagalan punya baris untuk nginx yang masih di port 80, dan
+  perintah uji di laptop memakai flag capability yang sama dengan Sakala.
+
 ## [0.3.0] - 2026-11-11
 
 ### Added
@@ -119,7 +129,8 @@ sampai workflow release (#1 sampai #21).
   Source (#19).
 - Dependency diperbarui ke versi terbaru (#13).
 
-[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/gmedia/sakala-landing/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/gmedia/sakala-landing/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/gmedia/sakala-landing/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/gmedia/sakala-landing/compare/v0.1.1...v0.2.0
