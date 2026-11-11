@@ -31,7 +31,7 @@
     "prettier": "^3.9.10",
     "prettier-plugin-astro": "^1.1.2",
     "typescript": "^6.0.3",
-    "vite": "^7.3.3"
+    "vite": "^8.3.5"
   },
   "lint-staged": {
     "*.{astro,js,ts,json,md,mdx,css}": [
