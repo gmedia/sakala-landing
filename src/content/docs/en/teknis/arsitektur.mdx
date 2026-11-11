@@ -75,10 +75,10 @@ Internet
         ├── Static landing
         ├── Static console
         ├── API           127.0.0.1:8080
-        └── User apps     127.0.0.1:31xxx
+        └── User apps     over the runtime Docker network, container-name:port
 ```
 
-User applications bind to loopback and publish no ports to the internet. Caddy forwards the public hostname to that internal port.
+User applications publish no ports to the host or the internet. Caddy forwards the public hostname to the application container's name on the runtime Docker network, so an application has to listen on `0.0.0.0:$PORT`.
 
 The domain mapping:
 

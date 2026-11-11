@@ -20,6 +20,9 @@ export const bilingualRoutes = [
   "/roadmap",
   "/open-source",
   "/changelog",
+  "/privasi",
+  "/syarat",
+  "/penggunaan-wajar",
 ] as const;
 
 export function isBilingual(path: string): boolean {

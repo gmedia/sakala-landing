@@ -246,7 +246,10 @@ arah            tercatat sebagai tujuan, belum dirancang
 
 **Analisis repository.** Sakala membaca repository, mendeteksi Dockerfile atau
 memakai Railpack, menebak perintah build dan start serta port, lalu menampilkan
-hasilnya untuk diperiksa dan diubah sebelum build. Status: berjalan.
+hasilnya untuk diperiksa dan diubah sebelum build. Status per 6 November 2026:
+dibangun, belum dicoba pengguna pilot. Console menampilkan hasil analisis dan form
+untuk build command, start command, port, dan root directory. Port tidak ditebak:
+nilainya `configured_port` bila diisi, selain itu 3000.
 
 **Builder.** Urutan prioritasnya tetap ([ADR-008](/docs/proyek/adr)):
 
@@ -255,6 +258,9 @@ hasilnya untuk diperiksa dan diubah sebelum build. Status: berjalan.
 2. Railpack
 3. Konfigurasi manual
 ```
+
+Per 6 November 2026 kode hanya mengenal Dockerfile dan Railpack. Build command
+dan start command sudah diterima API, tetapi belum menjadi builder ketiga.
 
 **Deployment.** Satu deployment adalah satu percobaan mewujudkan satu revisi
 source. Tahapnya bernama dan terlihat oleh pengguna. Daftar state kanonik
@@ -286,17 +292,20 @@ dipakai ketika admin men-suspend project), dan batas jumlah build per jam.
 
 ### 9.3 Operate — menjaga aplikasi tetap hidup
 
-| Kemampuan                                                   | Status    |
-| ----------------------------------------------------------- | --------- |
-| Variabel dan secret terenkripsi, di-redaksi dari log        | berjalan  |
-| Domain bawaan `<slug>.run.sakala.dev`                       | berjalan  |
-| Log build dan log runtime, dengan batas ukuran              | berjalan  |
-| Health check saat deploy                                    | berjalan  |
-| Redeploy tanpa mematikan versi lama sebelum yang baru sehat | berjalan  |
-| Custom domain dengan verifikasi DNS dan TLS                 | dirancang |
-| Metrik dasar (CPU, memori, restart)                         | arah      |
-| Auto-deploy dari push (webhook GitHub)                      | dibangun  |
-| PostgreSQL, Redis, object storage terkelola                 | arah      |
+Status per 6 November 2026. `dibangun` di sini berarti ada di kode terbaru, tetapi
+belum diuji di production dan belum dipakai pengguna pilot.
+
+| Kemampuan                                                                                                             | Status                                                                                                             |
+| --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Variabel dan secret terenkripsi. Log disaring berdasarkan nama key, pola token, dan nilai persis secret project       | dibangun. Nilai di bawah 8 karakter dan kata umum tidak disaring, dan kebocoran di log nyata belum bisa dipastikan |
+| Domain bawaan `<slug>.run.sakala.dev`                                                                                 | berjalan di staging per 1 Oktober 2026, dengan pola `run.staging.sakala.dev`                                       |
+| Log build dan log runtime, dengan batas ukuran                                                                        | dibangun, termasuk panel log di Console                                                                            |
+| Health check saat deploy: permintaan HTTP ke `/`, status di bawah 500 lolos                                           | dibangun                                                                                                           |
+| Redeploy tanpa mematikan versi lama sebelum yang baru sehat; deploy yang gagal meninggalkan versi lama tetap melayani | dibangun                                                                                                           |
+| Custom domain dengan verifikasi DNS dan TLS                                                                           | dirancang                                                                                                          |
+| Metrik dasar (CPU, memori, restart)                                                                                   | arah                                                                                                               |
+| Auto-deploy dari push (webhook GitHub)                                                                                | dibangun                                                                                                           |
+| PostgreSQL, Redis, object storage terkelola                                                                           | arah                                                                                                               |
 
 ### 9.4 Learn — belajar mengirim software
 

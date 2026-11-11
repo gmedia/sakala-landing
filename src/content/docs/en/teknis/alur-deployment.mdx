@@ -33,8 +33,8 @@ Polling only offers eligible work. The Agent may not execute a command until an 
 A deployment is an attempt, not an object that always succeeds. That is why each stage has its own name, so failure can be pinned precisely.
 
 <DiagramFigure
-  caption="The stages a single deployment passes through, and its two possible endings."
-  alt="A deployment moves in order through queued, cloning, analyzing, preparing, building, starting, routing, and health checking. From there it ends in one of two states: succeeded when healthy, or failed when a stage did not pass."
+  caption="The stages a single deployment passes through, and its three possible endings."
+  alt="A deployment moves in order through queued, cloning, analyzing, building, deploying, health checking, and routing. From there it ends in one of three states: succeeded when it worked, failed when a stage did not pass, or cancelled when it was called off."
   class="my-8"
 >
   <StateFlow
@@ -42,18 +42,20 @@ A deployment is an attempt, not an object that always succeeds. That is why each
       { name: "queued" },
       { name: "cloning" },
       { name: "analyzing" },
-      { name: "preparing" },
       { name: "building" },
-      { name: "starting" },
-      { name: "routing" },
+      { name: "deploying" },
       { name: "health_checking" },
+      { name: "routing" },
       { name: "succeeded", kind: "success" },
       { name: "failed", kind: "failure" },
+      { name: "cancelled", kind: "failure" },
     ]}
   />
 </DiagramFigure>
 
-Because the stages are named, a failure message can say which stage stopped and what to check, rather than only `something went wrong`.
+The health check runs before routing, because a route is only activated for an app that has answered. A deployment can skip a stage: `analyzing` is only reported for Railpack builds.
+
+Because the stages are named, a failure message can say which stage stopped and what to check, rather than only `something went wrong`. The list of codes lives in [When a Deploy Fails](/en/docs/deploy-gagal).
 
 Every deployment records the source commit, branch, trigger, actor, builder, runtime node, requested and applied resources, status, events, logs, image, route, health result, timestamps, and failure category.
 
@@ -63,10 +65,10 @@ Sakala does not guess arbitrarily. The order in which builders are chosen is fix
 
 <DiagramFigure
   caption="The order of builders Sakala tries when turning source into an image."
-  alt="Sakala tries the user's Dockerfile first. If none exists, it uses Railpack. If neither fits, manual configuration is the last resort."
+  alt="Sakala tries the user's Dockerfile first. If none exists, it uses Railpack."
   class="my-8"
 >
-  <LoopDiagram steps={["User Dockerfile", "Railpack", "Manual configuration"]}>
+  <LoopDiagram steps={["User Dockerfile", "Railpack"]}>
     <p class="text-sm leading-6 text-muted">
       A user's Dockerfile always wins. Railpack is only used when the repository
       provides none.
@@ -76,20 +78,24 @@ Sakala does not guess arbitrarily. The order in which builders are chosen is fix
 
 Repository analysis uses the Sakala scanner and `railpack info`. Real deployments use `railpack prepare` with BuildKit, rather than repeating the whole analysis chain.
 
+The manual configuration in [ADR-008](/en/docs/proyek/adr) is not a builder of its own yet. What exists today are a project's build and start commands, which apply on top of those two builders. See [Preparing a Dockerfile](/en/docs/dockerfile) for the rules an application has to meet.
+
 ## Application routing
 
 An application that runs successfully is mapped to a `*.run.sakala.dev` domain. In the local playground the same pattern is exercised through `*.run.sakala.localhost`.
 
-Application containers bind to loopback, and Caddy forwards the public hostname to that internal port. Routes are written as files that are validated first, then reloaded.
+Application containers join the runtime Docker network and publish no ports to the host. Caddy sits on the same network and forwards the public hostname to the container name and the port the API chose, for example `sakala-app-<project8>-<deployment-id>:3000`. That is why an application has to listen on `0.0.0.0:$PORT`, not on `localhost`.
+
+Routes are written as files that are validated first, then reloaded.
 
 ## A deployment does not destroy a healthy one
 
-A new deployment should not immediately tear down a running application. The direction is to build a candidate, start it, check its route and health, then switch the active deployment and retire the old one.
+A new deployment does not immediately tear down a running application. The Agent builds a candidate, starts it, then sends an HTTP request to `/` from inside the Caddy container. A status under 500 passes, and a 5xx is retried until the start deadline. Only then does the route move and the old container get removed.
 
-MVP may implement something simpler, but the architecture deliberately avoids treating a project as one permanent container.
+If the candidate fails before the route moves, the previous version keeps serving, and the candidate's last lines of output are sent as logs before it is removed.
 
 ## Current status
 
-The MVP Agent foundation already provides Dockerfile and Railpack execution, plus opt-in Caddy route updates. None of that is a hosted public service yet; it still needs Agent API integration and a runtime node configured for a pilot.
+As of 6 November 2026 the Agent and the API are connected through the Agent API: commands, events, logs, and results flow between them. This path was proven on staging on 1 October 2026. The HTTP health check, the stage order above, and the more detailed failure messages exist only on the `feat/core-maturity` branch. They have not been tested in production or used by pilot users. Sakala is not open to the public yet.
 
 Operating modes and runtime limits are described in [How the Sakala Agent Works](/en/docs/teknis/agent).

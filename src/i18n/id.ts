@@ -676,6 +676,33 @@ export const id = {
     rights: "Sakala Contributors",
     license: "Apache-2.0",
     sponsor: "Founding sponsor: GMEDIA",
+    legalLabel: "Legal",
+  },
+  legal: {
+    eyebrow: "Dokumen hukum",
+    effectiveSince: "Berlaku sejak",
+    version: "Versi",
+    governingNote: "",
+    documents: {
+      privasi: {
+        title: "Pemberitahuan Privasi",
+        heading: "Pemberitahuan Privasi Sakala",
+        description:
+          "Data pribadi yang diproses layanan Sakala, untuk apa, berapa lama disimpan, siapa yang ikut memprosesnya, dan apa hakmu.",
+      },
+      syarat: {
+        title: "Syarat Layanan",
+        heading: "Syarat Layanan Sakala",
+        description:
+          "Syarat memakai layanan Sakala selama tahap pilot: apa yang kamu dapat, batasnya, tanggung jawabmu, dan penangguhan.",
+      },
+      "penggunaan-wajar": {
+        title: "Kebijakan Penggunaan Wajar",
+        heading: "Kebijakan Penggunaan Wajar Sakala",
+        description:
+          "Apa yang dilarang di Sakala, bagaimana laporan ditangani, cara melapor, dan cara mengajukan banding.",
+      },
+    },
   },
 };
 

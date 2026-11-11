@@ -22,22 +22,30 @@ this page is corrected.
 Source: `DeploymentStatus` in `sakala-api`.
 
 ```text
-queued → cloning → analyzing → building → deploying → routing → health_checking
+queued → cloning → analyzing → building → deploying → health_checking → routing
        → succeeded | failed | cancelled
 ```
+
+The agent only activates a route for an app that answered its probe, so health
+comes before routing. A deployment may skip a state: `analyzing` is reported only
+for Railpack builds, and older agents do not report analysis, health, or route.
 
 ### Stage names shown to users
 
 Five named stages, grouped from the states above. Each interface uses one
 language throughout.
 
-| State(s)               | Indonesian            | English            |
-| ---------------------- | --------------------- | ------------------ |
-| `queued`, `cloning`    | Mengambil repository  | Cloning repository |
-| `analyzing`            | Membaca proyek        | Analyzing project  |
-| `building`             | Membangun image       | Building image     |
-| `deploying`, `routing` | Menjalankan container | Starting container |
-| `health_checking`      | Memeriksa kesehatan   | Checking health    |
+| State(s)                     | Indonesian            | English            |
+| ---------------------------- | --------------------- | ------------------ |
+| `queued`, `cloning`          | Mengambil repository  | Cloning repository |
+| `analyzing`                  | Membaca proyek        | Analyzing project  |
+| `building`                   | Membangun image       | Building image     |
+| `deploying`                  | Menjalankan container | Starting container |
+| `health_checking`, `routing` | Memeriksa kesehatan   | Checking health    |
+
+As of 6 November 2026 the Console timeline still uses its own labels, one per
+state: Menunggu antrean, Menyalin repository, Menganalisis proyek, Build proyek,
+Deploy proyek, Mengecek aplikasi, and Menyiapkan routing.
 
 Stage status words: `selesai / done`, `sedang berjalan / running`,
 `menunggu / pending`, `gagal / failed`.
@@ -111,7 +119,9 @@ Development, with its own deployment, configuration, and domain.
 
 **Variable.** Non-secret runtime configuration.
 
-**Secret.** Sensitive configuration, encrypted at rest and redacted from logs.
+**Secret.** Sensitive configuration, encrypted at rest. Logs are filtered by key
+name, token pattern, and the exact value, which reduces leaks but does not rule
+them out.
 
 **Generated Domain.** The Sakala-provided hostname `<slug>.run.sakala.dev`.
 Some slugs are reserved (`api`, `app`, `admin`, `status`, and others). See
@@ -221,7 +231,8 @@ treats it as abandoned.
 `runsc` for gVisor). See ADR-014.
 
 **Builder.** The mechanism that turns source into a runnable image. Priority:
-Dockerfile, Railpack, manual.
+Dockerfile, then Railpack. The manual option in ADR-008 is not a builder in the
+code yet; a project's build and start commands are options on those two.
 
 **Railpack.** The automatic build-plan system Sakala uses when there is no
 Dockerfile.

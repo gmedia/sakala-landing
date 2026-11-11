@@ -2,6 +2,8 @@
 
 Terima kasih atas minat berkontribusi pada website dan dokumentasi Sakala.
 
+Baru pertama kali? [Start Contributing](https://sakala.dev/docs/proyek/start-contributing) memetakan semua repository Sakala, cara menjalankannya, perintah quality, dan cara memilih pekerjaan.
+
 ## Setup
 
 Gunakan Node.js 22 dan npm:

@@ -136,7 +136,8 @@ sakala-infra        runtime reference
 ```
 
 Each repository has its own `CONTRIBUTING.md` for local setup; this page sets
-the rules they share.
+the rules they share. New here? [Start Contributing](/docs/proyek/start-contributing)
+maps each repository, its stack, its quality commands, and how to pick work.
 
 ## Security
 

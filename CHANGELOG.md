@@ -16,6 +16,36 @@ Cara merilis:
 
 ## [Unreleased]
 
+### Added
+
+- Pemberitahuan Privasi, Syarat Layanan, dan Kebijakan Penggunaan Wajar di
+  `/privasi`, `/syarat`, dan `/penggunaan-wajar`, ditautkan dari footer. Route
+  `/en/...` menampilkan teks Indonesia, dengan catatan bahwa teks itulah yang
+  berlaku.
+- Panduan [Deploy Pertamamu](src/content/docs/deploy-pertama.md),
+  [Menyiapkan Dockerfile](src/content/docs/dockerfile.md),
+  [Menghubungkan Database Eksternal](src/content/docs/database-eksternal.md),
+  dan [Saat Deploy Gagal](src/content/docs/deploy-gagal.md), dalam Bahasa
+  Indonesia dan Inggris.
+- Halaman [Start Contributing](src/content/docs/proyek/start-contributing.md)
+  yang memetakan repository, perintah quality, dan aturan kontrak.
+
+### Changed
+
+- Status di MVP, Roadmap, dan PRD §9.3 diperbarui per 6 November 2026. MVP tetap
+  belum selesai, dan gate pendaftaran umum tetap belum terpenuhi.
+- Pengantar dokumentasi tidak lagi menyebut bahwa alur deploy belum ada, dan
+  menyatakan bahwa Sakala belum dibuka untuk umum.
+- `/docs/ketika-gagal` kini mengarah ke `/docs/deploy-gagal`.
+
+### Fixed
+
+- State deployment di Alur Deployment dan Glossary mengikuti `DeploymentStatus`.
+- Dokumen tidak lagi menyebut aplikasi mengikat port localhost. Route Caddy
+  mengarah ke nama container di network runtime.
+- Alur Deployment tidak lagi menyebut integrasi Agent API sebagai pekerjaan
+  yang belum selesai.
+
 ## [0.2.1] - 2026-10-01
 
 ### Changed

@@ -74,10 +74,10 @@ Internet
         ├── Landing statis
         ├── Console statis
         ├── API           127.0.0.1:8080
-        └── Aplikasi user 127.0.0.1:31xxx
+        └── Aplikasi user lewat Docker network runtime, nama-container:port
 ```
 
-Aplikasi pengguna mengikat alamat loopback, tidak mempublikasikan port ke internet. Caddy yang meneruskan hostname publik ke port internal tersebut.
+Aplikasi pengguna tidak mempublikasikan port ke host maupun internet. Caddy yang meneruskan hostname publik ke nama container aplikasi di Docker network runtime, jadi aplikasi harus mendengarkan di `0.0.0.0:$PORT`.
 
 Pemetaan domainnya:
 

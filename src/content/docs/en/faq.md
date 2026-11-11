@@ -15,7 +15,7 @@ Sakala is an open-source deployment platform that carries a project from a Git r
 
 ## Can Sakala be used in production yet?
 
-No. Sakala is under active development and is still assembling its product and runtime foundations.
+No. Sakala is under active development and is not open to the public yet. Its deployment path exists, but has not been tested with pilot users or in production.
 
 ## Is this only for students?
 
@@ -33,4 +33,8 @@ Sakala remains an open-source project with a public roadmap, documentation, issu
 
 ## Where do I report a problem?
 
-Use the [issues on the Sakala Landing repository](https://github.com/gmedia/sakala-landing/issues) for website and documentation problems. For security matters, follow the [repository security policy](https://github.com/gmedia/sakala-landing/security/policy).
+Use the [issues on the Sakala Landing repository](https://github.com/gmedia/sakala-landing/issues) for website and documentation problems. For security matters, follow the [repository security policy](https://github.com/gmedia/sakala-landing/security/policy). To report a harmful application on `*.run.sakala.dev`, write to `abuse@sakala.dev` as described in the [Acceptable Use Policy](/en/penggunaan-wajar).
+
+## Where are Sakala's legal documents?
+
+There are three: the [Privacy Notice](/en/privasi), the [Terms of Service](/en/syarat), and the [Acceptable Use Policy](/en/penggunaan-wajar). They are published in Indonesian, and the Indonesian text governs.

@@ -32,8 +32,8 @@ Polling hanya menawarkan pekerjaan yang eligible. Agent belum boleh mengeksekusi
 Sebuah deployment adalah percobaan, bukan objek yang selalu berhasil. Karena itu setiap tahap punya nama sendiri sehingga kegagalan dapat ditunjuk secara spesifik.
 
 <DiagramFigure
-  caption="Tahapan yang dilalui satu deployment, beserta dua keadaan akhirnya."
-  alt="Deployment berpindah berurutan dari queued, cloning, analyzing, preparing, building, starting, routing, sampai health checking. Dari situ ia berakhir pada salah satu dari dua keadaan: succeeded bila sehat, atau failed bila ada tahap yang gagal."
+  caption="Tahapan yang dilalui satu deployment, beserta tiga keadaan akhirnya."
+  alt="Deployment berpindah berurutan dari queued, cloning, analyzing, building, deploying, health checking, sampai routing. Dari situ ia berakhir pada salah satu dari tiga keadaan: succeeded bila berhasil, failed bila ada tahap yang gagal, atau cancelled bila dibatalkan."
   class="my-8"
 >
   <StateFlow
@@ -41,18 +41,20 @@ Sebuah deployment adalah percobaan, bukan objek yang selalu berhasil. Karena itu
       { name: "queued" },
       { name: "cloning" },
       { name: "analyzing" },
-      { name: "preparing" },
       { name: "building" },
-      { name: "starting" },
-      { name: "routing" },
+      { name: "deploying" },
       { name: "health_checking" },
+      { name: "routing" },
       { name: "succeeded", kind: "success" },
       { name: "failed", kind: "failure" },
+      { name: "cancelled", kind: "failure" },
     ]}
   />
 </DiagramFigure>
 
-Karena tahapnya bernama, pesan kegagalan dapat menyebut tahap mana yang berhenti dan apa yang perlu diperiksa, bukan sekadar `something went wrong`.
+Health check berjalan sebelum routing, karena route baru diaktifkan untuk aplikasi yang sudah menjawab. Sebuah deployment bisa melewati satu tahap: `analyzing` hanya dilaporkan untuk build Railpack.
+
+Karena tahapnya bernama, pesan kegagalan dapat menyebut tahap mana yang berhenti dan apa yang perlu diperiksa, bukan sekadar `something went wrong`. Daftar kodenya ada di [Saat Deploy Gagal](/docs/deploy-gagal).
 
 Setiap deployment mencatat commit sumber, branch, pemicu, aktor, builder, runtime node, resource yang diminta dan diterapkan, status, event, log, image, route, hasil health check, waktu, serta kategori kegagalan.
 
@@ -62,12 +64,10 @@ Sakala tidak menebak sembarangan. Urutan pemilihan builder bersifat tetap dan da
 
 <DiagramFigure
   caption="Urutan builder yang dicoba Sakala saat mengubah source menjadi image."
-  alt="Sakala mencoba Dockerfile milik pengguna lebih dulu. Bila tidak ada, ia memakai Railpack. Bila keduanya tidak sesuai, konfigurasi manual dipakai sebagai jalan terakhir."
+  alt="Sakala mencoba Dockerfile milik pengguna lebih dulu. Bila tidak ada, ia memakai Railpack."
   class="my-8"
 >
-  <LoopDiagram
-    steps={["Dockerfile pengguna", "Railpack", "Konfigurasi manual"]}
-  >
+  <LoopDiagram steps={["Dockerfile pengguna", "Railpack"]}>
     <p class="text-sm leading-6 text-muted">
       Dockerfile milik pengguna selalu menang. Railpack hanya dipakai ketika
       repository tidak menyediakan Dockerfile.
@@ -77,20 +77,24 @@ Sakala tidak menebak sembarangan. Urutan pemilihan builder bersifat tetap dan da
 
 Analisis repository memakai scanner Sakala dan `railpack info`. Deployment sesungguhnya memakai `railpack prepare` bersama BuildKit, bukan mengulang seluruh rangkaian analisis.
 
+Konfigurasi manual di [ADR-008](/docs/proyek/adr) belum menjadi builder tersendiri. Yang sudah ada adalah build command dan start command project, yang berlaku di atas kedua builder tadi. Lihat [Menyiapkan Dockerfile](/docs/dockerfile) untuk aturan yang perlu dipenuhi aplikasi.
+
 ## Routing aplikasi
 
 Aplikasi yang berhasil dijalankan dipetakan ke domain `*.run.sakala.dev`. Pada playground lokal, pola yang sama diuji melalui `*.run.sakala.localhost`.
 
-Container aplikasi mengikat alamat loopback, dan Caddy meneruskan hostname publik ke port internal tersebut. Route ditulis sebagai berkas yang divalidasi lebih dulu, baru kemudian dimuat ulang.
+Container aplikasi bergabung ke Docker network runtime tanpa mempublikasikan port ke host. Caddy berada di network yang sama, lalu meneruskan hostname publik ke nama container dan port yang dipilih API, misalnya `sakala-app-<project8>-<deployment-id>:3000`. Karena itu aplikasi wajib mendengarkan di `0.0.0.0:$PORT`, bukan di `localhost`.
+
+Route ditulis sebagai berkas yang divalidasi lebih dulu, baru kemudian dimuat ulang.
 
 ## Deployment tidak merusak yang sedang sehat
 
-Sebuah deployment baru tidak seharusnya langsung menghancurkan aplikasi yang sedang berjalan. Arah yang dituju adalah membangun kandidat, menjalankannya, memeriksa route dan health-nya, baru menukar deployment aktif dan memensiunkan yang lama.
+Deployment baru tidak langsung menghancurkan aplikasi yang sedang berjalan. Agent membangun kandidat, menjalankannya, lalu mengirim permintaan HTTP ke `/` dari dalam container Caddy. Status di bawah 500 berarti lolos, sedangkan 5xx terus dicoba sampai batas waktu start. Setelah itu baru route berpindah dan container lama dihapus.
 
-MVP boleh memakai versi yang lebih sederhana, tetapi arsitekturnya sengaja tidak menyamakan project dengan satu container yang itu-itu saja.
+Kalau kandidat gagal sebelum route berpindah, versi sebelumnya tetap melayani, dan baris terakhir output kandidat dikirim sebagai log sebelum ia dihapus.
 
 ## Status saat ini
 
-Fondasi MVP agent sudah menyediakan eksekusi Dockerfile dan Railpack serta pembaruan route Caddy secara opt-in. Fitur tersebut belum menjadi layanan hosted publik dan masih membutuhkan integrasi Agent API serta runtime node yang dikonfigurasi untuk pilot.
+Per 6 November 2026 Agent dan API sudah terhubung lewat Agent API: command, event, log, dan hasil deployment mengalir di antara keduanya. Jalur ini terbukti di staging pada 1 Oktober 2026. Health check HTTP, urutan tahap di atas, dan pesan kegagalan yang lebih rinci baru ada di branch `feat/core-maturity`, belum diuji di production, dan belum dipakai pengguna pilot. Sakala belum dibuka untuk umum.
 
 Detail operating mode dan batas runtime dijelaskan pada [Cara kerja Sakala Agent](/docs/teknis/agent).

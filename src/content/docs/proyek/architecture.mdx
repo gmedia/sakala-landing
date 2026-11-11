@@ -350,6 +350,9 @@ Dockerfile
 → Manual override
 ```
 
+As of 5 November 2026 the code implements Dockerfile and Railpack. Manual override
+exists only as a project's build and start commands, not as a third builder.
+
 Analyze:
 
 ```text
@@ -448,10 +451,12 @@ api.sakala.dev
 → user app route
 ```
 
-User app binds localhost:
+User apps publish no ports to the host. They join the runtime Docker network, and
+the runtime Caddy reaches them by container name, so an app must listen on
+`0.0.0.0:$PORT`:
 
 ```text
-127.0.0.1:31xxx
+sakala-app-<project8>-<deployment-id>:3000
 ```
 
 MVP route management:

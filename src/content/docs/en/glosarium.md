@@ -57,7 +57,7 @@ Consistent language prevents accidental architecture. The terms on this page car
 
 **AgentCommand** — A control plane instruction claimed and executed by an Agent.
 
-**Builder** — The mechanism that turns source into a runnable image. The order is Dockerfile, then Railpack, then manual configuration.
+**Builder** — The mechanism that turns source into a runnable image. The order is Dockerfile, then Railpack.
 
 **Railpack** — The automatic build-plan system Sakala uses when a repository provides no Dockerfile.
 

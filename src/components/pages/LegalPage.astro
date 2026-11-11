@@ -1,0 +1,72 @@
+---
+import { getEntry, render } from "astro:content";
+import Container from "../ui/Container.astro";
+import PageHeader from "../ui/PageHeader.astro";
+import LandingLayout from "../../layouts/LandingLayout.astro";
+import {
+  formatLegalDate,
+  legalEffectiveDate,
+  type LegalId,
+} from "../../data/legal";
+import { localizePath, useTranslations, type Lang } from "../../i18n";
+
+interface Props {
+  id: LegalId;
+  lang: Lang;
+}
+
+const { id, lang } = Astro.props;
+const copy = useTranslations(lang).legal;
+const { title, heading, description } = copy.documents[id];
+
+const entry = await getEntry("legal", id);
+if (!entry) throw new Error(`Dokumen hukum "${id}" tidak ditemukan.`);
+const { Content } = await render(entry);
+
+const breadcrumbs = [
+  { label: lang === "en" ? "Home" : "Beranda", href: localizePath("/", lang) },
+  { label: title },
+];
+---
+
+<LandingLayout
+  lang={lang}
+  title={`${title} — Sakala`}
+  description={description}
+  availableLocales={["id", "en"]}
+  {breadcrumbs}
+>
+  <PageHeader eyebrow={copy.eyebrow} title={heading} {breadcrumbs}>
+    <dl class="mt-8 flex flex-wrap gap-x-10 gap-y-4">
+      <div>
+        <dt class="artifact-label text-muted-2">{copy.effectiveSince}</dt>
+        <dd class="mt-1 text-sm font-semibold text-ink">
+          <time datetime={legalEffectiveDate}>{formatLegalDate(lang)}</time>
+        </dd>
+      </div>
+      <div>
+        <dt class="artifact-label text-muted-2">{copy.version}</dt>
+        <dd class="mt-1 font-mono text-sm font-semibold text-ink">
+          {entry.data.version}
+        </dd>
+      </div>
+    </dl>
+  </PageHeader>
+
+  <Container className="py-12 sm:py-16">
+    <div class="max-w-3xl">
+      <!-- Teks Indonesia adalah sumber tunggal, seperti dokumen kanonik jalur
+           proyek. Route /en menampilkannya apa adanya dan mengatakannya. -->
+      {
+        copy.governingNote && (
+          <p class="mb-8 border-l-2 border-primary pl-4 text-sm leading-6 text-muted">
+            {copy.governingNote}
+          </p>
+        )
+      }
+      <article class="prose-sakala legal-prose" lang="id">
+        <Content />
+      </article>
+    </div>
+  </Container>
+</LandingLayout>

@@ -32,26 +32,32 @@ Autentikasi → Onboarding → Buat project → Analisis repository → Konfigur
 
 ## Wajib ada
 
-Status per 1 Oktober 2026 berdasarkan kode di repository `sakala-api`,
-`sakala-agent`, dan `sakala-console`, serta pengujian di staging.
+Status per 6 November 2026, berdasarkan kode terbaru di repository `sakala-api`,
+`sakala-agent`, dan `sakala-console` pada branch `feat/core-maturity`. Perubahan
+di branch itu belum di-merge, belum diuji di production, dan belum dipakai
+pengguna pilot. Bukti staging terakhir yang tercatat berasal dari 1 Oktober 2026,
+sebelum perubahan ini. Kata `dibangun` di bawah berarti ada di kode, tetapi belum
+terbukti di pemakaian nyata.
 
-| Area          | Kebutuhan                                                                                                                                     | Status                                                           |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| Identitas     | GitHub OAuth, email dengan verifikasi, sesi Console, logout, onboarding dengan profil                                                         | dibangun; di production masih ada masalah kredensial autentikasi |
-| Console       | Dashboard, buat project, detail project, variabel dan secret, detail deployment, log build, notifikasi                                        | berjalan                                                         |
-| Project       | Repository GitHub publik, branch, nama dan slug, domain bawaan, analisis stack, deteksi Dockerfile dan Railpack, konfigurasi yang bisa diubah | berjalan                                                         |
-| Deployment    | Record deployment, state, event, log, deploy dan redeploy manual, satu web workload, build, run, route, health check, sukses dan gagal        | berjalan                                                         |
-| Agent         | Identitas, heartbeat, poll, claim dengan lease, event, log, complete, fail, protokol berversi                                                 | berjalan                                                         |
-| Runtime       | Docker rootless, build Dockerfile, fallback Railpack, batas resource, port localhost, route Caddy, health check, cleanup                      | berjalan                                                         |
-| Kuota         | Kuota pilot tertulis dan ditegakkan ([PRD §9.2](/docs/proyek/prd))                                                                            | berjalan                                                         |
-| Kontrol admin | Stop dan suspend project, dengan alasan dan jejak audit                                                                                       | berjalan                                                         |
-| Infrastruktur | Caddy host, Docker Engine, agent via systemd, API, PostgreSQL, Valkey, object storage, Console dan Landing statis, DNS wildcard runtime       | berjalan                                                         |
-| Rilis         | Image dibangun di CI, dipin per digest, rollback lewat revert                                                                                 | berjalan                                                         |
+| Area          | Kebutuhan                                                                                                                                                 | Status                                                                                                                                                                                        |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Identitas     | GitHub OAuth, email dengan verifikasi, sesi Console, logout, onboarding dengan profil                                                                     | dibangun. Catatan 1 Oktober 2026 menyebut masalah kredensial autentikasi di production, dan belum diperiksa ulang                                                                             |
+| Console       | Dashboard, buat project, detail project, variabel dan secret, detail deployment, log build, notifikasi                                                    | dibangun, termasuk wizard Auto Detect, panel log, ringkasan kegagalan, notifikasi, dan form masukan. Belum dicoba pengguna pilot                                                              |
+| Project       | Repository GitHub publik, branch, nama dan slug, domain bawaan, analisis stack, deteksi Dockerfile dan Railpack, konfigurasi yang bisa diubah             | dibangun. Console menampilkan hasil analisis dan menyediakan form untuk port, build command, start command, dan root directory. Port tidak dideteksi: nilainya yang kamu isi, selain itu 3000 |
+| Deployment    | Record deployment, state, event, log, deploy dan redeploy manual, satu web workload, build, run, route, health check, sukses dan gagal                    | dibangun. Deploy yang gagal menyimpan kode, tahap, dan detail kegagalan, dan versi lama tetap melayani                                                                                        |
+| Agent         | Identitas, heartbeat, poll, claim dengan lease, event, log, complete, fail, protokol berversi                                                             | berjalan di staging per 1 Oktober 2026. Tambahan kode kegagalan dan pembatalan dibangun                                                                                                       |
+| Runtime       | Docker rootless, build Dockerfile, fallback Railpack, batas resource, route Caddy ke nama container di network runtime, health check HTTP ke `/`, cleanup | dibangun. Status di bawah 500 lolos, dan aplikasi wajib listen di `0.0.0.0:$PORT`. Jalur variabel saat build pada Railpack belum diuji dengan build sungguhan                                 |
+| Kuota         | Kuota pilot tertulis dan ditegakkan ([PRD §9.2](/docs/proyek/prd))                                                                                        | berjalan di API, dan Console menampilkan pemakaiannya saat membuat proyek                                                                                                                     |
+| Kontrol admin | Stop dan suspend project, dengan alasan dan jejak audit                                                                                                   | berjalan di API. Dashboard admin di Console belum ada                                                                                                                                         |
+| Infrastruktur | Caddy host, Docker Engine, agent via systemd, API, PostgreSQL, Valkey, object storage, Console dan Landing statis, DNS wildcard runtime                   | berjalan per 1 Oktober 2026, belum diperiksa ulang                                                                                                                                            |
+| Rilis         | Image dibangun di CI, dipin per digest, rollback lewat revert                                                                                             | berjalan per 1 Oktober 2026, belum diperiksa ulang                                                                                                                                            |
 
-Ringkasnya, MVP **belum selesai**. Jalur deploy dari repository sampai URL
-publik sudah terbukti di staging, tetapi belum matang dan belum dipakai
-pengguna pilot. Di production, pendaftaran belum dibuka karena masalah
-kredensial autentikasi yang masih diperbaiki.
+Ringkasnya, MVP **belum selesai** dan belum dinyatakan selesai. Jalur deploy dari
+repository sampai URL publik sudah terbukti di staging pada 1 Oktober 2026.
+Sejak itu kode untuk health check HTTP, log, dan pesan kegagalan sudah dibangun,
+tetapi belum terbukti di production dan belum dicoba pengguna pilot. Jadi bagian
+kedua pertanyaan validasi, yaitu apakah mahasiswa bisa memulihkan deploy gagal
+tanpa bantuan, belum terjawab. Pendaftaran di production belum dibuka.
 
 ## Sengaja tidak dibangun untuk MVP
 
@@ -84,6 +90,12 @@ Syarat tambahan:
 - dokumentasi menjelaskan deploy pertama;
 - pemasangan bisa diulang dari environment bersih dengan langkah yang
   terdokumentasi.
+
+Per 6 November 2026 daftar ini belum terpenuhi. Pemasangan dari environment bersih
+dan penegakan batas resource saat runtime belum dibuktikan, dan kebocoran secret
+di log nyata belum bisa dipastikan. Panduan [deploy pertama](/docs/deploy-pertama),
+Dockerfile, database eksternal, dan deploy gagal sudah ditulis, tetapi belum dicoba
+bersama pengguna pilot.
 
 ## Gate sebelum pendaftaran dibuka untuk umum
 
@@ -118,9 +130,23 @@ syarat berikut terpenuhi.
 6. **Biaya.** Estimasi biaya runtime per workload per bulan dan kapasitas yang
    disediakan GMEDIA tercatat, termasuk batasnya.
 
-Status gate per 1 Oktober 2026: syarat 1 sampai 6 belum terpenuhi. Kuota
-pilot, suspend oleh admin, dan Docker rootless sudah menjadi fondasi untuk
-syarat 1, 2, dan 4.
+Status gate per 6 November 2026: syarat 1, 2, 5, dan 6 belum terpenuhi, dan
+syarat 3 dan 4 baru sebagian. Kuota pilot dan suspend oleh admin sudah menjadi
+fondasi untuk syarat 2 dan 4.
+
+Untuk syarat 3, [Pemberitahuan Privasi](/privasi), [Syarat Layanan](/syarat),
+dan [Kebijakan Penggunaan Wajar](/penggunaan-wajar) sudah ditulis untuk terbit
+di situs. Persetujuan saat pendaftaran sudah ada di kode API dan Console, dan
+berlaku setelah versi itu di-deploy. Untuk syarat 4, alamat `abuse@sakala.dev`
+dan alurnya sudah tertulis, sedangkan pemantauan alamat itu masih perlu
+dipastikan maintainer.
+
+Untuk syarat 1, runtime tersandbox gVisor **siap sebagai fitur, tetapi belum
+diaktifkan di production**. Maintainer memutuskan runtime node memakai Docker
+rootful dengan `runsc`, karena limit per workload tidak berlaku di bawah `runsc`
+pada Docker rootless ([ADR-014](/docs/proyek/adr)). Pengujiannya lolos di node
+staging. Dua butir lain di syarat 1 belum selesai, yaitu egress policy dan jalur
+build tersendiri.
 
 ## Sinyal keberhasilan MVP
 

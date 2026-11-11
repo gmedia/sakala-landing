@@ -35,15 +35,15 @@ export default defineConfig({
     // alurnya di jalur teknis, jadi ia tidak dilempar ke hub.
     "/docs/perjalanan-deploy": "/docs/teknis/alur-deployment",
     "/en/docs/perjalanan-deploy": "/en/docs/teknis/alur-deployment",
+    "/docs/ketika-gagal": "/docs/deploy-gagal",
+    "/en/docs/ketika-gagal": "/en/docs/deploy-gagal",
     // Sisanya tidak punya penerus satu lawan satu, jadi mendarat di hub.
     "/docs/quickstart": "/docs",
     "/docs/menyiapkan-project": "/docs",
-    "/docs/ketika-gagal": "/docs",
     "/docs/variabel-dan-secret": "/docs",
     "/docs/domain-dan-url": "/docs",
     "/en/docs/quickstart": "/en/docs",
     "/en/docs/menyiapkan-project": "/en/docs",
-    "/en/docs/ketika-gagal": "/en/docs",
     "/en/docs/variabel-dan-secret": "/en/docs",
     "/en/docs/domain-dan-url": "/en/docs",
   },

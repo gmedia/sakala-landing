@@ -74,4 +74,5 @@ only as a changed sentence in `ARCHITECTURE`.
 
 Documentation baseline: 15 August 2026, moved to this site on 17 September
 2026, and matured on 1 October 2026 (PRD 6.0, ADR-014 to ADR-017, language
-rule).
+rule). The status tables in MVP, Roadmap, and PRD §9.3 were updated as of
+6 November 2026.

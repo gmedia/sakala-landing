@@ -16,7 +16,7 @@ const trackCopy = {
     panduan: {
       label: "Pengantar",
       title: "Pengantar Sakala",
-      blurb: "Persoalan yang dikerjakan dan arah yang sedang dibangun.",
+      blurb: "Persoalan, arah yang dibangun, dan panduan untuk peserta pilot.",
     },
     teknis: {
       label: "Teknis",
@@ -33,7 +33,7 @@ const trackCopy = {
     panduan: {
       label: "Overview",
       title: "Understanding Sakala",
-      blurb: "The problem being worked on, and the direction being built.",
+      blurb: "The problem, the direction, and guides for pilot participants.",
     },
     teknis: {
       label: "Technical",
