@@ -90,7 +90,15 @@ Before moving traffic to a new version, Sakala sends an HTTP request to `/` on y
 
 **Address.** `127.0.0.1` and `localhost` mean "only from inside this container". An application listening there is alive, but a request from outside never reaches it. `0.0.0.0` means accepting connections from outside as well.
 
-**Port.** Sakala decides the port and hands it over through the `PORT` environment variable. The value is 3000, unless you fill in the **Port** field when creating the project or in the **Pengaturan** tab. A change in Settings applies from the next deployment. So read `PORT` in your code, and do not hard-code the number. An `EXPOSE` line in the Dockerfile is not used to decide the port.
+**Port.** Sakala decides the port, hands it over through the `PORT` environment variable, and checks your application on that port. The order is:
+
+1. The **Port** field you fill in when creating the project or in the **Pengaturan** tab.
+2. If that field is empty, and the last stage of your Dockerfile declares exactly one port with `EXPOSE`, for example `EXPOSE 80`, that port is used.
+3. Otherwise, 3000.
+
+Sakala reads `EXPOSE` when it detects the project's stack, which happens when the project is created and when the Root Directory changes. Only an `EXPOSE` written in your Dockerfile counts, not one already inside a base image such as `nginx`. Values from an `ARG` or `ENV` set in the Dockerfile are read too. Two or more ports, for example `EXPOSE 80 443`, keep Sakala on 3000, so fill in the **Port** field. The project page shows the port that will be used, and a change in **Pengaturan** applies from the next deployment.
+
+For code you write yourself, read `PORT` and do not hard-code the number. For an image whose port is fixed, such as `nginx` on port 80, write `EXPOSE` with that port.
 
 Do not add your own `PORT` variable to the project. If its value differs from the port Sakala chose, the deploy fails with [`runtime_port_conflict`](/en/docs/deploy-gagal#runtime_port_conflict).
 
@@ -179,7 +187,7 @@ Dockerfile
 .dockerignore
 ```
 
-The regular `nginx` image works too, as long as you keep the template above so nginx listens on `${PORT}`. Without it, nginx listens on port 80 and the deploy fails with [`runtime_app_not_listening`](/en/docs/deploy-gagal#runtime_app_not_listening). This example uses `nginxinc/nginx-unprivileged` because its processes never run as root at all.
+The regular `nginx` image works too. Keep the template above so nginx listens on `${PORT}`, or, without the template, write `EXPOSE 80` in the last stage so Sakala uses port 80. With neither, nginx listens on port 80 while Sakala checks port 3000, and the deploy fails with [`runtime_app_not_listening`](/en/docs/deploy-gagal#runtime_app_not_listening). This example uses `nginxinc/nginx-unprivileged` because its processes never run as root at all.
 
 Try it on your laptop:
 
@@ -258,15 +266,15 @@ Then open the project in the Console and press **Deploy sekarang** or **Redeploy
 
 A failed deploy does not replace the version being served. If your project has deployed successfully before, the old version stays reachable while you fix things. The most common mistakes:
 
-| What happened                                                  | Code                                                                                   |
-| -------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| The application listens on `localhost` or a fixed port         | [`runtime_app_not_listening`](/en/docs/deploy-gagal#runtime_app_not_listening)         |
-| The project has a `PORT` variable with a different value       | [`runtime_port_conflict`](/en/docs/deploy-gagal#runtime_port_conflict)                 |
-| nginx still listens on port 80, without the `${PORT}` template | [`runtime_app_not_listening`](/en/docs/deploy-gagal#runtime_app_not_listening)         |
-| The application stops on start                                 | [`runtime_app_crashed`](/en/docs/deploy-gagal#runtime_app_crashed)                     |
-| `/` always answers 5xx                                         | [`runtime_app_unhealthy`](/en/docs/deploy-gagal#runtime_app_unhealthy)                 |
-| `npm ci` fails because `package-lock.json` was not committed   | [`runtime_build_failed`](/en/docs/deploy-gagal#runtime_build_failed)                   |
-| A file named `dockerfile` in lowercase                         | No specific code. See [Dockerfile not used](/en/docs/deploy-gagal#dockerfile-not-used) |
+| What happened                                                   | Code                                                                                   |
+| --------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| The application listens on `localhost` or a fixed port          | [`runtime_app_not_listening`](/en/docs/deploy-gagal#runtime_app_not_listening)         |
+| The project has a `PORT` variable with a different value        | [`runtime_port_conflict`](/en/docs/deploy-gagal#runtime_port_conflict)                 |
+| nginx on port 80, without the `${PORT}` template or `EXPOSE 80` | [`runtime_app_not_listening`](/en/docs/deploy-gagal#runtime_app_not_listening)         |
+| The application stops on start                                  | [`runtime_app_crashed`](/en/docs/deploy-gagal#runtime_app_crashed)                     |
+| `/` always answers 5xx                                          | [`runtime_app_unhealthy`](/en/docs/deploy-gagal#runtime_app_unhealthy)                 |
+| `npm ci` fails because `package-lock.json` was not committed    | [`runtime_build_failed`](/en/docs/deploy-gagal#runtime_build_failed)                   |
+| A file named `dockerfile` in lowercase                          | No specific code. See [Dockerfile not used](/en/docs/deploy-gagal#dockerfile-not-used) |
 
 ## Next steps
 

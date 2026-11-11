@@ -150,9 +150,9 @@ Repository-mu berisi beberapa aplikasi? Lihat [Men-deploy monorepo](/docs/monore
 
 #### `runtime_port_conflict`
 
-- **Yang terlihat:** "Environment variable `PORT` di project ini berbeda dengan port yang dipakai Sakala untuk aplikasimu."
+- **Yang terlihat:** "Environment variable `PORT` di proyek ini berbeda dengan port yang dipakai Sakala untuk aplikasimu."
 - **Penyebab:** Ada variabel `PORT` di project yang nilainya tidak sama dengan port pilihan Sakala, atau nilainya bukan nomor port.
-- **Cek:** Lihat tab **Environment Variables** dan **Detail error**, yang menyebut kedua nilainya. Port pilihan Sakala adalah 3000, kecuali kolom **Port** di tab **Pengaturan** diisi. Halaman proyek menampilkan port yang sedang dipakai, dan port baru kalau baru berlaku di deploy berikutnya.
+- **Cek:** Lihat tab **Environment Variables** dan **Detail error**, yang menyebut kedua nilainya. Port pilihan Sakala adalah kolom **Port** di tab **Pengaturan**. Kalau kolom itu kosong, Sakala memakai port dari `EXPOSE` di Dockerfile bila hanya ada satu, dan 3000 kalau tidak ada. Halaman proyek menampilkan port yang sedang dipakai, dan port baru kalau baru berlaku di deploy berikutnya.
 - **Perbaiki:** Hapus variabel `PORT`, karena Sakala sudah mengisinya. Kalau aplikasimu memang butuh port lain, isi kolom **Port** di tab **Pengaturan**. Lalu deploy ulang.
 
 ### Aplikasi tidak menjawab
@@ -162,7 +162,7 @@ Repository-mu berisi beberapa aplikasi? Lihat [Men-deploy monorepo](/docs/monore
 - **Yang terlihat:** "Aplikasi berjalan, tetapi tidak menerima koneksi di port yang ditentukan Sakala."
 - **Penyebab:** Sampai batas waktu start, yang secara default 2 menit, tidak ada yang menjawab di port itu. Biasanya aplikasi mendengarkan di `localhost` atau `127.0.0.1`, memakai port tetap, atau mulainya terlalu lambat.
 - **Cek:** Jalankan [perintah di laptop](#mencoba-ulang-di-laptop) dan lihat alamat yang tercatat di log. Selama container berjalan, `docker exec coba-sakala netstat -ltn` menunjukkan alamat yang didengarkan pada image Alpine. Yang benar adalah `0.0.0.0:3000` atau `:::3000`.
-- **Perbaiki:** Dengarkan di `0.0.0.0` dan baca port dari `PORT`, lalu deploy ulang. Kalau port aplikasimu sulit diubah, samakan kolom **Port** di tab **Pengaturan** dengan port itu. Lihat [Kenapa alamat dan port itu penting](/docs/dockerfile#kenapa-alamat-dan-port-itu-penting).
+- **Perbaiki:** Dengarkan di `0.0.0.0` dan baca port dari `PORT`, lalu deploy ulang. Kalau port aplikasimu sulit diubah, samakan kolom **Port** di tab **Pengaturan** dengan port itu, atau tulis port itu sebagai satu-satunya `EXPOSE` di Dockerfile. Lihat [Kenapa alamat dan port itu penting](/docs/dockerfile#kenapa-alamat-dan-port-itu-penting).
 
 #### `runtime_app_unhealthy`
 

@@ -151,9 +151,9 @@ Does your repository hold several applications? See [Deploying a Monorepo](/en/d
 
 #### `runtime_port_conflict`
 
-- **What you see:** "Environment variable `PORT` di project ini berbeda dengan port yang dipakai Sakala untuk aplikasimu." (the project's `PORT` variable differs from the port Sakala uses for your application)
+- **What you see:** "Environment variable `PORT` di proyek ini berbeda dengan port yang dipakai Sakala untuk aplikasimu." (the project's `PORT` variable differs from the port Sakala uses for your application)
 - **Cause:** The project has a `PORT` variable whose value differs from the port Sakala chose, or whose value is not a port number.
-- **Check:** Look at the **Environment Variables** tab and **Detail error**, which names both values. Sakala's port is 3000, unless the **Port** field in the **Pengaturan** tab is filled in. The project page shows the port in use, and a new one if it only applies from the next deploy.
+- **Check:** Look at the **Environment Variables** tab and **Detail error**, which names both values. Sakala's port is the **Port** field in the **Pengaturan** tab. If that field is empty, Sakala uses the port from `EXPOSE` in the Dockerfile when there is exactly one, and 3000 otherwise. The project page shows the port in use, and a new one if it only applies from the next deploy.
 - **Fix:** Delete the `PORT` variable, since Sakala already sets it. If your application really needs another port, fill in the **Port** field in the **Pengaturan** tab. Then deploy again.
 
 ### The application does not answer
@@ -163,7 +163,7 @@ Does your repository hold several applications? See [Deploying a Monorepo](/en/d
 - **What you see:** "Aplikasi berjalan, tetapi tidak menerima koneksi di port yang ditentukan Sakala." (the application runs, but does not accept connections on the port Sakala set)
 - **Cause:** Nothing answered on that port until the start deadline, 2 minutes by default. Usually the application listens on `localhost` or `127.0.0.1`, uses a fixed port, or starts too slowly.
 - **Check:** Run the [laptop commands](#trying-it-again-on-your-laptop) and look at the address in the log. While the container runs, `docker exec coba-sakala netstat -ltn` shows the listening address on an Alpine image. The right one is `0.0.0.0:3000` or `:::3000`.
-- **Fix:** Listen on `0.0.0.0` and read the port from `PORT`, then deploy again. If your application's port is hard to change, set the **Port** field in the **Pengaturan** tab to match it. See [Why the address and port matter](/en/docs/dockerfile#why-the-address-and-port-matter).
+- **Fix:** Listen on `0.0.0.0` and read the port from `PORT`, then deploy again. If your application's port is hard to change, set the **Port** field in the **Pengaturan** tab to match it, or write that port as the only `EXPOSE` in the Dockerfile. See [Why the address and port matter](/en/docs/dockerfile#why-the-address-and-port-matter).
 
 #### `runtime_app_unhealthy`
 

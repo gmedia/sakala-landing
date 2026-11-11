@@ -89,7 +89,15 @@ Sebelum mengalihkan trafik ke versi baru, Sakala mengirim permintaan HTTP ke `/`
 
 **Alamat.** `127.0.0.1` dan `localhost` berarti "hanya dari dalam container ini". Aplikasi yang mendengarkan di sana memang hidup, tetapi permintaan dari luar tidak pernah sampai. `0.0.0.0` berarti menerima koneksi dari luar juga.
 
-**Port.** Sakala yang menentukan port, lalu memberikannya lewat environment variable `PORT`. Nilainya 3000, kecuali kamu mengisi kolom **Port** saat membuat proyek atau di tab **Pengaturan**. Perubahan di Settings berlaku mulai deployment berikutnya. Jadi baca `PORT` di kodemu dan jangan menulis angkanya secara tetap. Baris `EXPOSE` di Dockerfile tidak dipakai untuk menentukan port.
+**Port.** Sakala yang menentukan port, lalu memberikannya lewat environment variable `PORT` dan memeriksa aplikasimu di port itu. Urutannya:
+
+1. Kolom **Port** yang kamu isi saat membuat proyek atau di tab **Pengaturan**.
+2. Kalau kolom itu kosong, dan stage terakhir Dockerfile-mu menulis tepat satu port lewat `EXPOSE`, misalnya `EXPOSE 80`, port itulah yang dipakai.
+3. Selain itu, 3000.
+
+Sakala membaca `EXPOSE` saat mendeteksi stack proyek, yaitu saat proyek dibuat dan saat Root Directory diganti. Yang dihitung hanya `EXPOSE` yang tertulis di Dockerfile-mu, bukan yang sudah ada di dalam base image seperti `nginx`. Nilai dari `ARG` atau `ENV` yang diisi di Dockerfile ikut terbaca. Dua port atau lebih, misalnya `EXPOSE 80 443`, membuat Sakala tetap memakai 3000, jadi isi kolom **Port**. Halaman proyek menampilkan port yang akan dipakai, dan perubahan di **Pengaturan** berlaku mulai deployment berikutnya.
+
+Untuk kode yang kamu tulis sendiri, baca `PORT` dan jangan menulis angkanya secara tetap. Untuk image yang port-nya sudah tetap, seperti `nginx` di port 80, tulis `EXPOSE` dengan port itu.
 
 Jangan menambahkan variabel `PORT` sendiri di project. Kalau nilainya berbeda dari port pilihan Sakala, deploy gagal dengan [`runtime_port_conflict`](/docs/deploy-gagal#runtime_port_conflict).
 
@@ -178,7 +186,7 @@ Dockerfile
 .dockerignore
 ```
 
-Image `nginx` biasa juga bisa dipakai, asal tetap memakai template di atas supaya nginx mendengarkan di `${PORT}`. Tanpa template, nginx mendengarkan di port 80 dan deploy gagal dengan [`runtime_app_not_listening`](/docs/deploy-gagal#runtime_app_not_listening). Contoh ini memakai `nginxinc/nginx-unprivileged` karena prosesnya tidak berjalan sebagai root sama sekali.
+Image `nginx` biasa juga bisa dipakai. Pakai template di atas supaya nginx mendengarkan di `${PORT}`, atau tanpa template, tulis `EXPOSE 80` di stage terakhir supaya Sakala memakai port 80. Tanpa keduanya, nginx mendengarkan di port 80 sementara Sakala memeriksa port 3000, dan deploy gagal dengan [`runtime_app_not_listening`](/docs/deploy-gagal#runtime_app_not_listening). Contoh ini memakai `nginxinc/nginx-unprivileged` karena prosesnya tidak berjalan sebagai root sama sekali.
 
 Coba di laptop:
 
@@ -257,15 +265,15 @@ Setelah itu buka project di Console, lalu tekan **Deploy sekarang** atau **Redep
 
 Deploy yang gagal tidak mengganti versi yang sedang melayani. Kalau project-mu pernah berhasil di-deploy, versi lama tetap bisa dibuka selama kamu memperbaikinya. Kesalahan yang paling sering:
 
-| Yang terjadi                                                  | Kode                                                                                                   |
-| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Aplikasi mendengarkan di `localhost` atau port tetap          | [`runtime_app_not_listening`](/docs/deploy-gagal#runtime_app_not_listening)                            |
-| Ada variabel `PORT` di project dengan nilai yang berbeda      | [`runtime_port_conflict`](/docs/deploy-gagal#runtime_port_conflict)                                    |
-| nginx masih mendengarkan di port 80, tanpa template `${PORT}` | [`runtime_app_not_listening`](/docs/deploy-gagal#runtime_app_not_listening)                            |
-| Aplikasi berhenti saat mulai                                  | [`runtime_app_crashed`](/docs/deploy-gagal#runtime_app_crashed)                                        |
-| `/` selalu menjawab 5xx                                       | [`runtime_app_unhealthy`](/docs/deploy-gagal#runtime_app_unhealthy)                                    |
-| `npm ci` gagal karena `package-lock.json` tidak ter-commit    | [`runtime_build_failed`](/docs/deploy-gagal#runtime_build_failed)                                      |
-| Berkas bernama `dockerfile` dengan huruf kecil                | Tidak ada kode khusus. Lihat [Dockerfile tidak terpakai](/docs/deploy-gagal#dockerfile-tidak-terpakai) |
+| Yang terjadi                                                     | Kode                                                                                                   |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Aplikasi mendengarkan di `localhost` atau port tetap             | [`runtime_app_not_listening`](/docs/deploy-gagal#runtime_app_not_listening)                            |
+| Ada variabel `PORT` di project dengan nilai yang berbeda         | [`runtime_port_conflict`](/docs/deploy-gagal#runtime_port_conflict)                                    |
+| nginx di port 80, tanpa template `${PORT}` dan tanpa `EXPOSE 80` | [`runtime_app_not_listening`](/docs/deploy-gagal#runtime_app_not_listening)                            |
+| Aplikasi berhenti saat mulai                                     | [`runtime_app_crashed`](/docs/deploy-gagal#runtime_app_crashed)                                        |
+| `/` selalu menjawab 5xx                                          | [`runtime_app_unhealthy`](/docs/deploy-gagal#runtime_app_unhealthy)                                    |
+| `npm ci` gagal karena `package-lock.json` tidak ter-commit       | [`runtime_build_failed`](/docs/deploy-gagal#runtime_build_failed)                                      |
+| Berkas bernama `dockerfile` dengan huruf kecil                   | Tidak ada kode khusus. Lihat [Dockerfile tidak terpakai](/docs/deploy-gagal#dockerfile-tidak-terpakai) |
 
 ## Langkah berikutnya
 

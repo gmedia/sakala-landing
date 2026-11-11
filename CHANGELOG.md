@@ -16,6 +16,17 @@ Cara merilis:
 
 ## [Unreleased]
 
+### Changed
+
+- Bagian Port di [Menyiapkan Dockerfile](src/content/docs/dockerfile.md), dalam
+  bahasa Indonesia dan Inggris, menjelaskan aturan port yang baru: kolom
+  **Port**, lalu satu-satunya port dari `EXPOSE` di stage terakhir Dockerfile,
+  lalu 3000. Image `nginx` biasa kini cukup memakai `EXPOSE 80`. [Saat Deploy
+  Gagal](src/content/docs/deploy-gagal.md) menyebut aturan yang sama di
+  `runtime_port_conflict` dan `runtime_app_not_listening`, dan kutipan pesan
+  `runtime_port_conflict` kini memakai "proyek", sama dengan pesan dari API.
+  Aturan ini berlaku setelah rilis API dan agent berikutnya terpasang.
+
 ## [0.3.1] - 2026-11-11
 
 ### Changed
