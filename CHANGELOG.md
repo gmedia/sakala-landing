@@ -16,6 +16,17 @@ Cara merilis:
 
 ## [Unreleased]
 
+### Added
+
+- Logo PNG untuk email transaksional di `/email/sakala-logo@2x.png` (280 x
+  118 px, 11 KB, lossless): lockup Sakala berwarna Green Teal di atas tile
+  putih bersudut bulat, digambar 2x untuk lebar tampil 140 px. Gmail dan
+  Outlook tidak menampilkan SVG, dan tile putihnya menjaga logo tetap terbaca
+  di klien email gelap yang tidak membalik warna gambar. Build menyalinnya apa
+  adanya dan path-nya tidak boleh berubah, karena email yang sudah terkirim
+  menunjuk ke sana. Dibuat ulang dengan `node scripts/email/render-logo.mjs`
+  dari `public/brand/sakala-lockup.svg`.
+
 ## [0.3.2] - 2026-11-11
 
 ### Changed
