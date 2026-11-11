@@ -135,6 +135,8 @@ Kasus ini tidak punya kode sendiri. Kalau Sakala tidak menemukan berkas bernama 
 - **Cek:** Jalankan `git ls-tree -d HEAD apps/web`, dengan `apps/web` diganti folder yang kamu isi. Kalau tidak ada hasil, foldernya tidak ada di commit itu.
 - **Perbaiki:** Di tab **Pengaturan**, perbaiki kolom **Root Directory**, misalnya `apps/web`, atau kosongkan untuk memakai root repository. Simpan, lalu tekan **Redeploy**.
 
+Repository-mu berisi beberapa aplikasi? Lihat [Men-deploy monorepo](/docs/monorepo), termasuk batasnya: build hanya melihat isi Root Directory, jadi lockfile dan package workspace di root repository tidak ikut.
+
 ### Aplikasi saat mulai
 
 #### `runtime_app_crashed`
@@ -237,4 +239,4 @@ Status di bawah 500 berarti aplikasinya menjawab. Tetap buka halamannya di brows
 
 ## Langkah berikutnya
 
-Untuk mengulang dari awal, ikuti [Deploy Pertamamu](/docs/deploy-pertama). Untuk contoh yang sudah dicoba, buka [Menyiapkan Dockerfile](/docs/dockerfile). Kalau masalahnya ada di koneksi data, buka [Menghubungkan database eksternal](/docs/database-eksternal). Untuk urutan tahap di balik layar, baca [Alur Deployment](/docs/teknis/alur-deployment).
+Untuk mengulang dari awal, ikuti [Deploy Pertamamu](/docs/deploy-pertama). Untuk contoh yang sudah dicoba, buka [Menyiapkan Dockerfile](/docs/dockerfile). Kalau masalahnya ada di koneksi data, buka [Menghubungkan database eksternal](/docs/database-eksternal). Kalau repository-mu berisi beberapa aplikasi, buka [Men-deploy monorepo](/docs/monorepo). Untuk urutan tahap di balik layar, baca [Alur Deployment](/docs/teknis/alur-deployment).

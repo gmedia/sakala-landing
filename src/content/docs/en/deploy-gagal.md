@@ -136,6 +136,8 @@ This case has no code of its own. If Sakala does not find a file named exactly `
 - **Check:** Run `git ls-tree -d HEAD apps/web`, with `apps/web` replaced by the folder you set. If nothing comes back, the folder is not in that commit.
 - **Fix:** In the **Pengaturan** tab, correct the **Root Directory** field, for example `apps/web`, or clear it to use the repository root. Save, then press **Redeploy**.
 
+Does your repository hold several applications? See [Deploying a Monorepo](/en/docs/monorepo), including its limits: the build only sees the Root Directory, so lockfiles and workspace packages at the repository root are left out.
+
 ### The application on start
 
 #### `runtime_app_crashed`
@@ -238,4 +240,4 @@ A status under 500 means the application answers. Still open the page in a brows
 
 ## Next steps
 
-To start over from the beginning, follow [Your First Deploy](/en/docs/deploy-pertama). For examples that have been tried, open [Preparing a Dockerfile](/en/docs/dockerfile). If the problem is in your data connection, open [Connecting an external database](/en/docs/database-eksternal). For the order of stages behind the scenes, read [Deployment Flow](/en/docs/teknis/alur-deployment).
+To start over from the beginning, follow [Your First Deploy](/en/docs/deploy-pertama). For examples that have been tried, open [Preparing a Dockerfile](/en/docs/dockerfile). If the problem is in your data connection, open [Connecting an external database](/en/docs/database-eksternal). If your repository holds several applications, open [Deploying a Monorepo](/en/docs/monorepo). For the order of stages behind the scenes, read [Deployment Flow](/en/docs/teknis/alur-deployment).

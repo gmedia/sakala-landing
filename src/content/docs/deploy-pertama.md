@@ -76,6 +76,8 @@ Untuk deploy pertama, biasanya hanya **Nama Proyek** dan **Branch** yang perlu k
 
 Jangan menulis password atau token di repository. Tempatnya di Environment Variables. Setelah semuanya benar, tekan **Buat Proyek**.
 
+Repository-mu berisi beberapa aplikasi, misalnya API dan web? Buat satu proyek per aplikasi dengan Root directory masing-masing. Caranya dan batasnya ada di [Men-deploy monorepo](/docs/monorepo).
+
 **Yang seharusnya terlihat:** tahap **Auto Detect** dengan judul **Sakala membaca proyekmu**. Proyeknya sudah dibuat, jadi jangan membuatnya lagi kalau kamu menutup halaman ini. Kalau muncul **Proyek sudah dibuat, tapi N variabel belum tersimpan**, dengan N berupa jumlah variabelnya, perbaiki lalu tekan **Simpan ulang variabel**.
 
 ## Langkah 5: periksa hasil Auto Detect

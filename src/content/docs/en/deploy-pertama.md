@@ -77,6 +77,8 @@ For a first deploy, usually only **Nama Proyek** and **Branch** need checking. L
 
 Do not write passwords or tokens in the repository. They belong in Environment Variables. When everything looks right, press **Buat Proyek** (create project).
 
+Does your repository hold several applications, such as an API and a web app? Create one project per application, each with its own Root directory. How, and the limits, are in [Deploying a Monorepo](/en/docs/monorepo).
+
 **What you should see:** the **Auto Detect** stage, headed **Sakala membaca proyekmu** (Sakala is reading your project). The project now exists, so do not create it again if you close this page. If you see **Proyek sudah dibuat, tapi N variabel belum tersimpan** (the project exists, but N variables were not saved), fix them and press **Simpan ulang variabel** (save variables again).
 
 ## Step 5: check the Auto Detect result
