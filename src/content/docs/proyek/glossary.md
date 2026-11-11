@@ -200,7 +200,8 @@ collections.
 ## Collaboration
 
 **Workspace.** An ownership and collaboration boundary containing projects
-and members.
+and members. Every project belongs to one: a personal workspace or a team
+([ADR-018](/docs/proyek/adr)).
 
 ## System
 
