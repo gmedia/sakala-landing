@@ -16,6 +16,8 @@ Cara merilis:
 
 ## [Unreleased]
 
+## [0.3.2] - 2026-11-11
+
 ### Changed
 
 - Bagian Port di [Menyiapkan Dockerfile](src/content/docs/dockerfile.md), dalam
@@ -25,7 +27,9 @@ Cara merilis:
   Gagal](src/content/docs/deploy-gagal.md) menyebut aturan yang sama di
   `runtime_port_conflict` dan `runtime_app_not_listening`, dan kutipan pesan
   `runtime_port_conflict` kini memakai "proyek", sama dengan pesan dari API.
-  Aturan ini berlaku setelah rilis API dan agent berikutnya terpasang.
+  Aturan ini berlaku setelah rilis API dan agent berikutnya terpasang. Port dari
+  base image, misalnya `FROM nginx:alpine` tanpa `EXPOSE`, juga terbaca.
+- Dependency diperbarui lewat Dependabot: grup npm minor dan patch (8 paket), Vite 8, @astrojs/mdx 8, prettier-plugin-astro 1, actions/checkout v7, actions/setup-node v7, dan docker/setup-buildx-action v4.
 
 ## [0.3.1] - 2026-11-11
 
@@ -140,7 +144,8 @@ sampai workflow release (#1 sampai #21).
   Source (#19).
 - Dependency diperbarui ke versi terbaru (#13).
 
-[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.3.1...HEAD
+[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.3.2...HEAD
+[0.3.2]: https://github.com/gmedia/sakala-landing/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/gmedia/sakala-landing/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/gmedia/sakala-landing/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/gmedia/sakala-landing/compare/v0.2.0...v0.2.1
