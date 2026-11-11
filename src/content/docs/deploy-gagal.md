@@ -55,7 +55,9 @@ git clone https://github.com/NAMA/REPO.git coba-sakala
 cd coba-sakala
 docker build -t coba-sakala .
 docker run -d --name coba-sakala -e PORT=3000 -p 127.0.0.1:3000:3000 \
-  --cap-drop ALL --security-opt no-new-privileges \
+  --cap-drop ALL --cap-add CHOWN --cap-add DAC_OVERRIDE --cap-add FOWNER --cap-add FSETID \
+  --cap-add KILL --cap-add SETGID --cap-add SETUID --cap-add NET_BIND_SERVICE \
+  --security-opt no-new-privileges \
   --memory 256m --cpus 0.5 --pids-limit 128 \
   coba-sakala
 curl -i http://127.0.0.1:3000/
