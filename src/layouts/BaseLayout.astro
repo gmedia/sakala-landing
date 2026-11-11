@@ -165,27 +165,23 @@ const jsonLd = JSON.stringify(structuredData ?? defaultStructuredData);
     <Font cssVariable="--font-montserrat" preload={[{ weight: 700 }]} />
     <Font cssVariable="--font-inter" preload={[{ weight: 400 }]} />
 
-    {
-      alternates.map((alt) => (
-        <link
-          rel="alternate"
-          hreflang={alt.htmlLang}
-          href={new URL(alt.path, Astro.site).toString()}
-        />
-      ))
-    }
-    {
-      alternates.length > 1 && (
-        <link
-          rel="alternate"
-          hreflang="x-default"
-          href={new URL(
-            alternates.find((a) => a.lang === defaultLang)?.path ?? "/",
-            Astro.site,
-          ).toString()}
-        />
-      )
-    }
+    {alternates.map((alt) => (
+      <link
+        rel="alternate"
+        hreflang={alt.htmlLang}
+        href={new URL(alt.path, Astro.site).toString()}
+      />
+    ))}
+    {alternates.length > 1 && (
+      <link
+        rel="alternate"
+        hreflang="x-default"
+        href={new URL(
+          alternates.find((a) => a.lang === defaultLang)?.path ?? "/",
+          Astro.site,
+        ).toString()}
+      />
+    )}
 
     <link
       rel="alternate"
@@ -196,16 +192,14 @@ const jsonLd = JSON.stringify(structuredData ?? defaultStructuredData);
 
     <meta property="og:site_name" content="Sakala" />
     <meta property="og:locale" content={languages[lang].ogLocale} />
-    {
-      alternates
-        .filter((alt) => alt.lang !== lang)
-        .map((alt) => (
-          <meta
-            property="og:locale:alternate"
-            content={languages[alt.lang].ogLocale}
-          />
-        ))
-    }
+    {alternates
+      .filter((alt) => alt.lang !== lang)
+      .map((alt) => (
+        <meta
+          property="og:locale:alternate"
+          content={languages[alt.lang].ogLocale}
+        />
+      ))}
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -222,7 +216,9 @@ const jsonLd = JSON.stringify(structuredData ?? defaultStructuredData);
     <script type="application/ld+json" is:inline set:html={jsonLd} />
   </head>
   <body class="text-ink antialiased">
-    <a class="skip-link" href="#main-content">{t.meta.skipToContent}</a>
+    <a class="skip-link" href="#main-content">
+      {t.meta.skipToContent}
+    </a>
     <slot />
     <script>
       import "../scripts/becoming";

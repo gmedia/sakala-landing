@@ -26,73 +26,59 @@ const converge = branches.map(
 );
 ---
 
-{
-  /* Percabangan, bukan daftar. Satu karya yang hidup menyebar ke beberapa
+{/* Percabangan, bukan daftar. Satu karya yang hidup menyebar ke beberapa
     kelanjutan, lalu berkumpul kembali menjadi titik awal karya berikutnya.
     Bentuk itu yang membawa artinya; daftar vertikal tidak membawanya.
-    Kematangannya dinyatakan di catatan figure, bukan per cabang. */
-}
+    Kematangannya dinyatakan di catatan figure, bukan per cabang. */}
 <div class="relative">
-  {
-    /* Konektor mengasumsikan cabangnya berjajar dalam satu baris, dan itu baru
+  {/* Konektor mengasumsikan cabangnya berjajar dalam satu baris, dan itu baru
       berlaku sejak lg. Di bawah itu cabangnya membungkus, jadi garisnya
-      disembunyikan daripada menunjuk ke tempat yang salah. */
-  }
+      disembunyikan daripada menunjuk ke tempat yang salah. */}
   <svg
     class="pointer-events-none absolute inset-0 hidden h-full w-full lg:block"
     viewBox="0 0 1000 480"
     preserveAspectRatio="none"
     aria-hidden="true"
   >
-    {
-      [...fanOut, ...converge].map((d) => (
-        <path
-          d={d}
-          fill="none"
-          stroke="var(--color-border-strong)"
-          stroke-width="1.5"
-          stroke-dasharray="4 6"
-          vector-effect="non-scaling-stroke"
-        />
-      ))
-    }
+    {[...fanOut, ...converge].map((d) => (
+      <path
+        d={d}
+        fill="none"
+        stroke="var(--color-border-strong)"
+        stroke-width="1.5"
+        stroke-dasharray="4 6"
+        vector-effect="non-scaling-stroke"
+      />
+    ))}
   </svg>
 
   <div class="relative grid gap-10 sm:gap-14">
     <div class="flex justify-center">
-      <p
-        class="inline-flex items-center gap-2.5 rounded-xl border border-primary-soft bg-primary-soft-2 px-4 py-2.5"
-      >
+      <p class="inline-flex items-center gap-2.5 rounded-xl border border-primary-soft bg-primary-soft-2 px-4 py-2.5">
         <span class="size-2 rounded-full bg-primary" aria-hidden="true"></span>
         <span class="font-display font-semibold text-primary-dark">{root}</span>
       </p>
     </div>
 
-    <ul
-      class="m-0 grid list-none gap-3 p-0 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4"
-    >
-      {
-        branches.map((branch) => (
-          <li class="flex justify-center">
-            <span class="inline-flex min-h-11 items-center justify-center rounded-xl border border-border bg-surface px-4 py-2.5 text-center text-ink">
-              {branch}
-            </span>
-          </li>
-        ))
-      }
+    <ul class="m-0 grid list-none gap-3 p-0 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
+      {branches.map((branch) => (
+        <li class="flex justify-center">
+          <span class="inline-flex min-h-11 items-center justify-center rounded-xl border border-border bg-surface px-4 py-2.5 text-center text-ink">
+            {branch}
+          </span>
+        </li>
+      ))}
     </ul>
 
     <div class="flex flex-col items-center">
-      <p
-        class="inline-flex items-center gap-2.5 rounded-xl border border-border bg-surface px-4 py-2.5"
-      >
+      <p class="inline-flex items-center gap-2.5 rounded-xl border border-border bg-surface px-4 py-2.5">
         <span class="size-2 rounded-full bg-spark" aria-hidden="true"></span>
         <span class="font-display font-semibold text-ink">{onward}</span>
       </p>
       <p class="mt-4 flex items-center gap-2.5 text-muted">
-        <span aria-hidden="true" class="font-mono text-muted-2"
-          >&#9492;&#9472;</span
-        >
+        <span aria-hidden="true" class="font-mono text-muted-2">
+          &#9492;&#9472;
+        </span>
         {newWork}
       </p>
     </div>

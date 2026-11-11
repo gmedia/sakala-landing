@@ -40,28 +40,26 @@ const style = styles[tone];
       style.wrap,
     ]}
   >
-    {
-      locales.map((locale) => {
-        const isActive = locale === lang;
-        return (
-          <li>
-            <a
-              href={localizePath(pathname, locale)}
-              hreflang={languages[locale].htmlLang}
-              lang={languages[locale].htmlLang}
-              aria-current={isActive ? "true" : undefined}
-              class:list={[
-                "flex min-h-8 items-center rounded-md px-2.5 font-mono text-xs font-semibold",
-                isActive ? style.active : style.idle,
-              ]}
-            >
-              <span class="sr-only">{languages[locale].label}</span>
-              <span aria-hidden="true">{languages[locale].short}</span>
-            </a>
-          </li>
-        );
-      })
-    }
+    {locales.map((locale) => {
+      const isActive = locale === lang;
+      return (
+        <li>
+          <a
+            href={localizePath(pathname, locale)}
+            hreflang={languages[locale].htmlLang}
+            lang={languages[locale].htmlLang}
+            aria-current={isActive ? "true" : undefined}
+            class:list={[
+              "flex min-h-8 items-center rounded-md px-2.5 font-mono text-xs font-semibold",
+              isActive ? style.active : style.idle,
+            ]}
+          >
+            <span class="sr-only">{languages[locale].label}</span>
+            <span aria-hidden="true">{languages[locale].short}</span>
+          </a>
+        </li>
+      );
+    })}
   </ul>
 </nav>
 

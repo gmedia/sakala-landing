@@ -18,27 +18,23 @@ const { facts, lang } = Astro.props;
 ---
 
 <!-- Keyakinan disertai bukti. Nilainya faktual dan dapat diperiksa. -->
-<dl
-  class="m-0 grid gap-px overflow-hidden rounded-2xl border border-border bg-border"
->
-  {
-    facts.map((fact) => (
-      <div class="grid gap-1 bg-surface px-5 py-3.5 sm:grid-cols-[9rem_1fr] sm:items-baseline">
-        <dt class="artifact-label text-muted-2">{fact.label}</dt>
-        <dd class="m-0 font-mono text-sm text-ink">
-          {fact.href ? (
-            <a
-              href={localizePath(fact.href, lang)}
-              data-astro-prefetch="hover"
-              class="text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
-            >
-              {fact.value} &rarr;
-            </a>
-          ) : (
-            fact.value
-          )}
-        </dd>
-      </div>
-    ))
-  }
+<dl class="m-0 grid gap-px overflow-hidden rounded-2xl border border-border bg-border">
+  {facts.map((fact) => (
+    <div class="grid gap-1 bg-surface px-5 py-3.5 sm:grid-cols-[9rem_1fr] sm:items-baseline">
+      <dt class="artifact-label text-muted-2">{fact.label}</dt>
+      <dd class="m-0 font-mono text-sm text-ink">
+        {fact.href ? (
+          <a
+            href={localizePath(fact.href, lang)}
+            data-astro-prefetch="hover"
+            class="text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
+          >
+            {fact.value} &rarr;
+          </a>
+        ) : (
+          fact.value
+        )}
+      </dd>
+    </div>
+  ))}
 </dl>

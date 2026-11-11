@@ -30,30 +30,28 @@ const style =
 ---
 
 <ol class="flow m-0 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-5">
-  {
-    steps.map((step, index) => (
-      <li class="flow-item relative">
-        {index > 0 && (
-          <span
-            aria-hidden="true"
-            class={`flow-rail absolute hidden h-px lg:block ${style.rail}`}
-          />
-        )}
-        <div class={`relative h-full rounded-xl border p-4 ${style.node}`}>
-          <span
-            class={`diagram-label block uppercase ${style.index}`}
-            aria-hidden="true"
-          >
-            {String(index + 1).padStart(2, "0")}
-          </span>
-          <h3 class={`mt-2 font-display text-base font-semibold ${style.name}`}>
-            {step.name}
-          </h3>
-          <p class={`mt-1.5 text-sm leading-6 ${style.text}`}>{step.text}</p>
-        </div>
-      </li>
-    ))
-  }
+  {steps.map((step, index) => (
+    <li class="flow-item relative">
+      {index > 0 && (
+        <span
+          aria-hidden="true"
+          class={`flow-rail absolute hidden h-px lg:block ${style.rail}`}
+        />
+      )}
+      <div class={`relative h-full rounded-xl border p-4 ${style.node}`}>
+        <span
+          class={`diagram-label block uppercase ${style.index}`}
+          aria-hidden="true"
+        >
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <h3 class={`mt-2 font-display text-base font-semibold ${style.name}`}>
+          {step.name}
+        </h3>
+        <p class={`mt-1.5 text-sm leading-6 ${style.text}`}>{step.text}</p>
+      </div>
+    </li>
+  ))}
 </ol>
 
 <style>

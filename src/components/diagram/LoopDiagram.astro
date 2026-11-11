@@ -24,29 +24,27 @@ const style =
 
 <div class="loop">
   <ol class="m-0 flex list-none flex-wrap items-center gap-x-2 gap-y-3 p-0">
-    {
-      steps.map((step, index) => (
-        <li class="flex items-center gap-2">
-          <span
-            class={`rounded-lg border px-3 py-2 font-mono text-xs ${style.chip}`}
-          >
-            {step}
+    {steps.map((step, index) => (
+      <li class="flex items-center gap-2">
+        <span
+          class={`rounded-lg border px-3 py-2 font-mono text-xs ${style.chip}`}
+        >
+          {step}
+        </span>
+        {index < steps.length - 1 && (
+          <span aria-hidden="true" class={`text-sm ${style.arrow}`}>
+            &rarr;
           </span>
-          {index < steps.length - 1 && (
-            <span aria-hidden="true" class={`text-sm ${style.arrow}`}>
-              &rarr;
-            </span>
-          )}
-        </li>
-      ))
-    }
+        )}
+      </li>
+    ))}
   </ol>
   <div
     class={`mt-4 flex items-center gap-3 border-t border-dashed pt-3 ${style.rail}`}
   >
-    <span aria-hidden="true" class={`font-mono text-sm ${style.arrow}`}
-      >&#8630;</span
-    >
+    <span aria-hidden="true" class={`font-mono text-sm ${style.arrow}`}>
+      &#8630;
+    </span>
     <slot />
   </div>
 </div>

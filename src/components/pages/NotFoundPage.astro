@@ -29,15 +29,11 @@ const destinations = [
        itu tema yang sama dengan seluruh situs. Karena itu ia memakai bahasa
        naratif yang sama, bukan pita gelap yang tidak dituntut isinya. -->
   <section class="relative isolate overflow-hidden bg-canvas">
-    <BrandMark
-      class="pointer-events-none absolute -right-24 top-1/2 -z-10 hidden h-[26rem] w-auto -translate-y-1/2 text-primary opacity-[0.04] lg:block"
-    />
+    <BrandMark class="pointer-events-none absolute -right-24 top-1/2 -z-10 hidden h-[26rem] w-auto -translate-y-1/2 text-primary opacity-[0.04] lg:block" />
 
     <Container className="py-28 sm:py-36 lg:py-44">
       <p class="artifact-label text-spark-text">{n.eyebrow}</p>
-      <h1
-        class="mt-5 max-w-[16ch] text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-ink"
-      >
+      <h1 class="mt-5 max-w-[16ch] text-balance font-display text-narrative-l font-bold tracking-[-0.03em] text-ink">
         {n.title}
       </h1>
       <p class="mt-7 max-w-xl text-lg leading-8 text-muted">{n.lead}</p>
@@ -46,27 +42,23 @@ const destinations = [
         class="green-line m-0 mt-12 list-none space-y-1 p-0 pl-8 sm:max-w-lg"
         style="--line-inset: 2rem"
       >
-        {
-          destinations.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                data-astro-prefetch="hover"
-                class="green-line-node green-line-node-mid flex min-h-14 items-center justify-between gap-4 py-2 text-ink hover:text-primary-dark"
-              >
-                <span>
-                  <span class="block font-semibold">{item.label}</span>
-                  <span class="mt-0.5 block text-sm text-muted">
-                    {item.note}
-                  </span>
-                </span>
-                <span aria-hidden="true" class="text-muted-2">
-                  &rarr;
-                </span>
-              </a>
-            </li>
-          ))
-        }
+        {destinations.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              data-astro-prefetch="hover"
+              class="green-line-node green-line-node-mid flex min-h-14 items-center justify-between gap-4 py-2 text-ink hover:text-primary-dark"
+            >
+              <span>
+                <span class="block font-semibold">{item.label}</span>
+                <span class="mt-0.5 block text-sm text-muted">{item.note}</span>
+              </span>
+              <span aria-hidden="true" class="text-muted-2">
+                &rarr;
+              </span>
+            </a>
+          </li>
+        ))}
       </ul>
     </Container>
   </section>

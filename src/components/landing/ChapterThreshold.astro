@@ -58,18 +58,16 @@ const c = t.home.threshold;
   <div class="mt-20 border-t border-deep-border pt-10">
     <h3 class="artifact-label text-on-deep-label">{c.forWhomTitle}</h3>
     <ul class="m-0 mt-6 grid list-none gap-8 p-0 sm:grid-cols-3 sm:gap-6">
-      {
-        c.personas.map((persona) => (
-          <li>
-            <p class="font-display text-base font-semibold text-on-deep">
-              {persona.name}
-            </p>
-            <p class="mt-1.5 text-sm leading-6 text-on-deep-muted">
-              {persona.text}
-            </p>
-          </li>
-        ))
-      }
+      {c.personas.map((persona) => (
+        <li>
+          <p class="font-display text-base font-semibold text-on-deep">
+            {persona.name}
+          </p>
+          <p class="mt-1.5 text-sm leading-6 text-on-deep-muted">
+            {persona.text}
+          </p>
+        </li>
+      ))}
     </ul>
   </div>
 </Chapter>

@@ -41,13 +41,9 @@ const contributeHref: Record<string, { href: string; external: boolean }> = {
 
   <section class="border-b border-border bg-background-soft py-20 sm:py-24">
     <Container>
-      <div
-        class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-16"
-      >
+      <div class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-16">
         <div>
-          <h2
-            class="font-display text-narrative-m font-bold tracking-[-0.025em] text-ink"
-          >
+          <h2 class="font-display text-narrative-m font-bold tracking-[-0.025em] text-ink">
             {o.sponsorTitle}
           </h2>
           <p class="mt-5 max-w-xl text-lg leading-8 text-muted">
@@ -57,33 +53,29 @@ const contributeHref: Record<string, { href: string; external: boolean }> = {
 
           <ArtifactFigure caption={o.stewardshipCaption} class="mt-10">
             <div class="grid gap-3 sm:grid-cols-3">
-              {
-                o.stewardshipCards.map((card, index) => (
-                  <div
+              {o.stewardshipCards.map((card, index) => (
+                <div
+                  class:list={[
+                    "rounded-xl border p-4",
+                    index === 0
+                      ? "border-primary bg-primary-soft-2"
+                      : "border-border bg-surface",
+                  ]}
+                >
+                  <p
                     class:list={[
-                      "rounded-xl border p-4",
-                      index === 0
-                        ? "border-primary bg-primary-soft-2"
-                        : "border-border bg-surface",
+                      "artifact-label",
+                      index === 0 ? "text-primary" : "text-muted-2",
                     ]}
                   >
-                    <p
-                      class:list={[
-                        "artifact-label",
-                        index === 0 ? "text-primary" : "text-muted-2",
-                      ]}
-                    >
-                      {card.role}
-                    </p>
-                    <p class="mt-2 font-display font-semibold text-ink">
-                      {card.name}
-                    </p>
-                    <p class="mt-1.5 text-xs leading-5 text-muted">
-                      {card.text}
-                    </p>
-                  </div>
-                ))
-              }
+                    {card.role}
+                  </p>
+                  <p class="mt-2 font-display font-semibold text-ink">
+                    {card.name}
+                  </p>
+                  <p class="mt-1.5 text-xs leading-5 text-muted">{card.text}</p>
+                </div>
+              ))}
             </div>
           </ArtifactFigure>
         </div>
@@ -102,22 +94,16 @@ const contributeHref: Record<string, { href: string; external: boolean }> = {
 
   <section class="border-b border-border py-20 sm:py-24">
     <Container>
-      <h2
-        class="font-display text-narrative-m font-bold tracking-[-0.025em] text-ink"
-      >
+      <h2 class="font-display text-narrative-m font-bold tracking-[-0.025em] text-ink">
         {o.decisionsTitle}
       </h2>
-      <dl
-        class="m-0 mt-10 grid gap-px overflow-hidden rounded-2xl border border-border bg-border"
-      >
-        {
-          o.decisions.map((item) => (
-            <div class="grid gap-1 bg-surface px-5 py-4 sm:grid-cols-[12rem_1fr] sm:items-baseline">
-              <dt class="font-display font-semibold text-ink">{item.area}</dt>
-              <dd class="m-0 text-sm leading-7 text-muted">{item.owner}</dd>
-            </div>
-          ))
-        }
+      <dl class="m-0 mt-10 grid gap-px overflow-hidden rounded-2xl border border-border bg-border">
+        {o.decisions.map((item) => (
+          <div class="grid gap-1 bg-surface px-5 py-4 sm:grid-cols-[12rem_1fr] sm:items-baseline">
+            <dt class="font-display font-semibold text-ink">{item.area}</dt>
+            <dd class="m-0 text-sm leading-7 text-muted">{item.owner}</dd>
+          </div>
+        ))}
       </dl>
     </Container>
   </section>
@@ -125,9 +111,7 @@ const contributeHref: Record<string, { href: string; external: boolean }> = {
   <section class="border-b border-border bg-background-soft py-20 sm:py-24">
     <Container>
       <div class="max-w-2xl">
-        <h2
-          class="font-display text-narrative-m font-bold tracking-[-0.025em] text-ink"
-        >
+        <h2 class="font-display text-narrative-m font-bold tracking-[-0.025em] text-ink">
           {o.ecosystemTitle}
         </h2>
         <p class="mt-5 text-lg leading-8 text-muted">{o.ecosystemLead}</p>
@@ -150,13 +134,9 @@ const contributeHref: Record<string, { href: string; external: boolean }> = {
        nama contributor dicatat di CONTRIBUTORS.md setelah nyata dan disetujui. -->
   <section class="py-20 sm:py-24">
     <Container>
-      <div
-        class="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-16"
-      >
+      <div class="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-16">
         <div>
-          <h2
-            class="font-display text-narrative-m font-bold tracking-[-0.025em] text-ink"
-          >
+          <h2 class="font-display text-narrative-m font-bold tracking-[-0.025em] text-ink">
             {o.contributeTitle}
           </h2>
           <p class="mt-5 max-w-xl text-lg leading-8 text-muted">
@@ -168,32 +148,30 @@ const contributeHref: Record<string, { href: string; external: boolean }> = {
           class="green-line green-line-live m-0 list-none space-y-1 p-0 pl-8 lg:pt-3"
           style="--line-inset: 2rem"
         >
-          {
-            o.contributePaths.map((path) => {
-              const target = contributeHref[path.key];
-              return (
-                <li>
-                  <a
-                    href={target.href}
-                    target={target.external ? "_blank" : undefined}
-                    rel={target.external ? "noreferrer" : undefined}
-                    data-astro-prefetch={target.external ? undefined : "hover"}
-                    class="green-line-node green-line-node-mid green-line-node-live flex min-h-14 items-center justify-between gap-4 py-2 text-ink hover:text-primary-dark"
-                  >
-                    <span>
-                      <span class="block font-semibold">{path.label}</span>
-                      <span class="mt-0.5 block text-sm text-muted">
-                        {path.note}
-                      </span>
+          {o.contributePaths.map((path) => {
+            const target = contributeHref[path.key];
+            return (
+              <li>
+                <a
+                  href={target.href}
+                  target={target.external ? "_blank" : undefined}
+                  rel={target.external ? "noreferrer" : undefined}
+                  data-astro-prefetch={target.external ? undefined : "hover"}
+                  class="green-line-node green-line-node-mid green-line-node-live flex min-h-14 items-center justify-between gap-4 py-2 text-ink hover:text-primary-dark"
+                >
+                  <span>
+                    <span class="block font-semibold">{path.label}</span>
+                    <span class="mt-0.5 block text-sm text-muted">
+                      {path.note}
                     </span>
-                    <span aria-hidden="true" class="text-muted-2">
-                      {target.external ? "↗" : "→"}
-                    </span>
-                  </a>
-                </li>
-              );
-            })
-          }
+                  </span>
+                  <span aria-hidden="true" class="text-muted-2">
+                    {target.external ? "↗" : "→"}
+                  </span>
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </Container>
