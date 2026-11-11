@@ -450,31 +450,39 @@ limits per class rather than per user.
   leave or be demoted.
 - Any user with a verified email may create team workspaces, capped per user
   (default 2 owned teams, from configuration). An admin can raise one user's
-  cap. The cap stops people multiplying quota by creating teams.
+  cap. The cap applies to every path to ownership: creating a team, accepting
+  an owner invitation, and being promoted to owner.
 - Members join through email invitations that carry a role, a single-use
-  token stored only as a hash, and an expiry (default 7 days).
+  token stored only as a hash, and an expiry (default 7 days). A `member` or
+  `viewer` invitation can be accepted with the token from any verified
+  account; an `owner` invitation only by the account whose verified email is
+  the invited address, so a forwarded link cannot hand over a team. An owner
+  who leaves or loses the role revokes the invitations they sent.
 - Resource limits come from reusable limit profiles (for example "Pilot",
   "Magang GMEDIA", "Kelas") attached to a workspace: max projects, max running
   containers, max concurrent deployments, per-project memory and CPU caps, and
   a builds-per-hour field reserved for the build rate limit
   ([sakala-api#124](https://github.com/gmedia/sakala-api/issues/124)).
-  Personal and team workspaces use the same mechanism. A workspace without a
-  profile uses the default for its type from configuration, which equals
-  today's pilot limits, so nothing changes for existing users. Limits count
-  per workspace, never per member, and are enforced under a row lock on the
+  Personal and team workspaces use the same mechanism. A personal workspace
+  without a profile keeps today's pilot limits, so nothing changes for existing
+  users. A team without a profile gets small defaults (2 projects, 2 running
+  containers, 1 deployment at a time), so creating teams does not multiply
+  quota; a team that needs more gets a profile from an admin. Limits count per
+  workspace, never per member, and are enforced under a row lock on the
   workspace.
 - GitHub access for team projects:
   - a public repository needs no person, so deploys keep working when the
     creator leaves;
-  - a private repository connected through a GitHub App installation on an
-    organisation account is accessed through that installation and does not
-    depend on any person; the organisation controls which repositories the
-    installation sees;
-  - a private repository from an installation on a personal GitHub account
-    stays tied to its creator, who must still be an owner or member of the
-    team and still able to read the repository. When the creator leaves,
-    deploys of that repository stop with `REPOSITORY_ACCESS_REVOKED` until the
-    team reconnects it through an organisation installation.
+  - a private repository from a GitHub App installation keeps access only
+    while a current owner or member with a linked GitHub identity is linked
+    to that installation: the creator while still a member, otherwise the
+    longest-standing owner, then member. When nobody qualifies, deploys stop
+    with `REPOSITORY_ACCESS_REVOKED` until someone in the team links the
+    installation;
+  - on an organisation installation that person only anchors the access: the
+    installation token reads the repository, and the organisation controls
+    which repositories the installation sees. On an installation on a personal
+    GitHub account, that person's own token must still read the repository.
 
   Personal workspace projects keep today's rule: the owner must still have
   access.
@@ -492,7 +500,9 @@ limits per class rather than per user.
   Console keeps working.
 - Audit events record membership, role, invitation, and limit-profile changes.
 - A team project from an organisation installation keeps deploying after its
-  creator leaves the GitHub organisation, as long as the installation still
-  includes the repository. Removing the repository from the installation is
-  the organisation's lever.
+  creator leaves, as long as another owner or member is linked to the
+  installation and it still includes the repository. Removing the repository
+  from the installation is the organisation's lever.
+- Realtime subscriptions are authorised once, when they open: a removed
+  member stops receiving deployment events only after reconnecting.
 - Moving a project between workspaces is not part of this decision.
