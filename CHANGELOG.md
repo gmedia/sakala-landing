@@ -16,6 +16,8 @@ Cara merilis:
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-11
+
 ### Added
 
 - Pemberitahuan Privasi, Syarat Layanan, dan Kebijakan Penggunaan Wajar di
@@ -117,7 +119,8 @@ sampai workflow release (#1 sampai #21).
   Source (#19).
 - Dependency diperbarui ke versi terbaru (#13).
 
-[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/gmedia/sakala-landing/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/gmedia/sakala-landing/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/gmedia/sakala-landing/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/gmedia/sakala-landing/compare/v0.1.0...v0.1.1
