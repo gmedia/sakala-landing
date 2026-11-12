@@ -38,6 +38,14 @@ docker run --rm -p 8080:8080 sakala-landing:local
 
 Untuk deployment Sakala, konfigurasi domain, TLS, reverse proxy host, dan path rilis dikelola di repository deployment terpisah. Image ini tidak membawa konfigurasi production tersebut.
 
+### Header respons
+
+Setiap halaman HTML, termasuk halaman 404, dikirim dengan `Cache-Control: no-transform`. Header ini mencegah Cloudflare mengubah isi halaman: Web Analytics (RUM) aktif di zona `sakala.dev` dan tidak bisa dimatikan dari sisi kami, sehingga Cloudflare menyisipkan script `static.cloudflareinsights.com/beacon.min.js` ke HTML. Itu bertentangan dengan [kebijakan privasi](src/content/legal/privasi.md) yang menyatakan situs ini tidak memasang analitik. Menurut [FAQ Web Analytics Cloudflare](https://developers.cloudflare.com/web-analytics/faq/), beacon tidak disisipkan ke respons yang membawa `no-transform`.
+
+Halaman tidak punya directive cache lain, jadi perilaku cache-nya tidak berubah. Header dipasang di level teratas `docker/Caddyfile` dan dicocokkan dengan `Content-Type` respons, jadi halaman baru ikut tercakup dan Caddy tetap mengompresinya dengan gzip atau zstd. File lain (CSS, JavaScript, gambar, RSS) tidak berubah.
+
+`tests/container/headers.sh` membangun image, lalu memeriksa header setiap file HTML di dalamnya. Skrip ini butuh Docker dan tidak dijalankan CI.
+
 ## Scripts
 
 ```bash
