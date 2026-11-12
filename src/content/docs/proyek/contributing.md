@@ -133,6 +133,7 @@ sakala-console      console
 sakala-api          control plane
 sakala-agent        runtime executor
 sakala-infra        runtime reference
+sakala              self-host distribution and Discussions
 ```
 
 Each repository has its own `CONTRIBUTING.md` for local setup; this page sets
