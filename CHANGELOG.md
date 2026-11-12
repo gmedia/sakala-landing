@@ -16,6 +16,8 @@ Cara merilis:
 
 ## [Unreleased]
 
+## [0.3.5] - 2026-11-12
+
 ### Fixed
 
 - Cloudflare tidak lagi menyisipkan beacon Web Analytics
@@ -189,7 +191,8 @@ sampai workflow release (#1 sampai #21).
   Source (#19).
 - Dependency diperbarui ke versi terbaru (#13).
 
-[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.3.4...HEAD
+[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.3.5...HEAD
+[0.3.5]: https://github.com/gmedia/sakala-landing/compare/v0.3.4...v0.3.5
 [0.3.4]: https://github.com/gmedia/sakala-landing/compare/v0.3.3...v0.3.4
 [0.3.3]: https://github.com/gmedia/sakala-landing/compare/v0.3.2...v0.3.3
 [0.3.2]: https://github.com/gmedia/sakala-landing/compare/v0.3.1...v0.3.2
