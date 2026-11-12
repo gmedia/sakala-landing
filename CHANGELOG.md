@@ -16,6 +16,17 @@ Cara merilis:
 
 ## [Unreleased]
 
+## [0.3.6] - 2026-11-12
+
+### Changed
+
+- [Start Contributing](src/content/docs/proyek/start-contributing.md) kini
+  meminta kontributor memastikan issue belum di-assign atau diklaim di
+  komentar sebelum mengerjakannya, menjelaskan bahwa maintainer meng-assign
+  issue setelah ada klaim, apa yang dilakukan kalau klaim diam seminggu, dan
+  bahwa pull request untuk issue yang sudah diklaim orang lain biasanya
+  ditutup sebagai duplikat (#54).
+
 ## [0.3.5] - 2026-11-12
 
 ### Fixed
@@ -191,7 +202,8 @@ sampai workflow release (#1 sampai #21).
   Source (#19).
 - Dependency diperbarui ke versi terbaru (#13).
 
-[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.3.5...HEAD
+[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.3.6...HEAD
+[0.3.6]: https://github.com/gmedia/sakala-landing/compare/v0.3.5...v0.3.6
 [0.3.5]: https://github.com/gmedia/sakala-landing/compare/v0.3.4...v0.3.5
 [0.3.4]: https://github.com/gmedia/sakala-landing/compare/v0.3.3...v0.3.4
 [0.3.3]: https://github.com/gmedia/sakala-landing/compare/v0.3.2...v0.3.3
