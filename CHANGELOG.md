@@ -16,6 +16,23 @@ Cara merilis:
 
 ## [Unreleased]
 
+### Changed
+
+- [Start Contributing](src/content/docs/proyek/start-contributing.md) kini
+  mengarahkan orang ke pencarian label `good first issue` dan `help wanted` di
+  semua repository Sakala, yang ikut berubah saat issue dibuka dan ditutup,
+  menggantikan kalimat bahwa belum ada good first issue. Larangan mengerjakan
+  Explore, Learn, dan fitur tim dihapus, karena fitur seperti itu sekarang
+  dibuka lewat issue `help wanted`. Sebagai gantinya ada penjelasan area yang
+  tetap dipegang maintainer (security boundary, protokol agent, deployment
+  production), cara mengusulkan pekerjaan besar lewat issue atau thread Ideas
+  di Discussions `gmedia/sakala`, dan tautan Q&A untuk bertanya. Tautan ke
+  `sakala-infra#4` yang sudah ditutup diganti panduan Full Stack Lokal, dan
+  repository `gmedia/sakala` masuk tabel repository dan perintah quality.
+- Template issue mengarahkan pertanyaan ke Discussions `gmedia/sakala` dan
+  laporan keamanan ke halaman security policy repository ini, menggantikan
+  tautan ke halaman organisasi.
+
 ## [0.3.3] - 2026-11-12
 
 ### Added
