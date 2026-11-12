@@ -16,6 +16,19 @@ Cara merilis:
 
 ## [Unreleased]
 
+### Fixed
+
+- Cloudflare tidak lagi menyisipkan beacon Web Analytics
+  (`static.cloudflareinsights.com/beacon.min.js`) ke halaman situs. Web
+  Analytics (RUM) aktif di zona dan tidak bisa dimatikan dari sisi Sakala,
+  padahal kebijakan privasi menyatakan situs tidak memasang analitik. Setiap
+  respons HTML, termasuk halaman 404, kini dikirim dengan
+  `Cache-Control: no-transform`, dan Cloudflare tidak mengubah respons yang
+  membawa directive itu. Header dipasang di level teratas `docker/Caddyfile`
+  berdasarkan `Content-Type: text/html`, jadi kompresi Caddy tetap jalan dan
+  file selain HTML tidak berubah. `tests/container/headers.sh` memeriksa header
+  setiap halaman HTML di image.
+
 ## [0.3.4] - 2026-11-12
 
 ### Changed

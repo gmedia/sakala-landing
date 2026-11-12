@@ -7,6 +7,22 @@
 	encode zstd gzip
 	root * /srv
 
+	# Every HTML page, the 404 page included, says no-transform so Cloudflare does not rewrite it.
+	# Web Analytics (RUM) is switched on for the zone and injects a
+	# static.cloudflareinsights.com/beacon.min.js script into proxied HTML, which goes against the
+	# privacy notice (src/content/legal/privasi.md). Cloudflare leaves a response marked
+	# no-transform alone:
+	# https://developers.cloudflare.com/web-analytics/faq/
+	#
+	# The pages set no other caching directive, so their freshness is unchanged. Matched on the
+	# response type, so a page added later is covered without a path list. It stays at the top
+	# level, which Caddy orders before `encode`: inside `route` or `handle`, `encode` would see
+	# no-transform first and send the page uncompressed.
+	header {
+		match header Content-Type text/html*
+		Cache-Control "no-transform"
+	}
+
 	@health path /healthz
 	respond @health "ok" 200
 
