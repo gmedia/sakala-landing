@@ -1,5 +1,8 @@
+# Setiap pull request otomatis meminta review ke maintainer Sakala.
+# Saat ada maintainer baru, tambahkan akunnya di sini (lihat GOVERNANCE di sakala.dev).
+* @HasanH47
+
 # Dokumen kanonik project adalah keputusan project, bukan penyuntingan.
 # Perubahan di jalur ini wajib ditinjau maintainer (GOVERNANCE §3).
-# Tim GitHub mengikuti usulan GOVERNANCE §4; sesuaikan bila nama tim berbeda.
-/src/content/docs/proyek/      @gmedia/sakala-maintainers
-/src/content/docs/en/proyek/   @gmedia/sakala-maintainers
+/src/content/docs/proyek/      @HasanH47
+/src/content/docs/en/proyek/   @HasanH47
