@@ -153,6 +153,9 @@ Contoh:
   biaya, dan permintaan yang kuat.
 - Multi-region menunggu sampai batas satu region dan multi-node benar-benar
   terlihat.
+- Load balancing antar replika satu project baru dikerjakan setelah Sakala
+  Edge berjalan untuk node kedua ([ADR-019](/docs/proyek/adr)). Sekarang satu
+  project selalu satu container di satu node.
 
 ## 5. Anti-roadmap
 

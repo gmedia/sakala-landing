@@ -1,6 +1,6 @@
 ---
 title: "Architecture Decision Records"
-description: "Architecture and product decisions with their status, context, alternatives, and consequences — from separating console and API to workload isolation, quotas, the shared public domain, the hosted plus self-host model, and workspace ownership."
+description: "Architecture and product decisions with their status, context, alternatives, and consequences — from separating console and API to workload isolation, quotas, the shared public domain, the hosted plus self-host model, workspace ownership, and the edge routing tier."
 track: proyek
 section: sistem
 order: 6
@@ -345,6 +345,17 @@ and nothing bounds how often a user can trigger builds.
 - Classroom resource policy (FEATURE_EDUCATION §7) is built on the same
   mechanism, with limits set per class instead of per user.
 
+### Update 2026-11-13: the wake path does not wait for the edge tier
+
+Idle sleep is built on a single runtime node first, without the edge tier of
+ADR-019. When a project sleeps, the Agent swaps its route in `runtime-caddy`
+for a static "starting" page. The page asks the API to wake the project through
+a public, rate-limited endpoint that only accepts a project that is actually
+asleep, then reloads once the route points at the container again. Idle time is
+measured from the access log of `runtime-caddy`. ADR-019 later moves the same
+behaviour into Sakala Edge, where a request can also be held instead of
+answered with a page.
+
 ## ADR-016 — The Shared Public Domain Is a Reputation Asset
 
 **Status:** Proposed
@@ -506,3 +517,96 @@ limits per class rather than per user.
 - Realtime subscriptions are authorised once, when they open: a removed
   member stops receiving deployment events only after reconnecting.
 - Moving a project between workspaces is not part of this decision.
+
+## ADR-019 — Sakala Edge Routes Public Traffic to Runtime Nodes
+
+**Status:** Proposed
+
+### Context
+
+Every project URL resolves through one DNS-only wildcard record,
+`*.run.sakala.dev`, to one runtime host. Host Caddy terminates TLS there and
+passes the request, `Host` header intact, to `runtime-caddy` on loopback, which
+reads the route files the Agent writes for that node. This works because there
+is exactly one runtime node.
+
+The API already supports more than one node: `AgentNodeSchedulerService` picks
+the online node with the fewest reserved commands and keeps a project on the
+node that serves it. What is missing sits in front of the nodes:
+
+- DNS cannot tell which node serves a project, so a second node, even in the
+  same data centre, has no way to receive its projects' traffic.
+- Nodes carry no location. A node in Yogyakarta and one in Jakarta are
+  indistinguishable to the scheduler and to the user.
+- Waking a sleeping project (ADR-015) is best done where a request can be held
+  for a few seconds instead of answered with a page.
+- Running one project as several containers and spreading requests across them
+  (load balancing between replicas) needs a component that knows every
+  replica of a project and its health.
+- Rate limits and abuse blocks for user workloads currently live on each
+  runtime host, next to untrusted code.
+
+### Options considered
+
+1. **One DNS record per project**, created through the DNS provider's API and
+   pointing at the node that serves it. No new component, but every
+   deployment depends on the DNS provider, record changes wait for TTLs, a
+   move between nodes is slow and visible, sleeping projects still need a
+   node to answer, and there is nowhere to balance load.
+2. **One wildcard per region**, for example `*.jkt.run.sakala.dev` and
+   `*.jog.run.sakala.dev`, each pointing at that region's runtime host. Simple
+   and close to today, but the region becomes part of every URL, moving a
+   project between regions changes its address, and several nodes inside one
+   region still cannot share traffic.
+3. **Sakala Edge**: a routing tier on its own hosts that holds the wildcard
+   certificate, looks up which node (and later which replicas) serve a
+   project, and forwards the request there over a private network. The
+   project URL never contains a node or a region.
+4. **A managed edge** such as Cloudflare Workers or Tunnel. Little to
+   operate, but routing, waking, and abuse handling would depend on a
+   proprietary platform that self-host operators cannot run, contrary to
+   ADR-017.
+
+### Proposed decision
+
+Option 3, built from an existing reverse proxy rather than a custom one, and
+introduced in stages so each stage is justified by a real need:
+
+1. **One runtime node (today).** No edge. Idle sleep follows the update to
+   ADR-015 on the node itself.
+2. **Second runtime node.** Sakala Edge appears on a separate host. The
+   wildcard record points at the edge. The API is the source of truth for
+   which node serves which project and publishes a route table; the edge pulls
+   it with its own credential and keeps the last good copy, so an API outage
+   does not take down running projects. Traffic from the edge reaches each
+   node's `runtime-caddy` over WireGuard; the node no longer accepts project
+   traffic from the internet. Waking, request holding, rate limits, and abuse
+   blocks move to the edge.
+3. **Regions.** Nodes report a region label (`SAKALA_AGENT_REGION`). A
+   workspace or project chooses a region, the scheduler only places it on
+   nodes of that region, and an edge runs per region. DNS steers users to the
+   edge of the project's region.
+4. **Replicas and load balancing.** A project can ask for more than one
+   container. The scheduler places the replicas, the route table lists all of
+   them with health, and the edge balances requests across the healthy ones.
+   This is the stage that answers "can Sakala load balance an app".
+
+Making the control plane itself highly available (several API hosts behind a
+load balancer) is a separate decision and not part of this ADR.
+
+### Consequences
+
+- The edge becomes a strong dependency of every project, so stage 2 runs two
+  edge instances from the start, and a stale route table must keep serving
+  rather than fail closed.
+- The edge holds the TLS certificate for every project URL. It never runs
+  tenant code, and its credential can only read the route table.
+- Requests gain one hop inside the same region; the latency is measured when
+  stage 2 starts instead of assumed.
+- The domain move of ADR-016 is cheapest when the edge is introduced, because
+  the edge is where the new wildcard certificate lives.
+- Self-host keeps working without an edge: a single-node installation uses the
+  path that runs today, and the edge is optional until a second node joins.
+- The Agent, the API route table, and the scheduler change together, so this
+  work stays with maintainers (protocol and security boundary), not with
+  outside contributors.
