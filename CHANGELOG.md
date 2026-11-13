@@ -14,7 +14,17 @@ Cara merilis:
 2. Naikkan `version` di `package.json` ke versi yang sama.
 3. Merge ke `main`, lalu buat tag `vX.Y.Z` pada commit merge itu.
 
+Setelah image terbit, tag yang sama juga membuat GitHub Release dari bagian
+versinya di file ini.
+
 ## [Unreleased]
+
+### Added
+
+- Setiap tag `vX.Y.Z` kini juga menerbitkan GitHub Release setelah image
+  terbit. Catatannya adalah bagian versi itu di file ini, disusul daftar
+  "What's Changed" buatan GitHub yang menyebut setiap kontributor. Workflow
+  release gagal kalau tag tidak punya bagian yang berisi di file ini.
 
 ## [0.3.6] - 2026-11-12
 
