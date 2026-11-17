@@ -117,7 +117,7 @@ Hasil akhirnya adalah salah satu dari ini:
 Tekan **Kunjungi situs**. Dari terminal, kamu juga bisa mengeceknya dengan perintah berikut. Ganti alamatnya dengan alamat proyekmu.
 
 ```bash
-curl -I https://NAMA-PROYEK.run.sakala.dev/
+curl -I https://NAMA-PROYEK.sakala.app/
 ```
 
 **Yang seharusnya terlihat:** halaman aplikasimu di browser, dan status di bawah 500 di terminal. Pengecekan Sakala hanya memastikan aplikasimu menjawab, jadi tetap coba fitur-fiturnya sendiri.

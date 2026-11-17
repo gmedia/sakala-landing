@@ -143,7 +143,7 @@ Before a migration that deletes or changes data:
 After a successful deploy, open your application's address:
 
 ```bash
-curl -i https://PROJECT-NAME.run.sakala.dev/db
+curl -i https://PROJECT-NAME.sakala.app/db
 ```
 
 `Database connected` means the connection is right. Replace the address above with your project's URL. You can also check from your laptop if you have `psql`, which helps decide whether the problem is in the database or in the application:

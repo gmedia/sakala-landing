@@ -142,7 +142,7 @@ Sebelum migration yang menghapus atau mengubah data:
 Setelah deploy berhasil, buka alamat aplikasimu:
 
 ```bash
-curl -i https://NAMA-PROJECT.run.sakala.dev/db
+curl -i https://NAMA-PROJECT.sakala.app/db
 ```
 
 `Database tersambung` berarti koneksinya benar. Ganti alamat di atas dengan URL project-mu. Kamu juga bisa mengecek dari laptop kalau punya `psql`, yang membantu memastikan apakah masalahnya di database atau di aplikasi:

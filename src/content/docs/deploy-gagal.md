@@ -234,7 +234,7 @@ Form **Kirim Masukan** di Console, juga tautan **Kirim masukan** di halaman depl
 Deploy dianggap pulih kalau statusnya berhasil dan alamat publiknya menjawab. Dari terminal, ganti alamat berikut dengan URL project-mu:
 
 ```bash
-curl -I https://NAMA-PROJECT.run.sakala.dev/
+curl -I https://NAMA-PROJECT.sakala.app/
 ```
 
 Status di bawah 500 berarti aplikasinya menjawab. Tetap buka halamannya di browser, karena pengecekan Sakala hanya memastikan aplikasinya menjawab, bukan bahwa setiap fiturnya benar.

@@ -73,12 +73,12 @@ export const en: Dictionary = {
       eyebrow: "Threshold",
       title: "Sakala stands between possibility and presence.",
       plain:
-        "The flow is real and documented: a public GitHub repository is read, built with a Dockerfile or Railpack, then given a public address of its own at *.run.sakala.dev.",
+        "The flow is real and documented: a public GitHub repository is read, built with a Dockerfile or Railpack, then given a public address of its own at *.sakala.app.",
       from: "Possibility / Local",
       through: "Sakala",
       to: "Presence / Public",
       fromToken: "github.com/you/portfolio",
-      toToken: "portfolio.run.sakala.dev",
+      toToken: "portfolio.sakala.app",
       caption:
         "The upper form of the mark is source; the lower form is presence. Sakala is the space between.",
       forWhomTitle: "Who it is for",
@@ -134,7 +134,7 @@ export const en: Dictionary = {
       statePending: "pending",
       arrivalTitle: "Your project is live",
       arrivalSub: "Finished in 47 seconds. Publicly reachable now.",
-      url: "https://portfolio.run.sakala.dev",
+      url: "https://portfolio.sakala.app",
       open: "Open site",
       appTitle: "Hello, world.",
       refrain: "Here it is.",

@@ -235,7 +235,7 @@ The **Kirim Masukan** form in the Console, and the **Kirim masukan** link on a f
 A deploy has recovered when its status is successful and its public address answers. From a terminal, replace this address with your project's URL:
 
 ```bash
-curl -I https://PROJECT-NAME.run.sakala.dev/
+curl -I https://PROJECT-NAME.sakala.app/
 ```
 
 A status under 500 means the application answers. Still open the page in a browser, because Sakala's check only confirms the application answers, not that every feature is right.

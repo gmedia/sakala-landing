@@ -88,7 +88,7 @@ Buat proyek kedua dari repository dan branch yang sama:
 
 - **Nama Proyek:** misalnya `facility-web`.
 - **Root directory:** `apps/web`.
-- **Environment Variables:** `VITE_API_BASE_URL` dengan URL API dari langkah 1 ditambah path API-nya, misalnya `https://facility-api.run.sakala.dev/api/v1`.
+- **Environment Variables:** `VITE_API_BASE_URL` dengan URL API dari langkah 1 ditambah path API-nya, misalnya `https://facility-api.sakala.app/api/v1`.
 
 Vite memasukkan variabel `VITE_*` ke hasil build, jadi nilainya harus ada **saat build**, bukan hanya saat aplikasi berjalan. Railpack memberikan Environment Variables proyek ke setiap langkah build. Kalau nilainya berubah, tekan **Redeploy** supaya situsnya dibangun ulang. Nilai `VITE_*` terbaca oleh siapa pun yang membuka situsmu, jadi jangan menaruh secret di sana.
 

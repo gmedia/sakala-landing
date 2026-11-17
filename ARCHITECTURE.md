@@ -33,4 +33,4 @@ Koleksi `docs` menghasilkan route dokumentasi dan validasi frontmatter. Koleksi 
 
 ## SEO dan Domain
 
-Konfigurasi site menggunakan `https://sakala.dev`. Sitemap dan `robots.txt` dapat ditemukan crawler, sementara setiap halaman memperoleh metadata canonical dan default social preview. Console berada pada `app.sakala.dev`, control plane API berada pada `api.sakala.dev`, dan URL aplikasi masa depan menggunakan `*.run.sakala.dev`.
+Konfigurasi site menggunakan `https://sakala.dev`. Sitemap dan `robots.txt` dapat ditemukan crawler, sementara setiap halaman memperoleh metadata canonical dan default social preview. Console berada pada `app.sakala.dev`, control plane API berada pada `api.sakala.dev`, dan aplikasi pengguna berada pada `*.sakala.app`, domain terpisah dari `sakala.dev` (ADR-016).

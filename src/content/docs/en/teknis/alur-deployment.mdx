@@ -82,7 +82,7 @@ The manual configuration in [ADR-008](/en/docs/proyek/adr) is not a builder of i
 
 ## Application routing
 
-An application that runs successfully is mapped to a `*.run.sakala.dev` domain. In the local playground the same pattern is exercised through `*.run.sakala.localhost`.
+An application that runs successfully is mapped to a `*.sakala.app` domain. In the local playground the same pattern is exercised through `*.run.sakala.localhost`.
 
 Application containers join the runtime Docker network and publish no ports to the host. Caddy sits on the same network and forwards the public hostname to the container name and the port the API chose, for example `sakala-app-<project8>-<deployment-id>:3000`. That is why an application has to listen on `0.0.0.0:$PORT`, not on `localhost`.
 

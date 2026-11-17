@@ -77,7 +77,7 @@ MVP dianggap selesai bila jalur end-to-end ini terbukti berjalan:
 Browser → Login → Buat project → Repository dianalisis
 → Perintah deploy dibuat → Agent menerima perintah → Source di-checkout
 → Image dibangun → Container berjalan → Route aktif → Health check lolos
-→ Console menerima tahap dan log → Pengguna membuka *.run.sakala.dev
+→ Console menerima tahap dan log → Pengguna membuka *.sakala.app
 → Pengguna melakukan redeploy
 ```
 

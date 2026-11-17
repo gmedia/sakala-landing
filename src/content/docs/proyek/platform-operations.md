@@ -91,7 +91,7 @@ arrive at `abuse@sakala.dev`, published in the
 - reports to the abuse contact from users, security vendors, or registrars;
 - usage signals (sustained CPU at the ceiling, unusual egress, repeated
   deployments of the same image across new accounts);
-- browser and mail-filter warnings about a `run.sakala.dev` subdomain.
+- browser and mail-filter warnings about a `sakala.app` subdomain.
 
 ### Procedure and target times
 

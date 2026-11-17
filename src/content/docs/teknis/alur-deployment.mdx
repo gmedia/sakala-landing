@@ -81,7 +81,7 @@ Konfigurasi manual di [ADR-008](/docs/proyek/adr) belum menjadi builder tersendi
 
 ## Routing aplikasi
 
-Aplikasi yang berhasil dijalankan dipetakan ke domain `*.run.sakala.dev`. Pada playground lokal, pola yang sama diuji melalui `*.run.sakala.localhost`.
+Aplikasi yang berhasil dijalankan dipetakan ke domain `*.sakala.app`. Pada playground lokal, pola yang sama diuji melalui `*.run.sakala.localhost`.
 
 Container aplikasi bergabung ke Docker network runtime tanpa mempublikasikan port ke host. Caddy berada di network yang sama, lalu meneruskan hostname publik ke nama container dan port yang dipilih API, misalnya `sakala-app-<project8>-<deployment-id>:3000`. Karena itu aplikasi wajib mendengarkan di `0.0.0.0:$PORT`, bukan di `localhost`.
 

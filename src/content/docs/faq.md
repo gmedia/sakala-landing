@@ -30,9 +30,19 @@ GMEDIA adalah sponsor pendiri dan infrastructure supporter untuk fase awal Sakal
 
 Sakala tetap dikembangkan sebagai project open-source dengan roadmap, dokumentasi, issue, dan kontribusi publik. Sponsor tidak otomatis mengontrol keputusan teknis, prioritas roadmap, perubahan lisensi, atau hak contributor.
 
+## Mengapa aplikasi ada di `sakala.app`, bukan `sakala.dev`?
+
+Aplikasi hasil deployment mendapat alamat `<slug>.sakala.app`, sedangkan website, dokumentasi, Console, dan API tetap di `sakala.dev`. Keduanya sengaja dipisah karena aplikasi di Sakala adalah kode milik pengguna yang bisa dibuka siapa saja.
+
+Alamat gratis dengan HTTPS otomatis sering disalahgunakan untuk halaman phishing. Kalau satu aplikasi seperti itu membuat browser atau filter email memblokir domainnya, yang terkena adalah `sakala.app`, sehingga website, dokumentasi, dan Console tetap bisa dibuka. Cookie dari `sakala.dev`, termasuk cookie login Console, juga tidak pernah terkirim ke aplikasi pengguna.
+
+Tiap proyek mendapat subdomain sendiri dan berjalan di container-nya sendiri. Langkah yang masih tersisa adalah mendaftarkan `sakala.app` ke Public Suffix List, supaya browser juga memperlakukan tiap proyek sebagai situs terpisah untuk urusan cookie. Latar belakang keputusannya ada di [ADR-016](/docs/proyek/adr).
+
+Sampai 18 November 2026 aplikasi memakai alamat `*.run.sakala.dev`. Alamat lama itu sudah dimatikan tanpa pengalihan, jadi tautan yang pernah dibagikan perlu diganti dengan alamat baru yang tampil di Console.
+
 ## Di mana saya melaporkan masalah?
 
-Gunakan [issue pada repository Sakala Landing](https://github.com/gmedia/sakala-landing/issues) untuk masalah website dan dokumentasi. Untuk isu keamanan, ikuti [kebijakan keamanan repository](https://github.com/gmedia/sakala-landing/security/policy). Untuk aplikasi di `*.run.sakala.dev` yang berbahaya, laporkan ke `abuse@sakala.dev` seperti dijelaskan di [Kebijakan Penggunaan Wajar](/penggunaan-wajar).
+Gunakan [issue pada repository Sakala Landing](https://github.com/gmedia/sakala-landing/issues) untuk masalah website dan dokumentasi. Untuk isu keamanan, ikuti [kebijakan keamanan repository](https://github.com/gmedia/sakala-landing/security/policy). Untuk aplikasi di `*.sakala.app` yang berbahaya, laporkan ke `abuse@sakala.dev` seperti dijelaskan di [Kebijakan Penggunaan Wajar](/penggunaan-wajar).
 
 ## Di mana dokumen hukum Sakala?
 

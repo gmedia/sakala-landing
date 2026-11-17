@@ -27,7 +27,7 @@ komponen di `src/components/landing/`, dirangkai oleh `HomePage.astro`.
 | 06  | `ChapterOpen`        | Bukti keterbukaan; lalu penutup `#ikuti-perkembangan`: pertanyaan, blok follow, tiga changelog terbaru                         |
 
 Satu project yang sama berjalan sepanjang halaman: `portfolio/` →
-`localhost:5173` → `github.com/kamu/portfolio` → `portfolio.run.sakala.dev`,
+`localhost:5173` → `github.com/kamu/portfolio` → `portfolio.sakala.app`,
 dan di bab Terang ia gagal health check justru karena mendengarkan di port
 5173, bukan 3000.
 

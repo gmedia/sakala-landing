@@ -44,7 +44,7 @@ siapa pun.
 | Token sukses `#39DA8A` dipakai sebagai teks (1,82:1)                                 | Teks status sukses sulit dibaca                 | Pakai varian gelap `#248A57` atau lebih gelap untuk teks                            |
 | Nama tahap deployment bercampur bahasa ("Cloning repository", "Menganalisis proyek") | Kosakata tidak konsisten dalam satu daftar      | Satu bahasa per antarmuka; nama tahap kanonik di [Glosarium](/docs/proyek/glossary) |
 | Log memakai Montserrat                                                               | Kolom dan timestamp sulit dipindai              | Monospace untuk log, sesuai Sistem Desain                                           |
-| Contoh slug berspasi (`Sakala 2.run.sakala.dev`)                                     | Contoh yang tidak mungkin terjadi               | Contoh slug memakai tanda hubung (`sakala-2`)                                       |
+| Contoh slug berspasi (`Sakala 2.sakala.app`)                                         | Contoh yang tidak mungkin terjadi               | Contoh slug memakai tanda hubung (`sakala-2`)                                       |
 
 ## 3. Gelombang berikutnya
 

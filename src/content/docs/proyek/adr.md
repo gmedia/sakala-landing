@@ -358,7 +358,8 @@ answered with a page.
 
 ## ADR-016 — The Shared Public Domain Is a Reputation Asset
 
-**Status:** Proposed
+**Status:** Accepted (`sakala.app` in use since 2026-11-18; Public Suffix List
+submission pending)
 
 ### Context
 
@@ -389,6 +390,32 @@ process in PLATFORM_OPERATIONS.
   during the pilot than after public launch.
 - Reserved slugs (`api`, `app`, `admin`, `status`, and others) stay reserved
   on the new domain.
+
+### Update 2026-11-18: `sakala.app` chosen, old domains switched off
+
+The maintainer accepted option 2 now and kept option 3 as the remaining step.
+User projects moved to **`sakala.app`**:
+
+- Production project URLs are `<slug>.sakala.app`. Staging uses
+  `<slug>.staging.sakala.app`. A DNS wildcard covers exactly one label, so the
+  production wildcard never serves a staging name, and `staging` joins the
+  reserved slugs so no production project can claim `staging.sakala.app`.
+- The apex `sakala.app` is not a project; it redirects (`301`) to
+  `https://sakala.dev`.
+- Certificates are issued the same way as before: host Caddy with the
+  Cloudflare DNS module, through DNS-01.
+- `*.run.sakala.dev` and `*.run.staging.sakala.dev` were switched off at once,
+  without redirects. A redirect would have kept user content reachable under
+  `sakala.dev`, the domain this ADR protects. Existing projects received their
+  new address by being deployed again.
+- Because `sakala.app` is a different registrable domain, no `sakala.dev`
+  cookie reaches a project, whatever its `Domain` attribute.
+
+Remaining step: submit `sakala.app` to the Public Suffix List. Until it is
+listed, browsers treat two projects as the same site, so one project can set a
+cookie on `.sakala.app` that every other project receives, and reputation
+systems may still judge all projects together. The operator procedure for the
+move is in the `sakala-deployment` README.
 
 ## ADR-017 — Hosted and Self-host Share One Codebase and One License
 
@@ -525,7 +552,7 @@ limits per class rather than per user.
 ### Context
 
 Every project URL resolves through one DNS-only wildcard record,
-`*.run.sakala.dev`, to one runtime host. Host Caddy terminates TLS there and
+`*.sakala.app`, to one runtime host. Host Caddy terminates TLS there and
 passes the request, `Host` header intact, to `runtime-caddy` on loopback, which
 reads the route files the Agent writes for that node. This works because there
 is exactly one runtime node.
@@ -553,8 +580,8 @@ node that serves it. What is missing sits in front of the nodes:
    deployment depends on the DNS provider, record changes wait for TTLs, a
    move between nodes is slow and visible, sleeping projects still need a
    node to answer, and there is nowhere to balance load.
-2. **One wildcard per region**, for example `*.jkt.run.sakala.dev` and
-   `*.jog.run.sakala.dev`, each pointing at that region's runtime host. Simple
+2. **One wildcard per region**, for example `*.jkt.sakala.app` and
+   `*.jog.sakala.app`, each pointing at that region's runtime host. Simple
    and close to today, but the region becomes part of every URL, moving a
    project between regions changes its address, and several nodes inside one
    region still cannot share traffic.

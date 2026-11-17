@@ -25,6 +25,18 @@ versinya di file ini.
   terbit. Catatannya adalah bagian versi itu di file ini, disusul daftar
   "What's Changed" buatan GitHub yang menyebut setiap kontributor. Workflow
   release gagal kalau tag tidak punya bagian yang berisi di file ini.
+- FAQ (id dan en) menjelaskan mengapa aplikasi pengguna berada di domain
+  terpisah `sakala.app`, bukan di `sakala.dev`.
+
+### Changed
+
+- Alamat aplikasi pengguna di dokumentasi, beranda, dan contoh perintah kini
+  `<slug>.sakala.app` (staging `<slug>.staging.sakala.app`), menggantikan
+  `*.run.sakala.dev` yang sudah dimatikan.
+- ADR-016 berstatus Accepted dengan catatan pembaruan 2026-11-18: `sakala.app`
+  dipilih, domain lama dimatikan tanpa pengalihan, dan pendaftaran ke Public
+  Suffix List menjadi langkah yang tersisa. ADR-019 menyebut wildcard
+  `*.sakala.app` sebagai keadaan sekarang.
 
 ## [0.3.6] - 2026-11-12
 
