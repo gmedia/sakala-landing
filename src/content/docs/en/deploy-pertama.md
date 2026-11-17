@@ -118,7 +118,7 @@ The end result is one of these:
 Press **Kunjungi situs**. You can also check from a terminal with the command below. Replace the address with your project's.
 
 ```bash
-curl -I https://PROJECT-NAME.run.sakala.dev/
+curl -I https://PROJECT-NAME.sakala.app/
 ```
 
 **What you should see:** your application in the browser, and a status under 500 in the terminal. Sakala's check only confirms your application answers, so still try its features yourself.

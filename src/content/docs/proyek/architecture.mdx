@@ -61,7 +61,7 @@ not part of the public repositories (GOVERNANCE §9).
     controlPlaneLabel="control plane"
     dataPlaneLabel="data plane"
     agentLabel="Agent"
-    appLabel="run.sakala.dev"
+    appLabel="sakala.app"
     browserLabel="Browser"
   />
 </DiagramFigure>
@@ -403,7 +403,7 @@ Internet
   └── edge proxy (TLS)
         ├── Landing and Console (static)
         ├── API and realtime
-        └── *.run.sakala.dev → runtime router → user containers
+        └── *.sakala.app → runtime router → user containers
 
 Containers on an internal network (rootless Docker)
   API and its workers · PostgreSQL · Valkey · object storage
@@ -447,7 +447,7 @@ app.sakala.dev
 api.sakala.dev
 → API container
 
-*.run.sakala.dev
+*.sakala.app
 → user app route
 ```
 

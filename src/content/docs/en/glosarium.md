@@ -39,7 +39,7 @@ Consistent language prevents accidental architecture. The terms on this page car
 
 ## Domains
 
-**Generated domain** — The Sakala-provided hostname following `<slug>.run.sakala.dev`.
+**Generated domain** — The Sakala-provided hostname following `<slug>.sakala.app`, on a domain kept apart from `sakala.dev` on purpose ([why](/en/docs/faq#why-do-applications-live-on-sakalaapp-instead-of-sakaladev)).
 
 **Custom domain** — A domain the user owns, mapped to a Sakala workload. Not available yet.
 

@@ -40,10 +40,10 @@ boundaries, the command lifecycle, and how the Agent works.
 
 ## The addresses
 
-| Purpose               | Address            |
-| --------------------- | ------------------ |
-| Website and docs      | `sakala.dev`       |
-| Console               | `app.sakala.dev`   |
-| Deployed applications | `*.run.sakala.dev` |
+| Purpose               | Address          |
+| --------------------- | ---------------- |
+| Website and docs      | `sakala.dev`     |
+| Console               | `app.sakala.dev` |
+| Deployed applications | `*.sakala.app`   |
 
-The Console is where projects are managed, and the `*.run.sakala.dev` pattern means each application gets its own sub-address. While registration is not open to the public, neither can be used by just anyone.
+The Console is where projects are managed, and the `*.sakala.app` pattern means each application gets its own sub-address, on a domain [kept apart](/en/docs/faq#why-do-applications-live-on-sakalaapp-instead-of-sakaladev) from `sakala.dev` on purpose. While registration is not open to the public, neither can be used by just anyone.

@@ -38,7 +38,7 @@ Bahasa yang konsisten mencegah arsitektur yang tidak disengaja. Istilah di halam
 
 ## Domain
 
-**Generated domain** — Hostname bawaan Sakala dengan pola `<slug>.run.sakala.dev`.
+**Generated domain** — Hostname bawaan Sakala dengan pola `<slug>.sakala.app`, di domain yang sengaja dipisah dari `sakala.dev` ([alasannya](/docs/faq#mengapa-aplikasi-ada-di-sakalaapp-bukan-sakaladev)).
 
 **Custom domain** — Domain milik pengguna yang dipetakan ke workload Sakala. Belum tersedia.
 

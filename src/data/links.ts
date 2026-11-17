@@ -22,5 +22,5 @@ export const domains = {
   site: "sakala.dev",
   console: "app.sakala.dev",
   api: "api.sakala.dev",
-  runtime: "*.run.sakala.dev",
+  runtime: "*.sakala.app",
 } as const;

@@ -77,12 +77,12 @@ export const id = {
       eyebrow: "Ambang",
       title: "Sakala berdiri di antara kemungkinan dan wujud.",
       plain:
-        "Alurnya nyata dan dapat dipelajari: repository GitHub publik dibaca, dibangun lewat Dockerfile atau Railpack, lalu menerima alamat publiknya sendiri di *.run.sakala.dev.",
+        "Alurnya nyata dan dapat dipelajari: repository GitHub publik dibaca, dibangun lewat Dockerfile atau Railpack, lalu menerima alamat publiknya sendiri di *.sakala.app.",
       from: "Kemungkinan / Lokal",
       through: "Sakala",
       to: "Wujud / Publik",
       fromToken: "github.com/kamu/portfolio",
-      toToken: "portfolio.run.sakala.dev",
+      toToken: "portfolio.sakala.app",
       caption:
         "Bentuk atas mark adalah source, bentuk bawah adalah wujud. Sakala adalah ruang di antaranya.",
       forWhomTitle: "Untuk siapa",
@@ -138,7 +138,7 @@ export const id = {
       statePending: "menunggu",
       arrivalTitle: "Proyekmu sudah hidup",
       arrivalSub: "Selesai dalam 47 detik. Dapat dibuka publik sekarang.",
-      url: "https://portfolio.run.sakala.dev",
+      url: "https://portfolio.sakala.app",
       open: "Buka situs",
       appTitle: "Halo, dunia.",
       refrain: "Here it is.",

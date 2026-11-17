@@ -89,7 +89,7 @@ Create a second project from the same repository and branch:
 
 - **Nama Proyek:** for example `facility-web`.
 - **Root directory:** `apps/web`.
-- **Environment Variables:** `VITE_API_BASE_URL` set to the API URL from step 1 plus the API path, for example `https://facility-api.run.sakala.dev/api/v1`.
+- **Environment Variables:** `VITE_API_BASE_URL` set to the API URL from step 1 plus the API path, for example `https://facility-api.sakala.app/api/v1`.
 
 Vite writes `VITE_*` variables into the build output, so the value must be there **at build time**, not only while the application runs. Railpack gives the project's Environment Variables to every build step. When the value changes, press **Redeploy** so the site is built again. Anyone who opens your site can read `VITE_*` values, so do not put secrets there.
 

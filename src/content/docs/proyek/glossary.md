@@ -123,9 +123,10 @@ Development, with its own deployment, configuration, and domain.
 name, token pattern, and the exact value, which reduces leaks but does not rule
 them out.
 
-**Generated Domain.** The Sakala-provided hostname `<slug>.run.sakala.dev`.
-Some slugs are reserved (`api`, `app`, `admin`, `status`, and others). See
-ADR-016 for the proposed separate domain.
+**Generated Domain.** The Sakala-provided hostname `<slug>.sakala.app`.
+Some slugs are reserved (`api`, `app`, `admin`, `status`, `staging`, and
+others). Staging uses `<slug>.staging.sakala.app`. ADR-016 explains why user
+projects live on `sakala.app`, separate from `sakala.dev`.
 
 **Custom Domain.** A user-owned domain mapped to a workload.
 

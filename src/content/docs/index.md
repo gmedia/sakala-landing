@@ -39,10 +39,10 @@ alur command, dan cara kerja Agent.
 
 ## Alamatnya
 
-| Tujuan                    | Alamat             |
-| ------------------------- | ------------------ |
-| Website dan dokumentasi   | `sakala.dev`       |
-| Console                   | `app.sakala.dev`   |
-| Aplikasi hasil deployment | `*.run.sakala.dev` |
+| Tujuan                    | Alamat           |
+| ------------------------- | ---------------- |
+| Website dan dokumentasi   | `sakala.dev`     |
+| Console                   | `app.sakala.dev` |
+| Aplikasi hasil deployment | `*.sakala.app`   |
 
-Console adalah antarmuka tempat project dikelola, dan pola `*.run.sakala.dev` berarti tiap aplikasi mendapat sub-alamatnya sendiri. Selama pendaftaran belum dibuka untuk umum, keduanya belum bisa dipakai oleh siapa saja.
+Console adalah antarmuka tempat project dikelola, dan pola `*.sakala.app` berarti tiap aplikasi mendapat sub-alamatnya sendiri, di domain yang [sengaja dipisah](/docs/faq#mengapa-aplikasi-ada-di-sakalaapp-bukan-sakaladev) dari `sakala.dev`. Selama pendaftaran belum dibuka untuk umum, keduanya belum bisa dipakai oleh siapa saja.
