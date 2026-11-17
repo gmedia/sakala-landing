@@ -17,11 +17,11 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@astrojs/mdx": "^8.1.2",
+    "@astrojs/mdx": "^8.1.3",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
-    "@tailwindcss/vite": "^4.3.4",
-    "astro": "^7.4.5",
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.7",
     "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
@@ -31,7 +31,7 @@
     "prettier": "^3.9.10",
     "prettier-plugin-astro": "^1.1.2",
     "typescript": "^6.0.3",
-    "vite": "^8.3.5"
+    "vite": "^8.3.6"
   },
   "lint-staged": {
     "*.{astro,js,ts,json,md,mdx,css}": [
