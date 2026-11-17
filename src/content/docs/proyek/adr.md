@@ -411,10 +411,12 @@ User projects moved to **`sakala.app`**:
 - Because `sakala.app` is a different registrable domain, no `sakala.dev`
   cookie reaches a project, whatever its `Domain` attribute.
 
-Remaining step: submit `sakala.app` to the Public Suffix List. Until it is
-listed, browsers treat two projects as the same site, so one project can set a
-cookie on `.sakala.app` that every other project receives, and reputation
-systems may still judge all projects together. The operator procedure for the
+Remaining step: submit `sakala.app` to the Public Suffix List, together with
+`staging.sakala.app`, since a suffix only separates the label directly below
+it. Until they are listed, browsers treat two projects as the same site, so
+one project can set a cookie on `.sakala.app` that every other project,
+staging included, receives, and reputation systems may still judge all
+projects together. The operator procedure for the
 move is in the `sakala-deployment` README.
 
 ## ADR-017 — Hosted and Self-host Share One Codebase and One License
