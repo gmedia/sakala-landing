@@ -19,6 +19,15 @@ versinya di file ini.
 
 ## [Unreleased]
 
+### Added
+
+- ADR-020 (Proposed): PostgreSQL terkelola untuk project. Satu instance
+  bersama per region di host database sendiri, satu database dan satu role per
+  project, daftar hardening, kuota lewat pemantau ukuran, backup `pg_dump` per
+  database yang dienkripsi dengan age, pemicu untuk pindah ke container per
+  project, dan hasil ukur PostgreSQL di bawah gVisor (runsc) dibanding runc.
+  PRD 9.3 dan Horizon G di roadmap kini menautkan ADR ini.
+
 ## [0.3.8] - 2026-11-18
 
 ### Added

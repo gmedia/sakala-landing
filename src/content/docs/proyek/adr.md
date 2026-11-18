@@ -1,6 +1,6 @@
 ---
 title: "Architecture Decision Records"
-description: "Architecture and product decisions with their status, context, alternatives, and consequences — from separating console and API to workload isolation, quotas, the shared public domain, the hosted plus self-host model, workspace ownership, and the edge routing tier with replicas and regions."
+description: "Architecture and product decisions with their status, context, alternatives, and consequences — from separating console and API to workload isolation, quotas, the shared public domain, the hosted plus self-host model, workspace ownership, the edge routing tier with replicas and regions, and the proposed managed PostgreSQL for projects."
 track: proyek
 section: sistem
 order: 6
@@ -710,3 +710,168 @@ traffic.
   exited replicas ([sakala-agent#98](https://github.com/gmedia/sakala-agent/pull/98)),
   and the Edge running on staging and production.
 - Remaining: the second node, and replicas spread across nodes (stage 4).
+
+## ADR-020 — Managed PostgreSQL for Projects
+
+**Status:** Proposed
+
+Tracked in [sakala-api#125](https://github.com/gmedia/sakala-api/issues/125).
+
+### Context
+
+Almost every student application needs a database. Today users sign up with
+an outside provider and paste its URL into environment variables
+([external database guide](/docs/database-eksternal)): one more account, a
+region to choose, and connections across the internet.
+
+Users need a database that comes with the project, credentials they never
+copy by hand, migrations on deploy, a backup to restore from, and a clear size
+limit. The platform needs tenant isolation, an enforceable quota, nightly
+backups with written retention, no internet exposure, compatibility with idle
+sleep (ADR-015), and a footprint that fits small nodes. Universities that
+self-host (ADR-017) need something one person can run.
+
+### Options considered
+
+1. **A. One shared PostgreSQL instance per region**, one database and one
+   login role per project. Hobby tiers were built this way: Heroku Essential
+   shares clusters between customers
+   ([Heroku](https://help.heroku.com/NYMRTXEG/why-am-i-seeing-information-about-other-postgresql-processes-or-databases-that-aren-t-related-to-my-heroku-postgres-essential-database)),
+   and a Laravel Cloud cluster holds up to 500 databases
+   ([Laravel Cloud](https://laravel.com/cloud/docs/resources/databases/postgres)).
+   One instance and one backup job to run; isolation is SQL privileges only.
+2. **B. A PostgreSQL container per project**, as Dokku, Coolify, and Railway
+   do. Isolation as strong as apps get, but every database is its own
+   upgrade, backup, health check, and wake ordering, and uses node memory.
+3. **C. Self-hosted Neon.** Scale to zero and per-branch restore, but it needs
+   a pageserver, safekeepers, a broker, a storage controller, and object
+   storage, and upstream documents it only "on a workstation for small
+   experiments" ([Neon](https://github.com/neondatabase/neon)).
+4. **D. Hybrid**: A by default, B for projects that outgrow it.
+5. **External providers only** (status quo): no operations, no user need met.
+
+### Proposed decision
+
+Option A for v1, with D as the planned next step.
+
+- **Placement.** One instance per region on its own database host, reachable
+  from every runtime node over the region's private network (WireGuard, as in
+  ADR-019) and never from the internet. Database IO and memory stay away from
+  builds and tenant code, and replicas on any node reach the same database. A
+  single-node or self-host installation may run it on the runtime node in its
+  own container; it then competes with apps for memory and disk, and moving
+  it out later is a dump and restore with downtime.
+- **Runtime.** runc, not runsc. The instance is operator infrastructure
+  running an upstream image; tenants submit SQL, not processes, and untrusted
+  procedural languages are refused. gVisor would contain a compromised
+  PostgreSQL, but by then every tenant's data is exposed, so it adds cost
+  (measured below) without guarding the asset that matters. Containers under
+  D, where a tenant may get superuser, run under runsc.
+- **Provisioning.** Sakala creates the database and role with random names
+  (`p_<random>`, never the slug), revokes database privileges from PUBLIC,
+  and injects the connection as environment variables into the release
+  command and every container of the project. The names and URL format
+  (`DATABASE_URL` and `DB_*` style) are decided at implementation.
+  Credentials are encrypted, redacted from logs like other secrets, and
+  rotatable. Agent commands on the database host do the provisioning
+  (ADR-004, ADR-005), so the superuser credential never leaves it.
+- **Hardening.** `scram-sha-256` only, from the region's runtime nodes only,
+  one `pg_hba` line per database and role; `postgres` and `template1` closed
+  to PUBLIC, and no CREATE on schema `public`
+  ([PostgreSQL](https://www.postgresql.org/docs/current/ddl-schemas.html)); an
+  allow-list of trusted extensions; minor releases applied within days of a
+  security release. Major upgrades are cluster-wide and announced.
+- **Limits.** `CONNECTION LIMIT` on role and database (starting at 5, from
+  configuration), shared by the project's replicas. Role defaults for
+  `statement_timeout`, `idle_in_transaction_session_timeout`, and
+  `idle_session_timeout`, which a tenant can override, and `temp_file_limit`,
+  which it cannot
+  ([PostgreSQL](https://www.postgresql.org/docs/current/runtime-config-resource.html)).
+- **The `work_mem` risk.** A tenant can `SET work_mem = '2GB'`, and one query
+  may use several times that; PostgreSQL cannot lock it. A memory limit on the
+  instance, a conservative `max_connections`, and the per-project connection
+  limit bound it, but an OOM still restarts the instance for every tenant.
+  This is the main reason for D.
+- **Quota.** PostgreSQL has no per-database disk quota. A size watcher reads
+  `pg_database_size()`, warns the owner at 80 % of the limit, and at the limit
+  sets `ALLOW_CONNECTIONS false`
+  ([PostgreSQL](https://www.postgresql.org/docs/current/sql-alterdatabase.html)).
+- **Backups.** Nightly `pg_dump -Fc` per database, encrypted with age and
+  stored off the host, as the control-plane backup already does; retention
+  starts at 7 days, and a scheduled drill restores one dump into a scratch
+  database. Point-in-time recovery, when added, is cluster-wide.
+- **Visibility.** Tenants can list other database and role names; PostgreSQL
+  "is not designed to hide this information"
+  ([pgsql-hackers](https://postgresql.org/message-id/671405.1716570133%40sss.pgh.pa.us)).
+  Names are random, and the user docs say so.
+- **Sleep, deploys, deletion, self-host.** The instance never sleeps; a
+  sleeping project holds no connections and wakes without waiting for it.
+  Migrations run in the release command before the new version takes
+  traffic. Deleting a project drops its database and role; the last dump is
+  kept for the retention period. Self-host gets this as an optional component
+  in `gmedia/sakala`, off by default.
+
+### Measurement under gVisor
+
+`postgres:18-alpine` (18.7), 256 MB memory limit, `shared_buffers=32MB`,
+`max_connections=20`, data on a Docker volume, one run per runtime on
+2026-11-18. Staging host: 2 vCPU (Intel Haswell), 1.9 GiB RAM, shared with the
+rest of staging (load average 2.9 to 5.2), runsc `release-20261102.0` with
+systrap, directfs, and a self-backed rootfs overlay.
+
+| Measure                                   | runc              | runsc             |
+| ----------------------------------------- | ----------------- | ----------------- |
+| First start with initdb, to `pg_isready`  | 6.5 s             | 24.1 s            |
+| Stop then start, to `pg_isready` (3 runs) | 4.4 / 4.9 / 3.2 s | 7.6 / 4.6 / 2.2 s |
+| Idle memory after init (`docker stats`)   | 18.1 MiB          | 61.6 MiB          |
+| `pg_test_fsync` fdatasync (8 kB)          | 53.9 ops/s        | 10.4 ops/s        |
+| `pgbench -i -s 5`                         | 22.1 s            | 17.1 s            |
+| `pgbench -c 4 -j 2 -T 30`: TPS, latency   | 26.0, 153.9 ms    | 26.8, 149.0 ms    |
+
+gVisor costs about 43 MiB more per idle instance and 2 to 5 times slower
+fdatasync. Throughput was equal most likely because this disk is the
+bottleneck (about 18 ms per fdatasync even under runc), which supports runc
+for the shared instance and means the database host needs SSD-class storage,
+measured with the same tools before it serves projects. For D, an idle
+sandboxed database costs about 60 MiB, and restart to ready fits inside the
+10 to 13 s app wake if started in parallel. With one noisy run each,
+differences below about 2 times are not meaningful.
+
+### Moving to option D
+
+When a project needs a superuser-only extension or another major version;
+one tenant repeatedly tops CPU or IO or causes an OOM; a team or paid tier is
+introduced; a university needs stronger isolation (for example graded
+assessments); or the instance passes about 70 % of `max_connections` or
+memory at peak.
+
+### Consequences
+
+- The instance is a shared dependency: its restart or OOM affects every
+  project in the region, and the docs state a recovery point of one day.
+- Network rules admit every runtime node of the region, so the boundary
+  between projects is credentials and the CONNECT privilege.
+- The Agent gains a database role and the API a resource holding secrets, so
+  this work stays with maintainers. External databases stay supported.
+
+### Open questions (owner: maintainer)
+
+- Database host size, provider, and disk target per region.
+- Size limit per project and profile, retention past 7 days, user downloads.
+- What happens to the database when a project changes region.
+- Per-project egress rules on the node, beyond credentials.
+- The extension allow-list (for example `pgvector`), and when to add a pooler
+  and cluster-wide PITR.
+
+### Plan
+
+No dates; each phase starts after the previous one.
+
+1. Accept this ADR; provision and measure a database host on staging.
+2. API: a database resource per project (create, status, rotate credentials,
+   delete) and variable injection on deploy and in the release command.
+3. Agent database role: provisioning, size watcher, nightly dumps, restore
+   drill; a user guide on the landing.
+4. Console: a database card with usage against the limit, and the injected
+   variables in the environment view with values hidden.
+5. The optional self-host component in `gmedia/sakala`.
