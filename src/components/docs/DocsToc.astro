@@ -1,0 +1,66 @@
+---
+import { tocCopy, type TocEntry } from "../../data/docs";
+import type { Lang } from "../../i18n";
+
+interface Props {
+  toc: TocEntry[];
+  lang: Lang;
+}
+
+const { toc, lang } = Astro.props;
+const { label } = tocCopy[lang];
+---
+
+<!--
+  Daftar isi untuk layar sempit, di bawah pemilih halaman dokumentasi. Di
+  layar lebar daftar bagian yang sama tampil di sidebar, di bawah halaman
+  yang sedang dibuka. Tertutup secara default supaya isi tetap di layar
+  pertama.
+-->
+{toc.length > 0 && (
+  <nav aria-label={label} class="mb-8 lg:hidden">
+    <details class="group rounded-2xl border border-border bg-surface p-2">
+      <summary class="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4 rounded-xl px-3 py-2 text-sm font-semibold text-ink hover:bg-background-soft">
+        {label}
+        <span
+          aria-hidden="true"
+          class="flex size-8 items-center justify-center rounded-full bg-primary-soft-2 text-lg leading-none text-primary transition-transform group-open:rotate-45"
+        >
+          +
+        </span>
+      </summary>
+      <ol class="m-0 mt-2 list-none space-y-0.5 border-t border-dashed border-border p-0 px-1 pt-3">
+        {toc.map((section) => (
+          <li>
+            <a
+              href={`#${section.slug}`}
+              class="flex min-h-11 items-center rounded-xl px-3 py-2 text-sm text-muted hover:bg-background-soft hover:text-ink"
+            >
+              {section.text}
+            </a>
+            {section.children.length > 0 && (
+              <ol class="m-0 list-none space-y-0.5 p-0 pl-4">
+                {section.children.map((child) => (
+                  <li>
+                    <a
+                      href={`#${child.slug}`}
+                      class="flex min-h-11 items-center rounded-xl px-3 py-2 text-sm text-muted-2 hover:bg-background-soft hover:text-ink"
+                    >
+                      {child.text}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            )}
+          </li>
+        ))}
+      </ol>
+    </details>
+  </nav>
+)}
+
+<style>
+  summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

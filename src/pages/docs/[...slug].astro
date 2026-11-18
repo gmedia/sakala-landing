@@ -23,7 +23,7 @@ interface Props {
 }
 
 const { doc } = Astro.props;
-const { Content } = await render(doc);
+const { Content, headings } = await render(doc);
 const availableLocales = await getDocLocales(doc.id);
 ---
 
@@ -33,6 +33,7 @@ const availableLocales = await getDocLocales(doc.id);
   currentPath={Astro.url.pathname}
   breadcrumbLabel={doc.data.title}
   {availableLocales}
+  {headings}
 >
   <CanonicalNote doc={doc} lang="id" />
   <article class="prose-sakala" lang={doc.data.lang}>
