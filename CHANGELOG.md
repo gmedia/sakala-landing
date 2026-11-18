@@ -37,6 +37,15 @@ versinya di file ini.
 
 ### Changed
 
+- ADR-019 berstatus Accepted sejak Sakala Edge melayani trafik production
+  pada 2026-11-18, dengan daftar yang sudah selesai (replika, tabel route API,
+  penempatan berdasarkan region dan kapasitas, `sakala-edge`, pemulihan
+  replika) dan yang tersisa (node kedua, replika lintas node).
+- Pemberitahuan Privasi kini menjelaskan bahwa cookie Console berlaku di
+  `sakala.dev` dan tidak terkirim ke aplikasi pengguna di `*.sakala.app`.
+  Syarat Layanan kini menyebut bahwa aplikasi di production sudah berjalan di
+  sandbox gVisor, dan bahwa perubahan alamat berikutnya diumumkan lebih dulu.
+  Versi dokumen tidak berubah.
 - Alamat aplikasi pengguna di dokumentasi, beranda, dan contoh perintah kini
   `<slug>.sakala.app` (staging `<slug>.staging.sakala.app`), menggantikan
   `*.run.sakala.dev` yang sudah dimatikan.
