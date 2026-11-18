@@ -1,14 +1,16 @@
 ---
+import type { MarkdownHeading } from "astro";
 import BaseLayout from "./BaseLayout.astro";
 import DocsNav from "../components/docs/DocsNav.astro";
 import DocsMobileNav from "../components/docs/DocsMobileNav.astro";
 import DocsSidebar from "../components/docs/DocsSidebar.astro";
+import DocsToc from "../components/docs/DocsToc.astro";
 import SiteFooter from "../components/layout/SiteFooter.astro";
 import SiteHeader from "../components/layout/SiteHeader.astro";
 import Breadcrumbs from "../components/ui/Breadcrumbs.astro";
 import Container from "../components/ui/Container.astro";
 import { defaultLang, localizePath, useTranslations, type Lang } from "../i18n";
-import { getTrackMeta, trackFromPath } from "../data/docs";
+import { buildToc, getTrackMeta, trackFromPath } from "../data/docs";
 
 interface Props {
   lang?: Lang;
@@ -17,6 +19,8 @@ interface Props {
   currentPath: string;
   breadcrumbLabel?: string;
   availableLocales?: Lang[];
+  /** Heading dokumen, untuk daftar isi halaman panjang. */
+  headings?: MarkdownHeading[];
 }
 
 const {
@@ -26,7 +30,9 @@ const {
   currentPath,
   breadcrumbLabel = title,
   availableLocales,
+  headings,
 } = Astro.props;
+const toc = buildToc(headings);
 
 const t = useTranslations(lang);
 const normalizedCurrentPath =
@@ -54,9 +60,10 @@ const breadcrumbs = [
 
   <main id="main-content">
     <Container className="flex gap-12 py-10 lg:py-16">
-      <DocsSidebar currentPath={normalizedCurrentPath} {lang} />
+      <DocsSidebar currentPath={normalizedCurrentPath} {lang} {toc} />
       <div class="min-w-0 max-w-3xl flex-1">
         <DocsMobileNav currentPath={normalizedCurrentPath} {lang} />
+        <DocsToc {toc} {lang} />
         <slot />
         <DocsNav currentPath={normalizedCurrentPath} {lang} />
       </div>

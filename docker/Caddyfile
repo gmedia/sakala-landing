@@ -27,4 +27,19 @@
 	respond @health "ok" 200
 
 	file_server
+
+	# A missing page gets the designed 404 page, not an empty body, and keeps status 404:
+	# file_server answers with the error's status inside handle_errors. English paths get the
+	# English page. Only the first matching rewrite in a block applies. There is no designed
+	# page for other errors, so they keep Caddy's default response. The header is deferred (>)
+	# for the same reason as the block above: set early, it would stop encode from compressing.
+	handle_errors 404 {
+		@english path /en /en/*
+		rewrite @english /en/404/index.html
+		rewrite * /404.html
+
+		encode zstd gzip
+		header >Cache-Control "no-transform"
+		file_server
+	}
 }

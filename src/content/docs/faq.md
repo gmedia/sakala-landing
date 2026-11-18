@@ -44,7 +44,7 @@ Sampai 18 November 2026 aplikasi memakai alamat `*.run.sakala.dev`. Alamat lama 
 
 ## Di mana saya melaporkan masalah?
 
-Gunakan [issue pada repository Sakala Landing](https://github.com/gmedia/sakala-landing/issues) untuk masalah website dan dokumentasi. Untuk isu keamanan, ikuti [kebijakan keamanan repository](https://github.com/gmedia/sakala-landing/security/policy). Untuk aplikasi di `*.sakala.app` yang berbahaya, laporkan ke `abuse@sakala.dev` seperti dijelaskan di [Kebijakan Penggunaan Wajar](/penggunaan-wajar).
+Buka issue di repository yang sesuai: [`sakala-landing`](https://github.com/gmedia/sakala-landing/issues) untuk website dan dokumentasi, [`sakala-console`](https://github.com/gmedia/sakala-console/issues) untuk tampilan dan alur di Console, dan [`sakala-api`](https://github.com/gmedia/sakala-api/issues) untuk deployment yang gagal karena gangguan di sisi Sakala. Kalau belum tahu repository-nya, tanyakan di [Discussions](https://github.com/gmedia/sakala/discussions). Untuk isu keamanan, ikuti [kebijakan keamanan repository](https://github.com/gmedia/sakala-landing/security/policy). Untuk aplikasi di `*.sakala.app` yang berbahaya, laporkan ke `abuse@sakala.dev` seperti dijelaskan di [Kebijakan Penggunaan Wajar](/penggunaan-wajar).
 
 ## Di mana dokumen hukum Sakala?
 

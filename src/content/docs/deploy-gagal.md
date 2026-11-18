@@ -31,19 +31,19 @@ Kalau kamu meminta bantuan, kirim kode, ringkasan, dan potongan log yang relevan
 
 Untuk gangguan di sisi Sakala, saran di bawah ringkasan berjudul **Yang bisa kamu lakukan** dan dibuka dengan kalimat "Ini gangguan di sisi Sakala, bukan kesalahan di aplikasimu." Kalau judulnya **Cara memperbaiki**, biasanya ada yang bisa kamu perbaiki.
 
-| Kategori     | Arti singkat                                       | Yang biasanya perlu dilakukan                                         |
-| ------------ | -------------------------------------------------- | --------------------------------------------------------------------- |
-| `checkout`   | Source code tidak bisa diambil dari GitHub         | Periksa repository dan akses GitHub                                   |
-| `build`      | Image tidak berhasil dibangun                      | Perbaiki Dockerfile atau dependency                                   |
-| `release`    | Perintah rilis gagal atau melewati batas waktu     | Baca bagian `[release]` di log                                        |
-| `start`      | Image jadi, tetapi aplikasinya tidak bertahan      | Baca log aplikasi                                                     |
-| `health`     | Aplikasi hidup, tetapi tidak menjawab dengan benar | Periksa port dan alamat `/`                                           |
-| `route`      | Alamat publik gagal disiapkan                      | Gangguan di sisi Sakala                                               |
-| `timeout`    | Melewati batas waktu                               | Percepat build atau start                                             |
-| `resource`   | Kehabisan memory, atau server penuh                | Kurangi pemakaian memory, atau tunggu                                 |
-| `node`       | Server Sakala belum siap                           | Gangguan di sisi Sakala                                               |
-| `scheduling` | Belum ada server yang mengerjakan                  | Coba lagi nanti                                                       |
-| `unknown`    | Belum dikenali                                     | Lihat [Kegagalan yang belum dikenali](#kegagalan-yang-belum-dikenali) |
+| Kategori     | Arti singkat                                          | Yang biasanya perlu dilakukan                                         |
+| ------------ | ----------------------------------------------------- | --------------------------------------------------------------------- |
+| `checkout`   | Source code tidak bisa diambil dari GitHub            | Periksa repository dan akses GitHub                                   |
+| `build`      | Image tidak berhasil dibangun                         | Perbaiki Dockerfile atau dependency                                   |
+| `release`    | Perintah rilis gagal atau melewati batas waktu        | Baca bagian `[release]` di log                                        |
+| `start`      | Image jadi, tetapi aplikasinya tidak bertahan         | Baca log aplikasi                                                     |
+| `health`     | Aplikasi hidup, tetapi tidak menjawab dengan benar    | Periksa port dan alamat `/`                                           |
+| `route`      | Alamat publik gagal disiapkan                         | Gangguan di sisi Sakala                                               |
+| `timeout`    | Melewati batas waktu                                  | Percepat build atau start                                             |
+| `resource`   | Kehabisan memory, replika berlebih, atau server penuh | Kurangi pemakaian memory atau jumlah replika, atau tunggu             |
+| `node`       | Server Sakala belum siap                              | Gangguan di sisi Sakala                                               |
+| `scheduling` | Belum ada server yang mengerjakan                     | Coba lagi nanti                                                       |
+| `unknown`    | Belum dikenali                                        | Lihat [Kegagalan yang belum dikenali](#kegagalan-yang-belum-dikenali) |
 
 Yang paling sering tertukar adalah kegagalan build dan kegagalan saat aplikasi berjalan. **Kegagalan build** berarti image belum pernah jadi, jadi jawabannya ada di output `docker build`. **Kegagalan start atau health** berarti image sudah jadi, jadi jawabannya ada di log aplikasi dan perilakunya saat dijalankan.
 
@@ -167,6 +167,13 @@ Kode di bagian ini hanya muncul kalau project-mu mengisi perintah rilis, yaitu f
 - **Cek:** Baca baris terakhir di panel Logs. Di laptop, jalankan `docker inspect --format '{{.State.ExitCode}}' coba-sakala` sebelum menghapus container.
 - **Perbaiki:** Lengkapi variabel di tab **Environment Variables**, jangan biarkan aplikasi berhenti hanya karena database belum tersambung, atau kosongkan **Start command** di tab **Pengaturan** kalau image-mu tidak punya `sh`. Lalu deploy ulang. Lihat [Menghubungkan database eksternal](/docs/database-eksternal).
 
+#### `runtime_app_exec_denied`
+
+- **Yang terlihat:** "Perintah start aplikasi ditolak karena meminta hak sistem yang tidak diizinkan Sakala."
+- **Penyebab:** Kernel menolak menjalankan program di image dengan pesan `Operation not permitted`, biasanya dengan exit code 126. Demi keamanan, container di Sakala hanya mendapat sekumpulan kecil capability Linux, yaitu potongan hak root yang diberikan satu per satu. Program yang meminta capability di luar daftar itu ditolak saat dijalankan, misalnya biner yang diberi `setcap cap_net_raw+ep` atau perintah yang memakai `sudo`.
+- **Cek:** Cari baris `Operation not permitted` di panel Logs dan lihat program apa yang disebut di baris itu. Di Dockerfile atau **Start command**, cari `setcap` dan `sudo`. [Perintah di laptop](#mencoba-ulang-di-laptop) memakai pembatasan yang sama, jadi kegagalannya juga muncul di sana.
+- **Perbaiki:** Hapus `sudo` dari start command, buang capability dari program dengan `setcap -r` di Dockerfile, atau pakai image lain yang tidak membutuhkannya. Aplikasi tidak butuh hak tambahan untuk mendengarkan di port dari `PORT`. Lalu deploy ulang.
+
 #### `runtime_port_conflict`
 
 - **Yang terlihat:** "Environment variable `PORT` di proyek ini berbeda dengan port yang dipakai Sakala untuk aplikasimu."
@@ -213,25 +220,34 @@ Kode di bagian ini hanya muncul kalau project-mu mengisi perintah rilis, yaitu f
 - **Cek:** Jalankan aplikasinya di laptop dengan `--memory 256m`, lalu lihat `docker stats --no-stream coba-sakala`. Sesudah berhenti, `docker inspect --format '{{.State.OOMKilled}}' coba-sakala` menjawab `true` kalau sebabnya memory.
 - **Perbaiki:** Kurangi jumlah worker, ukuran cache, atau data yang dimuat saat mulai, lalu deploy ulang.
 
+### Replika
+
+#### `runtime_replicas_exceeded`
+
+- **Yang terlihat:** "Jumlah replika proyek ini melebihi batas replika server yang menjalankannya."
+- **Penyebab:** Kolom **Replika** di tab **Pengaturan** meminta lebih banyak salinan aplikasi daripada yang boleh dijalankan server Sakala untuk satu proyek. Server menolak deployment ini sebelum mengambil source code, dan tidak diam-diam menjalankan lebih sedikit replika.
+- **Cek:** Lihat **Detail error**, yang menyebut batasnya, lalu bandingkan dengan kolom **Replika**.
+- **Perbaiki:** Kurangi jumlah replika sampai batas itu, lalu deploy ulang. Batas ini milik server, jadi tidak bisa dinaikkan dari project.
+
 ## Gangguan di sisi Sakala
 
 Untuk kode di bawah, tidak ada yang perlu kamu ubah di repository. Kamu tidak bisa memeriksa server Sakala dari luar, jadi cara mengeceknya sama: pastikan kodenya memang ada di daftar ini, lalu lihat apakah versi lama masih melayani.
 
 Yang bisa kamu lakukan adalah deploy ulang. Cara ini sering menolong, tetapi tidak dijamin berhasil. Kalau kode yang sama muncul lagi, jangan terus mengulang. Laporkan seperti di bagian [Kegagalan yang belum dikenali](#kegagalan-yang-belum-dikenali).
 
-| Kode                                                                                                                                                                          | Yang terlihat                                                                                     | Penyebab                                                            | Yang bisa dilakukan                               |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------- |
-| `repository_credential_expired`                                                                                                                                               | "Akses sementara Sakala ke repository habis masa berlakunya sebelum source code selesai diambil." | Pengambilan source terlalu lama, sampai izinnya habis               | Deploy ulang. Sakala meminta akses baru ke GitHub |
-| `repository_access_check_failed`                                                                                                                                              | "Sakala tidak bisa memeriksa akses repository ke GitHub saat ini."                                |
-| `repository_checkout_failed`, `runtime_repository_failed`                                                                                                                     | "Sakala gagal mengambil source code dari GitHub."                                                 | Proses Git gagal di server, misalnya karena jaringan                | Deploy ulang. Kalau terulang, laporkan            |
-| `runtime_execution_failed`, `runtime_container_failed`, `runtime_workload_not_found`, `runtime_workload_not_running`, `runtime_reporting_failed`, `runtime_filesystem_failed` | "Sakala gagal menjalankan container aplikasi."                                                    | Perintah Docker, berkas kerja, atau pelaporan gagal di server       | Deploy ulang. Kalau terulang, laporkan            |
-| `runtime_routing_failed`                                                                                                                                                      | "Sakala gagal menyiapkan alamat publik untuk aplikasi."                                           | Route ke aplikasi tidak bisa diaktifkan                             | Deploy ulang. Kalau terulang, laporkan            |
-| `command_lease_expired`                                                                                                                                                       | "Server Sakala berhenti merespons sebelum deployment selesai."                                    | Server tidak melapor sampai batas waktu                             | Deploy ulang. Kalau terulang, laporkan            |
-| `command_expired`                                                                                                                                                             | "Belum ada server Sakala yang tersedia untuk menjalankan deployment."                             | Tidak ada server yang mengambil pekerjaan ini                       | Deploy ulang beberapa menit lagi                  |
-| `runtime_capacity_exceeded`                                                                                                                                                   | "Kapasitas server Sakala sedang penuh."                                                           | Server sudah menjalankan terlalu banyak aplikasi                    | Deploy ulang beberapa menit lagi                  |
-| `runtime_disk_pressure`                                                                                                                                                       | "Ruang disk server Sakala sedang hampir penuh."                                                   | Disk server hampir penuh                                            | Deploy ulang beberapa menit lagi                  |
-| `runtime_preflight_failed`, `runtime_dependency_failed`, `invalid_runtime_configuration`, `invalid_runtime_command`, `unsupported_runtime_command`                            | "Server Sakala belum siap menjalankan deployment."                                                | Pemeriksaan server gagal, atau perintah dari API tidak bisa dipakai | Deploy ulang. Kalau terulang, laporkan            |
-| `runtime_cancelled`                                                                                                                                                           | "Deployment dibatalkan karena server Sakala sedang berhenti atau dialihkan."                      | Deployment dihentikan, oleh server atau oleh permintaan batal       | Deploy ulang. Tidak ada yang perlu diubah         |
+| Kode                                                                                                                                                                          | Yang terlihat                                                                                     | Penyebab                                                               | Yang bisa dilakukan                                        |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `repository_credential_expired`                                                                                                                                               | "Akses sementara Sakala ke repository habis masa berlakunya sebelum source code selesai diambil." | Pengambilan source terlalu lama, sampai izinnya habis                  | Deploy ulang. Sakala meminta akses baru ke GitHub          |
+| `repository_access_check_failed`                                                                                                                                              | "Sakala tidak bisa memeriksa akses repository ke GitHub saat ini."                                | GitHub tidak bisa ditanya soal izin repository selama lebih dari 1 jam | Deploy ulang beberapa menit lagi. Kalau terulang, laporkan |
+| `repository_checkout_failed`, `runtime_repository_failed`                                                                                                                     | "Sakala gagal mengambil source code dari GitHub."                                                 | Proses Git gagal di server, misalnya karena jaringan                   | Deploy ulang. Kalau terulang, laporkan                     |
+| `runtime_execution_failed`, `runtime_container_failed`, `runtime_workload_not_found`, `runtime_workload_not_running`, `runtime_reporting_failed`, `runtime_filesystem_failed` | "Sakala gagal menjalankan container aplikasi."                                                    | Perintah Docker, berkas kerja, atau pelaporan gagal di server          | Deploy ulang. Kalau terulang, laporkan                     |
+| `runtime_routing_failed`                                                                                                                                                      | "Sakala gagal menyiapkan alamat publik untuk aplikasi."                                           | Route ke aplikasi tidak bisa diaktifkan                                | Deploy ulang. Kalau terulang, laporkan                     |
+| `command_lease_expired`                                                                                                                                                       | "Server Sakala berhenti merespons sebelum deployment selesai."                                    | Server tidak melapor sampai batas waktu                                | Deploy ulang. Kalau terulang, laporkan                     |
+| `command_expired`                                                                                                                                                             | "Belum ada server Sakala yang tersedia untuk menjalankan deployment."                             | Tidak ada server yang mengambil pekerjaan ini                          | Deploy ulang beberapa menit lagi                           |
+| `runtime_capacity_exceeded`                                                                                                                                                   | "Kapasitas server Sakala sedang penuh."                                                           | Server sudah menjalankan terlalu banyak aplikasi                       | Deploy ulang beberapa menit lagi                           |
+| `runtime_disk_pressure`                                                                                                                                                       | "Ruang disk server Sakala sedang hampir penuh."                                                   | Disk server hampir penuh                                               | Deploy ulang beberapa menit lagi                           |
+| `runtime_preflight_failed`, `runtime_dependency_failed`, `invalid_runtime_configuration`, `invalid_runtime_command`, `unsupported_runtime_command`                            | "Server Sakala belum siap menjalankan deployment."                                                | Pemeriksaan server gagal, atau perintah dari API tidak bisa dipakai    | Deploy ulang. Kalau terulang, laporkan                     |
+| `runtime_cancelled`                                                                                                                                                           | "Deployment dibatalkan karena server Sakala sedang berhenti atau dialihkan."                      | Deployment dihentikan, oleh server atau oleh permintaan batal          | Deploy ulang. Tidak ada yang perlu diubah                  |
 
 ## Deployment tertahan di antrean
 

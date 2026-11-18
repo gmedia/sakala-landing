@@ -30,6 +30,28 @@ export function isBilingual(path: string): boolean {
   return (bilingualRoutes as readonly string[]).includes(path);
 }
 
+/** Path tanpa trailing slash, kecuali root, supaya `/produk` dan `/produk/`
+ *  dibandingkan sebagai halaman yang sama. */
+export function withoutTrailingSlash(path: string): string {
+  return path.length > 1 ? path.replace(/\/$/, "") : path;
+}
+
+/**
+ * Nilai `aria-current` untuk satu item navigasi: `page` di halaman itu
+ * sendiri, `true` di halaman yang berada di bawahnya (misalnya satu dokumen
+ * di bawah Dokumentasi), dan tidak ada untuk halaman lain.
+ */
+export function navCurrent(
+  currentPath: string,
+  item: NavItem,
+): "page" | "true" | undefined {
+  if (item.external) return undefined;
+  const current = withoutTrailingSlash(currentPath);
+  const target = withoutTrailingSlash(item.href);
+  if (current === target) return "page";
+  return current.startsWith(`${target}/`) ? "true" : undefined;
+}
+
 /** Navigasi utama sengaja pendek. Sisanya berada di footer.
  *  Produk dan Dokumentasi mendahului Filosofi: developer yang scanning mencari
  *  keduanya lebih dulu, dan filosofi tetap satu klik untuk yang mencarinya. */

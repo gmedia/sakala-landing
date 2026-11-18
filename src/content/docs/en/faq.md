@@ -45,7 +45,7 @@ Until 18 November 2026 applications used `*.run.sakala.dev` addresses. Those old
 
 ## Where do I report a problem?
 
-Use the [issues on the Sakala Landing repository](https://github.com/gmedia/sakala-landing/issues) for website and documentation problems. For security matters, follow the [repository security policy](https://github.com/gmedia/sakala-landing/security/policy). To report a harmful application on `*.sakala.app`, write to `abuse@sakala.dev` as described in the [Acceptable Use Policy](/en/penggunaan-wajar).
+Open an issue on the matching repository: [`sakala-landing`](https://github.com/gmedia/sakala-landing/issues) for the website and documentation, [`sakala-console`](https://github.com/gmedia/sakala-console/issues) for screens and flows in the Console, and [`sakala-api`](https://github.com/gmedia/sakala-api/issues) for deployments that fail because of a fault on Sakala's side. If you are not sure which repository, ask in [Discussions](https://github.com/gmedia/sakala/discussions). For security matters, follow the [repository security policy](https://github.com/gmedia/sakala-landing/security/policy). To report a harmful application on `*.sakala.app`, write to `abuse@sakala.dev` as described in the [Acceptable Use Policy](/en/penggunaan-wajar).
 
 ## Where are Sakala's legal documents?
 

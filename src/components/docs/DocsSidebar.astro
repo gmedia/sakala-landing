@@ -1,14 +1,21 @@
 ---
 import DocsTrackSwitch from "./DocsTrackSwitch.astro";
-import { getTrackGroups, trackFromPath } from "../../data/docs";
+import {
+  getTrackGroups,
+  tocCopy,
+  trackFromPath,
+  type TocEntry,
+} from "../../data/docs";
 import type { Lang } from "../../i18n";
 
 interface Props {
   currentPath: string;
   lang: Lang;
+  /** Bagian halaman yang sedang dibuka; kosong untuk halaman pendek. */
+  toc?: TocEntry[];
 }
 
-const { currentPath, lang } = Astro.props;
+const { currentPath, lang, toc = [] } = Astro.props;
 const track = trackFromPath(currentPath);
 const groups = await getTrackGroups(track, lang);
 ---
@@ -44,6 +51,23 @@ const groups = await getTrackGroups(track, lang);
                   >
                     {item.title}
                   </a>
+                  {isCurrent && toc.length > 0 && (
+                    <ol
+                      aria-label={tocCopy[lang].label}
+                      class="m-0 mb-2 list-none space-y-0.5 border-l border-border p-0 pl-3"
+                    >
+                      {toc.map((section) => (
+                        <li>
+                          <a
+                            href={`#${section.slug}`}
+                            class="flex min-h-8 items-center py-1 pr-2 text-sm leading-5 text-muted hover:text-ink"
+                          >
+                            {section.text}
+                          </a>
+                        </li>
+                      ))}
+                    </ol>
+                  )}
                 </li>
               );
             })}

@@ -2,7 +2,7 @@
 import Button from "../ui/Button.astro";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import { links } from "../../data/links";
-import { getMainNavigation } from "../../data/navigation";
+import { getMainNavigation, navCurrent } from "../../data/navigation";
 import type { Lang } from "../../i18n";
 import type { Dictionary } from "../../i18n/id";
 
@@ -17,7 +17,7 @@ const { lang, t, basePath, currentPath } = Astro.props;
 const navigation = getMainNavigation(lang, t);
 ---
 
-<details class="group relative lg:hidden">
+<details class="group relative lg:hidden" data-mobile-nav>
   <summary class="inline-flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-xl border border-border bg-surface px-3 py-2 text-sm font-semibold text-ink hover:border-primary">
     <svg
       aria-hidden="true"
@@ -50,28 +50,31 @@ const navigation = getMainNavigation(lang, t);
     aria-label={t.nav.label}
   >
     <ul class="m-0 grid list-none gap-1 p-0">
-      {navigation.map((item) => (
-        <li>
-          <a
-            href={item.href}
-            target={item.external ? "_blank" : undefined}
-            rel={item.external ? "noreferrer" : undefined}
-            data-astro-prefetch={item.external ? undefined : "tap"}
-            aria-current={currentPath === item.href ? "page" : undefined}
-            class:list={[
-              "flex min-h-14 items-center justify-between gap-3 rounded-xl px-3 py-2 text-sm font-semibold",
-              currentPath === item.href
-                ? "bg-primary-soft-2 text-primary-dark"
-                : "text-ink hover:bg-background-soft",
-            ]}
-          >
-            {item.label}
-            <span aria-hidden="true" class="text-muted-2">
-              {item.external ? "↗" : "→"}
-            </span>
-          </a>
-        </li>
-      ))}
+      {navigation.map((item) => {
+        const current = navCurrent(currentPath, item);
+        return (
+          <li>
+            <a
+              href={item.href}
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noreferrer" : undefined}
+              data-astro-prefetch={item.external ? undefined : "tap"}
+              aria-current={current}
+              class:list={[
+                "flex min-h-14 items-center justify-between gap-3 rounded-xl px-3 py-2 text-sm font-semibold",
+                current
+                  ? "bg-primary-soft-2 text-primary-dark"
+                  : "text-ink hover:bg-background-soft",
+              ]}
+            >
+              {item.label}
+              <span aria-hidden="true" class="text-muted-2">
+                {item.external ? "↗" : "→"}
+              </span>
+            </a>
+          </li>
+        );
+      })}
     </ul>
 
     {t.nav.docsNoteForEnglish && (
@@ -92,3 +95,19 @@ const navigation = getMainNavigation(lang, t);
     </div>
   </nav>
 </details>
+
+<script>
+  // <details> tidak menutup dengan Esc. Menu ini menutup dan mengembalikan
+  // fokus ke tombol Menu, supaya pengguna keyboard tidak kehilangan posisi.
+  const CLOSE_KEY = "Escape";
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== CLOSE_KEY) return;
+    for (const menu of document.querySelectorAll<HTMLDetailsElement>(
+      "details[data-mobile-nav][open]",
+    )) {
+      menu.open = false;
+      menu.querySelector("summary")?.focus();
+    }
+  });
+</script>
