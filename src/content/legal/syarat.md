@@ -2,7 +2,7 @@
 version: syarat-v1
 ---
 
-Dengan menyetujui syarat ini saat mendaftar, atau saat pertama kali masuk lewat GitHub atau Google, kamu boleh memakai layanan Sakala di `sakala.dev`, `app.sakala.dev`, dan `*.run.sakala.dev`. Sakala masih tahap pilot, gratis, dan belum siap menjadi tempat aplikasi yang penting. Syarat ini ditulis supaya kamu tahu persis apa yang bisa dan tidak bisa kamu harapkan.
+Dengan menyetujui syarat ini saat mendaftar, atau saat pertama kali masuk lewat GitHub atau Google, kamu boleh memakai layanan Sakala di `sakala.dev`, `app.sakala.dev`, dan `*.sakala.app`. Sakala masih tahap pilot, gratis, dan belum siap menjadi tempat aplikasi yang penting. Syarat ini ditulis supaya kamu tahu persis apa yang bisa dan tidak bisa kamu harapkan.
 
 Pemrosesan data pribadimu dijelaskan terpisah di [Pemberitahuan Privasi](/privasi), yang bukan bagian dari persetujuan ini.
 
@@ -22,7 +22,7 @@ Kamu bertanggung jawab atas keamanan akunmu dan atas semua yang terjadi lewat ak
 
 ## 3. Apa yang kamu dapat
 
-Sakala mengambil source code dari repository GitHub-mu, membangunnya, menjalankannya sebagai satu web service, dan memberinya alamat `<slug>.run.sakala.dev`.
+Sakala mengambil source code dari repository GitHub-mu, membangunnya, menjalankannya sebagai satu web service, dan memberinya alamat `<slug>.sakala.app`.
 
 Batas pilot saat ini:
 

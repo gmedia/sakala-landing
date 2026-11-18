@@ -4,7 +4,7 @@ version: penggunaan-wajar-v1
 
 Sakala adalah layanan gratis untuk belajar dan membawa project kecil sampai punya URL publik. Jangan memakainya untuk merugikan orang lain atau menghabiskan kapasitas bersama. Kalau kamu melanggar, proyekmu bisa ditangguhkan. Kebijakan ini adalah bagian dari [Syarat Layanan](/syarat).
 
-Melihat sesuatu yang berbahaya di `*.run.sakala.dev`? Laporkan ke [`abuse@sakala.dev`](mailto:abuse@sakala.dev).
+Melihat sesuatu yang berbahaya di `*.sakala.app`? Laporkan ke [`abuse@sakala.dev`](mailto:abuse@sakala.dev).
 
 ## Yang dilarang
 
@@ -25,7 +25,7 @@ Belajar keamanan boleh, selama targetnya aplikasimu sendiri atau sistem yang kam
 
 ## Cara kami menemukan pelanggaran
 
-Sumbernya laporan dari pengguna, vendor keamanan, atau registrar, peringatan browser dan filter email tentang alamat `run.sakala.dev`, dan sinyal penggunaan seperti kegagalan deployment berulang.
+Sumbernya laporan dari pengguna, vendor keamanan, atau registrar, peringatan browser dan filter email tentang alamat `sakala.app`, dan sinyal penggunaan seperti kegagalan deployment berulang.
 
 Deteksi otomatis kami masih terbatas, jadi laporan darimu penting. Admin juga bisa membaca log dan konfigurasi proyek untuk memeriksa laporan.
 
@@ -64,7 +64,7 @@ Belum ada fitur banding di Console. Kirim email ke [`abuse@sakala.dev`](mailto:a
 
 Kirim ke [`abuse@sakala.dev`](mailto:abuse@sakala.dev):
 
-- alamat lengkap yang bermasalah, misalnya `contoh.run.sakala.dev/login`;
+- alamat lengkap yang bermasalah, misalnya `contoh.sakala.app/login`;
 - apa yang kamu lihat dan kapan;
 - bukti pendukung, misalnya tangkapan layar atau header email;
 - cara menghubungimu, kalau kamu ingin kabar lanjutan.

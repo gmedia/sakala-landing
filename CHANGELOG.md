@@ -37,6 +37,13 @@ versinya di file ini.
   dipilih, domain lama dimatikan tanpa pengalihan, dan pendaftaran ke Public
   Suffix List menjadi langkah yang tersisa. ADR-019 menyebut wildcard
   `*.sakala.app` sebagai keadaan sekarang.
+- Syarat Layanan, Pemberitahuan Privasi, dan Kebijakan Penggunaan Wajar kini
+  menyebut `*.sakala.app` sebagai alamat aplikasi pengguna. Ini koreksi fakta
+  tentang tempat aplikasi disajikan, jadi versi dokumen dan tanggal
+  berlakunya tidak berubah.
+- PRD §9.3 mencatat replika per project, dan bagian "Jalan menuju multi-node"
+  di dokumentasi teknis (id dan en) menyebut replika di satu node dan Sakala
+  Edge yang sudah berjalan.
 
 ## [0.3.6] - 2026-11-12
 

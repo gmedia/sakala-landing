@@ -135,7 +135,7 @@ simple application result
 Example domain pattern:
 
 ```text
-<slug>.run.sakala.dev
+<slug>.sakala.app
 ```
 
 Use a clearly illustrative slug.

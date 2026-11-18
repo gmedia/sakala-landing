@@ -18,7 +18,7 @@ Kami tidak mengklaim Sakala sudah memenuhi seluruh kewajiban Undang-Undang Nomor
 
 ## Siapa yang bertanggung jawab
 
-Layanan Sakala di `sakala.dev`, `app.sakala.dev`, `api.sakala.dev`, dan `*.run.sakala.dev` dikelola oleh Sakala Maintainers, yaitu pengelola proyek open-source Sakala. Sakala Maintainers belum punya badan hukum tersendiri.
+Layanan Sakala di `sakala.dev`, `app.sakala.dev`, `api.sakala.dev`, dan `*.sakala.app` dikelola oleh Sakala Maintainers, yaitu pengelola proyek open-source Sakala. Sakala Maintainers belum punya badan hukum tersendiri.
 
 Infrastrukturnya didukung PT Media Sarana Data (GMEDIA) sebagai founding sponsor. Dokumen ini tidak menyebut GMEDIA sebagai pengendali data atau pihak dalam perjanjian, karena GMEDIA belum menyepakati peran itu.
 
@@ -71,7 +71,7 @@ Saat build, Sakala Agent mengambil source code ke runtime node. Folder kerjanya 
 
 Log dan variabel proyek tidak publik. Yang bisa melihatnya hanya pemilik proyek dan admin Sakala.
 
-URL proyek (`<slug>.run.sakala.dev`) publik dan bisa dibuka siapa saja. Slug dibuat dari nama proyek, jadi jangan memakai nama yang mengungkap data pribadi.
+URL proyek (`<slug>.sakala.app`) publik dan bisa dibuka siapa saja. Slug dibuat dari nama proyek, jadi jangan memakai nama yang mengungkap data pribadi.
 
 Penyaringan secret di log tidak sempurna. Sakala menyaring pola token umum dan nilai persis secret proyekmu, tetapi nilai di bawah 8 karakter, potongan secret, dan token tanpa pola yang dikenali bisa lolos. Jangan mencetak secret ke log.
 
@@ -96,13 +96,13 @@ Kalau avatarmu berasal dari GitHub atau Google, browser memuat gambarnya langsun
 
 ## Pihak lain yang ikut memproses data
 
-| Pihak                                                                                              | Perannya                                                                                                   | Data yang terlibat                                                                                                                              |
-| -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| PT Media Sarana Data (GMEDIA)                                                                      | Menyediakan server yang menjalankan Sakala                                                                 | Semua data yang tersimpan di server. Pengelola server secara teknis bisa menjangkaunya                                                          |
-| [Cloudflare](https://www.cloudflare.com/privacypolicy/)                                            | DNS, proxy untuk `sakala.dev`, `app.sakala.dev`, dan `api.sakala.dev`, serta penerusan email `@sakala.dev` | Alamat IP, alamat yang diminta, data permintaan, dan email yang kamu kirim ke kami. Lalu lintas `*.run.sakala.dev` tidak lewat proxy Cloudflare |
-| [GitHub](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) | Login, GitHub App, repository, webhook                                                                     | Identitas GitHub, token, dan data repository                                                                                                    |
-| [Brevo](https://www.brevo.com/legal/privacypolicy/)                                                | Mengirim email akun                                                                                        | Alamat email, nama, dan isi email                                                                                                               |
-| [Google](https://policies.google.com/privacy)                                                      | Login Google, hanya kalau kamu memakainya                                                                  | Identitas Google                                                                                                                                |
+| Pihak                                                                                              | Perannya                                                                                                   | Data yang terlibat                                                                                                                          |
+| -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| PT Media Sarana Data (GMEDIA)                                                                      | Menyediakan server yang menjalankan Sakala                                                                 | Semua data yang tersimpan di server. Pengelola server secara teknis bisa menjangkaunya                                                      |
+| [Cloudflare](https://www.cloudflare.com/privacypolicy/)                                            | DNS, proxy untuk `sakala.dev`, `app.sakala.dev`, dan `api.sakala.dev`, serta penerusan email `@sakala.dev` | Alamat IP, alamat yang diminta, data permintaan, dan email yang kamu kirim ke kami. Lalu lintas `*.sakala.app` tidak lewat proxy Cloudflare |
+| [GitHub](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) | Login, GitHub App, repository, webhook                                                                     | Identitas GitHub, token, dan data repository                                                                                                |
+| [Brevo](https://www.brevo.com/legal/privacypolicy/)                                                | Mengirim email akun                                                                                        | Alamat email, nama, dan isi email                                                                                                           |
+| [Google](https://policies.google.com/privacy)                                                      | Login Google, hanya kalau kamu memakainya                                                                  | Identitas Google                                                                                                                            |
 
 Email dari Sakala memakai pelacakan Brevo, dalam mode anonim. Setiap email memuat piksel kecil yang mencatat bahwa email dibuka. Setiap tautan di email lebih dulu melewati pengalihan Brevo di `r.em.sakala.dev`, baru sampai ke tujuannya. Itu berlaku untuk semua tautan, termasuk tautan verifikasi dan reset kata sandi, jadi alamat tujuan beserta tokennya ikut melewati server Brevo.
 

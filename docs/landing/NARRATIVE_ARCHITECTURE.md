@@ -167,7 +167,7 @@ Reach
 Then reveal:
 
 ```text
-project.run.sakala.dev
+project.sakala.app
 ```
 
 and a browser/live application representation.
