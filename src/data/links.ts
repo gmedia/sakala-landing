@@ -1,5 +1,8 @@
 export const links = {
   console: "https://app.sakala.dev",
+  /** Halaman daftar Console. Pilot hosted terbuka untuk siapa saja sejak
+   *  19 November 2026, jadi CTA utama beranda mengarah ke sini. */
+  consoleRegister: "https://app.sakala.dev/register",
   api: "https://api.sakala.dev",
   githubOrganization: "https://github.com/gmedia",
   /**

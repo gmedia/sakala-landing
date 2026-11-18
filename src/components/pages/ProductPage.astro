@@ -34,6 +34,13 @@ const breadcrumbs = [
   <PageHeader eyebrow={p.eyebrow} title={p.title} lead={p.lead} {breadcrumbs}>
     <p class="mt-8 max-w-2xl border-l-2 border-spark pl-5 text-sm leading-7 text-muted">
       {p.disclaimer}
+      <a
+        href={localizePath("/docs/batas-pilot", lang)}
+        data-astro-prefetch="hover"
+        class="font-medium text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
+      >
+        {p.disclaimerLink}
+      </a>
     </p>
   </PageHeader>
 
@@ -42,27 +49,29 @@ const breadcrumbs = [
       <h2 class="font-display text-narrative-m font-bold tracking-[-0.025em] text-ink">
         {p.pillarsTitle}
       </h2>
+      <p class="mt-4 text-sm text-muted">{p.pillarsStatusDate}</p>
 
-      <!-- Tiap pilar wajib membawa status. Desain siap bukan berarti
-           fiturnya berjalan. -->
+      <!-- Status dipasang per kemampuan, bukan per pilar, supaya yang sudah
+           berjalan tidak tercampur dengan yang masih arah. Desain siap bukan
+           berarti fiturnya berjalan. -->
       <ol class="m-0 mt-10 list-none space-y-px overflow-hidden rounded-2xl border border-border bg-border p-0">
         {p.pillars.map((pillar) => (
           <li class="bg-surface p-6 sm:p-8">
-            <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-              <h3 class="font-display text-xl font-semibold tracking-tight text-ink">
-                {pillar.name}
-              </h3>
-              <StatusPill
-                tone={pillar.status}
-                label={t.status[pillar.status as StatusKey]}
-              />
-            </div>
+            <h3 class="font-display text-xl font-semibold tracking-tight text-ink">
+              {pillar.name}
+            </h3>
             <p class="mt-2.5 text-sm italic leading-6 text-muted-2">
               {pillar.question}
             </p>
-            <ul class="m-0 mt-5 grid list-none gap-2 border-t border-dashed border-border p-0 pt-4 sm:grid-cols-2">
+            <ul class="m-0 mt-5 grid list-none gap-x-8 gap-y-3 border-t border-dashed border-border p-0 pt-4 sm:grid-cols-2">
               {pillar.items.map((item) => (
-                <li class="font-mono text-xs text-muted">{item}</li>
+                <li class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                  <span class="text-sm text-muted">{item.label}</span>
+                  <StatusPill
+                    tone={item.status}
+                    label={t.status[item.status as StatusKey]}
+                  />
+                </li>
               ))}
             </ul>
           </li>

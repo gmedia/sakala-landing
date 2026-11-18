@@ -48,17 +48,17 @@ export const id = {
    *  yang berubah keadaan. Nama tahap deployment mengikuti Console Wave 1. */
   home: {
     status: {
-      label: "Pre-launch",
-      text: "Belum tersedia sebagai layanan publik. Dibangun terbuka.",
-      link: "Lihat roadmap",
+      label: "Pilot terbuka",
+      text: "Siapa pun bisa mendaftar, dengan batas pemakaian.",
+      link: "Lihat batas pilot",
     },
 
     possibility: {
       eyebrow: "Sakala · Platform deployment open-source",
       title: "Setiap karya bermula sebagai kemungkinan.",
       sub: "Berjalan di laptop bukan berarti dapat dijangkau. Sakala membawa project dari repository Git menjadi aplikasi dengan alamat publiknya sendiri.",
-      ctaPrimary: "Lihat cara kerjanya",
-      ctaSecondary: "Lihat di GitHub",
+      ctaPrimary: "Daftar dan deploy",
+      ctaSecondary: "Lihat cara kerjanya",
       repoLabel: "Repository",
       branch: "main",
       commit: "a3f9c21",
@@ -144,7 +144,7 @@ export const id = {
       refrain: "Here it is.",
       deployCaption:
         "Lima tahap bernama, dan akibatnya: karya yang sama, kini punya alamat.",
-      note: "Tahap, waktu, dan alamat menggambarkan rancangan Console yang sedang dibangun, bukan layanan yang sudah berjalan.",
+      note: "Ilustrasi dengan data contoh, bukan tangkapan layar Console.",
     },
 
     clarity: {
@@ -197,7 +197,7 @@ export const id = {
       ],
       caption:
         "Kegagalan ditunjuk pada satu tahap, dijelaskan dalam bahasa manusia, dan lognya ada di tempat yang sama.",
-      note: "Bentuk penjelasan ini menggambarkan rancangan Console yang sedang dibangun.",
+      note: "Ilustrasi dengan data contoh. Di Console, deployment yang gagal menampilkan tahap, kode kegagalan, penjelasan, dan log-nya.",
     },
 
     life: {
@@ -228,7 +228,7 @@ export const id = {
         { label: "Keputusan", value: "Tercatat", href: "/docs/proyek/adr" },
         { label: "Kontribusi", value: "Terbuka" },
         { label: "Runtime pilot", value: "Didukung GMEDIA" },
-        { label: "Self-host", value: "Di roadmap" },
+        { label: "Self-host", value: "Sedang diuji" },
       ],
       factsCaption: "Bukti keterbukaan Sakala, bukan sekadar label.",
       human:
@@ -241,6 +241,8 @@ export const id = {
     finale: {
       title: "Apa yang akan kamu wujudkan?",
       lead: "Setiap karya bermula sebagai kemungkinan.",
+      cta: "Daftar dan deploy",
+      ctaNote: "Selama pilot ada batas pemakaian.",
       followTitle: "Ikuti perkembangan",
       followLead:
         "Sakala dibangun terbuka. Setiap langkahnya dapat diikuti dari sini.",
@@ -362,61 +364,91 @@ export const id = {
     title: "Apa yang Sakala kerjakan, dan sejauh mana.",
     lead: "Setiap kemampuan di halaman ini membawa status. Desain yang selesai tidak berarti fiturnya sudah berjalan.",
     disclaimer:
-      "Sakala belum tersedia sebagai layanan publik. Fondasi produk dan runtime masih disusun secara terbuka.",
+      "Sakala sedang dalam tahap pilot. Siapa pun bisa mendaftar dan memakainya tanpa biaya, dengan batas proyek, container, dan build per jam. Belum ada jaminan uptime, jadi belum cocok untuk aplikasi penting.",
+    disclaimerLink: "Lihat batas pilot",
     pillarsTitle: "Perjalanan produk",
+    pillarsStatusDate: "Status per 19 November 2026.",
     pillars: [
       {
         name: "Create",
         question: "Dari mana karya ini dimulai?",
-        status: "building",
         items: [
-          "menghubungkan repository Git",
-          "memilih branch",
-          "template sebagai titik awal",
+          {
+            label: "menghubungkan repository GitHub publik",
+            status: "available",
+          },
+          {
+            label: "repository privat lewat GitHub App",
+            status: "available",
+          },
+          { label: "memilih branch", status: "available" },
+          { label: "template sebagai titik awal", status: "direction" },
         ],
       },
       {
         name: "Manifest",
         question: "Bagaimana source ini menjadi sesuatu yang hidup?",
-        status: "building",
         items: [
-          "analisis repository dan deteksi stack",
-          "build lewat Dockerfile atau Railpack",
-          "deployment, health check, dan route publik",
-          "redeploy",
+          {
+            label: "analisis repository dan deteksi stack",
+            status: "available",
+          },
+          {
+            label: "build lewat Dockerfile atau Railpack",
+            status: "available",
+          },
+          {
+            label: "deployment, health check, dan route publik",
+            status: "available",
+          },
+          {
+            label: "redeploy dan deploy otomatis saat push",
+            status: "available",
+          },
+          {
+            label: "perintah rilis sebelum versi baru melayani",
+            status: "available",
+          },
         ],
       },
       {
         name: "Operate",
         question: "Setelah hidup, bagaimana aplikasi ini dijaga?",
-        status: "next",
         items: [
-          "variabel dan secret",
-          "domain bawaan dan custom domain",
-          "log dan health",
-          "metrik dasar",
+          { label: "variabel dan secret", status: "available" },
+          { label: "domain bawaan *.sakala.app", status: "available" },
+          { label: "log dan health", status: "available" },
+          {
+            label: "sleep saat sepi, bangun saat dikunjungi",
+            status: "available",
+          },
+          { label: "workspace tim dan peran", status: "available" },
+          {
+            label: "replika dan load balancing, lewat profil batas dari admin",
+            status: "available",
+          },
+          { label: "metrik dasar", status: "building" },
+          { label: "custom domain", status: "direction" },
         ],
       },
       {
         name: "Explore",
         question: "Apa yang dapat lahir dari karya yang sudah hidup?",
-        status: "direction",
         items: [
-          "showcase project",
-          "template",
-          "profil creator",
-          "koleksi dan silsilah karya",
+          { label: "showcase project", status: "direction" },
+          { label: "template", status: "direction" },
+          { label: "profil creator", status: "direction" },
+          { label: "koleksi dan silsilah karya", status: "direction" },
         ],
       },
       {
         name: "Learn",
         question: "Bagaimana orang belajar mengirim software sungguhan?",
-        status: "direction",
         items: [
-          "kelas dan workshop",
-          "penugasan",
-          "alur magang",
-          "tinjauan mentor",
+          { label: "kelas dan workshop", status: "next" },
+          { label: "penugasan", status: "next" },
+          { label: "alur magang", status: "direction" },
+          { label: "tinjauan mentor", status: "direction" },
         ],
       },
     ],
@@ -453,7 +485,7 @@ export const id = {
     cardsCaption:
       "Kartu project di Dashboard: nama, repository, keadaan, pratinjau, dan satu aksi.",
     cardsNote:
-      "Rancangan Console Wave 1, dibangun ulang sebagai ilustrasi. Bukan tangkapan layar produk yang berjalan.",
+      "Ilustrasi berdasarkan rancangan Console, dengan data contoh. Bukan tangkapan layar.",
     boundaryTitle: "Yang sengaja tidak dikejar",
     boundaryLead:
       "Menjaga identitas lebih penting daripada mengejar kesetaraan fitur.",
@@ -479,42 +511,62 @@ export const id = {
     title: "Arah, bukan janji tanggal.",
     sourceTitle: "Roadmap Sakala (ROADMAP)",
     lead: "Sakala memakai tiga pandangan yang berjalan paralel dan tidak selalu sinkron: produk, desain, dan engineering.",
-    horizonLabel: "Horizon",
+    shippedTitle: "Sudah tersedia",
+    shippedLead:
+      "Status per 19 November 2026. Semua ini bisa dipakai di pilot hosted, dengan batas pilot.",
+    shippedLink: "Lihat batas pilot",
+    shipped: [
+      "Akun lewat email, GitHub, atau Google, dengan persetujuan syarat layanan",
+      "Project dari repository GitHub publik, atau privat lewat GitHub App",
+      "Analisis repository, build lewat Dockerfile atau Railpack, deploy, health check, dan redeploy",
+      "Deploy otomatis saat push, dan perintah rilis sebelum versi baru melayani",
+      "Variabel dan secret, log build dan runtime, serta kode kegagalan yang menunjuk tahapnya",
+      "Domain bawaan di *.sakala.app",
+      "Workspace pribadi dan tim, undangan, serta peran Owner, Member, dan Viewer",
+      "Kuota per workspace, batas build per jam, dan sleep setelah 30 menit tanpa pengunjung",
+      "Replika dan load balancing lewat Sakala Edge, untuk workspace dengan profil batas dari admin",
+      "Aplikasi pengguna berjalan di sandbox gVisor, terpisah dari control plane",
+      "Area admin, penangguhan project, dan dokumen hukum",
+    ],
+    horizonsTitle: "Yang belum ada",
+    horizonsLead:
+      "Arah berikutnya, berurutan. Status di sini menunjukkan kematangan, bukan tanggal.",
     horizons: [
       {
-        name: "Manifestasi",
+        label: "Gate",
+        name: "Pilot publik",
         status: "testing",
-        text: "Identitas, project, analisis repository, build, deploy, log, domain bawaan, health, redeploy, kuota pilot, dan kontrol admin.",
+        text: "Pendaftaran dibuka untuk siapa saja sejak 19 November 2026. Yang masih dikerjakan: pembatasan lalu lintas keluar dari container pengguna, serta bukti pemakaian dan biaya dari pilot.",
       },
       {
-        name: "Gate pilot publik",
-        status: "next",
-        text: "Isolasi workload, sleep otomatis dan batas build, dokumen hukum, penanganan abuse, serta bukti dan biaya dari pilot.",
-      },
-      {
+        label: "Horizon B",
         name: "Learn minimal",
         status: "next",
         text: "Kelas, peserta lewat CSV, penugasan dengan tenggat, ringkasan untuk pengajar, dan siklus hidup project setelah kelas selesai.",
       },
       {
+        label: "Horizon C",
         name: "Self-host satu node",
-        status: "direction",
-        text: "Installer yang bisa diulang dengan gVisor aktif, supaya institusi bisa menjalankan Sakala di servernya sendiri.",
+        status: "testing",
+        text: "Installer di repository gmedia/sakala sudah ada dan diuji di mesin bersih, tetapi belum dirilis dan belum dicoba di server sungguhan.",
       },
       {
+        label: "Horizon D",
         name: "Operasi yang andal",
         status: "direction",
-        text: "Custom domain, pemulihan dan rollback, metrik dasar, auto-deploy lewat webhook, dan repository privat.",
+        text: "Custom domain, pemulihan dan rollback ke versi sebelumnya, dan visibilitas pemakaian. Metrik dasar per project sedang dibangun.",
       },
       {
+        label: "Horizon E",
         name: "Explore dan ekosistem",
         status: "direction",
         text: "Dimulai dari koleksi terkurasi, lalu showcase, template, profil creator, dan silsilah project.",
       },
       {
-        name: "Kolaborasi, layanan, platform",
+        label: "Horizon G–H",
+        name: "Layanan dan platform",
         status: "direction",
-        text: "Workspace dan peran, layanan data terkelola, CLI, API publik, dan runtime multi-node.",
+        text: "Layanan data terkelola seperti PostgreSQL, worker dan cron, CLI, API publik, dan runtime multi-node.",
       },
     ],
     designTitle: "Status desain dan engineering dipisah",
@@ -522,9 +574,10 @@ export const id = {
       "Desain yang siap tidak berarti engineering sudah berkomitmen membangunnya. Keduanya sengaja tidak disamakan.",
     tracks: [
       { name: "Desain alur produk inti", status: "available" },
-      { name: "Fondasi console, API, agent", status: "building" },
-      { name: "Runtime deployment", status: "testing" },
-      { name: "Layanan publik", status: "unavailable" },
+      { name: "Console, API, dan agent", status: "available" },
+      { name: "Runtime deployment", status: "available" },
+      { name: "Layanan hosted, tahap pilot", status: "available" },
+      { name: "Self-host satu node", status: "testing" },
     ],
     gateTitle: "Kapan sebuah horizon boleh dimulai",
     gateLead:

@@ -44,17 +44,17 @@ export const en: Dictionary = {
 
   home: {
     status: {
-      label: "Pre-launch",
-      text: "Not yet available as a public service. Built in the open.",
-      link: "See the roadmap",
+      label: "Open pilot",
+      text: "Anyone can sign up, within usage limits.",
+      link: "See the pilot limits",
     },
 
     possibility: {
       eyebrow: "Sakala · Open-source deployment platform",
       title: "Every project begins as a possibility.",
       sub: "Running on a laptop is not the same as being reachable. Sakala takes a project from a Git repository to an application with a public address of its own.",
-      ctaPrimary: "See how it works",
-      ctaSecondary: "View on GitHub",
+      ctaPrimary: "Sign up and deploy",
+      ctaSecondary: "See how it works",
       repoLabel: "Repository",
       branch: "main",
       commit: "a3f9c21",
@@ -140,7 +140,7 @@ export const en: Dictionary = {
       refrain: "Here it is.",
       deployCaption:
         "Five named stages, and their consequence: the same work, now with an address.",
-      note: "Stages, times, and the address show the Console design being built, not a running service.",
+      note: "An illustration with sample data, not a Console screenshot.",
     },
 
     clarity: {
@@ -193,7 +193,7 @@ export const en: Dictionary = {
       ],
       caption:
         "The failure points to one stage, is explained in plain words, and the log sits right beside it.",
-      note: "This form of explanation shows the Console design being built.",
+      note: "An illustration with sample data. In the Console, a failed deployment shows its stage, failure code, explanation, and logs.",
     },
 
     life: {
@@ -224,7 +224,7 @@ export const en: Dictionary = {
         { label: "Decisions", value: "Recorded", href: "/docs/proyek/adr" },
         { label: "Contributions", value: "Open" },
         { label: "Pilot runtime", value: "Supported by GMEDIA" },
-        { label: "Self-host", value: "On the roadmap" },
+        { label: "Self-host", value: "Under test" },
       ],
       factsCaption: "Evidence that Sakala is open, not just a label.",
       human:
@@ -237,6 +237,8 @@ export const en: Dictionary = {
     finale: {
       title: "What will you bring to life?",
       lead: "Every project begins as a possibility.",
+      cta: "Sign up and deploy",
+      ctaNote: "Usage limits apply during the pilot.",
       followTitle: "Follow the progress",
       followLead:
         "Sakala is built in the open. Every step can be followed from here.",
@@ -358,61 +360,86 @@ export const en: Dictionary = {
     title: "What Sakala does, and how far along it is.",
     lead: "Every capability on this page carries a status. A finished design does not mean the feature runs.",
     disclaimer:
-      "Sakala is not available as a public service yet. The product and runtime foundations are still being assembled in the open.",
+      "Sakala is in its pilot. Anyone can sign up and use it at no cost, within limits on projects, containers, and builds per hour. There is no uptime guarantee yet, so it is not a fit for important applications.",
+    disclaimerLink: "See the pilot limits",
     pillarsTitle: "The product journey",
+    pillarsStatusDate: "Status as of 19 November 2026.",
     pillars: [
       {
         name: "Create",
         question: "Where does this work begin?",
-        status: "building",
         items: [
-          "connect a Git repository",
-          "choose a branch",
-          "templates as a starting point",
+          { label: "connect a public GitHub repository", status: "available" },
+          {
+            label: "private repositories through the GitHub App",
+            status: "available",
+          },
+          { label: "choose a branch", status: "available" },
+          { label: "templates as a starting point", status: "direction" },
         ],
       },
       {
         name: "Manifest",
         question: "How does this source become something alive?",
-        status: "building",
         items: [
-          "repository analysis and stack detection",
-          "build via Dockerfile or Railpack",
-          "deployment, health check, and public route",
-          "redeploy",
+          {
+            label: "repository analysis and stack detection",
+            status: "available",
+          },
+          { label: "build via Dockerfile or Railpack", status: "available" },
+          {
+            label: "deployment, health check, and public route",
+            status: "available",
+          },
+          {
+            label: "redeploy and automatic deploy on push",
+            status: "available",
+          },
+          {
+            label: "a release command before the new version serves",
+            status: "available",
+          },
         ],
       },
       {
         name: "Operate",
         question: "Once alive, how is the application kept healthy?",
-        status: "next",
         items: [
-          "variables and secrets",
-          "generated and custom domains",
-          "logs and health",
-          "basic metrics",
+          { label: "variables and secrets", status: "available" },
+          { label: "generated *.sakala.app domain", status: "available" },
+          { label: "logs and health", status: "available" },
+          {
+            label: "sleep when idle, wake when visited",
+            status: "available",
+          },
+          { label: "team workspaces and roles", status: "available" },
+          {
+            label:
+              "replicas and load balancing, through an admin limit profile",
+            status: "available",
+          },
+          { label: "basic metrics", status: "building" },
+          { label: "custom domains", status: "direction" },
         ],
       },
       {
         name: "Explore",
         question: "What can grow out of work that is already alive?",
-        status: "direction",
         items: [
-          "project showcase",
-          "templates",
-          "creator profiles",
-          "collections and project lineage",
+          { label: "project showcase", status: "direction" },
+          { label: "templates", status: "direction" },
+          { label: "creator profiles", status: "direction" },
+          { label: "collections and project lineage", status: "direction" },
         ],
       },
       {
         name: "Learn",
         question: "How do people learn to ship software for real?",
-        status: "direction",
         items: [
-          "classes and workshops",
-          "assignments",
-          "internship flow",
-          "mentor review",
+          { label: "classes and workshops", status: "next" },
+          { label: "assignments", status: "next" },
+          { label: "internship flow", status: "direction" },
+          { label: "mentor review", status: "direction" },
         ],
       },
     ],
@@ -449,7 +476,7 @@ export const en: Dictionary = {
     cardsCaption:
       "Project cards on the Dashboard: name, repository, state, preview, and one action.",
     cardsNote:
-      "Console Wave 1 design, rebuilt as an illustration. Not a screenshot of a running product.",
+      "An illustration based on the Console design, with sample data. Not a screenshot.",
     boundaryTitle: "What we deliberately avoid becoming",
     boundaryLead:
       "Keeping an identity matters more than chasing feature parity.",
@@ -475,42 +502,62 @@ export const en: Dictionary = {
     title: "Direction, not a promise of dates.",
     sourceTitle: "Sakala Roadmap (ROADMAP)",
     lead: "Sakala runs three parallel views that are related but never perfectly in sync: product, design, and engineering.",
-    horizonLabel: "Horizon",
+    shippedTitle: "Available now",
+    shippedLead:
+      "Status as of 19 November 2026. All of this can be used on the hosted pilot, within the pilot limits.",
+    shippedLink: "See the pilot limits",
+    shipped: [
+      "Accounts with email, GitHub, or Google, with consent to the terms of service",
+      "Projects from a public GitHub repository, or a private one through the GitHub App",
+      "Repository analysis, build via Dockerfile or Railpack, deploy, health check, and redeploy",
+      "Automatic deploy on push, and a release command before the new version serves",
+      "Variables and secrets, build and runtime logs, and failure codes that point at their stage",
+      "A generated domain on *.sakala.app",
+      "Personal and team workspaces, invitations, and Owner, Member, and Viewer roles",
+      "Quotas per workspace, a build limit per hour, and sleep after 30 minutes without visitors",
+      "Replicas and load balancing through Sakala Edge, for workspaces with an admin limit profile",
+      "User applications run in a gVisor sandbox, apart from the control plane",
+      "An admin area, project suspension, and legal documents",
+    ],
+    horizonsTitle: "Not built yet",
+    horizonsLead:
+      "What comes next, in order. The status shows maturity, not a date.",
     horizons: [
       {
-        name: "Manifestation",
+        label: "Gate",
+        name: "Public pilot",
         status: "testing",
-        text: "Identity, projects, repository analysis, build, deploy, logs, generated domain, health, redeploy, pilot quotas, and admin controls.",
+        text: "Registration has been open to anyone since 19 November 2026. Still in progress: limiting outgoing traffic from user containers, and evidence of usage and costs from the pilot.",
       },
       {
-        name: "Public pilot gate",
-        status: "next",
-        text: "Workload isolation, idle sleep and build limits, legal documents, abuse handling, and evidence and costs from the pilot.",
-      },
-      {
+        label: "Horizon B",
         name: "Minimal Learn",
         status: "next",
         text: "Classes, participants via CSV, assignments with deadlines, an overview for instructors, and what happens to projects after a class ends.",
       },
       {
+        label: "Horizon C",
         name: "Single-node self-host",
-        status: "direction",
-        text: "A repeatable installer with gVisor on by default, so institutions can run Sakala on their own servers.",
+        status: "testing",
+        text: "The installer in the gmedia/sakala repository exists and is tested on clean machines, but it has not been released or tried on a real server.",
       },
       {
+        label: "Horizon D",
         name: "Reliable operation",
         status: "direction",
-        text: "Custom domains, recovery and rollback, basic metrics, webhook auto-deploy, and private repositories.",
+        text: "Custom domains, recovery and rollback to a previous version, and usage visibility. Basic per-project metrics are being built.",
       },
       {
+        label: "Horizon E",
         name: "Explore and ecosystem",
         status: "direction",
         text: "Starting from curated collections, then showcases, templates, creator profiles, and project lineage.",
       },
       {
-        name: "Collaboration, services, platform",
+        label: "Horizon G–H",
+        name: "Services and platform",
         status: "direction",
-        text: "Workspaces and roles, managed data services, CLI, public API, and multi-node runtime.",
+        text: "Managed data services such as PostgreSQL, workers and cron, CLI, public API, and multi-node runtime.",
       },
     ],
     designTitle: "Design and engineering status stay separate",
@@ -518,9 +565,10 @@ export const en: Dictionary = {
       "A design being ready does not mean engineering has committed to building it. The two are deliberately not conflated.",
     tracks: [
       { name: "Core product flow design", status: "available" },
-      { name: "Console, API, agent foundation", status: "building" },
-      { name: "Deployment runtime", status: "testing" },
-      { name: "Public service", status: "unavailable" },
+      { name: "Console, API, and agent", status: "available" },
+      { name: "Deployment runtime", status: "available" },
+      { name: "Hosted service, pilot stage", status: "available" },
+      { name: "Single-node self-host", status: "testing" },
     ],
     gateTitle: "When a horizon may begin",
     gateLead:

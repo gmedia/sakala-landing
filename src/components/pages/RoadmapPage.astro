@@ -42,24 +42,75 @@ const breadcrumbs = [
     </p>
   </PageHeader>
 
-  <section class="border-b border-border bg-background-soft py-20 sm:py-24">
+  <!-- Yang sudah bisa dipakai dipisah dari horizon yang belum dibangun,
+       supaya keduanya tidak terbaca sebagai satu tingkat kematangan. -->
+  <section
+    class="border-b border-border py-20 sm:py-24"
+    aria-labelledby="shipped-title"
+  >
     <Container>
-      <!-- Horizon berurutan, jadi penomoran memang membawa informasi. -->
-      <ol class="m-0 list-none space-y-px overflow-hidden rounded-2xl border border-border bg-border p-0">
-        {r.horizons.map((horizon, index) => (
+      <div class="grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
+        <div>
+          <h2
+            id="shipped-title"
+            class="font-display text-narrative-m font-bold tracking-[-0.025em] text-ink"
+          >
+            {r.shippedTitle}
+          </h2>
+          <StatusPill
+            tone="available"
+            label={t.status.available}
+            class="mt-4"
+          />
+          <p class="mt-5 max-w-md text-lg leading-8 text-muted">
+            {r.shippedLead}
+          </p>
+          <a
+            href={localizePath("/docs/batas-pilot", lang)}
+            data-astro-prefetch="hover"
+            class="mt-5 inline-flex min-h-11 items-center font-semibold text-primary-dark underline decoration-primary-soft decoration-2 underline-offset-4 hover:decoration-primary"
+          >
+            {r.shippedLink} &rarr;
+          </a>
+        </div>
+        <ul class="m-0 list-none space-y-px overflow-hidden rounded-2xl border border-border bg-border p-0">
+          {r.shipped.map((item) => (
+            <li class="bg-surface px-5 py-4 text-ink">{item}</li>
+          ))}
+        </ul>
+      </div>
+    </Container>
+  </section>
+
+  <section
+    class="border-b border-border bg-background-soft py-20 sm:py-24"
+    aria-labelledby="horizons-title"
+  >
+    <Container>
+      <h2
+        id="horizons-title"
+        class="font-display text-narrative-m font-bold tracking-[-0.025em] text-ink"
+      >
+        {r.horizonsTitle}
+      </h2>
+      <p class="mt-5 max-w-2xl text-lg leading-8 text-muted">
+        {r.horizonsLead}
+      </p>
+      <!-- Horizon berurutan. Labelnya mengikuti huruf di dokumen roadmap
+           kanonik, supaya rujukan silang tetap cocok. -->
+      <ol class="m-0 mt-10 list-none space-y-px overflow-hidden rounded-2xl border border-border bg-border p-0">
+        {r.horizons.map((horizon) => (
           <li class="bg-surface p-6 sm:p-8">
             <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-              <p class="artifact-label text-muted-2">
-                {r.horizonLabel} {String.fromCharCode(65 + index)}
-              </p>
+              <p class="artifact-label text-muted-2">{horizon.label}</p>
               <StatusPill
                 tone={horizon.status}
                 label={t.status[horizon.status as StatusKey]}
               />
             </div>
-            <h2 class="mt-3 font-display text-xl font-semibold tracking-tight text-ink">
+            <h3 class="mt-3 font-display text-xl font-semibold tracking-tight text-ink">
               {horizon.name}
-            </h2>
+            </h3>
             <p class="mt-2.5 max-w-2xl leading-7 text-muted">{horizon.text}</p>
           </li>
         ))}
