@@ -1,3 +1,4 @@
+import type { MarkdownHeading } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import { defaultLang, type Lang } from "../i18n";
 
@@ -182,4 +183,32 @@ export async function getDocLocales(id: string): Promise<Lang[]> {
       return entryLang === lang && (entryBare === bare || entry.id === bare);
     });
   return (["id", "en"] as Lang[]).filter(has);
+}
+
+/**
+ * Daftar isi halaman. Hanya halaman dengan cukup banyak bagian yang
+ * mendapatkannya, supaya halaman pendek tidak diberi navigasi yang tidak
+ * menolong. Bagian adalah heading h2; h3 menjadi sub-bagiannya.
+ */
+export const TOC_MIN_SECTIONS = 6;
+const TOC_SECTION_DEPTH = 2;
+const TOC_SUBSECTION_DEPTH = 3;
+
+export const tocCopy: Record<Lang, { label: string }> = {
+  id: { label: "Di halaman ini" },
+  en: { label: "On this page" },
+};
+
+export type TocEntry = { slug: string; text: string; children: TocEntry[] };
+
+/** Bagian h2 beserta h3 di bawahnya, atau daftar kosong bila halaman pendek. */
+export function buildToc(headings: MarkdownHeading[] = []): TocEntry[] {
+  const sections: TocEntry[] = [];
+  for (const heading of headings) {
+    const entry = { slug: heading.slug, text: heading.text, children: [] };
+    if (heading.depth === TOC_SECTION_DEPTH) sections.push(entry);
+    else if (heading.depth === TOC_SUBSECTION_DEPTH)
+      sections.at(-1)?.children.push(entry);
+  }
+  return sections.length >= TOC_MIN_SECTIONS ? sections : [];
 }

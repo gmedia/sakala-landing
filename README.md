@@ -44,7 +44,9 @@ Setiap halaman HTML, termasuk halaman 404, dikirim dengan `Cache-Control: no-tra
 
 Halaman tidak punya directive cache lain, jadi perilaku cache-nya tidak berubah. Header dipasang di level teratas `docker/Caddyfile` dan dicocokkan dengan `Content-Type` respons, jadi halaman baru ikut tercakup dan Caddy tetap mengompresinya dengan gzip atau zstd. File lain (CSS, JavaScript, gambar, RSS) tidak berubah.
 
-`tests/container/headers.sh` membangun image, lalu memeriksa header setiap file HTML di dalamnya. Skrip ini butuh Docker dan tidak dijalankan CI.
+Alamat yang tidak ada dijawab dengan halaman 404 situs, atau versi Inggrisnya untuk path di bawah `/en/`, lewat `handle_errors` di `docker/Caddyfile`. Statusnya tetap 404, dan header serta kompresinya sama dengan halaman lain.
+
+`tests/container/headers.sh` membangun image, lalu memeriksa header setiap file HTML di dalamnya. Skrip ini juga memeriksa status, judul, dan header halaman 404 untuk alamat yang tidak ada. Skrip ini butuh Docker dan tidak dijalankan CI.
 
 ## Scripts
 

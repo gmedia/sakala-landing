@@ -659,7 +659,7 @@ export const id = {
     ecosystemLead:
       "Tanggung jawab dipisahkan supaya batas hak istimewa tetap jelas. Hanya Agent yang menjalankan operasi runtime.",
     ecosystemCaption:
-      "Lima repository Sakala, dikelompokkan menurut hak istimewa yang dipegangnya.",
+      "Lima repository komponen Sakala, dikelompokkan menurut hak istimewa yang dipegangnya. Repository keenam, sakala, berisi installer self-host dan Discussions.",
     publicLabel: "Publik",
     controlLabel: "Control plane",
     dataLabel: "Data plane",
@@ -672,22 +672,27 @@ export const id = {
     },
     contributeTitle: "Cara berkontribusi",
     contributeLead:
-      "Tidak perlu menunggu produknya jadi. Tiga jalur ini terbuka hari ini, dan kontribusi bukan hanya kode.",
+      "Kontribusi bukan hanya kode. Mulai dari peta repository, lalu pilih jalur yang cocok untukmu.",
     contributePaths: [
       {
-        key: "issues",
-        label: "Buka issue atau diskusi",
-        note: "Laporkan yang keliru, usulkan yang kurang, tanyakan yang belum jelas.",
+        key: "start",
+        label: "Mulai berkontribusi",
+        note: "Repository mana mengerjakan apa, cara menjalankannya, dan cara memilih issue.",
+      },
+      {
+        key: "goodFirstIssues",
+        label: "Pilih good first issue",
+        note: "Issue kecil di semua repository Sakala, masing-masing dengan berkas dan cara mengujinya.",
+      },
+      {
+        key: "discussions",
+        label: "Bertanya atau mengusulkan di Discussions",
+        note: "Untuk pertanyaan dan usulan yang belum jelas repository-nya.",
       },
       {
         key: "docs",
         label: "Baca dan koreksi dokumentasi",
         note: "Dokumentasi teknis dibuka untuk dibaca, diuji, dan diperbaiki.",
-      },
-      {
-        key: "build",
-        label: "Jalankan situs ini secara lokal",
-        note: "Repository landing dapat di-clone, dibangun, dan dikirimi pull request.",
       },
     ],
     topologyNote:
@@ -710,8 +715,8 @@ export const id = {
     metaTitle: "Halaman tidak ditemukan — Sakala",
     metaDescription: "Halaman yang kamu cari tidak ditemukan.",
     eyebrow: "Error 404",
-    title: "Alamat ini belum menuju ke mana-mana.",
-    lead: "Tautannya mungkin sudah berubah, atau halamannya memang belum ada karena Sakala masih dibangun. Berikut tempat yang pasti bisa dibuka.",
+    title: "Alamat ini tidak menuju ke halaman mana pun.",
+    lead: "Tautannya mungkin sudah berubah, halamannya sudah dipindah, atau alamatnya salah ketik. Berikut tempat yang pasti bisa dibuka.",
     destinations: {
       home: { label: "Beranda", note: "Kembali ke awal" },
       docs: { label: "Dokumentasi", note: "Konsep dan alur deployment" },

@@ -79,6 +79,19 @@ for page in / /en/ /privasi/ /404.html; do
     expect_equal "$page: Cache-Control" 'no-transform' "$(header_value Cache-Control "$response")"
 done
 
+# A missing page gets the designed 404 page, in the language of its path, with status 404 and the
+# same headers as every other page.
+title() { curl -sS --compressed "http://127.0.0.1:$port$1" | sed -n 's|.*<title>\([^<]*\)</title>.*|\1|p' | head -n 1; }
+for missing in /halaman-yang-tidak-ada /docs/halaman-yang-tidak-ada /en/page-that-does-not-exist; do
+    response=$(headers "$missing")
+    expect_contains "$missing: status 404" ' 404' "$(head -n 1 <<< "$response")"
+    expect_contains "$missing: is HTML" 'Content-Type: text/html' "$response"
+    expect_equal "$missing: Cache-Control" 'no-transform' "$(header_value Cache-Control "$response")"
+    expect_equal "$missing: compressed" 'gzip' "$(header_value Content-Encoding "$response")"
+done
+expect_equal "missing Indonesian page: 404 page title" 'Halaman tidak ditemukan — Sakala' "$(title /halaman-yang-tidak-ada)"
+expect_equal "missing English page: English 404 page title" 'Page not found — Sakala' "$(title /en/page-that-does-not-exist)"
+
 # Everything else keeps its previous headers.
 css=$(docker exec "$name" find /srv -name '*.css' | head -n 1 | sed 's|^/srv||')
 expect_equal "stylesheet $css: no Cache-Control added" '' "$(header_value Cache-Control "$(headers "$css")")"
