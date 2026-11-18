@@ -115,6 +115,6 @@ The following seven require a recorded architecture decision to change:
 
 ## The path to multiple nodes
 
-Not being built now. The order is: a single runtime node, then several, placement metadata, node capability labels, drain, gateway separation, a dedicated router, and onward.
+Multiple nodes are not running yet, because there is one runtime node today. As of 18 November 2026 the first two steps are in place: a project can run as several replicas on that node, with the node router spreading requests across the healthy ones, and Sakala Edge forwards public traffic to the node ([ADR-019](/en/docs/proyek/adr)). Next come more nodes, spreading replicas across them, drain, and onward.
 
 What matters today is only that the path stays open.

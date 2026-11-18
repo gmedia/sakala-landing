@@ -114,6 +114,6 @@ Tujuh hal berikut memerlukan keputusan arsitektur tercatat bila hendak diubah:
 
 ## Jalan menuju multi-node
 
-Belum dibangun sekarang. Arahnya berurutan: satu runtime node, lalu beberapa node, metadata penempatan, label kemampuan node, drain, pemisahan gateway, router tersendiri, dan seterusnya.
+Multi-node belum berjalan, karena saat ini baru ada satu runtime node. Per 18 November 2026 dua langkah awalnya sudah berjalan: satu project bisa berjalan sebagai beberapa replika di node itu, dengan router node yang membagi request ke replika yang sehat, dan Sakala Edge meneruskan trafik publik ke node ([ADR-019](/docs/proyek/adr)). Arah berikutnya: menambah node, menyebar replika ke beberapa node, drain, dan seterusnya.
 
 Yang dijaga sekarang hanyalah tidak menutup jalan itu.

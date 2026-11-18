@@ -2,7 +2,7 @@
 version: syarat-v1
 ---
 
-Dengan menyetujui syarat ini saat mendaftar, atau saat pertama kali masuk lewat GitHub atau Google, kamu boleh memakai layanan Sakala di `sakala.dev`, `app.sakala.dev`, dan `*.run.sakala.dev`. Sakala masih tahap pilot, gratis, dan belum siap menjadi tempat aplikasi yang penting. Syarat ini ditulis supaya kamu tahu persis apa yang bisa dan tidak bisa kamu harapkan.
+Dengan menyetujui syarat ini saat mendaftar, atau saat pertama kali masuk lewat GitHub atau Google, kamu boleh memakai layanan Sakala di `sakala.dev`, `app.sakala.dev`, dan `*.sakala.app`. Sakala masih tahap pilot, gratis, dan belum siap menjadi tempat aplikasi yang penting. Syarat ini ditulis supaya kamu tahu persis apa yang bisa dan tidak bisa kamu harapkan.
 
 Pemrosesan data pribadimu dijelaskan terpisah di [Pemberitahuan Privasi](/privasi), yang bukan bagian dari persetujuan ini.
 
@@ -22,7 +22,7 @@ Kamu bertanggung jawab atas keamanan akunmu dan atas semua yang terjadi lewat ak
 
 ## 3. Apa yang kamu dapat
 
-Sakala mengambil source code dari repository GitHub-mu, membangunnya, menjalankannya sebagai satu web service, dan memberinya alamat `<slug>.run.sakala.dev`.
+Sakala mengambil source code dari repository GitHub-mu, membangunnya, menjalankannya sebagai satu web service, dan memberinya alamat `<slug>.sakala.app`.
 
 Batas pilot saat ini:
 
@@ -49,9 +49,9 @@ Layanan ini disediakan apa adanya. Kami tidak menjanjikan uptime, SLA, pemulihan
 
 Hal berikut bisa terjadi, kadang tanpa pemberitahuan: layanan berhenti, proyek perlu di-deploy ulang, log terhapus lebih cepat dari biasanya, atau data hilang karena kerusakan node.
 
-Isolasi antarpengguna belum selesai. Runtime tersandbox gVisor belum aktif di production, dan container pengguna belum dibatasi lalu lintas keluarnya. Jadi jangan menjalankan aplikasi yang menyimpan data sensitif atau yang kegagalannya bisa merugikan orang lain.
+Isolasi antarpengguna belum selesai. Aplikasi pengguna di production sudah berjalan di sandbox gVisor, tetapi container pengguna belum dibatasi lalu lintas keluarnya. Jadi jangan menjalankan aplikasi yang menyimpan data sensitif atau yang kegagalannya bisa merugikan orang lain.
 
-Alamat `*.run.sakala.dev` juga bisa berubah. Ada usulan memindahkan aplikasi pengguna ke domain terpisah, dan kalau itu diputuskan, kami akan mengumumkannya lebih dulu.
+Sejak 18 November 2026, aplikasi pengguna berjalan di domain terpisah, `*.sakala.app`, menggantikan `*.run.sakala.dev`. Kalau alamat ini berubah lagi, kami akan mengumumkannya lebih dulu.
 
 ## 5. Kode dan datamu tetap milikmu
 
