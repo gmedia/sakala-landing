@@ -23,6 +23,7 @@ Panduan pakai baru sebagian ada, terutama untuk peserta pilot:
 - [Deploy Pertamamu](/docs/deploy-pertama), langkah demi langkah sampai punya URL publik;
 - [Menyiapkan Dockerfile](/docs/dockerfile) dengan contoh yang sudah dicoba;
 - [Menghubungkan database eksternal](/docs/database-eksternal), karena Sakala belum menyediakan database;
+- [Database dan perintah rilis](/docs/perintah-rilis), untuk menjalankan migration sekali setiap deployment;
 - [Saat deploy gagal](/docs/deploy-gagal), untuk membaca kode kegagalan dan memperbaikinya.
 
 Yang tetap berguna walau kamu akhirnya memakai platform lain:

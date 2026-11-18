@@ -66,9 +66,11 @@ Then press **Buat Proyek** and **Deploy sekarang**.
 
 ## Step 2: run migrations deliberately
 
-Sakala does not run `php artisan migrate` for you, and there is no dedicated pre-deploy step for migrations yet. Run migrations as a step you decide on, not as a side effect of every application start.
+Run migrations as a step you decide on, not as a side effect of every application start. There are two ways.
 
-The way we suggest: from your laptop or CI, point Laravel at the same database and run the migrations before deploying the version that needs them.
+The first is the release command: set the **Release command** field in the API project's **Pengaturan** (settings) tab to `php artisan migrate --force`. Sakala runs it once per deployment, after the build and before the new version receives traffic. How it works and which versions it needs are in [Databases and the Release Command](/en/docs/perintah-rilis).
+
+The second, if the Sakala you use does not offer the release command yet: from your laptop or CI, point Laravel at the same database and run the migrations before deploying the version that needs them.
 
 ```bash
 cd apps/api
@@ -79,7 +81,7 @@ php artisan migrate --force
 
 Do not keep that command with its password in a shared shell history, and do not commit it. The database must be reachable from your laptop. If your provider restricts IP addresses, allow yours first.
 
-You may be tempted to put `php artisan migrate --force && ...` in front of Start command. That runs every time the container starts, including restarts and redeploys. A failing migration also keeps the application from ever starting, and all you see is `runtime_app_crashed`. If you have to use it, remove it again once the migration is done.
+You may be tempted to put `php artisan migrate --force && ...` in front of Start command. That runs every time the container starts, including restarts and redeploys. A failing migration also keeps the application from ever starting, and all you see is `runtime_app_crashed`. If your project has several replicas, each replica also runs it at the same time. Use the release command instead.
 
 Write migrations that stay safe for the version that is running, because the old version keeps serving until the new one passes its check.
 

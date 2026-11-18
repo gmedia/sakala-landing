@@ -24,6 +24,7 @@ Usage guides exist only in part, mainly for pilot participants:
 - [Your First Deploy](/en/docs/deploy-pertama), step by step to a public URL;
 - [Preparing a Dockerfile](/en/docs/dockerfile), with examples that have been tried;
 - [Connecting an external database](/en/docs/database-eksternal), since Sakala does not provide one;
+- [Databases and the release command](/en/docs/perintah-rilis), to run migrations once per deployment;
 - [When a deploy fails](/en/docs/deploy-gagal), to read failure codes and fix them.
 
 What stays useful even if you end up using a different platform:

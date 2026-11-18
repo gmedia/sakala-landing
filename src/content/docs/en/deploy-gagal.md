@@ -36,6 +36,7 @@ For faults on Sakala's side, the advice below the summary is headed **Yang bisa 
 | ------------ | ------------------------------------------------------- | --------------------------------------------------- |
 | `checkout`   | Source code could not be fetched from GitHub            | Check the repository and GitHub access              |
 | `build`      | The image was not built                                 | Fix the Dockerfile or dependencies                  |
+| `release`    | The release command failed or passed its time limit     | Read the `[release]` lines in the log               |
 | `start`      | The image exists, but the application does not stay up  | Read the application log                            |
 | `health`     | The application is alive, but does not answer correctly | Check the port and `/`                              |
 | `route`      | The public address could not be prepared                | A fault on Sakala's side                            |
@@ -139,6 +140,24 @@ This case has no code of its own. If Sakala does not find a file named exactly `
 - **Fix:** In the **Pengaturan** tab, correct the **Root Directory** field, for example `apps/web`, or clear it to use the repository root. Save, then press **Redeploy**.
 
 Does your repository hold several applications? See [Deploying a Monorepo](/en/docs/monorepo), including its limits: the build only sees the Root Directory, so lockfiles and workspace packages at the repository root are left out.
+
+### Release command
+
+The codes in this section only appear if your project sets a release command, the **Release command** field in the **Pengaturan** (settings) tab. That command runs after the build and before the new version receives traffic. See [Databases and the Release Command](/en/docs/perintah-rilis).
+
+#### `release_command_failed`
+
+- **What you see:** "Perintah rilis keluar dengan kode selain 0, jadi versi baru tidak dijalankan." (the release command exited with a non-zero code, so the new version was not started)
+- **Cause:** The release command finished with a non-zero exit code. For example: a migration failed, the database connection variables are not set, the database cannot be reached, or the tool it calls is not in the image.
+- **Check:** Look at the exit code in **Detail error**, then read the lines starting with `[release]` in the Logs panel. Exit code 127 usually means the command, or `sh`, was not found in the image.
+- **Fix:** Fix the migration in the repository, or change **Release command** in the **Pengaturan** tab, then deploy again. If a migration ran partway, check the database schema before trying again.
+
+#### `release_command_timeout`
+
+- **What you see:** "Perintah rilis melewati batas waktu, jadi versi baru tidak dijalankan." (the release command passed its time limit, so the new version was not started)
+- **Cause:** The release command had not finished when its time limit ran out. The limit is set by the Sakala operator, 600 seconds by default, and cannot be changed from the project. This can happen when the command waits for input, starts a server, or a migration works through a large table for too long.
+- **Check:** Read the last lines starting with `[release]` in the Logs panel to find the slow step.
+- **Fix:** Make sure the command finishes on its own, does not wait for input, and does not start a server. Split a long migration across several deployments. Then deploy again.
 
 ### The application on start
 

@@ -65,9 +65,11 @@ Lalu tekan **Buat Proyek** dan **Deploy sekarang**.
 
 ## Langkah 2: jalankan migration dengan sengaja
 
-Sakala tidak menjalankan `php artisan migrate` untukmu, dan belum ada tahap khusus untuk migration sebelum deploy. Jalankan migration sebagai langkah yang kamu putuskan sendiri, bukan sebagai efek samping setiap kali aplikasi start.
+Jalankan migration sebagai langkah yang kamu putuskan sendiri, bukan sebagai efek samping setiap kali aplikasi start. Ada dua cara.
 
-Cara yang kami sarankan: dari laptop atau CI, arahkan Laravel ke database yang sama lalu jalankan migration sebelum men-deploy versi yang membutuhkannya.
+Cara pertama adalah perintah rilis: isi field **Release command** di tab **Pengaturan** proyek API dengan `php artisan migrate --force`. Sakala menjalankannya sekali setiap deployment, setelah build dan sebelum versi baru menerima trafik. Cara kerja dan syarat versinya ada di [Database dan Perintah Rilis](/docs/perintah-rilis).
+
+Cara kedua, kalau perintah rilis belum tersedia di Sakala yang kamu pakai: dari laptop atau CI, arahkan Laravel ke database yang sama lalu jalankan migration sebelum men-deploy versi yang membutuhkannya.
 
 ```bash
 cd apps/api
@@ -78,7 +80,7 @@ php artisan migrate --force
 
 Jangan simpan perintah berisi password itu di riwayat shell bersama, dan jangan commit ke repository. Database harus bisa dijangkau dari laptopmu. Kalau provider-mu membatasi alamat IP, izinkan dulu alamatmu.
 
-Kamu mungkin tergoda menaruh `php artisan migrate --force && ...` di depan Start command. Itu berjalan setiap kali container start, termasuk saat restart dan redeploy. Migration yang gagal juga membuat aplikasi tidak pernah start, dan yang terlihat hanya `runtime_app_crashed`. Kalau terpaksa memakainya, buang lagi setelah migration-nya selesai.
+Kamu mungkin tergoda menaruh `php artisan migrate --force && ...` di depan Start command. Itu berjalan setiap kali container start, termasuk saat restart dan redeploy. Migration yang gagal juga membuat aplikasi tidak pernah start, dan yang terlihat hanya `runtime_app_crashed`. Kalau project-mu punya beberapa replika, setiap replika juga menjalankannya bersamaan. Pakai perintah rilis sebagai gantinya.
 
 Tulis migration yang tetap aman untuk versi aplikasi yang sedang berjalan, karena versi lama terus melayani sampai versi baru lolos pengecekan.
 

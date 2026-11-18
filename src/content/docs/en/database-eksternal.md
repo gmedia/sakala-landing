@@ -120,7 +120,9 @@ Some providers only accept connections from a list of IP addresses. As of 6 Nove
 
 ## Migrations and backups are your responsibility
 
-Sakala does not run migrations and does not back up data. The simplest way is to run migrations from your laptop, with `DATABASE_URL` living only in your terminal. `read -rs` keeps the value off the screen and out of your shell history:
+Sakala does not back up data. For migrations there are two ways. The first is the release command, which Sakala runs once per deployment before the new version receives traffic. It is explained in [Databases and the Release Command](/en/docs/perintah-rilis).
+
+The second is to run migrations from your laptop, with `DATABASE_URL` living only in your terminal. `read -rs` keeps the value off the screen and out of your shell history:
 
 ```bash
 read -rs DATABASE_URL && export DATABASE_URL
@@ -130,7 +132,7 @@ unset DATABASE_URL
 
 `npm run migrate` here is a script in your own project, so adapt it to the migration tool you use.
 
-If migrations run when the application starts, remember one thing: **a failed deploy returns traffic to the old version, but it does not return the data.** A changed schema stays changed, and the old version can break when it reads the new schema.
+Whichever way you choose, remember one thing: **a failed deploy returns traffic to the old version, but it does not return the data.** A changed schema stays changed, and the old version can break when it reads the new schema.
 
 Before a migration that deletes or changes data:
 
