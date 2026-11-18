@@ -119,7 +119,9 @@ Beberapa provider hanya menerima koneksi dari daftar IP tertentu. Per 6 November
 
 ## Migration dan backup adalah tanggung jawabmu
 
-Sakala tidak menjalankan migration dan tidak mem-backup data. Cara paling sederhana adalah menjalankan migration dari laptop, dengan `DATABASE_URL` yang hanya hidup di terminalmu. `read -rs` membuat nilainya tidak tampil di layar dan tidak tersimpan di riwayat shell:
+Sakala tidak mem-backup data. Untuk migration ada dua cara. Yang pertama adalah perintah rilis, yang Sakala jalankan sekali setiap deployment sebelum versi baru menerima trafik. Penjelasannya ada di [Database dan Perintah Rilis](/docs/perintah-rilis).
+
+Cara kedua adalah menjalankan migration dari laptop, dengan `DATABASE_URL` yang hanya hidup di terminalmu. `read -rs` membuat nilainya tidak tampil di layar dan tidak tersimpan di riwayat shell:
 
 ```bash
 read -rs DATABASE_URL && export DATABASE_URL
@@ -129,7 +131,7 @@ unset DATABASE_URL
 
 `npm run migrate` di sini adalah script di project-mu sendiri, jadi sesuaikan dengan alat migration yang kamu pakai.
 
-Kalau migration dijalankan saat aplikasi mulai, ingat satu hal: **deploy yang gagal mengembalikan trafik ke versi lama, tetapi tidak mengembalikan datanya.** Skema yang sudah berubah tetap berubah, dan versi lama bisa rusak karena membaca skema baru.
+Apa pun caranya, ingat satu hal: **deploy yang gagal mengembalikan trafik ke versi lama, tetapi tidak mengembalikan datanya.** Skema yang sudah berubah tetap berubah, dan versi lama bisa rusak karena membaca skema baru.
 
 Sebelum migration yang menghapus atau mengubah data:
 

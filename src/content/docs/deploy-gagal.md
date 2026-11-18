@@ -35,6 +35,7 @@ Untuk gangguan di sisi Sakala, saran di bawah ringkasan berjudul **Yang bisa kam
 | ------------ | -------------------------------------------------- | --------------------------------------------------------------------- |
 | `checkout`   | Source code tidak bisa diambil dari GitHub         | Periksa repository dan akses GitHub                                   |
 | `build`      | Image tidak berhasil dibangun                      | Perbaiki Dockerfile atau dependency                                   |
+| `release`    | Perintah rilis gagal atau melewati batas waktu     | Baca bagian `[release]` di log                                        |
 | `start`      | Image jadi, tetapi aplikasinya tidak bertahan      | Baca log aplikasi                                                     |
 | `health`     | Aplikasi hidup, tetapi tidak menjawab dengan benar | Periksa port dan alamat `/`                                           |
 | `route`      | Alamat publik gagal disiapkan                      | Gangguan di sisi Sakala                                               |
@@ -138,6 +139,24 @@ Kasus ini tidak punya kode sendiri. Kalau Sakala tidak menemukan berkas bernama 
 - **Perbaiki:** Di tab **Pengaturan**, perbaiki kolom **Root Directory**, misalnya `apps/web`, atau kosongkan untuk memakai root repository. Simpan, lalu tekan **Redeploy**.
 
 Repository-mu berisi beberapa aplikasi? Lihat [Men-deploy monorepo](/docs/monorepo), termasuk batasnya: build hanya melihat isi Root Directory, jadi lockfile dan package workspace di root repository tidak ikut.
+
+### Perintah rilis
+
+Kode di bagian ini hanya muncul kalau project-mu mengisi perintah rilis, yaitu field **Release command** di tab **Pengaturan**. Perintah itu berjalan setelah build dan sebelum versi baru menerima trafik. Lihat [Database dan Perintah Rilis](/docs/perintah-rilis).
+
+#### `release_command_failed`
+
+- **Yang terlihat:** "Perintah rilis keluar dengan kode selain 0, jadi versi baru tidak dijalankan."
+- **Penyebab:** Perintah rilis selesai dengan exit code selain 0. Contohnya: migration gagal, environment variable koneksi database belum diisi, database tidak bisa dihubungi, atau alat yang dipanggil tidak ada di image.
+- **Cek:** Lihat exit code di **Detail error**, lalu baca baris berawalan `[release]` di panel Logs. Exit code 127 biasanya berarti perintahnya, atau `sh`, tidak ditemukan di image.
+- **Perbaiki:** Perbaiki migration di repository, atau ubah **Release command** di tab **Pengaturan**, lalu deploy ulang. Kalau migration sudah sebagian berjalan, periksa dulu skema database sebelum mencoba lagi.
+
+#### `release_command_timeout`
+
+- **Yang terlihat:** "Perintah rilis melewati batas waktu, jadi versi baru tidak dijalankan."
+- **Penyebab:** Perintah rilis belum selesai sampai batas waktunya habis. Batas ini ditentukan operator Sakala, defaultnya 600 detik, dan tidak bisa diubah dari project. Ini bisa terjadi kalau perintahnya menunggu input, menjalankan server, atau migration-nya memproses tabel besar terlalu lama.
+- **Cek:** Baca baris terakhir berawalan `[release]` di panel Logs untuk melihat langkah yang lambat.
+- **Perbaiki:** Pastikan perintahnya selesai sendiri, tidak menunggu input, dan tidak menjalankan server. Pecah migration yang lama menjadi beberapa deployment. Lalu deploy ulang.
 
 ### Aplikasi saat mulai
 

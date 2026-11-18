@@ -19,6 +19,22 @@ versinya di file ini.
 
 ## [Unreleased]
 
+### Added
+
+- Halaman panduan "Database dan Perintah Rilis" (id dan en) menjelaskan cara
+  memakai database dari layanan lain selama Sakala belum menyediakan database
+  terkelola, dan perintah rilis per project (field **Release command**): kapan
+  ia berjalan, kapan tidak, batas waktunya, migration yang cocok dengan versi
+  lama, dan alasan seeder serta migration tidak ditaruh di Start command.
+- "Saat Deploy Gagal" (id dan en) kini memuat kategori `release` beserta kode
+  `release_command_failed` dan `release_command_timeout`.
+
+### Changed
+
+- "Menghubungkan Database Eksternal" dan "Men-deploy Monorepo" (id dan en)
+  kini menyarankan perintah rilis untuk migration, dengan menjalankan
+  migration dari laptop sebagai cara lain.
+
 ## [0.3.7] - 2026-11-18
 
 ### Added
