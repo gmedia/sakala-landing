@@ -19,6 +19,13 @@ versinya di file ini.
 
 ## [Unreleased]
 
+### Changed
+
+- FAQ (id dan en) menjelaskan bahwa router Sakala membuang atribut `Domain`
+  dari cookie aplikasi, bahwa pendaftaran `sakala.app` ke Public Suffix List
+  menunggu jumlah pengguna cukup besar, dan cara memakai cookie berawalan
+  `__Host-` untuk sesi login.
+
 ## [0.3.8] - 2026-11-18
 
 ### Added
