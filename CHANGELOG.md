@@ -19,6 +19,8 @@ versinya di file ini.
 
 ## [Unreleased]
 
+## [0.3.7] - 2026-11-18
+
 ### Added
 
 - Setiap tag `vX.Y.Z` kini juga menerbitkan GitHub Release setelah image
@@ -27,9 +29,23 @@ versinya di file ini.
   release gagal kalau tag tidak punya bagian yang berisi di file ini.
 - FAQ (id dan en) menjelaskan mengapa aplikasi pengguna berada di domain
   terpisah `sakala.app`, bukan di `sakala.dev`.
+- ADR-019 (Proposed) mencatat Sakala Edge, tier routing yang meneruskan trafik
+  publik ke runtime node, beserta jalur wake untuk sleep otomatis (#60).
+  Pembaruan 2026-11-18 mencatat urutan kerja (replika di satu node dulu, lalu
+  Sakala Edge), teknologi Edge, dua lapis load balancing, dan model region
+  (#65).
 
 ### Changed
 
+- ADR-019 berstatus Accepted sejak Sakala Edge melayani trafik production
+  pada 2026-11-18, dengan daftar yang sudah selesai (replika, tabel route API,
+  penempatan berdasarkan region dan kapasitas, `sakala-edge`, pemulihan
+  replika) dan yang tersisa (node kedua, replika lintas node).
+- Pemberitahuan Privasi kini menjelaskan bahwa cookie Console berlaku di
+  `sakala.dev` dan tidak terkirim ke aplikasi pengguna di `*.sakala.app`.
+  Syarat Layanan kini menyebut bahwa aplikasi di production sudah berjalan di
+  sandbox gVisor, dan bahwa perubahan alamat berikutnya diumumkan lebih dulu.
+  Versi dokumen tidak berubah.
 - Alamat aplikasi pengguna di dokumentasi, beranda, dan contoh perintah kini
   `<slug>.sakala.app` (staging `<slug>.staging.sakala.app`), menggantikan
   `*.run.sakala.dev` yang sudah dimatikan.
@@ -44,6 +60,10 @@ versinya di file ini.
 - PRD §9.3 mencatat replika per project, dan bagian "Jalan menuju multi-node"
   di dokumentasi teknis (id dan en) menyebut replika di satu node dan Sakala
   Edge yang sudah berjalan.
+- `sakala-maintainers` menjadi code owner semua path (#58).
+- Dependency diperbarui lewat Dependabot: astro 7.4.7, @astrojs/mdx 8.1.3,
+  tailwindcss dan @tailwindcss/vite 4.3.5, vite 8.3.6 (#62), serta
+  docker/login-action dan softprops/action-gh-release v3.0.4 (#61).
 
 ## [0.3.6] - 2026-11-12
 
@@ -231,7 +251,8 @@ sampai workflow release (#1 sampai #21).
   Source (#19).
 - Dependency diperbarui ke versi terbaru (#13).
 
-[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.3.6...HEAD
+[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.3.7...HEAD
+[0.3.7]: https://github.com/gmedia/sakala-landing/compare/v0.3.6...v0.3.7
 [0.3.6]: https://github.com/gmedia/sakala-landing/compare/v0.3.5...v0.3.6
 [0.3.5]: https://github.com/gmedia/sakala-landing/compare/v0.3.4...v0.3.5
 [0.3.4]: https://github.com/gmedia/sakala-landing/compare/v0.3.3...v0.3.4
