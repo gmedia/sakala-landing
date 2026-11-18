@@ -1,6 +1,6 @@
 ---
 title: "Architecture Decision Records"
-description: "Architecture and product decisions with their status, context, alternatives, and consequences — from separating console and API to workload isolation, quotas, the shared public domain, the hosted plus self-host model, workspace ownership, and the edge routing tier."
+description: "Architecture and product decisions with their status, context, alternatives, and consequences — from separating console and API to workload isolation, quotas, the shared public domain, the hosted plus self-host model, workspace ownership, and the edge routing tier with replicas and regions."
 track: proyek
 section: sistem
 order: 6
@@ -549,7 +549,8 @@ limits per class rather than per user.
 
 ## ADR-019 — Sakala Edge Routes Public Traffic to Runtime Nodes
 
-**Status:** Proposed
+**Status:** Proposed (replicas on a node in place; see the update of
+2026-11-18)
 
 ### Context
 
@@ -639,3 +640,67 @@ load balancer) is a separate decision and not part of this ADR.
 - The Agent, the API route table, and the scheduler change together, so this
   work stays with maintainers (protocol and security boundary), not with
   outside contributors.
+
+### Update 2026-11-18: build order, technology, regions
+
+**Build order.** The maintainer changed the order of the stages above. Replicas
+on one node come first, and Sakala Edge is built now, before a second node
+exists, so adding a node later is provisioning only.
+
+- **Phase 1, replicas on a node.** A project can run N containers on the node
+  that serves it. The node's Caddy (`runtime-caddy`) balances across the
+  healthy replicas with `least_conn` and passive health checks: a replica that
+  fails a request receives no traffic for 10 seconds, and the request is
+  retried on another replica for up to 5 seconds. Active health checks were
+  rejected because Caddy 2.11 treats only one status class as healthy, while
+  Sakala treats any status below 500 as alive.
+- **Phase 2, Sakala Edge.** Built next and deployed in front of the single
+  node that exists today.
+
+**Technology.** Sakala Edge is Caddy as the data plane plus a small sync
+service, `sakala-edge`:
+
+- The API publishes the route table at `GET /api/edge/v1/routes`, readable
+  only with the Edge credential.
+- `sakala-edge` validates every table before using it. It rejects an empty
+  table, a host outside the project domains, an upstream that is not a
+  private address, and a table smaller than the minimum the API says to
+  expect. It keeps the last good snapshot on disk, renders it as a Caddyfile
+  include, and reloads Caddy, rolling back to the previous file if the reload
+  fails. An API outage, or an Edge restart during one, therefore keeps the
+  last good routes.
+- Traefik with its HTTP provider was evaluated and rejected. It does not
+  persist polled configuration, so an Edge restart during an API outage would
+  drop every route. Its open-source ACME cannot share certificates between
+  instances. It would also add a second proxy to a stack that otherwise runs
+  only Caddy.
+- Caddy's own HTTP config loader was rejected because it replaces the whole
+  configuration on each load and stops polling after one failed apply.
+- Rate limiting at the Edge is deferred, because Caddy needs a third-party
+  module for it. Rate limiting of wake requests already lives in the API.
+
+**Load balancing layers.** The Edge balances across nodes; each node's Caddy
+balances across that node's replicas. The Edge never needs to know about
+individual replicas.
+
+**Regions**, as agreed with the maintainer:
+
+- A user chooses a region per project. A workspace may set a default region
+  for its new projects.
+- The scheduler places a project only on nodes labelled with that region.
+- When a region has more than one node, the replicas of a project are spread
+  across different nodes in that region automatically.
+- Replicas in more than one region are deferred until there is demand. They
+  need DNS that steers each user to the nearest region, and they make apps
+  backed by one database slower, because every request from the far region
+  crosses to the database.
+
+**Status.** The ADR stays Proposed until Sakala Edge serves production traffic.
+
+- Done: replicas on a node
+  ([sakala-agent#93](https://github.com/gmedia/sakala-agent/pull/93),
+  [sakala-api#162](https://github.com/gmedia/sakala-api/pull/162),
+  [sakala-console#129](https://github.com/gmedia/sakala-console/pull/129)).
+- Remaining: the API route table endpoint, deploying the Edge (staging, then
+  production), placement that accounts for node capacity and region labels,
+  and the second node.
