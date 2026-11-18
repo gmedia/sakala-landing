@@ -95,7 +95,7 @@ Workspace, anggota, peran, dan koleksi milik organisasi.
 
 PostgreSQL, Redis atau Valkey, object storage terkelola, worker dan queue,
 backup dan restore, observability yang lebih kaya.
-Rancangan PostgreSQL terkelola per project diusulkan di
+Rancangan PostgreSQL terkelola diusulkan di
 [ADR-020](/docs/proyek/adr).
 
 ### Horizon H — Platformisasi
