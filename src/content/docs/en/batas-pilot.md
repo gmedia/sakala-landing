@@ -52,7 +52,7 @@ Your application is stopped while it sleeps and started again when it wakes, so 
 - An uptime guarantee, an SLA, or data recovery.
 - Persistent storage inside the container. Files the application writes, including SQLite and uploads, are lost every time a new deploy finishes. For data, use an [external database](/en/docs/database-eksternal).
 - Managed databases, custom domains, workers, and cron.
-- Limits on outgoing traffic from containers. Applications run in a gVisor sandbox, but do not keep sensitive data on Sakala during the pilot.
+- Limits on outgoing traffic from containers. These limits are being added. Applications already run in a gVisor sandbox, but do not keep sensitive data on Sakala during the pilot.
 
 ## The binding rules
 

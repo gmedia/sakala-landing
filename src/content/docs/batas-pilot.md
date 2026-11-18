@@ -51,7 +51,7 @@ Aplikasimu dihentikan saat tidur dan dijalankan lagi saat bangun, jadi apa pun y
 - Jaminan uptime, SLA, atau pemulihan data.
 - Penyimpanan tetap di dalam container. Berkas yang ditulis aplikasi, termasuk SQLite dan hasil upload, hilang setiap kali deploy baru selesai. Untuk data, pakai [database eksternal](/docs/database-eksternal).
 - Database terkelola, custom domain, worker, dan cron.
-- Pembatasan lalu lintas keluar dari container. Aplikasi berjalan di sandbox gVisor, tetapi jangan menyimpan data sensitif di Sakala selama pilot.
+- Pembatasan lalu lintas keluar dari container. Pembatasan ini sedang ditambahkan. Aplikasi sudah berjalan di sandbox gVisor, tetapi selama pilot jangan menyimpan data sensitif di Sakala.
 
 ## Aturan yang mengikat
 

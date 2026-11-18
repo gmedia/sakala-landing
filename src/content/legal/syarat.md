@@ -24,22 +24,26 @@ Kamu bertanggung jawab atas keamanan akunmu dan atas semua yang terjadi lewat ak
 
 Sakala mengambil source code dari repository GitHub-mu, membangunnya, menjalankannya sebagai satu web service, dan memberinya alamat `<slug>.sakala.app`.
 
-Batas pilot saat ini:
+Batas pilot saat ini, untuk workspace pribadi tanpa profil batas khusus:
 
-| Batas                         | Nilai                                                          |
-| ----------------------------- | -------------------------------------------------------------- |
-| Proyek per pengguna           | 3                                                              |
-| Deployment aktif per pengguna | 2                                                              |
-| Deployment aktif per proyek   | 1                                                              |
-| Memori per container          | 256 MB, maksimal 512 MB                                        |
-| CPU per container             | 0,5 core, maksimal 1 core                                      |
-| Jumlah proses per container   | 128, maksimal 256                                              |
-| Waktu build                   | 10 menit                                                       |
-| Waktu start sampai sehat      | 2 menit                                                        |
-| Waktu total satu perintah     | 15 menit                                                       |
-| Log yang tersimpan            | 7 hari setelah deployment selesai, maksimal 10 MB per perintah |
+| Batas                            | Nilai                                                          |
+| -------------------------------- | -------------------------------------------------------------- |
+| Proyek per workspace             | 3                                                              |
+| Container berjalan per workspace | 3                                                              |
+| Deployment aktif per workspace   | 2                                                              |
+| Deployment aktif per proyek      | 1                                                              |
+| Build per workspace              | 20 per jam, dihitung 60 menit ke belakang                      |
+| Memori per container             | 256 MB, maksimal 512 MB                                        |
+| CPU per container                | 0,5 core, maksimal 1 core                                      |
+| Jumlah proses per container      | 128, maksimal 256                                              |
+| Waktu build                      | 10 menit                                                       |
+| Waktu start sampai sehat         | 2 menit                                                        |
+| Waktu total satu perintah        | 15 menit                                                       |
+| Log yang tersimpan               | 7 hari setelah deployment selesai, maksimal 10 MB per perintah |
 
-Perubahan batas kami umumkan sebelum berlaku. Sleep otomatis untuk proyek tanpa trafik dan batas jumlah build per jam belum aktif, tetapi direncanakan. Kami akan mengumumkannya sebelum diaktifkan.
+Workspace tim, dan workspace yang diberi profil batas oleh admin, bisa punya batas yang berbeda. Rincian semua batas ada di [Batas Pilot](/docs/batas-pilot). Perubahan batas kami umumkan sebelum berlaku.
+
+Proyek yang tidak dikunjungi selama 30 menit ditidurkan, lalu dinyalakan lagi saat alamatnya dibuka atau saat kamu membangunkannya dari Console. Selama tidur, aplikasimu tidak berjalan.
 
 Container tidak punya penyimpanan tetap. Berkas yang ditulis di dalam container, termasuk SQLite dan hasil upload, hilang setiap kali deploy baru selesai. Sakala juga belum menyediakan basis data, custom domain, worker, atau cron.
 

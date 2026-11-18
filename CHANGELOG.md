@@ -34,6 +34,9 @@ versinya di file ini.
   batas per container, sleep setelah 30 menit tanpa pengunjung, dan yang belum
   ada selama pilot. Chip status beranda, Produk, Roadmap, hub dokumentasi, dan
   Deploy Pertamamu menautkannya.
+- Entri changelog situs "Batas pilot yang kini berlaku" (id dan en, 19
+  November 2026): pengumuman yang dijanjikan Syarat Layanan §3 untuk sleep
+  otomatis dan batas build per jam.
 - Lima entri changelog situs (id dan en) untuk perkembangan sejak 1 Oktober
   2026: Console dan workspace tim, sleep otomatis, domain `sakala.app`, replika
   dengan Sakala Edge beserta perintah rilis dan batas build per jam, dan pilot
@@ -53,6 +56,10 @@ versinya di file ini.
 - Produk memberi status per kemampuan, bukan per pilar, per 19 November 2026.
   Roadmap memisahkan "Sudah tersedia" dari horizon yang belum dibangun, dengan
   label horizon mengikuti dokumen roadmap kanonik.
+- Syarat Layanan §3 memuat batas yang sekarang berlaku: kuota proyek,
+  container, dan deployment per workspace, 20 build per workspace per jam,
+  dan sleep setelah 30 menit tanpa pengunjung. Versi (`syarat-v1`) dan tanggal
+  berlakunya tidak diubah, karena yang berubah adalah batas operasional.
 - Dokumen kanonik Roadmap, MVP, dan PRD mencatat status per 19 November 2026
   (pendaftaran pilot terbuka, fase engineering yang sudah berjalan di
   production).
