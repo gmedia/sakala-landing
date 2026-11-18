@@ -19,6 +19,8 @@ versinya di file ini.
 
 ## [Unreleased]
 
+## [0.3.8] - 2026-11-18
+
 ### Added
 
 - Halaman panduan "Database dan Perintah Rilis" (id dan en) menjelaskan cara
@@ -267,7 +269,8 @@ sampai workflow release (#1 sampai #21).
   Source (#19).
 - Dependency diperbarui ke versi terbaru (#13).
 
-[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.3.7...HEAD
+[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.3.8...HEAD
+[0.3.8]: https://github.com/gmedia/sakala-landing/compare/v0.3.7...v0.3.8
 [0.3.7]: https://github.com/gmedia/sakala-landing/compare/v0.3.6...v0.3.7
 [0.3.6]: https://github.com/gmedia/sakala-landing/compare/v0.3.5...v0.3.6
 [0.3.5]: https://github.com/gmedia/sakala-landing/compare/v0.3.4...v0.3.5
