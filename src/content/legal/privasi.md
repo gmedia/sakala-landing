@@ -128,12 +128,12 @@ Yang sudah berjalan:
 - log disaring di agent dan di API;
 - basis data dan avatar yang diunggah dicadangkan setiap hari dalam bentuk terenkripsi;
 - tindakan sensitif admin, seperti stop, suspend, dan membuka kembali proyek, dicatat di jejak audit;
-- setiap pembacaan nilai secret dicatat di jejak audit, dengan nama variabelnya dan tanpa nilainya.
+- setiap pembacaan nilai secret dicatat di jejak audit, dengan nama variabelnya dan tanpa nilainya;
+- aplikasi pengguna di production berjalan di dalam sandbox gVisor, sehingga container pengguna tidak langsung berbagi kernel dengan host-nya.
 
 Yang belum selesai:
 
-- runtime tersandbox gVisor belum aktif di production, jadi container pengguna masih berbagi kernel dengan host-nya;
-- belum ada pembatasan lalu lintas keluar dari container pengguna;
+- pembatasan lalu lintas keluar dari container pengguna sedang ditambahkan;
 - belum ada jalur isolasi tersendiri untuk build;
 - pembacaan log oleh admin belum dicatat di jejak audit;
 - jejak audit belum punya batas waktu simpan.

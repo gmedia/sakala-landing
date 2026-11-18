@@ -11,7 +11,9 @@ lang: en
 
 A monorepo is one repository that holds several applications, for example `apps/api` and `apps/web`. Sakala deploys a monorepo as **one project per application**. Every project points at the same repository and branch, and each has its own **Root directory**.
 
-> **Status as of 11 November 2026.** Sakala is not open to the public yet. This guide comes from one real run in a Sakala development environment against the [`gmedia/facility-reporting`](https://github.com/gmedia/facility-reporting) repository, which holds a Laravel API in `apps/api` and a Vite web app in `apps/web`. It has not been tried with pilot users or in production. Other stacks have not been tried as a monorepo.
+> Sakala has been in an open pilot since 19 November 2026: anyone can sign up and use it at no cost, within the [usage limits](/en/docs/batas-pilot).
+>
+> **Status of this guide as of 11 November 2026.** This guide comes from one real run in a Sakala development environment against the [`gmedia/facility-reporting`](https://github.com/gmedia/facility-reporting) repository, which holds a Laravel API in `apps/api` and a Vite web app in `apps/web`. It has not been tried with pilot users or in production. Other stacks have not been tried as a monorepo.
 
 ## Who this is for
 

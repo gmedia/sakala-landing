@@ -11,7 +11,9 @@ lang: en
 
 By the end of this guide your repository has a Dockerfile that runs on your laptop and meets Sakala's two requirements: the application listens on `0.0.0.0:$PORT`, and `/` answers with a status under 500.
 
-> **Status as of 6 November 2026.** Sakala is not open to the public yet. This guide is for invited pilot participants and for anyone preparing an application ahead of time. The examples here have been built and run locally with Docker, under the same restrictions as the Sakala runtime, but have not been tried through Sakala in production.
+> Sakala has been in an open pilot since 19 November 2026: anyone can sign up and use it at no cost, within the [usage limits](/en/docs/batas-pilot).
+>
+> **Status of this guide as of 6 November 2026.** This guide is for anyone preparing an application for Sakala. The examples here have been built and run locally with Docker, under the same restrictions as the Sakala runtime, but have not been tried through Sakala in production.
 
 ## Who this is for
 

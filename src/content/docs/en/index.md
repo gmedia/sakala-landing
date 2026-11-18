@@ -15,11 +15,11 @@ You do not need to understand Docker, reverse proxies, or server configuration t
 
 ## Where things actually stand
 
-Sakala is **not open to the public yet**. A deployment path from a repository to a public URL exists and has been proven on staging, but registration is not open, and the path has not been tested with pilot users or in production. The status as of 6 November 2026 is in the [MVP](/en/docs/proyek/mvp) document.
+Hosted Sakala is in an **open pilot**. Anyone can [sign up in the Console](https://app.sakala.dev/register) and use it at no cost, within limits on projects, containers, and builds per hour, and projects sleep after 30 minutes without visitors. There is no uptime guarantee yet, so Sakala is not a fit for important applications. The details are in [Pilot Limits](/en/docs/batas-pilot), and the latest progress is in the [Changelog](/en/changelog).
 
-So most pages here are still design documents: the problem, the decisions already made, and the direction being built toward.
+Some pages here are usage guides, others are design documents: the problem, the decisions already made, and the direction being built toward.
 
-Usage guides exist only in part, mainly for pilot participants:
+Usage guides:
 
 - [Your First Deploy](/en/docs/deploy-pertama), step by step to a public URL;
 - [Preparing a Dockerfile](/en/docs/dockerfile), with examples that have been tried;
@@ -47,4 +47,4 @@ boundaries, the command lifecycle, and how the Agent works.
 | Console               | `app.sakala.dev` |
 | Deployed applications | `*.sakala.app`   |
 
-The Console is where projects are managed, and the `*.sakala.app` pattern means each application gets its own sub-address, on a domain [kept apart](/en/docs/faq#why-do-applications-live-on-sakalaapp-instead-of-sakaladev) from `sakala.dev` on purpose. While registration is not open to the public, neither can be used by just anyone.
+The Console is where projects are managed, and the `*.sakala.app` pattern means each application gets its own sub-address, on a domain [kept apart](/en/docs/faq#why-do-applications-live-on-sakalaapp-instead-of-sakaladev) from `sakala.dev` on purpose.

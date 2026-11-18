@@ -13,7 +13,9 @@ A failed deploy can almost always be traced from two places: the summary on the 
 
 The old version does not break with it. Sakala only moves traffic after the new version answers, so if your project has deployed successfully before, the last good version keeps serving visitors while you fix things.
 
-> **Status as of 6 November 2026.** Sakala is not open to the public yet, and this guide has not been tested with pilot users. The codes below follow `DeploymentFailureClassifier` in `sakala-api`. The Console shows its messages in Indonesian, and they are quoted here as they appear on screen.
+> Sakala has been in an open pilot since 19 November 2026: anyone can sign up and use it at no cost, within the [usage limits](/en/docs/batas-pilot).
+>
+> **Status of this guide as of 6 November 2026.** This guide has not been tested with pilot users. The codes below follow `DeploymentFailureClassifier` in `sakala-api`. The Console shows its messages in Indonesian, and they are quoted here as they appear on screen.
 
 ## Who this is for
 
@@ -261,7 +263,7 @@ Any code not listed on this page falls into the `unknown` category, with the sum
 1. Read the Logs panel, because the answer may be there.
 2. Deploy again once. The result is not guaranteed.
 3. If it fails again, note the failure code, the project name, the time, and the relevant log lines, without secret values.
-4. Tell the maintainer or mentor who invited you to the pilot, or open an [issue on `sakala-api`](https://github.com/gmedia/sakala-api/issues). Issues are public, so check the contents again.
+4. Tell us through the **Kirim Masukan** (send feedback) menu in the Console, or open an [issue on `sakala-api`](https://github.com/gmedia/sakala-api/issues). Issues are public, so check the contents again.
 
 The **Kirim Masukan** form in the Console, and the **Kirim masukan** link on a finished deployment page, help the team improve Sakala. The form is not a support channel, so you may not get a reply. Do not write secrets there. There is no promised response time or official support, because Sakala is still in development.
 

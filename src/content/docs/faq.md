@@ -10,11 +10,11 @@ order: 2
 
 ## Apa itu Sakala?
 
-Sakala adalah platform deployment open-source yang membawa project dari repository Git menjadi aplikasi yang dapat dibuka dan dibagikan. Ia diinisiasi oleh Sakala Maintainers, didukung GMEDIA sebagai founding sponsor, dan masih dalam pengembangan aktif — belum tersedia sebagai layanan publik.
+Sakala adalah platform deployment open-source yang membawa project dari repository Git menjadi aplikasi yang dapat dibuka dan dibagikan. Ia diinisiasi oleh Sakala Maintainers, didukung GMEDIA sebagai founding sponsor, dan masih dalam pengembangan aktif. Layanan hosted-nya sedang dalam tahap pilot terbuka, jadi siapa pun bisa [mendaftar](https://app.sakala.dev/register) dan memakainya tanpa biaya, dengan batas pemakaian.
 
 ## Apakah Sakala dapat langsung dipakai production?
 
-Belum. Sakala masih dalam pengembangan aktif dan belum dibuka untuk umum. Jalur deploy-nya sudah ada, tetapi belum teruji bersama pengguna pilot atau di production.
+Belum untuk aplikasi yang penting. Selama pilot tidak ada jaminan uptime, SLA, atau pemulihan data, dan berkas di dalam container hilang setiap kali deploy baru selesai. Untuk tugas, portfolio, dan demo, Sakala sudah bisa dipakai dengan batas yang dijelaskan di [Batas Pilot](/docs/batas-pilot).
 
 ## Apakah platform ini hanya untuk mahasiswa?
 

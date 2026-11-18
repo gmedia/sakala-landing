@@ -13,7 +13,9 @@ The Sakala MVP does not provide a database. If your application needs one, you r
 
 That makes backups, migrations, and data recovery your responsibility. Sakala only runs the application. Containers have no persistent storage either, so a SQLite file or an upload written inside the container is gone each time a new deploy finishes.
 
-> **Status as of 6 November 2026.** Sakala is not open to the public yet. The code example here has been run locally against PostgreSQL in Docker, without TLS. It has not been tried against a real provider or through Sakala in production.
+> Sakala has been in an open pilot since 19 November 2026: anyone can sign up and use it at no cost, within the [usage limits](/en/docs/batas-pilot).
+>
+> **Status of this guide as of 6 November 2026.** The code example here has been run locally against PostgreSQL in Docker, without TLS. It has not been tried against a real provider or through Sakala in production.
 
 ## Who this is for
 

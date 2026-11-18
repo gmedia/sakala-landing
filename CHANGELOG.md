@@ -29,9 +29,43 @@ versinya di file ini.
   RPO 24 jam, unduh dump oleh pemilik, daftar extension, kapan menambah
   PgBouncer dan PITR, dan hasil ukur PostgreSQL di bawah gVisor (runsc)
   dibanding runc. PRD 9.3 dan Horizon G di roadmap kini menautkan ADR ini.
+- Halaman panduan "Batas Pilot" (id dan en) di `/docs/batas-pilot`: batas per
+  workspace (proyek, container, deployment bersamaan, build per jam, replika),
+  batas per container, sleep setelah 30 menit tanpa pengunjung, dan yang belum
+  ada selama pilot. Chip status beranda, Produk, Roadmap, hub dokumentasi, dan
+  Deploy Pertamamu menautkannya.
+- Entri changelog situs "Batas pilot yang kini berlaku" (id dan en, 19
+  November 2026): pengumuman yang dijanjikan Syarat Layanan §3 untuk sleep
+  otomatis dan batas build per jam.
+- Lima entri changelog situs (id dan en) untuk perkembangan sejak 1 Oktober
+  2026: Console dan workspace tim, sleep otomatis, domain `sakala.app`, replika
+  dengan Sakala Edge beserta perintah rilis dan batas build per jam, dan pilot
+  yang terbuka untuk siapa saja.
 
 ### Changed
 
+- Status layanan mengikuti keputusan maintainer 19 November 2026: pilot hosted
+  terbuka untuk siapa saja, tanpa biaya, dengan batas pemakaian. Klaim "pre-launch", "belum
+  tersedia sebagai layanan publik", dan syarat undangan diganti di beranda,
+  Produk, Roadmap, hub dokumentasi, FAQ, Deploy Pertamamu, panduan lain, dan
+  Start Contributing (id dan en). Catatan ilustrasi tidak lagi menyebut
+  "bukan layanan yang sudah berjalan".
+- Hero beranda: aksi utama "Daftar dan deploy" ke halaman daftar Console, aksi
+  kedua "Lihat cara kerjanya". Tombol GitHub pindah dari hero; GitHub tetap ada
+  di navigasi dan bab Terbuka. Penutup beranda mendapat tombol daftar yang sama.
+- Produk memberi status per kemampuan, bukan per pilar, per 19 November 2026.
+  Roadmap memisahkan "Sudah tersedia" dari horizon yang belum dibangun, dengan
+  label horizon mengikuti dokumen roadmap kanonik.
+- Syarat Layanan §3 memuat batas yang sekarang berlaku: kuota proyek,
+  container, dan deployment per workspace, 20 build per workspace per jam,
+  dan sleep setelah 30 menit tanpa pengunjung. Versi (`syarat-v1`) dan tanggal
+  berlakunya tidak diubah, karena yang berubah adalah batas operasional.
+  Pemberitahuan Privasi bagian keamanan dikoreksi dengan cara yang sama:
+  aplikasi pengguna di production berjalan di sandbox gVisor, dan pembatasan
+  lalu lintas keluar dari container pengguna sedang ditambahkan.
+- Dokumen kanonik Roadmap, MVP, dan PRD mencatat status per 19 November 2026
+  (pendaftaran pilot terbuka, fase engineering yang sudah berjalan di
+  production).
 - FAQ (id dan en) menjelaskan bahwa router Sakala membuang atribut `Domain`
   dari cookie aplikasi, bahwa pendaftaran `sakala.app` ke Public Suffix List
   menunggu jumlah pengguna cukup besar, dan cara memakai cookie berawalan

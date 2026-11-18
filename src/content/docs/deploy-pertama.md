@@ -1,6 +1,6 @@
 ---
 title: Deploy Pertamamu
-description: Langkah demi langkah dari akun Sakala sampai aplikasimu punya URL publik, status, dan log yang bisa kamu baca, untuk peserta pilot.
+description: Langkah demi langkah dari mendaftar di Sakala sampai aplikasimu punya URL publik, status, dan log yang bisa kamu baca.
 track: panduan
 section: Panduan deploy
 order: 2.5
@@ -10,7 +10,7 @@ order: 2.5
 
 Di akhir panduan ini, repository-mu sudah menjadi aplikasi dengan URL publik, kamu tahu cara membaca status dan log-nya, dan kamu sudah pernah melakukan redeploy. Sisihkan kira-kira 30 menit untuk pertama kali. Angka itu perkiraan kami, bukan hasil pengukuran.
 
-> **Status per 6 November 2026.** Sakala belum dibuka untuk umum, jadi panduan ini hanya untuk peserta pilot yang diundang. Langkah di bawah ditulis dari kode Console terbaru, tetapi belum dicoba bersama pengguna pilot dan belum diuji di production. Sakala belum siap untuk aplikasi production, dan tidak ada jaminan uptime atau waktu respons.
+> **Status per 19 November 2026.** Sakala sedang dalam tahap pilot terbuka: siapa pun bisa mendaftar dan memakainya tanpa biaya, dengan batas pemakaian. Belum ada jaminan uptime atau waktu respons, jadi Sakala belum cocok untuk aplikasi yang penting. Langkah di bawah ditulis dari kode Console terbaru. Kalau tampilan di layarmu berbeda, ceritakan lewat menu **Kirim Masukan** di Console.
 
 ## Untuk siapa
 
@@ -18,17 +18,16 @@ Panduan ini untuk mahasiswa dan developer pemula yang belum pernah men-deploy le
 
 ## Yang perlu disiapkan
 
-- **Undangan pilot.** Tanpa undangan, kamu belum bisa memakai Sakala.
 - **Akun GitHub dan satu repository.** Repository publik bisa langsung dipakai. Repository private harus dihubungkan lewat GitHub App.
 - **Aplikasi web yang mendengarkan di `0.0.0.0:$PORT`,** dengan alamat `/` yang menjawab di bawah status 500.
 
 Belum punya aplikasi? Salin contoh kecil di [Menyiapkan Dockerfile](/docs/dockerfile), lalu push ke GitHub. Repository dengan Dockerfile memakai Dockerfile itu, dan repository tanpa Dockerfile dibangun otomatis oleh Railpack. Sakala belum menyediakan database, jadi kalau aplikasimu butuh database, baca dulu [Menghubungkan database eksternal](/docs/database-eksternal).
 
-Selama pilot, satu akun punya 3 proyek. Aplikasi berjalan dengan memory 256 MB dan CPU 0,5 vCPU, dan build dibatasi 10 menit.
+Selama pilot, workspace pribadimu punya 3 proyek. Aplikasi berjalan dengan memory 256 MB dan CPU 0,5 vCPU, build dibatasi 10 menit dan 20 kali per jam, dan proyek tidur setelah 30 menit tanpa pengunjung. Rinciannya ada di [Batas Pilot](/docs/batas-pilot).
 
 ## Langkah 1: daftar dan verifikasi email
 
-Buka Console di `app.sakala.dev`. Kalau belum punya akun, buka halaman **Daftar** lalu pilih **Buat akun dengan Github**, **Google**, atau **Email**.
+Buka Console di `app.sakala.dev`. Kalau belum punya akun, buka halaman [**Daftar**](https://app.sakala.dev/register) lalu pilih **Buat akun dengan Github**, **Google**, atau **Email**.
 
 Kalau memilih email, isi email, nama lengkap, dan kata sandi minimal 8 karakter, lalu tekan **Buat Akun**. Buka tautan verifikasi yang kami kirim, lalu masuk dengan **Lanjutkan dengan Email**.
 

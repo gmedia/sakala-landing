@@ -11,11 +11,11 @@ lang: en
 
 ## What is Sakala?
 
-Sakala is an open-source deployment platform that carries a project from a Git repository into an application that can be opened and shared. It is initiated by the Sakala Maintainers, supported by GMEDIA as founding sponsor, and still under active development — not yet available as a public service.
+Sakala is an open-source deployment platform that carries a project from a Git repository into an application that can be opened and shared. It is initiated by the Sakala Maintainers, supported by GMEDIA as founding sponsor, and still under active development. Its hosted service is in an open pilot, so anyone can [sign up](https://app.sakala.dev/register) and use it at no cost, within usage limits.
 
 ## Can Sakala be used in production yet?
 
-No. Sakala is under active development and is not open to the public yet. Its deployment path exists, but has not been tested with pilot users or in production.
+Not for important applications. During the pilot there is no uptime guarantee, SLA, or data recovery, and files inside the container are lost every time a new deploy finishes. For assignments, portfolios, and demos, Sakala can already be used within the limits described in [Pilot Limits](/en/docs/batas-pilot).
 
 ## Is this only for students?
 

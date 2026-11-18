@@ -12,7 +12,7 @@ canonical: true
 
 Pick one repository below, run it, then pick an issue. Sakala is split across six public repositories, and you do not need all of them running to make a useful change. The rules they share are in [Contributing to Sakala](/docs/proyek/contributing).
 
-As of 6 November 2026, Sakala is not open to the public and the MVP is not done. See [MVP](/docs/proyek/mvp) for what exists and what does not.
+Since 19 November 2026, hosted Sakala has been in an open pilot: anyone can sign up and use it at no cost, within the [usage limits](/docs/batas-pilot). See [MVP](/docs/proyek/mvp) for what the engineering scope covers and what it leaves out.
 
 ## The repositories
 

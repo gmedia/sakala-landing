@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import ArtifactFigure from "../artifact/ArtifactFigure.astro";
 import OpenProofArtifact from "../artifact/OpenProofArtifact.astro";
+import Button from "../ui/Button.astro";
 import Chapter from "./Chapter.astro";
 import { changelogAnchor } from "../../data/changelog";
 import { links } from "../../data/links";
@@ -17,8 +18,8 @@ const { t, lang } = Astro.props;
 const c = t.home.open;
 const f = t.home.finale;
 
-/* Satu aksi utama pre-launch: mengikuti perkembangan. Tiga kanalnya nyata dan
-   tersedia hari ini — bukan pendaftaran untuk layanan yang belum ada. */
+/* Aksi utama penutup sama dengan hero: mendaftar di pilot hosted. Kanal
+   mengikuti perkembangan tetap ada untuk yang belum siap mendaftar. */
 const followHref: Record<string, { href: string; external: boolean }> = {
   github: { href: links.githubOrganization, external: true },
   rss: { href: localizePath("/rss.xml", lang), external: false },
@@ -88,6 +89,10 @@ const changelogPath = localizePath("/changelog", lang);
         {f.title}
       </h2>
       <p class="mt-7 text-lg leading-8 text-muted">{f.lead}</p>
+      <div class="mt-9 flex flex-col items-center gap-3">
+        <Button href={links.consoleRegister}>{f.cta}</Button>
+        <p class="text-sm text-muted">{f.ctaNote}</p>
+      </div>
     </div>
 
     <div class="becoming mx-auto mt-14 grid max-w-4xl gap-12 lg:grid-cols-2 lg:gap-16">

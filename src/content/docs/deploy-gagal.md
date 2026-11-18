@@ -12,7 +12,9 @@ Deploy yang gagal hampir selalu bisa ditelusuri dari dua tempat: ringkasan di ha
 
 Versi lama tidak ikut rusak. Sakala baru mengalihkan trafik setelah versi baru menjawab, jadi kalau project-mu pernah berhasil di-deploy, versi terakhir yang berhasil tetap melayani pengunjung selama kamu memperbaiki.
 
-> **Status per 6 November 2026.** Sakala belum dibuka untuk umum, dan panduan ini belum diuji bersama pengguna pilot. Daftar kode di bawah mengikuti `DeploymentFailureClassifier` di `sakala-api`.
+> Sakala sedang dalam pilot terbuka sejak 19 November 2026: siapa pun bisa mendaftar dan memakainya tanpa biaya, dengan [batas pemakaian](/docs/batas-pilot).
+>
+> **Status panduan ini per 6 November 2026.** Panduan ini belum diuji bersama pengguna pilot. Daftar kode di bawah mengikuti `DeploymentFailureClassifier` di `sakala-api`.
 
 ## Untuk siapa
 
@@ -260,7 +262,7 @@ Kode apa pun yang tidak tercantum di halaman ini masuk kategori `unknown`, denga
 1. Baca panel Logs, karena jawabannya mungkin ada di sana.
 2. Deploy ulang sekali. Hasilnya tidak dijamin.
 3. Kalau gagal lagi, catat kode kegagalan, nama project, waktu kejadian, dan baris log yang relevan, tanpa nilai secret.
-4. Sampaikan ke maintainer atau mentor yang mengundangmu ke pilot, atau buka [issue di `sakala-api`](https://github.com/gmedia/sakala-api/issues). Issue bersifat publik, jadi periksa lagi isinya.
+4. Ceritakan lewat menu **Kirim Masukan** di Console, atau buka [issue di `sakala-api`](https://github.com/gmedia/sakala-api/issues). Issue bersifat publik, jadi periksa lagi isinya.
 
 Form **Kirim Masukan** di Console, juga tautan **Kirim masukan** di halaman deployment yang sudah selesai, membantu tim memperbaiki Sakala. Form itu bukan jalur bantuan, jadi kamu belum tentu mendapat balasan. Jangan menulis secret di sana. Belum ada janji waktu respons atau layanan dukungan resmi, karena Sakala masih dalam tahap pengembangan.
 
