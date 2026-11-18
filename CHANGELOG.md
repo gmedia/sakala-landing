@@ -19,6 +19,17 @@ versinya di file ini.
 
 ## [Unreleased]
 
+### Added
+
+- ADR-020 (Proposed, keputusannya sudah disetujui maintainer): PostgreSQL
+  terkelola. Satu instance bersama per region di VM database sendiri dengan
+  syarat kecepatan disk, database sebagai resource milik workspace yang bisa
+  dipasang ke nol, satu, atau beberapa project, kuota jumlah dan total ukuran
+  database di profil batas, aturan beda region, backup harian 7 hari dengan
+  RPO 24 jam, unduh dump oleh pemilik, daftar extension, kapan menambah
+  PgBouncer dan PITR, dan hasil ukur PostgreSQL di bawah gVisor (runsc)
+  dibanding runc. PRD 9.3 dan Horizon G di roadmap kini menautkan ADR ini.
+
 ### Changed
 
 - FAQ (id dan en) menjelaskan bahwa router Sakala membuang atribut `Domain`
