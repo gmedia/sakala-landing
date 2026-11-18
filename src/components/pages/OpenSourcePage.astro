@@ -21,11 +21,16 @@ const breadcrumbs = [
   { label: o.crumb },
 ];
 
-/* Jalur kontribusi yang benar-benar terbuka hari ini. */
+/* Jalur kontribusi yang benar-benar terbuka hari ini. Start Contributing
+   didahulukan karena ia memetakan repository dan cara memilih issue. */
 const contributeHref: Record<string, { href: string; external: boolean }> = {
-  issues: { href: links.githubIssues, external: true },
+  start: {
+    href: localizePath("/docs/proyek/start-contributing", lang),
+    external: false,
+  },
+  goodFirstIssues: { href: links.goodFirstIssues, external: true },
+  discussions: { href: links.githubDiscussions, external: true },
   docs: { href: localizePath("/docs/teknis", lang), external: false },
-  build: { href: links.repositories.landing, external: true },
 };
 ---
 
@@ -130,7 +135,7 @@ const contributeHref: Record<string, { href: string; external: boolean }> = {
   </section>
 
   <!-- Bagian ini pernah berjudul "Contributor awal" dan berisi janji daftar
-       yang belum ada. Diganti tiga jalur yang bisa ditempuh hari ini;
+       yang belum ada. Diganti jalur yang bisa ditempuh hari ini;
        nama contributor dicatat di CONTRIBUTORS.md setelah nyata dan disetujui. -->
   <section class="py-20 sm:py-24">
     <Container>

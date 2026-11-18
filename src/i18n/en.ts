@@ -602,7 +602,7 @@ export const en: Dictionary = {
     ecosystemLead:
       "Responsibility is separated so the privilege boundary stays clear. Only the Agent performs runtime operations.",
     ecosystemCaption:
-      "Sakala's five repositories, grouped by the privilege each one holds.",
+      "Sakala's five component repositories, grouped by the privilege each one holds. A sixth repository, sakala, holds the self-host installer and Discussions.",
     publicLabel: "Public",
     controlLabel: "Control plane",
     dataLabel: "Data plane",
@@ -615,22 +615,27 @@ export const en: Dictionary = {
     },
     contributeTitle: "How to contribute",
     contributeLead:
-      "No need to wait for the product. These three paths are open today, and contribution is not only code.",
+      "Contribution is not only code. Start from the map of repositories, then pick the path that suits you.",
     contributePaths: [
       {
-        key: "issues",
-        label: "Open an issue or a discussion",
-        note: "Report what is wrong, propose what is missing, ask what is unclear.",
+        key: "start",
+        label: "Start contributing",
+        note: "Which repository does what, how to run it, and how to pick an issue.",
+      },
+      {
+        key: "goodFirstIssues",
+        label: "Pick a good first issue",
+        note: "Small issues across every Sakala repository, each naming the files and how to test them.",
+      },
+      {
+        key: "discussions",
+        label: "Ask or propose in Discussions",
+        note: "For questions and ideas that do not belong to one repository yet.",
       },
       {
         key: "docs",
         label: "Read and correct the documentation",
         note: "The technical documentation is open to be read, tested, and fixed.",
-      },
-      {
-        key: "build",
-        label: "Run this site locally",
-        note: "The landing repository can be cloned, built, and sent a pull request.",
       },
     ],
     topologyNote:
@@ -653,8 +658,8 @@ export const en: Dictionary = {
     metaTitle: "Page not found — Sakala",
     metaDescription: "The page you were looking for could not be found.",
     eyebrow: "Error 404",
-    title: "This address does not lead anywhere yet.",
-    lead: "The link may have changed, or the page may simply not exist yet while Sakala is still being built. Here is where you can go instead.",
+    title: "This address does not lead to any page.",
+    lead: "The link may have changed, the page may have moved, or the address may have a typo. Here is where you can go instead.",
     destinations: {
       home: { label: "Home", note: "Back to the start" },
       docs: { label: "Documentation", note: "Concepts and deployment flow" },
