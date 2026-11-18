@@ -549,8 +549,8 @@ limits per class rather than per user.
 
 ## ADR-019 — Sakala Edge Routes Public Traffic to Runtime Nodes
 
-**Status:** Proposed (replicas on a node in place; see the update of
-2026-11-18)
+**Status:** Accepted (2026-11-18: Sakala Edge serves production traffic;
+see the update of 2026-11-18)
 
 ### Context
 
@@ -695,12 +695,18 @@ individual replicas.
   backed by one database slower, because every request from the far region
   crosses to the database.
 
-**Status.** The ADR stays Proposed until Sakala Edge serves production traffic.
+**Status.** Accepted on 2026-11-18, when Sakala Edge started serving production
+traffic.
 
 - Done: replicas on a node
   ([sakala-agent#93](https://github.com/gmedia/sakala-agent/pull/93),
   [sakala-api#162](https://github.com/gmedia/sakala-api/pull/162),
-  [sakala-console#129](https://github.com/gmedia/sakala-console/pull/129)).
-- Remaining: the API route table endpoint, deploying the Edge (staging, then
-  production), placement that accounts for node capacity and region labels,
-  and the second node.
+  [sakala-console#129](https://github.com/gmedia/sakala-console/pull/129)),
+  the API route table with region- and capacity-aware placement
+  ([sakala-api#163](https://github.com/gmedia/sakala-api/pull/163)), the
+  `sakala-edge` route sync
+  ([sakala-agent#95](https://github.com/gmedia/sakala-agent/pull/95),
+  [sakala-agent#96](https://github.com/gmedia/sakala-agent/pull/96)), restarting
+  exited replicas ([sakala-agent#98](https://github.com/gmedia/sakala-agent/pull/98)),
+  and the Edge running on staging and production.
+- Remaining: the second node, and replicas spread across nodes (stage 4).

@@ -49,9 +49,9 @@ Layanan ini disediakan apa adanya. Kami tidak menjanjikan uptime, SLA, pemulihan
 
 Hal berikut bisa terjadi, kadang tanpa pemberitahuan: layanan berhenti, proyek perlu di-deploy ulang, log terhapus lebih cepat dari biasanya, atau data hilang karena kerusakan node.
 
-Isolasi antarpengguna belum selesai. Runtime tersandbox gVisor belum aktif di production, dan container pengguna belum dibatasi lalu lintas keluarnya. Jadi jangan menjalankan aplikasi yang menyimpan data sensitif atau yang kegagalannya bisa merugikan orang lain.
+Isolasi antarpengguna belum selesai. Aplikasi pengguna di production sudah berjalan di sandbox gVisor, tetapi container pengguna belum dibatasi lalu lintas keluarnya. Jadi jangan menjalankan aplikasi yang menyimpan data sensitif atau yang kegagalannya bisa merugikan orang lain.
 
-Alamat `*.run.sakala.dev` juga bisa berubah. Ada usulan memindahkan aplikasi pengguna ke domain terpisah, dan kalau itu diputuskan, kami akan mengumumkannya lebih dulu.
+Sejak 18 November 2026, aplikasi pengguna berjalan di domain terpisah, `*.sakala.app`, menggantikan `*.run.sakala.dev`. Kalau alamat ini berubah lagi, kami akan mengumumkannya lebih dulu.
 
 ## 5. Kode dan datamu tetap milikmu
 

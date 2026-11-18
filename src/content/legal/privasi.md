@@ -87,8 +87,10 @@ Situs `sakala.dev` tidak memasang cookie analitik atau pelacak iklan. Font di si
 
 Console memakai dua cookie, dan keduanya perlu supaya login berjalan:
 
-- `__Host-sakala-api-session` menyimpan sesi login. Cookie ini hanya berlaku untuk `api.sakala.dev`, jadi tidak terkirim ke aplikasi di `*.run.sakala.dev`.
-- `XSRF-TOKEN` melindungi dari permintaan palsu dari situs lain. Cookie ini berlaku untuk seluruh `sakala.dev`, jadi ikut terkirim ke aplikasi di `*.run.sakala.dev`. Ini bukan cookie sesi, dan tidak bisa dipakai sendirian untuk masuk ke akunmu.
+- `__Host-sakala-api-session` menyimpan sesi login. Cookie ini hanya berlaku untuk `api.sakala.dev`.
+- `XSRF-TOKEN` melindungi dari permintaan palsu dari situs lain. Cookie ini berlaku untuk seluruh `sakala.dev`. Ini bukan cookie sesi, dan tidak bisa dipakai sendirian untuk masuk ke akunmu.
+
+Aplikasi pengguna berjalan di domain terpisah, `*.sakala.app`, jadi kedua cookie ini tidak terkirim ke aplikasi pengguna.
 
 Console juga menyimpan beberapa catatan di local storage browser: cara login terakhir, halaman yang ingin kamu tuju setelah login, penanda sesi aktif, dan waktu tunggu setelah terkena batas percobaan. Catatan ini tidak dikirim ke pihak lain.
 
