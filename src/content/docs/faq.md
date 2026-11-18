@@ -36,7 +36,9 @@ Aplikasi hasil deployment mendapat alamat `<slug>.sakala.app`, sedangkan website
 
 Alamat gratis dengan HTTPS otomatis sering disalahgunakan untuk halaman phishing. Kalau satu aplikasi seperti itu membuat browser atau filter email memblokir domainnya, yang terkena adalah `sakala.app`, sehingga website, dokumentasi, dan Console tetap bisa dibuka. Cookie dari `sakala.dev`, termasuk cookie login Console, juga tidak pernah terkirim ke aplikasi pengguna.
 
-Tiap proyek mendapat subdomain sendiri dan berjalan di container-nya sendiri. Langkah yang masih tersisa adalah mendaftarkan `sakala.app` ke Public Suffix List, supaya browser juga memperlakukan tiap proyek sebagai situs terpisah untuk urusan cookie. Latar belakang keputusannya ada di [ADR-016](/docs/proyek/adr).
+Tiap proyek mendapat subdomain sendiri dan berjalan di container-nya sendiri. Browser belum memperlakukan tiap proyek sebagai situs terpisah untuk urusan cookie, karena `sakala.app` belum terdaftar di Public Suffix List. Pendaftaran itu direncanakan setelah jumlah pengguna Sakala cukup besar, karena itu salah satu syarat daftar tersebut. Latar belakang keputusannya ada di [ADR-016](/docs/proyek/adr).
+
+Sementara itu, router Sakala membuang atribut `Domain` dari setiap header `Set-Cookie` yang dikirim aplikasi, jadi cookie dari server aplikasimu hanya berlaku untuk alamat aplikasimu sendiri. Yang tidak tercakup adalah cookie yang dipasang lewat JavaScript di browser. Kalau aplikasimu punya fitur login, beri nama cookie sesi dengan awalan `__Host-` (misalnya `SESSION_COOKIE=__Host-session` di Laravel), pasang `Secure` dan `Path=/`, tanpa `Domain`. Browser menolak cookie berawalan `__Host-` yang dipasang dari subdomain lain, sehingga aplikasi lain di `sakala.app` tidak bisa menimpanya.
 
 Sampai 18 November 2026 aplikasi memakai alamat `*.run.sakala.dev`. Alamat lama itu sudah dimatikan tanpa pengalihan, jadi tautan yang pernah dibagikan perlu diganti dengan alamat baru yang tampil di Console.
 
