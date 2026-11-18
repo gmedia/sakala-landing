@@ -755,8 +755,9 @@ self-host (ADR-017) need something one person can run.
 Option A for v1, with D as the planned next step.
 
 - **Placement.** One instance per region on its own database host, reachable
-  from every runtime node over the region's private network (WireGuard, as in
-  ADR-019) and never from the internet. Database IO and memory stay away from
+  from every runtime node over the region's private network (today the
+  provider's private LAN between the app and runtime hosts; WireGuard where
+  nodes do not share one, as ADR-019 describes) and never from the internet. Database IO and memory stay away from
   builds and tenant code, and replicas on any node reach the same database. A
   single-node or self-host installation may run it on the runtime node in its
   own container; it then competes with apps for memory and disk, and moving
