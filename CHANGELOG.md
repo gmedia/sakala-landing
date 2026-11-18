@@ -37,6 +37,33 @@ versinya di file ini.
   menunggu jumlah pengguna cukup besar, dan cara memakai cookie berawalan
   `__Host-` untuk sesi login.
 
+### Fixed
+
+- Alamat yang tidak ada kini menampilkan halaman 404 situs (versi Inggris
+  untuk `/en/...`) dengan status tetap 404. Sebelumnya Caddy menjawab 404
+  dengan body kosong karena `docker/Caddyfile` tidak punya `handle_errors`.
+  Copy 404 tidak lagi menyebut "Sakala masih dibangun".
+- Tautan "GitHub" di navigasi, bab Terbuka, dan footer membuka daftar
+  repository Sakala di organisasi `gmedia` (difilter, tanpa arsip), bukan
+  halaman organisasi yang juga berisi project lain.
+- Halaman Open Source mendahulukan "Mulai berkontribusi" (Start
+  Contributing), lalu good first issue di semua repository Sakala,
+  Discussions di `gmedia/sakala`, dan dokumentasi. Keterangan ekosistem
+  menyebut repository keenam, `sakala`. FAQ (id dan en) mengarahkan issue ke
+  repository sesuai topiknya.
+- "Saat Deploy Gagal" (id dan en) kini memuat `runtime_app_exec_denied` dan
+  `runtime_replicas_exceeded`, yang bisa diperbaiki pengguna dan sebelumnya
+  jatuh ke "Kegagalan yang belum dikenali". Baris tabel
+  `repository_access_check_failed` kini punya keempat kolom.
+- Halaman dokumentasi dengan enam bagian atau lebih punya daftar isi: di
+  sidebar di bawah halaman yang sedang dibuka (layar lebar), dan sebagai
+  panel "Di halaman ini" yang bisa dibuka (layar sempit).
+- Navigasi utama kini menandai halaman aktif (`aria-current="page"`, atau
+  `"true"` untuk halaman di bawah Dokumentasi). Sebelumnya trailing slash
+  membuat perbandingan path tidak pernah cocok.
+- H1 beranda tidak lagi terpotong di layar di bawah 360 px, dan menu mobile
+  menutup dengan Esc lalu mengembalikan fokus ke tombol Menu.
+
 ## [0.3.8] - 2026-11-18
 
 ### Added
