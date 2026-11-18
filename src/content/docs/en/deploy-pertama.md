@@ -1,6 +1,6 @@
 ---
 title: Your First Deploy
-description: Step by step from a Sakala account to an application with a public URL, a status, and logs you can read, for pilot participants.
+description: Step by step from signing up for Sakala to an application with a public URL, a status, and logs you can read.
 track: panduan
 section: Deploy guides
 order: 2.5
@@ -11,7 +11,7 @@ lang: en
 
 By the end of this guide your repository is an application with a public URL, you know how to read its status and logs, and you have done a redeploy. Set aside about 30 minutes the first time. That figure is our estimate, not a measurement.
 
-> **Status as of 6 November 2026.** Sakala is not open to the public yet, so this guide is only for invited pilot participants. The steps below were written from the latest Console code, but have not been tried with pilot users or tested in production. Sakala is not ready for production applications, and there is no uptime or response time guarantee. The Console is in Indonesian, so its labels are quoted as they appear on screen.
+> **Status as of 19 November 2026.** Sakala is in an open pilot: anyone can sign up and use it at no cost, within usage limits. There is no uptime or response time guarantee yet, so Sakala is not a fit for important applications. The steps below were written from the latest Console code. If your screen looks different, tell us through the **Kirim Masukan** (send feedback) menu in the Console. The Console is in Indonesian, so its labels are quoted as they appear on screen.
 
 ## Who this is for
 
@@ -19,17 +19,16 @@ This guide is for students and beginner developers who have not deployed through
 
 ## What you need
 
-- **A pilot invitation.** Without one, you cannot use Sakala yet.
 - **A GitHub account and one repository.** A public repository works right away. A private one has to be connected through the GitHub App.
 - **A web application listening on `0.0.0.0:$PORT`,** whose `/` answers with a status under 500.
 
 No application yet? Copy the small example in [Preparing a Dockerfile](/en/docs/dockerfile), then push it to GitHub. A repository with a Dockerfile uses that Dockerfile, and one without is built automatically by Railpack. Sakala does not provide a database yet, so if your application needs one, read [Connecting an external database](/en/docs/database-eksternal) first.
 
-During the pilot, one account has 3 projects. Applications run with 256 MB of memory and 0.5 vCPU, and builds are limited to 10 minutes.
+During the pilot, your personal workspace has 3 projects. Applications run with 256 MB of memory and 0.5 vCPU, builds are limited to 10 minutes and 20 per hour, and projects sleep after 30 minutes without visitors. The details are in [Pilot Limits](/en/docs/batas-pilot).
 
 ## Step 1: sign up and verify your email
 
-Open the Console at `app.sakala.dev`. If you have no account, open the **Daftar** (sign up) page and choose **Buat akun dengan Github**, **Google**, or **Email**.
+Open the Console at `app.sakala.dev`. If you have no account, open the [**Daftar**](https://app.sakala.dev/register) (sign up) page and choose **Buat akun dengan Github**, **Google**, or **Email**.
 
 If you choose email, enter your email, full name, and a password of at least 8 characters, then press **Buat Akun**. Open the verification link we send, then log in with **Lanjutkan dengan Email**.
 

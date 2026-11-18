@@ -10,7 +10,9 @@ order: 4.5
 
 Monorepo adalah satu repository yang berisi beberapa aplikasi, misalnya `apps/api` dan `apps/web`. Sakala men-deploy monorepo dengan membuat **satu proyek per aplikasi**. Semua proyek menunjuk repository dan branch yang sama, tetapi masing-masing punya **Root directory** sendiri.
 
-> **Status per 11 November 2026.** Sakala belum dibuka untuk umum. Panduan ini ditulis dari satu percobaan sungguhan di lingkungan pengembangan Sakala terhadap repository [`gmedia/facility-reporting`](https://github.com/gmedia/facility-reporting), yang berisi API Laravel di `apps/api` dan web Vite di `apps/web`. Belum dicoba bersama pengguna pilot, dan belum di production. Stack lain belum dicoba sebagai monorepo.
+> Sakala sedang dalam pilot terbuka sejak 19 November 2026: siapa pun bisa mendaftar dan memakainya tanpa biaya, dengan [batas pemakaian](/docs/batas-pilot).
+>
+> **Status panduan ini per 11 November 2026.** Panduan ini ditulis dari satu percobaan sungguhan di lingkungan pengembangan Sakala terhadap repository [`gmedia/facility-reporting`](https://github.com/gmedia/facility-reporting), yang berisi API Laravel di `apps/api` dan web Vite di `apps/web`. Belum dicoba bersama pengguna pilot, dan belum di production. Stack lain belum dicoba sebagai monorepo.
 
 ## Untuk siapa
 

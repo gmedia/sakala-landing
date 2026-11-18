@@ -8,15 +8,15 @@ export type DocTrack = "panduan" | "teknis" | "proyek";
  * persoalan dan arahnya, jalur kedua menjelaskan mesinnya.
  *
  * Kunci `panduan` dipertahankan karena dipakai frontmatter setiap dokumen.
- * Salinannya tidak lagi berbunyi "panduan pakai": selama Sakala belum jadi
- * layanan publik, judul semacam itu menjanjikan sesuatu yang belum ada.
+ * Labelnya "Pengantar" karena jalur ini memuat persoalan dan arah, bukan
+ * hanya panduan pakai.
  */
 const trackCopy = {
   id: {
     panduan: {
       label: "Pengantar",
       title: "Pengantar Sakala",
-      blurb: "Persoalan, arah yang dibangun, dan panduan untuk peserta pilot.",
+      blurb: "Persoalan, arah yang dibangun, dan panduan memakai pilot.",
     },
     teknis: {
       label: "Teknis",
@@ -33,7 +33,7 @@ const trackCopy = {
     panduan: {
       label: "Overview",
       title: "Understanding Sakala",
-      blurb: "The problem, the direction, and guides for pilot participants.",
+      blurb: "The problem, the direction, and guides for using the pilot.",
     },
     teknis: {
       label: "Technical",

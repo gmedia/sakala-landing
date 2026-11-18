@@ -12,7 +12,9 @@ Sakala MVP tidak menyediakan database. Kalau aplikasimu butuh database, kamu men
 
 Artinya backup, migration, dan pemulihan data menjadi tanggung jawabmu. Sakala hanya menjalankan aplikasinya. Container juga tidak punya penyimpanan tetap, jadi berkas SQLite atau hasil upload yang ditulis ke dalam container hilang setiap kali deploy baru selesai.
 
-> **Status per 6 November 2026.** Sakala belum dibuka untuk umum. Contoh kode di halaman ini sudah dijalankan secara lokal terhadap PostgreSQL di Docker, tanpa TLS. Ia belum dicoba terhadap provider sungguhan atau lewat Sakala di production.
+> Sakala sedang dalam pilot terbuka sejak 19 November 2026: siapa pun bisa mendaftar dan memakainya tanpa biaya, dengan [batas pemakaian](/docs/batas-pilot).
+>
+> **Status panduan ini per 6 November 2026.** Contoh kode di halaman ini sudah dijalankan secara lokal terhadap PostgreSQL di Docker, tanpa TLS. Ia belum dicoba terhadap provider sungguhan atau lewat Sakala di production.
 
 ## Untuk siapa
 

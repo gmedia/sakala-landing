@@ -39,11 +39,12 @@ Identitas, onboarding, project, analisis repository, build, deploy, log,
 variabel dan secret, domain bawaan, health check, redeploy, kuota pilot,
 kontrol admin.
 
-**Status per 6 November 2026:** jalur deploy end-to-end pernah berjalan di
-staging pada 1 Oktober 2026, misalnya `react.run.staging.sakala.dev`, tetapi
-belum matang. Sejak itu health check HTTP, log di Console, dan pesan kegagalan
-sudah dibangun, tetapi belum diuji di production atau bersama pengguna pilot.
-Pendaftaran di production belum dibuka. Lihat [MVP](/docs/proyek/mvp).
+**Status per 19 November 2026:** tersedia di layanan hosted. Jalur deploy
+end-to-end berjalan di production sejak 12 November 2026, termasuk health
+check HTTP, log di Console, dan pesan kegagalan. Sejak itu juga dirilis
+workspace dan tim, deploy otomatis saat push, perintah rilis per project, dan
+domain project di `*.sakala.app`. Pendaftaran pilot terbuka untuk siapa saja
+sejak 19 November 2026, dengan [batas pilot](/docs/batas-pilot).
 
 ### Gate — Pilot publik
 
@@ -51,6 +52,12 @@ Syarat sebelum pendaftaran dibuka untuk umum, dirinci di
 [MVP](/docs/proyek/mvp): isolasi workload ([ADR-014](/docs/proyek/adr)), sleep
 otomatis dan batas build ([ADR-015](/docs/proyek/adr)), dokumen hukum,
 penanganan abuse, bukti dari pilot, dan estimasi biaya.
+
+**Status per 19 November 2026:** maintainer membuka pendaftaran pilot untuk
+siapa saja. Sandbox gVisor, runtime yang terpisah dari control plane, sleep
+setelah 30 menit tanpa pengunjung, batas build per jam, dokumen hukum, dan
+penangguhan project sudah berjalan. Pembatasan lalu lintas keluar dari
+container pengguna, bukti dari pilot, dan estimasi biaya masih dikerjakan.
 
 ### Horizon B — Learn minimal
 
@@ -72,6 +79,10 @@ Detail di [Sakala Learn](/docs/proyek/feature-education).
 - panduan untuk pengelola lab institusi;
 - repository distribusi `sakala` ([ADR-013](/docs/proyek/adr)).
 
+**Status per 19 November 2026:** sedang diuji. Installer di `gmedia/sakala`
+sudah ada dan lolos uji di mesin bersih, tetapi belum dirilis dan belum
+dicoba di server sungguhan.
+
 ### Horizon D — Operasi yang andal
 
 - custom domain dengan verifikasi DNS dan TLS;
@@ -80,6 +91,9 @@ Detail di [Sakala Learn](/docs/proyek/feature-education).
 - auto-deploy dari push lewat webhook;
 - repository privat lewat GitHub App;
 - visibilitas pemakaian dan kuota.
+
+**Status per 19 November 2026:** auto-deploy dari push dan repository privat
+lewat GitHub App sudah tersedia. Metrik dasar sedang dibangun. Sisanya belum.
 
 ### Horizon E — Explore dan ekosistem
 
@@ -90,6 +104,10 @@ magang), lalu showcase, template, profil creator, silsilah project, dan
 ### Horizon F — Kolaborasi
 
 Workspace, anggota, peran, dan koleksi milik organisasi.
+
+**Status per 19 November 2026:** workspace tim, undangan, dan peran Owner,
+Member, dan Viewer tersedia sejak 12 November 2026. Koleksi milik organisasi
+belum.
 
 ### Horizon G — Layanan developer
 
@@ -105,31 +123,31 @@ dan router.
 
 ## 2. Roadmap engineering
 
-| Fase | Isi                                                                                       | Status per 6 Nov 2026                                                                           |
+| Fase | Isi                                                                                       | Status per 19 Nov 2026                                                                          |
 | ---- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
 | 0    | Pemisahan repository, CI dasar, branch protection, fondasi design system                  | selesai                                                                                         |
-| 1    | Kontrak auth, GitHub OAuth, email dan verifikasi, sesi, onboarding                        | dibangun, belum diuji di production                                                             |
-| 2    | Siklus project, validasi repository, analisis stack, domain bawaan, variabel dan secret   | dibangun, belum diuji di production                                                             |
-| 3    | Model deployment, event dan log, state machine, realtime                                  | dibangun, belum diuji di production                                                             |
+| 1    | Kontrak auth, GitHub OAuth, email dan verifikasi, sesi, onboarding                        | berjalan di production sejak 12 Nov                                                             |
+| 2    | Siklus project, validasi repository, analisis stack, domain bawaan, variabel dan secret   | berjalan di production sejak 12 Nov                                                             |
+| 3    | Model deployment, event dan log, state machine, realtime                                  | berjalan di production sejak 12 Nov                                                             |
 | 4    | Agent terhubung: register, heartbeat, poll, claim, lease, event, log, protokol berversi   | selesai                                                                                         |
-| 5    | Runtime nyata: checkout, Dockerfile, Railpack, container, batas, Caddy, health, cleanup   | dibangun, belum diuji di production; variabel build Railpack belum diuji dengan build sungguhan |
-| 6    | MVP end-to-end: browser, API, agent, runtime, URL publik                                  | berjalan di staging per 1 Okt, belum matang; perubahan sesudahnya belum diuji di production     |
-| 7    | Penguatan pilot: kategori kegagalan, dokumentasi, pengaman, metrik validasi, alat operasi | sedang dikerjakan, belum dicoba pengguna pilot                                                  |
-| 8    | Gate pilot publik: isolasi, sleep, batas build, dokumen hukum, abuse                      | berikutnya                                                                                      |
+| 5    | Runtime nyata: checkout, Dockerfile, Railpack, container, batas, Caddy, health, cleanup   | berjalan di production sejak 12 Nov; variabel build Railpack belum diuji dengan build sungguhan |
+| 6    | MVP end-to-end: browser, API, agent, runtime, URL publik                                  | berjalan di production sejak 12 Nov                                                             |
+| 7    | Penguatan pilot: kategori kegagalan, dokumentasi, pengaman, metrik validasi, alat operasi | sedang dikerjakan; pilot terbuka sejak 19 Nov                                                   |
+| 8    | Gate pilot publik: isolasi, sleep, batas build, dokumen hukum, abuse                      | sebagian besar berjalan; egress container, bukti, dan biaya belum                               |
 | 9    | Learn minimal                                                                             | berikutnya                                                                                      |
-| 10   | Installer self-host satu node                                                             | berikutnya                                                                                      |
+| 10   | Installer self-host satu node                                                             | sedang diuji, belum dirilis                                                                     |
 
 ## 3. Roadmap desain
 
-| Gelombang | Isi                                                                                                                                                                           | Status                                                              |
-| --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| 1         | Perjalanan produk inti: login, OAuth, verifikasi, onboarding, dashboard, buat project, detail deployment, log build, detail project, variabel, profil, pengaturan, notifikasi | desain selesai dan dibangun di Console, belum dicoba pengguna pilot |
-| 2         | Platform Console: overview, pengguna, project, deployment, node, kegagalan, abuse, masukan                                                                                    | sedang dikerjakan                                                   |
-| 3         | Pilot publik: halaman sleep dan bangun, kuota, suspend dan banding, persetujuan syarat layanan                                                                                | berikutnya                                                          |
-| 4         | Learn: kelas, penugasan, ringkasan pengajar, tampilan peserta, masuknya peserta lewat CSV                                                                                     | berikutnya                                                          |
-| 5         | Domain dan operasi: custom domain, DNS, TLS, health runtime, error yang lebih kaya                                                                                            | nanti                                                               |
-| 6         | Explore: koleksi terkurasi, showcase, template, profil creator                                                                                                                | nanti                                                               |
-| 7         | Layanan terkelola                                                                                                                                                             | nanti                                                               |
+| Gelombang | Isi                                                                                                                                                                           | Status                                                                                              |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| 1         | Perjalanan produk inti: login, OAuth, verifikasi, onboarding, dashboard, buat project, detail deployment, log build, detail project, variabel, profil, pengaturan, notifikasi | desain selesai dan dibangun di Console                                                              |
+| 2         | Platform Console: overview, pengguna, project, deployment, node, kegagalan, abuse, masukan                                                                                    | dibangun sebagian di area admin Console: overview, pengguna, workspace, profil batas, node, masukan |
+| 3         | Pilot publik: halaman sleep dan bangun, kuota, suspend dan banding, persetujuan syarat layanan                                                                                | dibangun di Console                                                                                 |
+| 4         | Learn: kelas, penugasan, ringkasan pengajar, tampilan peserta, masuknya peserta lewat CSV                                                                                     | berikutnya                                                                                          |
+| 5         | Domain dan operasi: custom domain, DNS, TLS, health runtime, error yang lebih kaya                                                                                            | nanti                                                                                               |
+| 6         | Explore: koleksi terkurasi, showcase, template, profil creator                                                                                                                | nanti                                                                                               |
+| 7         | Layanan terkelola                                                                                                                                                             | nanti                                                                                               |
 
 Rincian per gelombang ada di [Design Strategy](/docs/proyek/design-strategy).
 

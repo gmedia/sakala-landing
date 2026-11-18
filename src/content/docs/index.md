@@ -14,11 +14,11 @@ Kamu tidak perlu sudah paham Docker, reverse proxy, atau konfigurasi server untu
 
 ## Status saat ini, supaya tidak salah harap
 
-Sakala **belum dibuka untuk umum**. Jalur deploy dari repository sampai URL publik sudah ada dan pernah terbukti di staging, tetapi pendaftarannya belum terbuka, dan jalur itu belum teruji bersama pengguna pilot atau di production. Status per 6 November 2026 ada di [MVP](/docs/proyek/mvp).
+Sakala hosted sedang dalam **tahap pilot terbuka**. Siapa pun bisa [mendaftar di Console](https://app.sakala.dev/register) dan memakainya tanpa biaya, dengan batas proyek, container, dan build per jam, serta proyek yang tidur setelah 30 menit tanpa pengunjung. Belum ada jaminan uptime, jadi Sakala belum cocok untuk aplikasi yang penting. Rinciannya ada di [Batas Pilot](/docs/batas-pilot), dan perkembangan terbarunya di [Changelog](/changelog).
 
-Karena itu sebagian besar halaman di sini masih dokumen rancangan: penjelasan tentang persoalannya, keputusan desain yang sudah diambil, dan arah yang sedang dituju.
+Sebagian halaman di sini adalah panduan pakai, sebagian lagi dokumen rancangan: penjelasan tentang persoalannya, keputusan desain yang sudah diambil, dan arah yang sedang dituju.
 
-Panduan pakai baru sebagian ada, terutama untuk peserta pilot:
+Panduan pakai:
 
 - [Deploy Pertamamu](/docs/deploy-pertama), langkah demi langkah sampai punya URL publik;
 - [Menyiapkan Dockerfile](/docs/dockerfile) dengan contoh yang sudah dicoba;
@@ -46,4 +46,4 @@ alur command, dan cara kerja Agent.
 | Console                   | `app.sakala.dev` |
 | Aplikasi hasil deployment | `*.sakala.app`   |
 
-Console adalah antarmuka tempat project dikelola, dan pola `*.sakala.app` berarti tiap aplikasi mendapat sub-alamatnya sendiri, di domain yang [sengaja dipisah](/docs/faq#mengapa-aplikasi-ada-di-sakalaapp-bukan-sakaladev) dari `sakala.dev`. Selama pendaftaran belum dibuka untuk umum, keduanya belum bisa dipakai oleh siapa saja.
+Console adalah antarmuka tempat project dikelola, dan pola `*.sakala.app` berarti tiap aplikasi mendapat sub-alamatnya sendiri, di domain yang [sengaja dipisah](/docs/faq#mengapa-aplikasi-ada-di-sakalaapp-bukan-sakaladev) dari `sakala.dev`.

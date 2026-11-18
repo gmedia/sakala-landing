@@ -32,6 +32,12 @@ Autentikasi → Onboarding → Buat project → Analisis repository → Konfigur
 
 ## Wajib ada
 
+> **Pembaruan 19 November 2026.** Maintainer membuka pendaftaran pilot hosted
+> untuk siapa saja, tanpa biaya, dengan [batas pemakaian](/docs/batas-pilot). Perubahan
+> di branch `feat/core-maturity` sudah di-merge dan berjalan di production sejak
+> 12 November 2026. Tabel dan gate di bawah belum diperbarui sejak 6 November;
+> status terbaru per horizon ada di [Roadmap](/docs/proyek/roadmap).
+
 Status per 6 November 2026, berdasarkan kode terbaru di repository `sakala-api`,
 `sakala-agent`, dan `sakala-console` pada branch `feat/core-maturity`. Perubahan
 di branch itu belum di-merge, belum diuji di production, dan belum dipakai

@@ -10,7 +10,9 @@ order: 3
 
 Di akhir panduan ini repository-mu punya Dockerfile yang berjalan di laptop dan memenuhi dua syarat Sakala: aplikasi mendengarkan di `0.0.0.0:$PORT`, dan alamat `/` menjawab dengan status di bawah 500.
 
-> **Status per 6 November 2026.** Sakala belum dibuka untuk umum. Panduan ini untuk peserta pilot yang diundang dan untuk siapa pun yang ingin menyiapkan aplikasinya lebih dulu. Contoh di halaman ini sudah dibangun dan dijalankan secara lokal dengan Docker, memakai pembatasan yang sama dengan runtime Sakala, tetapi belum dicoba lewat Sakala di production.
+> Sakala sedang dalam pilot terbuka sejak 19 November 2026: siapa pun bisa mendaftar dan memakainya tanpa biaya, dengan [batas pemakaian](/docs/batas-pilot).
+>
+> **Status panduan ini per 6 November 2026.** Panduan ini untuk siapa pun yang ingin menyiapkan aplikasinya untuk Sakala. Contoh di halaman ini sudah dibangun dan dijalankan secara lokal dengan Docker, memakai pembatasan yang sama dengan runtime Sakala, tetapi belum dicoba lewat Sakala di production.
 
 ## Untuk siapa
 
