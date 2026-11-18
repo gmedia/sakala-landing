@@ -60,6 +60,9 @@ versinya di file ini.
   container, dan deployment per workspace, 20 build per workspace per jam,
   dan sleep setelah 30 menit tanpa pengunjung. Versi (`syarat-v1`) dan tanggal
   berlakunya tidak diubah, karena yang berubah adalah batas operasional.
+  Pemberitahuan Privasi bagian keamanan dikoreksi dengan cara yang sama:
+  aplikasi pengguna di production berjalan di sandbox gVisor, dan pembatasan
+  lalu lintas keluar dari container pengguna sedang ditambahkan.
 - Dokumen kanonik Roadmap, MVP, dan PRD mencatat status per 19 November 2026
   (pendaftaran pilot terbuka, fase engineering yang sudah berjalan di
   production).
