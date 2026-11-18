@@ -37,7 +37,9 @@ A deployed application gets the address `<slug>.sakala.app`, while the website, 
 
 Free addresses with automatic HTTPS are a common tool for phishing pages. If one such application gets its domain blocked by browsers or mail filters, the block lands on `sakala.app`, and the website, documentation, and Console stay reachable. Cookies from `sakala.dev`, including the Console login cookie, are never sent to user applications either.
 
-Each project gets its own subdomain and runs in its own container. The remaining step is submitting `sakala.app` to the Public Suffix List, so browsers also treat each project as a separate site for cookies. The reasoning behind the decision is in [ADR-016](/en/docs/proyek/adr).
+Each project gets its own subdomain and runs in its own container. Browsers do not yet treat each project as a separate site for cookies, because `sakala.app` is not on the Public Suffix List. Submitting it is planned once Sakala has enough users, which is one of the list's requirements. The reasoning behind the decision is in [ADR-016](/en/docs/proyek/adr).
+
+Meanwhile, the Sakala router removes the `Domain` attribute from every `Set-Cookie` header an application sends, so cookies from your application's server only apply to your application's own address. Cookies set from JavaScript in the browser are not covered. If your application has a login, name the session cookie with the `__Host-` prefix (for example `SESSION_COOKIE=__Host-session` in Laravel), with `Secure` and `Path=/` and no `Domain`. Browsers reject a `__Host-` cookie set from another subdomain, so other applications on `sakala.app` cannot overwrite it.
 
 Until 18 November 2026 applications used `*.run.sakala.dev` addresses. Those old addresses were switched off without a redirect, so links shared earlier need to be replaced with the new address shown in the Console.
 
