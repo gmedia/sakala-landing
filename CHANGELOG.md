@@ -19,6 +19,20 @@ versinya di file ini.
 
 ## [Unreleased]
 
+### Changed
+
+- Men-deploy Monorepo (id dan en) menjelaskan workspace JavaScript (pnpm, npm,
+  Yarn, Bun): Root directory diisi folder package, Build dan Start command
+  dibiarkan kosong, build berjalan dari root workspace dengan lockfile-nya,
+  dan SPA Vite tanpa script `start` disajikan sebagai situs statis. Batas
+  "hanya isi Root directory" kini berlaku di luar workspace JavaScript dan di
+  node dengan sakala-agent lebih lama dari v0.13.0. Panduan juga mengingatkan
+  agar Start command tidak diisi `vite preview`.
+- Saat Deploy Gagal (id dan en) mendapat bagian `runtime_app_host_blocked`:
+  Vite preview atau dev server yang menolak domain Sakala, dan Django dengan
+  `DisallowedHost`, beserta cara mengecek dan memperbaikinya. Kedua perubahan
+  membutuhkan sakala-agent v0.13.0 atau lebih baru.
+
 ## [0.3.9] - 2026-11-19
 
 ### Added
