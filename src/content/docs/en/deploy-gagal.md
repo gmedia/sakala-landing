@@ -15,7 +15,7 @@ The old version does not break with it. Sakala only moves traffic after the new 
 
 > Sakala has been in an open pilot since 19 November 2026: anyone can sign up and use it at no cost, within the [usage limits](/en/docs/batas-pilot).
 >
-> **Status of this guide as of 6 November 2026.** This guide has not been tested with pilot users. The codes below follow `DeploymentFailureClassifier` in `sakala-api`. The Console shows its messages in Indonesian, and they are quoted here as they appear on screen.
+> **Status of this guide as of 6 November 2026.** This guide has not been tested with pilot users. The codes below follow `DeploymentFailureClassifier` in `sakala-api`, except `runtime_app_host_blocked`, which as of 19 November 2026 is only sent by sakala-agent and not yet recognised by that classifier. The Console shows its messages in Indonesian, and they are quoted here as they appear on screen.
 
 ## Who this is for
 
@@ -141,7 +141,7 @@ This case has no code of its own. If Sakala does not find a file named exactly `
 - **Check:** Run `git ls-tree -d HEAD apps/web`, with `apps/web` replaced by the folder you set. If nothing comes back, the folder is not in that commit.
 - **Fix:** In the **Pengaturan** tab, correct the **Root Directory** field, for example `apps/web`, or clear it to use the repository root. Save, then press **Redeploy**.
 
-Does your repository hold several applications? See [Deploying a Monorepo](/en/docs/monorepo), including its limits: the build only sees the Root Directory, so lockfiles and workspace packages at the repository root are left out.
+Does your repository hold several applications? See [Deploying a Monorepo](/en/docs/monorepo), including its limits. The build only sees the Root Directory, except a package in a JavaScript workspace, which is built from the workspace root with its lockfile. That needs the latest sakala-agent (v0.13.0 or later).
 
 ### Release command
 
@@ -199,6 +199,13 @@ The codes in this section only appear if your project sets a release command, th
 - **Cause:** `/` kept answering 5xx until the deadline. Usually that page calls a database or another service that fails.
 - **Check:** Run `curl -i http://127.0.0.1:3000/` on your laptop, then read the error in the Logs panel. A status under 500, including 404, already passes.
 - **Fix:** Fix the error, or make `/` independent of other services, then deploy again.
+
+#### `runtime_app_host_blocked`
+
+- **What you see:** The code `runtime_app_host_blocked`. **Detail error** names your project's domain and the fix in English, for example "Vite's preview server refuses requests for PROJECT-NAME.sakala.app, so every visitor would get HTTP 403". Until `sakala-api` recognises this code, the summary still reads "Deployment gagal karena terjadi kesalahan yang belum dikenali." (the deployment failed with an error that is not recognised yet)
+- **Cause:** The application answers, but its framework refuses the project's domain, so every visitor would get the same refusal. Sakala recognises two cases. The preview or dev server of Vite 6 and later answers 403 "Blocked request. This host (...) is not allowed" for an address that is not in `allowedHosts`. Django with `DEBUG = True` answers 400 `DisallowedHost` for a domain outside `ALLOWED_HOSTS`. Sakala fails such a deployment so the previous version keeps serving, instead of marking it successful while every visitor is refused. This check needs the latest sakala-agent (v0.13.0 or later).
+- **Check:** Look at **Start command** in the **Pengaturan** tab, and at the `start` script in `package.json`. If it is `vite preview`, `npm run preview`, or `vite`, that is the cause. On your laptop, after `npx vite build`, run `npx vite preview`, then `curl -i -H 'Host: example.sakala.app' http://127.0.0.1:4173/` shows the same 403.
+- **Fix:** For a Vite SPA, do not run `vite preview` in production. Clear **Start command** and remove a `start` script that runs `vite preview`, so the build output is served as a static site. In a monorepo, set Root directory to the package folder, see [Deploying a Monorepo](/en/docs/monorepo#javascript-monorepos). If you do need `vite preview`, add `preview: { allowedHosts: ['.sakala.app'] }` to `vite.config`. The leading dot allows every `sakala.app` subdomain. For the dev server, the setting is `server.allowedHosts`. For Django, add your project's domain to `ALLOWED_HOSTS` in `settings.py`, and turn `DEBUG` off in production. Then deploy again.
 
 #### `runtime_health_check_failed`
 

@@ -14,7 +14,7 @@ Versi lama tidak ikut rusak. Sakala baru mengalihkan trafik setelah versi baru m
 
 > Sakala sedang dalam pilot terbuka sejak 19 November 2026: siapa pun bisa mendaftar dan memakainya tanpa biaya, dengan [batas pemakaian](/docs/batas-pilot).
 >
-> **Status panduan ini per 6 November 2026.** Panduan ini belum diuji bersama pengguna pilot. Daftar kode di bawah mengikuti `DeploymentFailureClassifier` di `sakala-api`.
+> **Status panduan ini per 6 November 2026.** Panduan ini belum diuji bersama pengguna pilot. Daftar kode di bawah mengikuti `DeploymentFailureClassifier` di `sakala-api`, kecuali `runtime_app_host_blocked`, yang per 19 November 2026 baru dikirim sakala-agent dan belum dikenali classifier itu.
 
 ## Untuk siapa
 
@@ -140,7 +140,7 @@ Kasus ini tidak punya kode sendiri. Kalau Sakala tidak menemukan berkas bernama 
 - **Cek:** Jalankan `git ls-tree -d HEAD apps/web`, dengan `apps/web` diganti folder yang kamu isi. Kalau tidak ada hasil, foldernya tidak ada di commit itu.
 - **Perbaiki:** Di tab **Pengaturan**, perbaiki kolom **Root Directory**, misalnya `apps/web`, atau kosongkan untuk memakai root repository. Simpan, lalu tekan **Redeploy**.
 
-Repository-mu berisi beberapa aplikasi? Lihat [Men-deploy monorepo](/docs/monorepo), termasuk batasnya: build hanya melihat isi Root Directory, jadi lockfile dan package workspace di root repository tidak ikut.
+Repository-mu berisi beberapa aplikasi? Lihat [Men-deploy monorepo](/docs/monorepo), termasuk batasnya. Build hanya melihat isi Root Directory, kecuali package di workspace JavaScript, yang dibangun dari root workspace beserta lockfile-nya. Yang terakhir ini membutuhkan sakala-agent versi terbaru (v0.13.0 atau lebih baru).
 
 ### Perintah rilis
 
@@ -198,6 +198,13 @@ Kode di bagian ini hanya muncul kalau project-mu mengisi perintah rilis, yaitu f
 - **Penyebab:** `/` terus menjawab 5xx sampai batas waktu. Biasanya halaman itu memanggil database atau layanan lain yang gagal.
 - **Cek:** Jalankan `curl -i http://127.0.0.1:3000/` di laptop, lalu baca error-nya di panel Logs. Status di bawah 500, termasuk 404, sudah lolos.
 - **Perbaiki:** Perbaiki error-nya, atau buat `/` tidak bergantung pada layanan lain, lalu deploy ulang.
+
+#### `runtime_app_host_blocked`
+
+- **Yang terlihat:** Kode `runtime_app_host_blocked`. **Detail error** menyebut domain project-mu dan perbaikannya dalam bahasa Inggris, misalnya "Vite's preview server refuses requests for NAMA-PROJECT.sakala.app, so every visitor would get HTTP 403". Selama `sakala-api` belum mengenali kode ini, ringkasannya masih berbunyi "Deployment gagal karena terjadi kesalahan yang belum dikenali."
+- **Penyebab:** Aplikasinya menjawab, tetapi framework-nya menolak domain project, jadi setiap pengunjung akan mendapat penolakan yang sama. Sakala mengenali dua kasus. Server preview atau dev server Vite 6 ke atas menjawab 403 "Blocked request. This host (...) is not allowed" untuk alamat yang tidak ada di `allowedHosts`. Django dengan `DEBUG = True` menjawab 400 `DisallowedHost` untuk domain di luar `ALLOWED_HOSTS`. Sakala menggagalkan deployment seperti ini supaya versi sebelumnya tetap melayani, daripada menandainya berhasil padahal semua pengunjung ditolak. Pengecekan ini membutuhkan sakala-agent versi terbaru (v0.13.0 atau lebih baru).
+- **Cek:** Lihat **Start command** di tab **Pengaturan**, dan script `start` di `package.json`. Kalau isinya `vite preview`, `npm run preview`, atau `vite`, itu penyebabnya. Di laptop, setelah `npx vite build`, jalankan `npx vite preview`, lalu `curl -i -H 'Host: contoh.sakala.app' http://127.0.0.1:4173/` menunjukkan 403 yang sama.
+- **Perbaiki:** Untuk SPA Vite, jangan menjalankan `vite preview` di production. Kosongkan **Start command** dan hapus script `start` yang menjalankan `vite preview`, supaya hasil build disajikan sebagai situs statis. Di monorepo, isi Root directory dengan folder package-nya, lihat [Men-deploy monorepo](/docs/monorepo#monorepo-javascript). Kalau kamu tetap butuh `vite preview`, tambahkan `preview: { allowedHosts: ['.sakala.app'] }` di `vite.config`. Titik di depan mengizinkan semua subdomain `sakala.app`. Untuk dev server, setting-nya `server.allowedHosts`. Untuk Django, tambahkan domain project-mu ke `ALLOWED_HOSTS` di `settings.py`, dan matikan `DEBUG` di production. Lalu deploy ulang.
 
 #### `runtime_health_check_failed`
 
