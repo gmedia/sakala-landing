@@ -16,6 +16,8 @@ A monorepo is one repository that holds several applications, for example `apps/
 > **Status of this guide as of 11 November 2026.** This guide comes from one real run in a Sakala development environment against the [`gmedia/facility-reporting`](https://github.com/gmedia/facility-reporting) repository, which holds a Laravel API in `apps/api` and a Vite web app in `apps/web`. It has not been tried with pilot users or in production. Other stacks have not been tried as a monorepo.
 >
 > **Update, 19 November 2026.** A package in a JavaScript workspace (pnpm, npm, Yarn, or Bun) is now built from the workspace root, so the lockfile and shared workspace packages are used. This needs the latest sakala-agent (v0.13.0 or later) on the node that runs your project. It has been tested with an example pnpm monorepo in the `sakala-agent` Docker tests, but not yet through Sakala in production. [JavaScript monorepos](#javascript-monorepos) explains how it works.
+>
+> **Update, 19 November 2026: pushes in a monorepo.** A push to GitHub now only deploys the projects its changes affect. This applies from the next `sakala-api` and Console releases, the versions after `sakala-api` v0.8.0 and Console v0.9.0. Before that, every push deploys every project with auto-deploy on. The rules are in [Pushes in a monorepo](#pushes-in-a-monorepo).
 
 ## Who this is for
 
@@ -121,13 +123,29 @@ Do not set Start command to `vite preview`, `npm run preview`, or `vite`. The pr
 
 The web app and the API live at different addresses, so the browser treats calls from the web app to the API as cross-origin requests. The API must allow the web origin through CORS. In Laravel that is set in `config/cors.php` or in the variables your application uses.
 
+## Pushes in a monorepo
+
+When auto-deploy is on, a push to the branch only deploys the projects it affects. Sakala looks at the files changed across all commits in that push, then decides per project:
+
+- **A changed file is inside the project's Root directory:** the project deploys.
+- **A shared file changed,** meaning a file outside every project's folder, such as `pnpm-lock.yaml`, the root `README.md`, `turbo.json`, or `packages/ui`: every project deploys.
+- **Only files in another project's folder changed:** this project does not deploy.
+
+For the example repository, a push that only changes `apps/api` deploys the API project alone. A push that changes `pnpm-lock.yaml` deploys both.
+
+A folder counts as another project's only if that project is in the same workspace and uses the same repository and branch, including projects with auto-deploy off. When folders are nested, such as `apps/web` and `apps/web/admin`, a file belongs to the deepest folder. So a change in `apps/web/admin` only deploys the project whose Root directory is `apps/web/admin`. A project whose Root directory is empty or `.` deploys on every push.
+
+When Sakala cannot be sure which files changed, every project deploys as before. That happens with a force push, a push that creates a new branch, a push with only empty commits, a push with 2048 or more commits, and a push with a commit that changes 3000 or more files. The same applies per project when it has never deployed successfully, its last deployment failed or was cancelled, or a push was not run because of the hourly build limit since its last deployment.
+
+A skipped push shows in the **Riwayat** (history) tab as a grey row, for example "Dilewati — tidak ada perubahan di apps/web" (skipped, no changes in apps/web). The row has no deployment number, does not count toward the hourly build limit, and sends no notification. Manual deploys and **Redeploy** are not affected by these rules.
+
 ## Current limits
 
 Read this before you move your monorepo to Sakala.
 
 - **Outside a JavaScript workspace, only the Root directory is built.** Files outside that folder, including shared configuration at the root, are not available during the build. On a node that still runs a sakala-agent older than v0.13.0, this also applies to workspace packages: the lockfile at the root is not used, workspace packages such as `packages/ui` are not visible, and a build that uses pnpm fails with `pnpm: not found`.
 - **SPAs other than Vite in a workspace are not served automatically yet.** For static Astro, Create React App, Angular, or React Router inside a workspace, add a `start` script to the package or fill in Start command.
-- **No watch paths yet.** Sakala cannot limit auto-deploy to particular folders. If auto-deploy is on for several projects, every push to that branch rebuilds all of them, even when only one application changed. To avoid wasted builds, turn auto-deploy on only for the project that changes most, and press **Redeploy** by hand for the others.
+- **You cannot choose the watched folders yourself yet.** Sakala decides which projects deploy from their Root directory, as described in [Pushes in a monorepo](#pushes-in-a-monorepo). Watch paths, a list of folders or file patterns you choose yourself to trigger a deploy, are not available yet. As a result, a change to a shared file such as the root `README.md` still deploys every project.
 - **One web service per project.** Laravel queue workers and the scheduler cannot run on Sakala yet.
 - **No persistent storage.** Files the application writes, such as `file` sessions, `file` cache, and uploads, are gone each time a new deploy finishes. Use a database or an external service for data that has to last.
 
