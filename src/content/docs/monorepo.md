@@ -15,6 +15,8 @@ Monorepo adalah satu repository yang berisi beberapa aplikasi, misalnya `apps/ap
 > **Status panduan ini per 11 November 2026.** Panduan ini ditulis dari satu percobaan sungguhan di lingkungan pengembangan Sakala terhadap repository [`gmedia/facility-reporting`](https://github.com/gmedia/facility-reporting), yang berisi API Laravel di `apps/api` dan web Vite di `apps/web`. Belum dicoba bersama pengguna pilot, dan belum di production. Stack lain belum dicoba sebagai monorepo.
 >
 > **Pembaruan 19 November 2026.** Package di workspace JavaScript (pnpm, npm, Yarn, atau Bun) kini dibangun dari root workspace, jadi lockfile dan package workspace bersama ikut terpakai. Fitur ini membutuhkan sakala-agent versi terbaru (v0.13.0 atau lebih baru) di node yang menjalankan project-mu. Sudah diuji dengan contoh monorepo pnpm di test Docker `sakala-agent`, tetapi belum dicoba lewat Sakala di production. Penjelasannya ada di [Monorepo JavaScript](#monorepo-javascript).
+>
+> **Pembaruan 19 November 2026, push di monorepo.** Push ke GitHub kini hanya men-deploy proyek yang terdampak perubahannya. Ini berlaku sejak rilis `sakala-api` dan Console berikutnya, yaitu versi setelah `sakala-api` v0.8.0 dan Console v0.9.0. Sebelum itu, setiap push men-deploy semua proyek yang auto-deploy-nya menyala. Aturannya ada di [Push di monorepo](#push-di-monorepo).
 
 ## Untuk siapa
 
@@ -120,13 +122,29 @@ Jangan isi Start command dengan `vite preview`, `npm run preview`, atau `vite`. 
 
 Web dan API berada di alamat berbeda, jadi browser menganggap panggilan dari web ke API sebagai permintaan lintas origin. API harus mengizinkan origin web lewat CORS. Di Laravel, itu diatur di `config/cors.php` atau variabel yang dipakai aplikasimu.
 
+## Push di monorepo
+
+Kalau auto-deploy menyala, push ke branch hanya men-deploy proyek yang terdampak. Sakala melihat berkas yang berubah di semua commit dalam push itu, lalu memutuskan per proyek:
+
+- **Ada berkas berubah di dalam Root directory proyek itu:** proyek di-deploy.
+- **Ada berkas bersama yang berubah,** yaitu berkas di luar folder semua proyek, misalnya `pnpm-lock.yaml`, `README.md` di root, `turbo.json`, atau `packages/ui`: semua proyek di-deploy.
+- **Yang berubah hanya berkas di folder proyek lain:** proyek ini tidak di-deploy.
+
+Untuk repository contoh, push yang hanya mengubah `apps/api` men-deploy proyek API saja. Push yang mengubah `pnpm-lock.yaml` men-deploy keduanya.
+
+Sebuah folder dihitung milik proyek lain hanya kalau proyek itu ada di workspace yang sama, memakai repository dan branch yang sama, termasuk proyek yang auto-deploy-nya mati. Kalau folder bersarang, misalnya `apps/web` dan `apps/web/admin`, berkas dihitung milik folder yang paling dalam. Jadi perubahan di `apps/web/admin` hanya men-deploy proyek dengan Root directory `apps/web/admin`. Proyek yang Root directory-nya kosong atau `.` di-deploy di setiap push.
+
+Kalau Sakala tidak bisa memastikan berkas mana yang berubah, semua proyek di-deploy seperti dulu. Ini terjadi pada force push, push yang membuat branch baru, push yang hanya berisi commit kosong, push dengan 2048 commit atau lebih, dan push dengan commit yang mengubah 3000 berkas atau lebih. Hal yang sama berlaku per proyek kalau proyek itu belum pernah berhasil di-deploy, deployment terakhirnya gagal atau dibatalkan, atau sejak deployment terakhirnya ada push yang tidak dijalankan karena batas build per jam.
+
+Push yang dilewati tampil di tab **Riwayat** sebagai baris abu-abu, misalnya "Dilewati — tidak ada perubahan di apps/web". Baris itu tidak punya nomor deployment, tidak dihitung dalam batas build per jam, dan tidak mengirim notifikasi. Deploy manual dan **Redeploy** tidak terpengaruh aturan ini.
+
 ## Batas saat ini
 
 Bagian ini penting dibaca sebelum memindahkan monorepo-mu ke Sakala.
 
 - **Di luar workspace JavaScript, hanya isi Root directory yang ikut dibangun.** Berkas di luar folder itu, termasuk konfigurasi bersama di root, tidak tersedia saat build. Di node yang masih menjalankan sakala-agent lebih lama dari v0.13.0, aturan ini juga berlaku untuk package workspace: lockfile di root tidak dipakai, package workspace seperti `packages/ui` tidak terlihat, dan build yang memakai pnpm gagal dengan `pnpm: not found`.
 - **SPA selain Vite di workspace belum disajikan otomatis.** Untuk Astro statis, Create React App, Angular, atau React Router di dalam workspace, tambahkan script `start` di package atau isi Start command.
-- **Belum ada watch paths.** Sakala belum bisa membatasi auto-deploy ke folder tertentu. Kalau auto-deploy menyala di beberapa proyek, setiap push ke branch itu membangun ulang semua proyek tersebut, walaupun hanya satu aplikasi yang berubah. Supaya build tidak terbuang, nyalakan auto-deploy hanya di proyek yang paling sering berubah, dan tekan **Redeploy** manual untuk yang lain.
+- **Folder yang dipantau belum bisa dipilih sendiri.** Sakala menentukan proyek yang di-deploy dari Root directory, seperti dijelaskan di [Push di monorepo](#push-di-monorepo). Watch paths, yaitu daftar folder atau pola berkas yang kamu pilih sendiri untuk memicu deploy, belum tersedia. Akibatnya, perubahan di berkas bersama seperti `README.md` di root tetap men-deploy semua proyek.
 - **Satu web service per proyek.** Queue worker dan scheduler Laravel belum bisa dijalankan di Sakala.
 - **Penyimpanan tidak tetap.** Berkas yang ditulis aplikasi, misalnya session `file`, cache `file`, dan upload, hilang setiap deploy baru selesai. Pakai database atau layanan eksternal untuk data yang harus bertahan.
 

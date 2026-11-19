@@ -21,6 +21,14 @@ versinya di file ini.
 
 ### Changed
 
+- Men-deploy Monorepo (id dan en) mendapat bagian "Push di monorepo": push
+  hanya men-deploy proyek yang Root directory-nya berubah, atau semua proyek
+  kalau berkas bersama di luar folder proyek berubah. Bagian itu juga
+  menjelaskan folder bersarang, Root directory kosong, kapan semua proyek
+  tetap di-deploy, dan baris "Dilewati" di tab Riwayat. Saran menyalakan
+  auto-deploy di satu proyek saja dihapus; watch paths tetap tercatat sebagai
+  batas. Berlaku sejak rilis `sakala-api` dan Console setelah `sakala-api`
+  v0.8.0 dan Console v0.9.0.
 - Men-deploy Monorepo (id dan en) menjelaskan workspace JavaScript (pnpm, npm,
   Yarn, Bun): Root directory diisi folder package, Build dan Start command
   dibiarkan kosong, build berjalan dari root workspace dengan lockfile-nya,
