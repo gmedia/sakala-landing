@@ -11,7 +11,7 @@ lang: en
 
 Sakala does not provide file storage for projects yet. Files your application writes inside its container, such as images uploaded by users, Laravel's `storage/app`, or a SQLite file, are gone each time a new deploy finishes. Keep files like these in S3-compatible object storage outside Sakala, and keep structured data in a database.
 
-> **Status of this guide as of 23 November 2026.** The code on this page has been run locally against Garage 2.5.0, an S3-compatible object store running in Docker: Laravel 13 with `league/flysystem-aws-s3-v3` 3.35, and Node 24 with the AWS SDK for JavaScript v3. It has not been tried against a real provider or through Sakala in production.
+> **Status of this guide as of 23 November 2026.** The code on this page has been run locally against two S3-compatible object stores in Docker, Garage 2.5.0 and RustFS 1.0.6: Laravel 13 with `league/flysystem-aws-s3-v3` 3.35, and Node 24 with the AWS SDK for JavaScript v3. It has not been tried against a real provider or through Sakala in production.
 
 ## Why files are lost
 

@@ -10,7 +10,7 @@ order: 4.1
 
 Sakala belum menyediakan penyimpanan file untuk proyek. Berkas yang ditulis aplikasimu ke dalam container, misalnya gambar yang di-upload pengguna, isi `storage/app` Laravel, atau berkas SQLite, hilang setiap kali deploy baru selesai. Simpan berkas seperti itu di object storage S3-compatible di luar Sakala, dan simpan data terstruktur di database.
 
-> **Status panduan ini per 23 November 2026.** Contoh kode di halaman ini sudah dijalankan secara lokal terhadap Garage 2.5.0, object storage S3-compatible yang berjalan di Docker: Laravel 13 dengan `league/flysystem-aws-s3-v3` 3.35, dan Node 24 dengan AWS SDK for JavaScript v3. Ia belum dicoba terhadap provider sungguhan atau lewat Sakala di production.
+> **Status panduan ini per 23 November 2026.** Contoh kode di halaman ini sudah dijalankan secara lokal terhadap dua object storage S3-compatible di Docker, Garage 2.5.0 dan RustFS 1.0.6: Laravel 13 dengan `league/flysystem-aws-s3-v3` 3.35, dan Node 24 dengan AWS SDK for JavaScript v3. Ia belum dicoba terhadap provider sungguhan atau lewat Sakala di production.
 
 ## Kenapa berkas hilang
 
