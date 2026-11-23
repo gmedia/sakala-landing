@@ -45,6 +45,19 @@ versinya di file ini.
 
 ### Added
 
+- Halaman panduan "Penyimpanan File" (id dan en) di `/docs/penyimpanan-file`:
+  berkas di dalam container hilang setiap deploy dan rollback tetapi bertahan
+  saat tidur dan **Restart**, replika punya filesystem sendiri, object storage
+  S3-compatible di provider luar sebagai gantinya, variabel `AWS_*` sebagai
+  secret, contoh Laravel (`league/flysystem-aws-s3-v3`, `temporaryUrl`) dan
+  Node (`@aws-sdk/client-s3`, presigned URL) yang sudah dicoba terhadap Garage
+  lokal, serta catatan SQLite. Hub docs dan Menghubungkan Database Eksternal
+  menautkannya.
+- ADR-021 "Managed Object Storage for Projects" (Proposed): Garage sebagai
+  engine, bucket milik workspace dengan kuota di profil batas, satu access key
+  per bucket, endpoint `s3.sakala.app` path-style dengan bucket privat dan
+  presigned URL, pilot di runtime node, serta pertanyaan terbuka (Garage atau
+  RustFS, bucket publik, backup). PRD menautkannya.
 - Halaman panduan "Variabel dan Secret" (id dan en) di `/docs/variabel-dan-secret`,
   yang sebelumnya dialihkan ke hub: cara mengisi variabel saat membuat proyek
   dan di tab Variabel, saran dari `.env.example` di tahap Persiapan, secret
