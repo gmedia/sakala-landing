@@ -26,6 +26,7 @@ Panduan pakai:
 - [Database terkelola](/docs/database-terkelola), yang masih pilot terbatas, dan [menghubungkan database eksternal](/docs/database-eksternal) sebagai pilihan lain;
 - [Database dan perintah rilis](/docs/perintah-rilis), untuk menjalankan migration sekali setiap deployment;
 - [Penyimpanan file](/docs/penyimpanan-file), karena berkas di dalam container hilang begitu container berhenti;
+- [Rollback dan Restart](/docs/rollback-dan-restart), untuk kembali ke versi sebelumnya atau menyalakan ulang container tanpa build;
 - [Saat deploy gagal](/docs/deploy-gagal), untuk membaca kode kegagalan dan memperbaikinya.
 
 Yang tetap berguna walau kamu akhirnya memakai platform lain:
