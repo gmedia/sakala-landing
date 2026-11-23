@@ -215,7 +215,7 @@ For now Sakala runs one web service per project. Workers and cron are not availa
 
 ## Variables needed during the build
 
-Variables you set in the Environment Variables tab are always available while the application runs. During the build, the rule depends on how it builds.
+Variables you set in the **Variabel** (variables) tab are always available while the application runs. During the build, the rule depends on how it builds.
 
 - **Without a Dockerfile (Railpack).** Variables are automatically available on every build step, with no extra setup.
 - **With a Dockerfile.** You have to ask for them on the step that needs them, like the line `RUN --mount=type=secret,id=VITE_API_URL,env=VITE_API_URL npm run build` above.
@@ -226,7 +226,7 @@ Three things that often confuse people on a Dockerfile:
 
 - **`ARG` stays empty.** Sakala deliberately does not fill it, because an `ARG` value is stored in the image history, where anyone holding the image can read it.
 - **An unset variable does not fail the build.** The step still runs with an empty value. In a trial of the Vite example above, the result read `API: ` with no address.
-- **Changing a value does not rebuild a cached step.** The next build can keep using the old value. Commit a code change in a file copied before that step so the step rebuilds.
+- **Variables without a build prefix do not trigger a build.** Sakala treats a project with a Dockerfile as a plain server, so changing a variable such as `API_URL` makes Redeploy reuse the old image without a build. Variables starting with `VITE_`, `NEXT_PUBLIC_`, and the other prefixes in [Variables and Secrets](/en/docs/variabel-dan-secret#build-time-and-runtime-variables) do trigger a build. For any other variable you read through `--mount=type=secret`, choose **Build ulang dari awal** (rebuild from scratch) after changing it. Every Dockerfile build on Sakala runs without the layer cache, so that build always reads the latest value.
 
 Values passed this way do not enter image layers or history, unless your own build step writes them to a file. Public variables like `VITE_*` and `NEXT_PUBLIC_*` are a different story: the framework puts them in the build output, where anyone opening your application can read them. Do not put secrets there.
 
@@ -243,7 +243,7 @@ ARG API_TOKEN
 COPY .env .
 ```
 
-Set the values in the Environment Variables tab so they exist only while the application runs. To confirm nothing slipped in, check the image history and look for `.env` files inside. The `find` command below must print nothing.
+Set the values in the **Variabel** tab so they exist only while the application runs. To confirm nothing slipped in, check the image history and look for `.env` files inside. The `find` command below must print nothing.
 
 ```bash
 docker history --no-trunc halo-sakala

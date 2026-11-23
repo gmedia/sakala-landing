@@ -20,6 +20,22 @@ Belum untuk aplikasi yang penting. Selama pilot tidak ada jaminan uptime, SLA, a
 
 Tidak. Sakala juga relevan untuk developer pemula, pengajar, komunitas, dan tim kecil yang membutuhkan deployment project yang sederhana.
 
+## Saya dosen. Bisakah Sakala dipakai untuk kelas?
+
+Bisa, sebagai salah satu cara supaya tugas mahasiswa bisa dibuka lewat URL, dengan beberapa batas. Sakala belum punya fitur kelas: belum ada daftar peserta, impor CSV, penugasan dengan tenggat, atau penilaian. Fitur itu ada di roadmap sebagai [Horizon B](/docs/proyek/roadmap#horizon-b--learn-minimal), belum dibangun. Sakala juga bukan sistem pengumpulan tugas resmi, jadi tetap kumpulkan tugas lewat sistem kampusmu dan minta mahasiswa mencantumkan URL-nya di sana.
+
+Cara yang paling sederhana hari ini:
+
+1. Setiap mahasiswa [mendaftar sendiri](https://app.sakala.dev/register) dan men-deploy dari repository GitHub miliknya. Workspace pribadi bisa menampung 3 proyek, dan selama pilot tidak ada biaya.
+2. Mahasiswa mengirim alamat `<nama-proyek>.sakala.app` lewat sistem tugas kampus.
+3. Kalau kamu perlu melihat deployment dan log-nya, mahasiswa bisa membuat proyeknya di workspace tim, lalu mengundangmu ke workspace itu sebagai **Pengamat**. Pengamat bisa membaca proyek, deployment, dan log, tetapi tidak bisa mengubah apa pun atau melihat nilai secret.
+
+Workspace tim juga bisa dipakai satu kelompok, tetapi batas bawaannya kecil: 2 proyek dan 2 container berjalan per workspace, dan undangan dikirim satu email per kali lewat **Undang anggota**. Semua batasnya ada di [Batas Pilot](/docs/batas-pilot).
+
+Sebelum memakainya untuk demo atau penilaian, ingat bahwa proyek tidur setelah 30 menit tanpa pengunjung dan butuh waktu untuk menyala lagi saat dibuka, dan selama pilot belum ada jaminan uptime. Siapkan cadangan, misalnya rekaman demo atau menjalankan aplikasinya di laptop.
+
+Kalau kelasmu butuh batas yang berbeda atau ada pertanyaan lain, tanyakan di [GitHub Discussions, kategori Q&A](https://github.com/gmedia/sakala/discussions/categories/q-a). Discussions bisa dibaca publik, jadi jangan menulis data mahasiswa, password, atau token di sana.
+
 ## Mengapa open source?
 
 Deployment lebih bermanfaat untuk pembelajaran bila alur, kontrak, dan trade-off teknisnya dapat dibaca serta diperbaiki bersama.

@@ -21,6 +21,22 @@ Not for important applications. During the pilot there is no uptime guarantee, S
 
 No. Sakala is also relevant for beginner developers, instructors, communities, and small teams who need straightforward project deployment.
 
+## I am a lecturer. Can Sakala be used for a class?
+
+Yes, as one way to let students' assignments be opened through a URL, within some limits. Sakala has no class features yet: no participant list, CSV import, assignments with deadlines, or grading. Those are on the roadmap as [Horizon B](/en/docs/proyek/roadmap#horizon-b--learn-minimal) and are not built. Sakala is also not an official submission system, so keep collecting assignments through your campus system and ask students to include the URL there.
+
+The simplest way today:
+
+1. Each student [signs up](https://app.sakala.dev/register) on their own and deploys from their own GitHub repository. A personal workspace holds 3 projects, and there is no cost during the pilot.
+2. Students send their `<project-name>.sakala.app` address through the campus assignment system.
+3. If you need to see the deployments and logs, a student can create the project in a team workspace, then invite you to that workspace as **Pengamat** (viewer). A viewer can read projects, deployments, and logs, but cannot change anything or see secret values.
+
+A team workspace can also be used by a group, but its default limits are small: 2 projects and 2 running containers per workspace, and invitations go one email at a time through **Undang anggota** (invite member). All the limits are in [Pilot Limits](/en/docs/batas-pilot).
+
+Before using it for a demo or grading, keep in mind that projects sleep after 30 minutes without visitors and need a moment to start again when opened, and there is no uptime guarantee during the pilot. Have a fallback, such as a recorded demo or running the application on a laptop.
+
+If your class needs different limits or you have other questions, ask in [GitHub Discussions, Q&A category](https://github.com/gmedia/sakala/discussions/categories/q-a). Discussions are public, so do not post student data, passwords, or tokens there.
+
 ## Why open source?
 
 Deployment teaches more when its flow, contracts, and technical trade-offs can be read and improved together.

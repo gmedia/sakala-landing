@@ -1,6 +1,6 @@
 ---
 title: Connecting an External Database
-description: Sakala does not provide a database yet. Here is how to connect your application to one outside Sakala through an environment variable, without leaking the password.
+description: How to connect your application to a database outside Sakala through an environment variable, without leaking the password.
 track: panduan
 section: Deploy guides
 order: 4
@@ -9,9 +9,11 @@ lang: en
 
 # Connecting an External Database
 
-The Sakala MVP does not provide a database. If your application needs one, you rent or set it up yourself outside Sakala, then give your application its address through the `DATABASE_URL` environment variable.
+This guide is for a database you rent or set up yourself outside Sakala. Your application gets its address through the `DATABASE_URL` environment variable.
 
-That makes backups, migrations, and data recovery your responsibility. Sakala only runs the application. Containers have no persistent storage either, so a SQLite file or an upload written inside the container is gone each time a new deploy finishes.
+Sakala also has [managed databases](/en/docs/database-terkelola), but as of 23 November 2026 they are a limited pilot: the default quota on `sakala.dev` is 0, so most workspaces cannot create one yet. Until then, an external database is the way.
+
+With an external database, backups, migrations, and data recovery are your responsibility. Sakala only runs the application. Containers have no persistent storage either, so a SQLite file or an upload written inside the container is gone each time a new deploy finishes.
 
 > Sakala has been in an open pilot since 19 November 2026: anyone can sign up and use it at no cost, within the [usage limits](/en/docs/batas-pilot).
 >
@@ -24,7 +26,7 @@ This guide is for pilot participants whose application needs to store data, and 
 ## What you need
 
 - An application that passes [Preparing a Dockerfile](/en/docs/dockerfile), or that Railpack can build.
-- A project in the Console, with access to the **Environment Variables** tab.
+- A project in the Console, with access to the **Variabel** (variables) tab.
 - A database at a provider of your choice.
 
 ## Choosing a provider
@@ -52,9 +54,9 @@ Do not put this value in the repository, in a committed `.env`, in a Dockerfile,
 
 ## Step 2: set it in the Console
 
-You can set it while creating the project, or later: open the project, go to the **Environment Variables** tab, press **Tambah Variabel**, and enter the name `DATABASE_URL` with the connection string. Keep **Simpan sebagai rahasia** (save as secret) ticked. Variable names use capital letters, digits, and underscores.
+You can set it while creating the project, or later: open the project, go to the **Variabel** tab, press **Tambah variabel** (add variable), and enter the name `DATABASE_URL` with the connection string. Tick **Simpan sebagai secret** (save as secret). Variable names use capital letters, digits, and underscores. More about variables is in [Variables and Secrets](/en/docs/variabel-dan-secret).
 
-The application only reads a new variable after the next deployment, so press **Redeploy** after saving. Each deployment uses a copy of the variables taken when it is created.
+The application only reads a new variable after the next deployment, so press **Redeploy** after saving. Each deployment uses a copy of the variables taken when it is created. For a plain server application, changing `DATABASE_URL` only needs a [redeploy without a build](/en/docs/variabel-dan-secret#redeploy-without-a-build).
 
 ## Step 3: read it in your code
 
@@ -182,7 +184,7 @@ While you fix things, the last successful version keeps serving visitors. If the
 Do this regularly, and right away if a password may have leaked.
 
 1. Create a new user or password at the provider. If you can, leave the old one active for now.
-2. In the **Environment Variables** tab, press **Ubah** (edit) on the `DATABASE_URL` row and save the new value.
+2. In the **Variabel** tab, press **Ubah** (edit) on the `DATABASE_URL` row and save the new value.
 3. Press **Redeploy**. The running version keeps the old value until the new deploy succeeds.
 4. Check `/db` on the new version.
 5. Turn off the old password at the provider.

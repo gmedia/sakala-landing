@@ -942,8 +942,8 @@ in Console v0.11.0. What changed against the decision above:
   the control-plane host and kept for 14 sets. A restore drill from that
   off-host copy on 2026-11-23 matched the live database.
 - **Not built yet.** Dump download in the Console, restore by the owner, and
-  "copy database". Restores are done by a maintainer, and the Managed Databases user
-  guide on this site says so, together with the RPO of up to one day.
+  "copy database". Restores are done by a maintainer, and the [Managed Databases](/docs/database-terkelola)
+  user guide says so, together with the RPO of up to one day.
 
 **Tenant dumps are never restored as a superuser.** A dump holds objects the
 tenant defined, and restoring it runs some of them: functions called by

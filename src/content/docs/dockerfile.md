@@ -214,7 +214,7 @@ Saat ini Sakala menjalankan satu web service per project. Worker dan cron belum 
 
 ## Variabel yang dibutuhkan saat build
 
-Variabel yang kamu isi di tab Environment Variables selalu tersedia saat aplikasi berjalan. Saat build, aturannya tergantung cara build-nya.
+Variabel yang kamu isi di tab **Variabel** selalu tersedia saat aplikasi berjalan. Saat build, aturannya tergantung cara build-nya.
 
 - **Tanpa Dockerfile (Railpack).** Variabel otomatis tersedia di setiap langkah build, tanpa pengaturan tambahan.
 - **Dengan Dockerfile.** Kamu harus memintanya pada langkah yang membutuhkan, seperti baris `RUN --mount=type=secret,id=VITE_API_URL,env=VITE_API_URL npm run build` di atas.
@@ -225,7 +225,7 @@ Tiga hal yang sering membingungkan pada Dockerfile:
 
 - **`ARG` tetap kosong.** Sakala sengaja tidak mengisinya, karena nilai `ARG` tersimpan di riwayat image dan bisa dibaca siapa pun yang memegang image itu.
 - **Variabel yang belum diisi tidak menggagalkan build.** Langkahnya tetap berjalan dengan nilai kosong. Dalam percobaan contoh Vite di atas, hasilnya tertulis `API: ` tanpa alamat.
-- **Mengubah nilai tidak membangun ulang langkah yang sudah ter-cache.** Build berikutnya bisa tetap memakai nilai lama. Commit perubahan kode pada berkas yang disalin sebelum langkah itu supaya langkahnya dibangun ulang.
+- **Variabel tanpa awalan build tidak memicu build.** Sakala menganggap proyek dengan Dockerfile sebagai server biasa, jadi mengubah variabel seperti `API_URL` membuat Redeploy memakai ulang image lama tanpa build. Variabel berawalan `VITE_`, `NEXT_PUBLIC_`, dan awalan lain di [Variabel dan Secret](/docs/variabel-dan-secret#variabel-saat-build-dan-saat-aplikasi-berjalan) memang memicu build. Untuk variabel lain yang kamu baca lewat `--mount=type=secret`, pilih **Build ulang dari awal** setelah mengubahnya. Setiap build Dockerfile di Sakala berjalan tanpa cache layer, jadi build itu selalu membaca nilai terbaru.
 
 Nilai yang lewat cara ini tidak masuk layer atau riwayat image, kecuali langkah build-mu sendiri menulisnya ke berkas. Variabel publik seperti `VITE_*` dan `NEXT_PUBLIC_*` lain ceritanya: framework memasukkannya ke hasil build, sehingga terbaca oleh siapa pun yang membuka aplikasimu. Jangan menaruh secret di sana.
 
@@ -242,7 +242,7 @@ ARG API_TOKEN
 COPY .env .
 ```
 
-Isi nilainya di tab Environment Variables supaya hanya tersedia saat aplikasi berjalan. Untuk memastikan tidak ada yang terbawa, periksa riwayat image dan cari berkas `.env` di dalamnya. Perintah `find` berikut harus tidak menampilkan apa pun.
+Isi nilainya di tab **Variabel** supaya hanya tersedia saat aplikasi berjalan. Untuk memastikan tidak ada yang terbawa, periksa riwayat image dan cari berkas `.env` di dalamnya. Perintah `find` berikut harus tidak menampilkan apa pun.
 
 ```bash
 docker history --no-trunc halo-sakala

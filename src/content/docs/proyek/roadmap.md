@@ -92,8 +92,9 @@ dicoba di server sungguhan.
 - repository privat lewat GitHub App;
 - visibilitas pemakaian dan kuota.
 
-**Status per 19 November 2026:** auto-deploy dari push dan repository privat
-lewat GitHub App sudah tersedia. Metrik dasar sedang dibangun. Sisanya belum.
+**Status per 23 November 2026:** auto-deploy dari push, repository privat
+lewat GitHub App, dan metrik dasar per proyek (CPU, memori, replika, dan
+restart, sejak 19 November 2026) sudah tersedia. Sisanya belum.
 
 ### Horizon E — Explore dan ekosistem
 
@@ -114,7 +115,13 @@ belum.
 PostgreSQL, Redis atau Valkey, object storage terkelola, worker dan queue,
 backup dan restore, observability yang lebih kaya.
 Rancangan PostgreSQL terkelola diusulkan di
-[ADR-020](/docs/proyek/adr).
+[ADR-020](/docs/proyek/adr#adr-020--managed-postgresql-for-projects).
+
+**Status per 23 November 2026:** PostgreSQL terkelola tahap pertama sedang
+diuji sebagai pilot terbatas sejak 23 November 2026, hanya untuk workspace
+yang diberi kuota oleh admin. Backup malam berjalan, dan pemulihannya
+dilakukan maintainer. Layanan lain belum. Panduannya ada di
+[Database Terkelola](/docs/database-terkelola).
 
 ### Horizon H — Platformisasi
 

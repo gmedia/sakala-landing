@@ -22,7 +22,7 @@ This guide is for students and beginner developers who have not deployed through
 - **A GitHub account and one repository.** A public repository works right away. A private one has to be connected through the GitHub App.
 - **A web application listening on `0.0.0.0:$PORT`,** whose `/` answers with a status under 500.
 
-No application yet? Copy the small example in [Preparing a Dockerfile](/en/docs/dockerfile), then push it to GitHub. A repository with a Dockerfile uses that Dockerfile, and one without is built automatically by Railpack. Sakala does not provide a database yet, so if your application needs one, read [Connecting an external database](/en/docs/database-eksternal) first.
+No application yet? Copy the small example in [Preparing a Dockerfile](/en/docs/dockerfile), then push it to GitHub. A repository with a Dockerfile uses that Dockerfile, and one without is built automatically by Railpack. If your application needs a database, read [Managed Databases](/en/docs/database-terkelola), still a limited pilot, or [Connecting an external database](/en/docs/database-eksternal) first.
 
 During the pilot, your personal workspace has 3 projects. Applications run with 256 MB of memory and 0.5 vCPU, builds are limited to 10 minutes and 20 per hour, and projects sleep after 30 minutes without visitors. The details are in [Pilot Limits](/en/docs/batas-pilot).
 
@@ -63,18 +63,18 @@ There are two ways to choose:
 
 For a first deploy, usually only **Nama Proyek** and **Branch** need checking. Leave the optional fields empty if you do not need them yet.
 
-| Field                            | What goes in it                                                                                                       |
-| -------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| Nama Proyek (project name)       | Taken from the repository name. **Domain preview** below it shows your likely address, which is not reserved yet.     |
-| Branch                           | The branch to deploy. Choose from the list.                                                                           |
-| Port (opsional)                  | The port Sakala passes through the `PORT` variable. Empty means 3000.                                                 |
-| Build command (opsional)         | Only for automatic builds with Railpack. Ignored when there is a Dockerfile.                                          |
-| Start command (opsional)         | Applies to both. With a Dockerfile it replaces the image's entrypoint, so the image needs `sh`.                       |
-| Root directory (opsional)        | The application's folder inside the repository, such as `apps/web`. Leave it empty if the application is at the root. |
-| Environment Variables (opsional) | Name and value pairs. **Simpan sebagai rahasia** (save as secret) hides the value once saved. Do not add `PORT`.      |
-| Auto-deploy                      | Creates a new deployment on every push to this branch. Only with **Dari GitHub**. Leave it off for your first deploy. |
+| Field                           | What goes in it                                                                                                                                                              |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Nama Proyek (project name)      | Taken from the repository name. **Domain preview** below it shows your likely address, which is not reserved yet.                                                            |
+| Branch                          | The branch to deploy. Choose from the list.                                                                                                                                  |
+| Port (opsional)                 | The port Sakala passes through the `PORT` variable. Empty means 3000.                                                                                                        |
+| Build command (opsional)        | Only for automatic builds with Railpack. Ignored when there is a Dockerfile.                                                                                                 |
+| Start command (opsional)        | Applies to both. With a Dockerfile it replaces the image's entrypoint, so the image needs `sh`.                                                                              |
+| Root directory (opsional)       | The application's folder inside the repository, such as `apps/web`. Leave it empty if the application is at the root.                                                        |
+| Environment variable (opsional) | Name and value pairs, or a `.env` file through **Tempel dari .env** (paste from .env). Tick **Simpan sebagai secret** (save as secret) for secret values. Do not add `PORT`. |
+| Auto-deploy                     | Creates a new deployment on every push to this branch. Only with **Dari GitHub**. Leave it off for your first deploy.                                                        |
 
-Do not write passwords or tokens in the repository. They belong in Environment Variables. When everything looks right, press **Buat Proyek** (create project).
+Do not write passwords or tokens in the repository. They belong in environment variables; see [Variables and Secrets](/en/docs/variabel-dan-secret). When everything looks right, press **Buat Proyek** (create project).
 
 Does your repository hold several applications, such as an API and a web app? Create one project per application, each with its own Root directory. How, and the limits, are in [Deploying a Monorepo](/en/docs/monorepo).
 
@@ -91,7 +91,7 @@ Check two things before moving on:
 - **Builder.** If your repository has a Dockerfile, this row should read **Dockerfile terdeteksi** (Dockerfile detected). If not, see [Dockerfile not used](/en/docs/deploy-gagal#dockerfile-not-used).
 - **Port.** Your application has to listen on this port. The safest way is to read `PORT` in your code.
 
-If a note about `.env.example` appears, compare it with the variables in the **Environment Variables** tab. If the analysis fails, press **Detect ulang** (detect again). If the analysis has not finished after 2 minutes, you may still continue, because Sakala chooses how to build at deploy time.
+If your repository has a `.env.example`, Sakala may show a **Persiapan** (preparation) phase with suggested variables and a database choice. It is explained in [Variables and Secrets](/en/docs/variabel-dan-secret#setting-variables-while-creating-a-project). If the analysis fails, press **Detect ulang** (detect again). If the analysis has not finished after 2 minutes, you may still continue, because Sakala chooses how to build at deploy time.
 
 Then press **Deploy sekarang** (deploy now). **Lewati** (skip) keeps the project without deploying it, and you can deploy later from the project page.
 
@@ -136,7 +136,7 @@ Open the project page and press **Redeploy**.
 
 **What you should see:** a new deployment with the next number. The old version keeps serving until the new one passes the check. After **Deployment berhasil**, reload your URL and the change appears. You can see every attempt in the **Riwayat Deployment** (deployment history) tab.
 
-Changes in the **Environment Variables** and **Pengaturan** tabs also only apply from the next deployment, so press **Redeploy** after changing them.
+Changes in the **Variabel** (variables) and **Pengaturan** tabs also only apply from the next deployment, so press **Redeploy** after changing them. If only variables read while the application runs have changed, Redeploy reuses the same image without a build. The rules are in [Variables and Secrets](/en/docs/variabel-dan-secret#build-time-and-runtime-variables).
 
 ## If you get stuck
 

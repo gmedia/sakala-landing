@@ -11,7 +11,7 @@ lang: en
 
 Hosted Sakala is in its pilot. Anyone can [sign up in the Console](https://app.sakala.dev/register) and use it at no cost, within the limits on this page. There is no uptime guarantee yet, so Sakala is not a fit for important applications.
 
-> **Status as of 19 November 2026.** The numbers below are the defaults for a workspace without a custom limit profile. We announce limit changes in the [Changelog](/en/changelog) before they take effect.
+> **Status as of 23 November 2026.** The numbers below are the defaults for a workspace without a custom limit profile. We announce limit changes in the [Changelog](/en/changelog) before they take effect.
 
 ## Limits per workspace
 
@@ -24,10 +24,11 @@ Every account gets one personal workspace when it signs up. A workspace is where
 | Deployments processed at the same time             | 2                  | 1              |
 | Builds per hour (counted over the last 60 minutes) | 20                 | 20             |
 | Replicas per project                               | 1                  | 1              |
+| Managed databases                                  | 0                  | 0              |
 
-One account can own up to 2 team workspaces. Sakala admins can give a specific workspace different limits through a limit profile, for example more than one replica.
+One account can own up to 2 team workspaces. Sakala admins can give a specific workspace different limits through a limit profile, for example more than one replica, or a quota for [managed databases](/en/docs/database-terkelola), which are in a limited pilot.
 
-For the builds-per-hour limit, every deployment counts, including failed ones. Once the limit is reached, new deployments are refused until the oldest deployment in the last 60 minutes drops out of the count. A push that would trigger an automatic deploy during that time is skipped, and you get a notification.
+For the builds-per-hour limit, every deployment that builds an image counts, including failed ones. A [redeploy without a build](/en/docs/variabel-dan-secret#redeploy-without-a-build), which reuses the image in use, does not count. Once the limit is reached, new deployments are refused until the oldest deployment in the last 60 minutes drops out of the count. A push that would trigger an automatic deploy during that time is skipped, and you get a notification.
 
 ## Limits per container
 
@@ -50,8 +51,9 @@ Your application is stopped while it sleeps and started again when it wakes, so 
 ## Not available during the pilot
 
 - An uptime guarantee, an SLA, or data recovery.
-- Persistent storage inside the container. Files the application writes, including SQLite and uploads, are lost every time a new deploy finishes. For data, use an [external database](/en/docs/database-eksternal).
-- Managed databases, custom domains, workers, and cron.
+- Persistent storage inside the container. Files the application writes, including SQLite and uploads, are lost every time a new deploy finishes. For data, use a database: an [external database](/en/docs/database-eksternal), or a [managed database](/en/docs/database-terkelola) once your workspace has a quota for it.
+- Managed databases for every workspace. PostgreSQL databases are open only as a limited pilot; see [Managed Databases](/en/docs/database-terkelola).
+- Custom domains, workers, and cron.
 - Limits on outgoing traffic from containers. These limits are being added. Applications already run in a gVisor sandbox, but do not keep sensitive data on Sakala during the pilot.
 
 ## The binding rules
