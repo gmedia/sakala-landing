@@ -46,7 +46,7 @@ For the builds-per-hour limit, every deployment that builds an image counts, inc
 
 A project with no visitors for 30 minutes is put to sleep so the pilot's capacity can be shared. Its address stays the same. The next visitor sees the **Proyek sedang dinyalakan** (project is starting) page, and the application opens by itself once it is ready. You can also wake it from the Console.
 
-Your application is stopped while it sleeps and started again when it wakes, so anything held only in the application's memory, such as login sessions that are not stored in a database, is lost.
+Your application is stopped while it sleeps and started again when it wakes, so anything held only in the application's memory, such as login sessions that are not stored in a database, is lost. Files written inside the container are lost too, see [File Storage](/en/docs/penyimpanan-file).
 
 ## Not available during the pilot
 

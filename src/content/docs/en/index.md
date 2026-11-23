@@ -26,6 +26,7 @@ Usage guides:
 - [Variables and secrets](/en/docs/variabel-dan-secret), including when a change needs a rebuild;
 - [Managed databases](/en/docs/database-terkelola), still a limited pilot, and [connecting an external database](/en/docs/database-eksternal) as the other option;
 - [Databases and the release command](/en/docs/perintah-rilis), to run migrations once per deployment;
+- [File storage](/en/docs/penyimpanan-file), because files inside a container are lost when it stops;
 - [When a deploy fails](/en/docs/deploy-gagal), to read failure codes and fix them.
 
 What stays useful even if you end up using a different platform:

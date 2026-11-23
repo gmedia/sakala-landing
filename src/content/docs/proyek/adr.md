@@ -1,6 +1,6 @@
 ---
 title: "Architecture Decision Records"
-description: "Architecture and product decisions with their status, context, alternatives, and consequences — from separating console and API to workload isolation, quotas, the shared public domain, the hosted plus self-host model, workspace ownership, the edge routing tier with replicas and regions, and the proposed managed PostgreSQL for projects."
+description: "Architecture and product decisions with their status, context, alternatives, and consequences — from separating console and API to workload isolation, quotas, the shared public domain, the hosted plus self-host model, workspace ownership, the edge routing tier with replicas and regions, managed PostgreSQL for projects, and proposed managed object storage."
 track: proyek
 section: sistem
 order: 6
@@ -960,3 +960,169 @@ with no other privileges in a scratch database, which is what
 `restore-database.sh` in `sakala-deployment` does. Extensions on the
 allow-list, which need the superuser, are created first and left out of what
 that role restores.
+
+## ADR-021 — Managed Object Storage for Projects
+
+**Status:** Proposed (direction set by the maintainer on 2026-11-23; becomes
+Accepted when the first managed bucket serves a project)
+
+### Context
+
+Sakala has no file storage for projects. Every deployment creates a new
+container, and the runtime never mounts host volumes into workloads
+(sakala-agent `docs/DOCKER_RUNTIME.md`), so anything an application writes to
+its filesystem, such as uploaded images, Laravel's `storage/app`, or a SQLite
+file, is lost on every redeploy and rollback. On hosted Sakala it is lost even
+sooner: workloads run under gVisor (ADR-014) with its root overlay inside the
+sandbox, so writes disappear whenever the container stops, including idle
+sleep (ADR-015), **Restart**, and an automatic restart after a crash (tested
+on the staging runtime node on 2026-11-23; under plain runc the same file
+survives a stop and start). Each replica (ADR-019) has its own filesystem, so
+replicas do not even see each other's files.
+
+Today users are told to use an S3-compatible provider outside Sakala
+([File Storage guide](/docs/penyimpanan-file)): one more account and keys to
+copy. A first application that accepts uploads works until its next deploy,
+then loses them. The roadmap, PRD, and vision already list managed object
+storage as a direction.
+
+Users need a bucket inside Sakala, credentials they never copy, and a clear
+size limit. The platform needs tenant isolation, an enforceable quota,
+protection of the shared domain's reputation (ADR-016), and a footprint one
+person can run when self-hosted (ADR-017).
+
+### Options considered
+
+1. **RustFS** ([rustfs/rustfs](https://github.com/rustfs/rustfs)), Apache
+   2.0, an S3-compatible store written in Rust. Version 1.0.0 was released on
+   2026-09-16 and 1.0.6 on 2026-11-15. Its README lists IAM policies, bucket
+   quota, and multi-tenancy as available, and marks S3 Tables (Iceberg REST)
+   and MinIO on-disk compatibility as preview, behind an opt-in flag or with
+   a bounded compatibility claim; Sakala needs neither. It already runs
+   inside the control plane as internal avatar storage reachable only by the
+   API (`sakala-deployment`, pinned to 1.0.0), so operators know it.
+2. **Garage** ([deuxfleurs](https://garagehq.deuxfleurs.fr/)), AGPLv3, built
+   for self-hosting on modest hardware: a single dependency-free binary, 1 GB
+   RAM and 16 GB disk as its stated minimum, and a geo-distributed design
+   meant for nodes in several physical locations. It has per-key permissions
+   on each bucket and bucket quotas on size and object count. Lighter than
+   RustFS, and a strong candidate; not chosen, by the maintainer's choice of
+   RustFS below.
+3. **MinIO Community.** Its README declared maintenance mode on 2025-12-03 and
+   "no longer maintained" on 2026-02-12, pointing to the commercial AIStor
+   editions, and the `minio/minio` repository is archived on GitHub (checked
+   2026-11-23). Rejected: no security fixes can be expected for a service
+   exposed to the internet.
+4. **SeaweedFS.** Viable and mature, but more moving parts for a pilot: a
+   master, volume servers, a filer, and the S3 gateway.
+5. **Ceph RGW.** Proven at scale, but far too heavy for the pilot's hardware:
+   monitors, managers, OSDs, and the gateway.
+6. **Per-project host volumes.** Rejected: a volume pins a project to one
+   node, conflicts with replicas, with the edge tier moving traffic between
+   nodes (ADR-019), and with rollback to a deployment whose files no longer
+   match, and every volume becomes a separate backup and restore problem.
+7. **External providers only** (status quo): no operations, no user need met.
+
+### Decision
+
+Option 1, RustFS, for v1, chosen by the maintainer on 2026-11-23 for
+consistency with Sakala's Rust components (the agent, ADR-004, and Sakala
+Edge, ADR-019) and for
+its permissive license, the same Apache 2.0 that Sakala uses. It runs as a
+separate service that Sakala reaches over the S3 and admin HTTP APIs.
+
+- **A bucket belongs to a workspace**, personal or team (ADR-018), like a
+  managed database (ADR-020). It has its own place in the Console, can exist
+  without a project, survives project deletion, and attaches to zero, one, or
+  several projects of the same workspace. Attaching injects the connection
+  variables; detaching removes them and keeps the objects.
+- **Quotas** live in limit profiles as new fields, for example `max_buckets`
+  and `max_bucket_storage_mb` (names decided at implementation). The default
+  on hosted is 0, and workspaces are opened one by one through limit
+  profiles, as in the database pilot. Enforcement relies on RustFS bucket
+  quotas once they are confirmed (see the open questions); until then a size
+  watcher sums bucket usage, warns at 80 %, and blocks writes at the limit,
+  as ADR-020 does for databases.
+- **Credentials.** One access key per bucket, whose IAM policy allows object
+  reads and writes on that bucket only, with no admin, bucket-policy, or
+  other-bucket actions. Keys are created by Sakala, encrypted, redacted from
+  logs, and rotatable like a database password, with an automatic redeploy
+  of attached projects.
+- **Injected variables** use the names AWS SDKs and Laravel already read:
+  `AWS_ENDPOINT_URL` (read by AWS SDKs, including JavaScript v3 and PHP)
+  and `AWS_ENDPOINT` (read by Laravel's `s3` disk), `AWS_ACCESS_KEY_ID`,
+  `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`, `AWS_BUCKET`, and
+  `AWS_USE_PATH_STYLE_ENDPOINT=true`. The JavaScript SDK reads the region
+  from `AWS_REGION`, not `AWS_DEFAULT_REGION`, so injecting both is to be
+  settled at implementation. As with databases, a project variable with the
+  same name wins.
+- **Endpoint.** One public HTTPS endpoint on the user-content domain, never
+  on `sakala.dev` (ADR-016): `s3.sakala.app` in production and
+  `s3.staging.sakala.app` on staging, path-style only, so no per-bucket
+  subdomains or certificates are needed. The slug `s3` joins the reserved
+  slugs. It is public because browsers must reach presigned URLs.
+- **Private by default.** Buckets do not allow anonymous reads. Browsers get
+  files through presigned URLs that the application creates.
+- **Placement.** The pilot runs a RustFS instance on the runtime node, as the
+  database pilot does, separate from the control plane's avatar store, so a
+  tenant's load or abuse cannot reach control-plane data. Quotas are tight.
+  The agent's disk guard marks the node degraded and refuses new builds under
+  critical disk pressure, but it does not stop RustFS from filling the disk,
+  so the sum of bucket quotas must stay below the node's free space. The
+  instance moves to a dedicated storage or database VM when GMEDIA provides
+  one (WP-14).
+- **Deletion.** A bucket attached to a project cannot be deleted; it is
+  detached first, as with databases. Whether objects are removed at once
+  like a managed database, or after a purge window like projects (30 days),
+  is to be aligned with ADR-020's deletion when the API is built.
+
+### Consequences
+
+- The runtime node carries a second stateful service during the pilot. A
+  full disk or a node failure affects applications, databases, and buckets
+  together.
+- A public S3 endpoint is a new internet-facing surface on `sakala.app`; its
+  abuse handling joins the process in PLATFORM_OPERATIONS.
+- The boundary between tenants is the access key and its IAM policy, not the
+  network.
+- RustFS reached 1.0 two months before this ADR, so Sakala depends on a young
+  release line; versions are pinned and upgraded deliberately, as for the
+  control plane.
+- Applications that follow the [File Storage guide](/docs/penyimpanan-file)
+  with an external provider can move by changing variables, as long as the
+  injected names stay as above.
+- Storing user files is a new data category, so the privacy notice needs a
+  new version (after `privasi-v2`) before buckets open to users.
+
+### Open questions (owner: maintainer)
+
+- **Bucket quota on the pinned version.** RustFS lists bucket quota as
+  available, but whether it rejects writes at the limit on the version
+  Sakala pins is not verified yet. Step 2 tests it, together with a key
+  limited to one bucket by IAM policy and memory use at idle.
+- **Public-read buckets and static website hosting.** A bucket policy can
+  make a bucket public-read, but anonymous hosting under `sakala.app`
+  invites malware and phishing and harms the domain's reputation (ADR-016).
+  Not offered in v1.
+- **Backup.** Recommended: a nightly encrypted copy of bucket contents off
+  the host, kept 14 days, matching the roughly 14 days of backup the privacy
+  notice (`privasi-v2`) states for other data. Not decided yet, and until it
+  is, the user guide must say that objects have no backup.
+- The concrete storage host per region, which depends on GMEDIA
+  infrastructure.
+- Whether self-host ships RustFS as an optional component in
+  `gmedia/sakala`, off by default, as planned for managed databases.
+
+### Plan
+
+No dates; each step starts after the previous one.
+
+1. Docs and a Console warning: the [File Storage guide](/docs/penyimpanan-file)
+   and this ADR, then a Console notice that container files are temporary.
+2. RustFS on staging, operated by hand: buckets, per-bucket keys, quotas,
+   and the public endpoint, with the checks in the open questions.
+3. API, agent, and Console integration: a workspace-scoped `buckets`
+   resource with attachments, variable injection, key rotation, quotas in
+   limit profiles, and a Console page next to Database.
+4. A production pilot behind limit profiles, after the privacy notice update
+   and the backup decision.

@@ -306,7 +306,7 @@ belum diuji di production dan belum dipakai pengguna pilot.
 | Custom domain dengan verifikasi DNS dan TLS                                                                                   | dirancang                                                                                                                                                                                             |
 | Metrik dasar (CPU, memori, restart)                                                                                           | arah                                                                                                                                                                                                  |
 | Auto-deploy dari push (webhook GitHub)                                                                                        | dibangun                                                                                                                                                                                              |
-| PostgreSQL, Redis, object storage terkelola                                                                                   | arah; rancangan PostgreSQL terkelola diusulkan di [ADR-020](/docs/proyek/adr)                                                                                                                         |
+| PostgreSQL, Redis, object storage terkelola                                                                                   | arah; rancangan PostgreSQL terkelola diusulkan di [ADR-020](/docs/proyek/adr), object storage terkelola di [ADR-021](/docs/proyek/adr)                                                                |
 
 ### 9.4 Learn — belajar mengirim software
 
