@@ -1126,3 +1126,56 @@ No dates; each step starts after the previous one.
    limit profiles, and a Console page next to Database.
 4. A production pilot behind limit profiles, after the privacy notice update
    and the backup decision.
+
+### Update 2026-11-23: phase 1 as built
+
+Step 3 of the plan is merged but not released: the `managed-s3` role in
+sakala-agent (#138), the `buckets` resource in sakala-api (#204), and the
+Console's Bucket page, which is still in review. The status stays Proposed
+until the first managed bucket serves a project. What changed against the
+decision above:
+
+- **Variable names.** Attached projects receive `AWS_ENDPOINT_URL_S3`,
+  `AWS_ENDPOINT`, `AWS_USE_PATH_STYLE_ENDPOINT=true`, `AWS_DEFAULT_REGION`,
+  `AWS_REGION`, `AWS_BUCKET`, `AWS_ACCESS_KEY_ID`, and
+  `AWS_SECRET_ACCESS_KEY`. `AWS_ENDPOINT_URL` is **not** injected: current
+  AWS SDKs read it as the endpoint for every AWS service, so an application
+  that also calls SES or SQS with its own keys would send those calls to the
+  bucket endpoint. `AWS_ENDPOINT_URL_S3` applies to S3 only. Both region
+  names are injected, because the JavaScript SDK v3 reads only `AWS_REGION`.
+  `FILESYSTEM_DISK` and `AWS_URL` are not injected; the Console suggests
+  `FILESYSTEM_DISK=s3` for Laravel instead.
+- **Quota.** RustFS 1.0.6 enforces a hard quota per bucket, so there is no
+  size watcher and no lock at 100 %: uploads past the quota are refused,
+  and the workspace is notified at 80 %. A workspace's limit profile holds
+  `max_buckets` and `max_bucket_storage_mb`, and the sum of its bucket
+  quotas stays within the latter. Two known gaps: RustFS answers the first
+  write after a quota change with `503 SlowDown`, which SDKs retry, and it
+  checks the quota when a multipart upload completes, not per part, so
+  parts of an abandoned upload take space until RustFS discards them after
+  about an hour.
+- **Names and keys.** The S3 bucket name is random (`b-` and 20
+  characters), never derived from user input, so presigned URLs reveal no
+  workspace or project name. One RustFS user per bucket, whose only policy
+  is read and write on that bucket. Rotation changes the secret and keeps
+  the access key ID. While a rotation is in flight and the node has not
+  confirmed which secret works, deployments of attached projects and the
+  owner's credential view answer `409 BUCKET_KEY_ROTATING`.
+- **Deletion.** Like a managed database: refused while attached, otherwise
+  the objects, key, and policy are removed at once, and backups keep them
+  for up to 14 days.
+- **Backup.** Decided: a nightly `rc mirror` of each bucket, encrypted with
+  age, 3 sets kept on the storage host and 14 pulled off-host. The pilot
+  runs on one drive with no redundancy, so losing the node loses up to 24
+  hours of objects; the [Managed Buckets](/docs/bucket-terkelola) user
+  guide says so.
+- **Abuse.** A Sakala admin can lock a bucket from the command line, which
+  disables its key, so applications can no longer read or write and
+  presigned URLs stop working. The endpoint's reverse proxy is planned to
+  add `X-Content-Type-Options: nosniff` and `Content-Security-Policy:
+sandbox`, so HTML served through a presigned URL cannot run scripts.
+- **Not built yet.** CORS for direct browser uploads, a wizard card,
+  bucket download for owners, and erasure-coded or multi-node storage.
+
+The production pilot still waits for a privacy notice version that covers
+bucket contents, a backup restore drill, and the pilot runbook.
