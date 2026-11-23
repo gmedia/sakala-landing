@@ -27,6 +27,7 @@ Usage guides:
 - [Managed databases](/en/docs/database-terkelola), still a limited pilot, and [connecting an external database](/en/docs/database-eksternal) as the other option;
 - [Databases and the release command](/en/docs/perintah-rilis), to run migrations once per deployment;
 - [File storage](/en/docs/penyimpanan-file), because files inside a container are lost when it stops;
+- [Managed buckets](/en/docs/bucket-terkelola), S3 object storage from Sakala, still a limited pilot;
 - [Rollback and Restart](/en/docs/rollback-dan-restart), to go back to an earlier version or start containers again without a build;
 - [When a deploy fails](/en/docs/deploy-gagal), to read failure codes and fix them.
 

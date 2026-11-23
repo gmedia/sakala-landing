@@ -125,10 +125,11 @@ Rancangan PostgreSQL terkelola diusulkan di
 diuji sebagai pilot terbatas sejak 23 November 2026, hanya untuk workspace
 yang diberi kuota oleh admin. Backup malam berjalan, dan pemulihannya
 dilakukan maintainer. Panduannya ada di
-[Database Terkelola](/docs/database-terkelola). Object storage terkelola baru
-dirancang di
-[ADR-021](/docs/proyek/adr#adr-021--managed-object-storage-for-projects)
-(Proposed), belum dibangun. Layanan lain belum.
+[Database Terkelola](/docs/database-terkelola). Bucket S3 terkelola
+([ADR-021](/docs/proyek/adr#adr-021--managed-object-storage-for-projects),
+Proposed) sedang dibangun sebagai pilot terbatas, dengan panduan di
+[Bucket Terkelola](/docs/bucket-terkelola). Kuota pertamanya baru dibuka
+setelah pemberitahuan privasi versi baru berlaku. Layanan lain belum.
 
 ### Horizon H — Platformisasi
 
