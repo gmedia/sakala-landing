@@ -140,6 +140,11 @@ Operator Sakala mem-backup isi setiap bucket setiap malam dalam bentuk terenkrip
 
 Selama pilot, server penyimpanan menyimpan bucket di satu disk tanpa salinan langsung di disk lain. Kalau disk atau mesin itu rusak, berkas yang ditulis setelah backup terakhir hilang, yaitu sampai sekitar 24 jam terakhir. Jadi jangan jadikan bucket ini satu-satunya tempat menyimpan berkas yang penting.
 
+Backup menyalin setiap objek sebagai berkas biasa, dan itu membawa dua batasan:
+
+- Key yang tidak bisa menjadi berkas dilewati dan tidak ikut di-backup. Contohnya penanda folder yang diakhiri `/`, misalnya `folder/`, dan key yang sekaligus menjadi awalan key lain, misalnya `a` di samping `a/b`. Hindari dua bentuk key ini. Kamu tidak butuh penanda folder, karena di S3 folder terbentuk sendiri dari `/` di dalam key.
+- Metadata objek tidak ikut tersimpan. Setelah dipulihkan, `Content-Type` setiap berkas ditebak dari ekstensinya. Mengisi `Content-Type` saat upload tetap boleh dan berguna untuk pemakaian biasa, tetapi nilainya bisa berubah setelah pemulihan. Jadi beri berkas ekstensi yang sesuai isinya, misalnya `.jpg` atau `.pdf`.
+
 Belum ada tombol unduh isi bucket atau pemulihan di Console. Kalau isi bucket perlu dipulihkan dari backup, maintainer yang melakukannya, dan selama pilot pemulihan belum dijamin. Pertanyaan soal ini bisa diajukan di [GitHub Discussions, kategori Q&A](https://github.com/gmedia/sakala/discussions/categories/q-a). Discussions bisa dibaca publik, jadi jangan menulis secret key atau isi berkasmu di sana. Kamu sendiri tetap bisa menyalin isi bucket kapan saja dengan alat S3 biasa dari laptop, memakai kunci dari **Untuk .env di laptop**.
 
 ## Yang belum didukung

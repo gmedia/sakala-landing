@@ -141,6 +141,11 @@ Sakala's operator backs up the contents of every bucket every night in encrypted
 
 During the pilot, the storage server keeps buckets on a single disk with no live copy on another disk. If that disk or machine fails, files written after the last backup are lost, which means up to about the last 24 hours. So do not make this bucket the only place you keep important files.
 
+The backup copies every object as an ordinary file, which brings two limits:
+
+- Keys that cannot be files are skipped and not backed up. Examples are folder markers ending in `/`, such as `folder/`, and a key that is also the prefix of another key, such as `a` next to `a/b`. Avoid these two kinds of key. You do not need folder markers, because S3 folders come from the `/` inside keys on their own.
+- Object metadata is not kept. After a restore, each file's `Content-Type` is guessed from its extension. Setting `Content-Type` on upload is still fine and useful for normal use, but the value may change after a restore. So give files an extension that matches their content, such as `.jpg` or `.pdf`.
+
 There is no button to download a bucket's contents or restore it in the Console yet. If a bucket needs to be restored from a backup, a maintainer does it, and restores are not guaranteed during the pilot. Questions about this can be asked in [GitHub Discussions, Q&A category](https://github.com/gmedia/sakala/discussions/categories/q-a). Discussions are public, so do not post your secret key or file contents there. You can still copy a bucket's contents yourself at any time with ordinary S3 tools from your laptop, using the keys from **Untuk .env di laptop**.
 
 ## Not supported yet
