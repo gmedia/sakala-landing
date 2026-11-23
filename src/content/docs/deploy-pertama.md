@@ -21,7 +21,7 @@ Panduan ini untuk mahasiswa dan developer pemula yang belum pernah men-deploy le
 - **Akun GitHub dan satu repository.** Repository publik bisa langsung dipakai. Repository private harus dihubungkan lewat GitHub App.
 - **Aplikasi web yang mendengarkan di `0.0.0.0:$PORT`,** dengan alamat `/` yang menjawab di bawah status 500.
 
-Belum punya aplikasi? Salin contoh kecil di [Menyiapkan Dockerfile](/docs/dockerfile), lalu push ke GitHub. Repository dengan Dockerfile memakai Dockerfile itu, dan repository tanpa Dockerfile dibangun otomatis oleh Railpack. Sakala belum menyediakan database, jadi kalau aplikasimu butuh database, baca dulu [Menghubungkan database eksternal](/docs/database-eksternal).
+Belum punya aplikasi? Salin contoh kecil di [Menyiapkan Dockerfile](/docs/dockerfile), lalu push ke GitHub. Repository dengan Dockerfile memakai Dockerfile itu, dan repository tanpa Dockerfile dibangun otomatis oleh Railpack. Kalau aplikasimu butuh database, baca dulu [Database Terkelola](/docs/database-terkelola), yang masih pilot terbatas, atau [Menghubungkan database eksternal](/docs/database-eksternal).
 
 Selama pilot, workspace pribadimu punya 3 proyek. Aplikasi berjalan dengan memory 256 MB dan CPU 0,5 vCPU, build dibatasi 10 menit dan 20 kali per jam, dan proyek tidur setelah 30 menit tanpa pengunjung. Rinciannya ada di [Batas Pilot](/docs/batas-pilot).
 
@@ -62,18 +62,18 @@ Ada dua cara memilih:
 
 Untuk deploy pertama, biasanya hanya **Nama Proyek** dan **Branch** yang perlu kamu periksa. Biarkan yang opsional kosong kalau kamu belum butuh.
 
-| Kolom                            | Isinya                                                                                                                       |
-| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Nama Proyek                      | Diambil dari nama repository. **Domain preview** di bawahnya menunjukkan calon alamatmu, tetapi alamat itu belum dipesan.    |
-| Branch                           | Branch yang akan di-deploy. Pilih dari daftar.                                                                               |
-| Port (opsional)                  | Port yang diberikan Sakala lewat variabel `PORT`. Kosong berarti 3000.                                                       |
-| Build command (opsional)         | Hanya untuk build otomatis dengan Railpack. Diabaikan kalau ada Dockerfile.                                                  |
-| Start command (opsional)         | Berlaku untuk keduanya. Pada Dockerfile, ini menggantikan entrypoint image, jadi image-nya harus punya `sh`.                 |
-| Root directory (opsional)        | Folder aplikasi di dalam repository, misalnya `apps/web`. Kosongkan kalau aplikasinya ada di root.                           |
-| Environment Variables (opsional) | Pasangan nama dan nilai. **Simpan sebagai rahasia** menyembunyikan nilainya setelah disimpan. Jangan menambahkan `PORT`.     |
-| Auto-deploy                      | Membuat deployment baru setiap kali kamu push ke branch ini. Hanya untuk **Dari GitHub**. Biarkan mati untuk deploy pertama. |
+| Kolom                           | Isinya                                                                                                                                                 |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Nama Proyek                     | Diambil dari nama repository. **Domain preview** di bawahnya menunjukkan calon alamatmu, tetapi alamat itu belum dipesan.                              |
+| Branch                          | Branch yang akan di-deploy. Pilih dari daftar.                                                                                                         |
+| Port (opsional)                 | Port yang diberikan Sakala lewat variabel `PORT`. Kosong berarti 3000.                                                                                 |
+| Build command (opsional)        | Hanya untuk build otomatis dengan Railpack. Diabaikan kalau ada Dockerfile.                                                                            |
+| Start command (opsional)        | Berlaku untuk keduanya. Pada Dockerfile, ini menggantikan entrypoint image, jadi image-nya harus punya `sh`.                                           |
+| Root directory (opsional)       | Folder aplikasi di dalam repository, misalnya `apps/web`. Kosongkan kalau aplikasinya ada di root.                                                     |
+| Environment variable (opsional) | Pasangan nama dan nilai, atau isi `.env` lewat **Tempel dari .env**. Centang **Simpan sebagai secret** untuk nilai rahasia. Jangan menambahkan `PORT`. |
+| Auto-deploy                     | Membuat deployment baru setiap kali kamu push ke branch ini. Hanya untuk **Dari GitHub**. Biarkan mati untuk deploy pertama.                           |
 
-Jangan menulis password atau token di repository. Tempatnya di Environment Variables. Setelah semuanya benar, tekan **Buat Proyek**.
+Jangan menulis password atau token di repository. Tempatnya di environment variable, lihat [Variabel dan Secret](/docs/variabel-dan-secret). Setelah semuanya benar, tekan **Buat Proyek**.
 
 Repository-mu berisi beberapa aplikasi, misalnya API dan web? Buat satu proyek per aplikasi dengan Root directory masing-masing. Caranya dan batasnya ada di [Men-deploy monorepo](/docs/monorepo).
 
@@ -90,7 +90,7 @@ Periksa dua hal berikut sebelum lanjut:
 - **Builder.** Kalau repository-mu punya Dockerfile, baris ini harus berbunyi **Dockerfile terdeteksi**. Kalau tidak, lihat [Dockerfile tidak terpakai](/docs/deploy-gagal#dockerfile-tidak-terpakai).
 - **Port.** Aplikasimu harus mendengarkan di port ini. Yang paling aman adalah membaca `PORT` di kode.
 
-Kalau muncul catatan soal `.env.example`, cocokkan isinya dengan variabel di tab **Environment Variables**. Kalau analisis gagal, tekan **Detect ulang**. Kalau setelah 2 menit analisisnya belum selesai, kamu tetap boleh lanjut, karena Sakala memilih cara build saat deploy.
+Kalau repository-mu punya `.env.example`, Sakala bisa menampilkan tahap **Persiapan** dengan saran variabel dan pilihan database. Isinya dijelaskan di [Variabel dan Secret](/docs/variabel-dan-secret#mengisi-variabel-saat-membuat-proyek). Kalau analisis gagal, tekan **Detect ulang**. Kalau setelah 2 menit analisisnya belum selesai, kamu tetap boleh lanjut, karena Sakala memilih cara build saat deploy.
 
 Lalu tekan **Deploy sekarang**. Tombol **Lewati** menyimpan proyek tanpa men-deploy-nya, dan kamu bisa men-deploy-nya nanti dari halaman proyek.
 
@@ -135,7 +135,7 @@ Buka halaman proyek, lalu tekan **Redeploy**.
 
 **Yang seharusnya terlihat:** deployment baru dengan nomor berikutnya. Versi lama tetap melayani sampai versi baru lolos pengecekan. Setelah **Deployment berhasil**, muat ulang URL-mu dan perubahannya tampil. Kamu bisa melihat semua percobaan di tab **Riwayat Deployment**.
 
-Perubahan di tab **Environment Variables** dan **Pengaturan** juga baru berlaku di deployment berikutnya, jadi tekan **Redeploy** setelah mengubahnya.
+Perubahan di tab **Variabel** dan **Pengaturan** juga baru berlaku di deployment berikutnya, jadi tekan **Redeploy** setelah mengubahnya. Kalau yang berubah hanya variabel yang dibaca saat aplikasi berjalan, Redeploy memakai ulang image yang sama tanpa build. Aturannya ada di [Variabel dan Secret](/docs/variabel-dan-secret#variabel-saat-build-dan-saat-aplikasi-berjalan).
 
 ## Kalau ada yang macet
 

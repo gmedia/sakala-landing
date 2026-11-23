@@ -399,13 +399,25 @@ export const en: Dictionary = {
             label: "a release command before the new version serves",
             status: "available",
           },
+          {
+            label:
+              "redeploy without a build when only runtime variables change",
+            status: "available",
+          },
+          {
+            label: "monorepos: a push deploys only the projects it changes",
+            status: "available",
+          },
         ],
       },
       {
         name: "Operate",
         question: "Once alive, how is the application kept healthy?",
         items: [
-          { label: "variables and secrets", status: "available" },
+          {
+            label: "variables and secrets, with suggestions from .env.example",
+            status: "available",
+          },
           { label: "generated *.sakala.app domain", status: "available" },
           { label: "logs and health", status: "available" },
           {
@@ -418,7 +430,14 @@ export const en: Dictionary = {
               "replicas and load balancing, through an admin limit profile",
             status: "available",
           },
-          { label: "basic metrics", status: "building" },
+          {
+            label: "basic metrics: CPU, memory, replicas, and restarts",
+            status: "available",
+          },
+          {
+            label: "managed PostgreSQL databases, limited pilot",
+            status: "testing",
+          },
           { label: "custom domains", status: "direction" },
         ],
       },
@@ -504,14 +523,18 @@ export const en: Dictionary = {
     lead: "Sakala runs three parallel views that are related but never perfectly in sync: product, design, and engineering.",
     shippedTitle: "Available now",
     shippedLead:
-      "Status as of 19 November 2026. All of this can be used on the hosted pilot, within the pilot limits.",
+      "Status as of 23 November 2026. All of this can be used on the hosted pilot, within the pilot limits.",
     shippedLink: "See the pilot limits",
     shipped: [
       "Accounts with email, GitHub, or Google, with consent to the terms of service",
       "Projects from a public GitHub repository, or a private one through the GitHub App",
       "Repository analysis, build via Dockerfile or Railpack, deploy, health check, and redeploy",
       "Automatic deploy on push, and a release command before the new version serves",
-      "Variables and secrets, build and runtime logs, and failure codes that point at their stage",
+      "A push to a monorepo deploys only the projects whose folder changed",
+      "Redeploy without a build when only runtime variables or the database change, and a Build ulang dari awal (rebuild from scratch) option",
+      "Variables and secrets, with suggestions from .env.example when creating a project",
+      "Build and runtime logs, and failure codes that point at their stage",
+      "Basic per-project metrics: CPU, memory, replicas, and restarts, up to 30 days back",
       "A generated domain on *.sakala.app",
       "Personal and team workspaces, invitations, and Owner, Member, and Viewer roles",
       "Quotas per workspace, a build limit per hour, and sleep after 30 minutes without visitors",
@@ -545,7 +568,7 @@ export const en: Dictionary = {
         label: "Horizon D",
         name: "Reliable operation",
         status: "direction",
-        text: "Custom domains, recovery and rollback to a previous version, and usage visibility. Basic per-project metrics are being built.",
+        text: "Custom domains, recovery and rollback to a previous version, and usage visibility beyond the basic metrics.",
       },
       {
         label: "Horizon E",
@@ -557,7 +580,7 @@ export const en: Dictionary = {
         label: "Horizon G–H",
         name: "Services and platform",
         status: "direction",
-        text: "Managed data services such as PostgreSQL, workers and cron, CLI, public API, and multi-node runtime.",
+        text: "Managed PostgreSQL has been in a limited pilot since 23 November 2026, only for workspaces given a quota. After that, workers and cron, CLI, public API, and multi-node runtime.",
       },
     ],
     designTitle: "Design and engineering status stay separate",

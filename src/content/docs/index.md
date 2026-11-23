@@ -22,7 +22,8 @@ Panduan pakai:
 
 - [Deploy Pertamamu](/docs/deploy-pertama), langkah demi langkah sampai punya URL publik;
 - [Menyiapkan Dockerfile](/docs/dockerfile) dengan contoh yang sudah dicoba;
-- [Menghubungkan database eksternal](/docs/database-eksternal), karena Sakala belum menyediakan database;
+- [Variabel dan secret](/docs/variabel-dan-secret), termasuk kapan perubahan butuh build ulang;
+- [Database terkelola](/docs/database-terkelola), yang masih pilot terbatas, dan [menghubungkan database eksternal](/docs/database-eksternal) sebagai pilihan lain;
 - [Database dan perintah rilis](/docs/perintah-rilis), untuk menjalankan migration sekali setiap deployment;
 - [Saat deploy gagal](/docs/deploy-gagal), untuk membaca kode kegagalan dan memperbaikinya.
 

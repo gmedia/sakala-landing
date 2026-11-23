@@ -38,13 +38,13 @@ export default defineConfig({
     "/docs/ketika-gagal": "/docs/deploy-gagal",
     "/en/docs/ketika-gagal": "/en/docs/deploy-gagal",
     // Sisanya tidak punya penerus satu lawan satu, jadi mendarat di hub.
+    // /docs/variabel-dan-secret kembali menjadi halaman sungguhan sejak
+    // panduan variabel ditulis ulang, jadi tidak dialihkan lagi.
     "/docs/quickstart": "/docs",
     "/docs/menyiapkan-project": "/docs",
-    "/docs/variabel-dan-secret": "/docs",
     "/docs/domain-dan-url": "/docs",
     "/en/docs/quickstart": "/en/docs",
     "/en/docs/menyiapkan-project": "/en/docs",
-    "/en/docs/variabel-dan-secret": "/en/docs",
     "/en/docs/domain-dan-url": "/en/docs",
   },
   prefetch: {

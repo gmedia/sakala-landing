@@ -409,13 +409,24 @@ export const id = {
             label: "perintah rilis sebelum versi baru melayani",
             status: "available",
           },
+          {
+            label: "redeploy tanpa build saat hanya variabel runtime berubah",
+            status: "available",
+          },
+          {
+            label: "monorepo: push hanya men-deploy proyek yang berubah",
+            status: "available",
+          },
         ],
       },
       {
         name: "Operate",
         question: "Setelah hidup, bagaimana aplikasi ini dijaga?",
         items: [
-          { label: "variabel dan secret", status: "available" },
+          {
+            label: "variabel dan secret, dengan saran dari .env.example",
+            status: "available",
+          },
           { label: "domain bawaan *.sakala.app", status: "available" },
           { label: "log dan health", status: "available" },
           {
@@ -427,7 +438,14 @@ export const id = {
             label: "replika dan load balancing, lewat profil batas dari admin",
             status: "available",
           },
-          { label: "metrik dasar", status: "building" },
+          {
+            label: "metrik dasar: CPU, memori, replika, dan restart",
+            status: "available",
+          },
+          {
+            label: "database PostgreSQL terkelola, pilot terbatas",
+            status: "testing",
+          },
           { label: "custom domain", status: "direction" },
         ],
       },
@@ -513,14 +531,18 @@ export const id = {
     lead: "Sakala memakai tiga pandangan yang berjalan paralel dan tidak selalu sinkron: produk, desain, dan engineering.",
     shippedTitle: "Sudah tersedia",
     shippedLead:
-      "Status per 19 November 2026. Semua ini bisa dipakai di pilot hosted, dengan batas pilot.",
+      "Status per 23 November 2026. Semua ini bisa dipakai di pilot hosted, dengan batas pilot.",
     shippedLink: "Lihat batas pilot",
     shipped: [
       "Akun lewat email, GitHub, atau Google, dengan persetujuan syarat layanan",
       "Project dari repository GitHub publik, atau privat lewat GitHub App",
       "Analisis repository, build lewat Dockerfile atau Railpack, deploy, health check, dan redeploy",
       "Deploy otomatis saat push, dan perintah rilis sebelum versi baru melayani",
-      "Variabel dan secret, log build dan runtime, serta kode kegagalan yang menunjuk tahapnya",
+      "Push di monorepo hanya men-deploy proyek yang folder-nya berubah",
+      "Redeploy tanpa build saat yang berubah hanya variabel runtime atau database, dan pilihan Build ulang dari awal",
+      "Variabel dan secret, dengan saran dari .env.example saat membuat proyek",
+      "Log build dan runtime, serta kode kegagalan yang menunjuk tahapnya",
+      "Metrik dasar per proyek: CPU, memori, replika, dan restart, sampai 30 hari ke belakang",
       "Domain bawaan di *.sakala.app",
       "Workspace pribadi dan tim, undangan, serta peran Owner, Member, dan Viewer",
       "Kuota per workspace, batas build per jam, dan sleep setelah 30 menit tanpa pengunjung",
@@ -554,7 +576,7 @@ export const id = {
         label: "Horizon D",
         name: "Operasi yang andal",
         status: "direction",
-        text: "Custom domain, pemulihan dan rollback ke versi sebelumnya, dan visibilitas pemakaian. Metrik dasar per project sedang dibangun.",
+        text: "Custom domain, pemulihan dan rollback ke versi sebelumnya, dan visibilitas pemakaian yang lebih lengkap dari metrik dasar.",
       },
       {
         label: "Horizon E",
@@ -566,7 +588,7 @@ export const id = {
         label: "Horizon G–H",
         name: "Layanan dan platform",
         status: "direction",
-        text: "Layanan data terkelola seperti PostgreSQL, worker dan cron, CLI, API publik, dan runtime multi-node.",
+        text: "PostgreSQL terkelola sedang diuji sebagai pilot terbatas sejak 23 November 2026, hanya untuk workspace yang diberi kuota. Setelahnya worker dan cron, CLI, API publik, dan runtime multi-node.",
       },
     ],
     designTitle: "Status desain dan engineering dipisah",

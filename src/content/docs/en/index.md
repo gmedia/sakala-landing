@@ -23,7 +23,8 @@ Usage guides:
 
 - [Your First Deploy](/en/docs/deploy-pertama), step by step to a public URL;
 - [Preparing a Dockerfile](/en/docs/dockerfile), with examples that have been tried;
-- [Connecting an external database](/en/docs/database-eksternal), since Sakala does not provide one;
+- [Variables and secrets](/en/docs/variabel-dan-secret), including when a change needs a rebuild;
+- [Managed databases](/en/docs/database-terkelola), still a limited pilot, and [connecting an external database](/en/docs/database-eksternal) as the other option;
 - [Databases and the release command](/en/docs/perintah-rilis), to run migrations once per deployment;
 - [When a deploy fails](/en/docs/deploy-gagal), to read failure codes and fix them.
 

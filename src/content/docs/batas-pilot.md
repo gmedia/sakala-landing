@@ -10,7 +10,7 @@ order: 1.5
 
 Sakala hosted sedang dalam tahap pilot. Siapa pun bisa [mendaftar di Console](https://app.sakala.dev/register) dan memakainya tanpa biaya, dengan batas yang tertulis di halaman ini. Belum ada jaminan uptime, jadi Sakala belum cocok untuk aplikasi yang penting.
 
-> **Status per 19 November 2026.** Angka di bawah adalah nilai default untuk workspace tanpa profil batas khusus. Perubahan batas kami umumkan di [Changelog](/changelog) sebelum berlaku.
+> **Status per 23 November 2026.** Angka di bawah adalah nilai default untuk workspace tanpa profil batas khusus. Perubahan batas kami umumkan di [Changelog](/changelog) sebelum berlaku.
 
 ## Batas per workspace
 
@@ -23,10 +23,11 @@ Setiap akun mendapat satu workspace pribadi saat mendaftar. Workspace adalah tem
 | Deployment yang diproses bersamaan            | 2                 | 1             |
 | Build per jam (dihitung 60 menit ke belakang) | 20                | 20            |
 | Replika per proyek                            | 1                 | 1             |
+| Database terkelola                            | 0                 | 0             |
 
-Satu akun bisa memiliki sampai 2 workspace tim. Admin Sakala bisa memberi workspace tertentu batas yang berbeda lewat profil batas, misalnya replika lebih dari satu.
+Satu akun bisa memiliki sampai 2 workspace tim. Admin Sakala bisa memberi workspace tertentu batas yang berbeda lewat profil batas, misalnya replika lebih dari satu, atau kuota [database terkelola](/docs/database-terkelola) yang sedang dalam pilot terbatas.
 
-Untuk batas build per jam, setiap deployment dihitung, termasuk yang gagal. Kalau batasnya tercapai, deployment baru ditolak sampai deployment paling lama di 60 menit terakhir keluar dari hitungan. Push yang seharusnya memicu deploy otomatis pada saat itu dilewati, dan kamu mendapat notifikasi.
+Untuk batas build per jam, setiap deployment yang mem-build image dihitung, termasuk yang gagal. [Redeploy tanpa build](/docs/variabel-dan-secret#redeploy-tanpa-build), yang memakai ulang image yang sedang dipakai, tidak dihitung. Kalau batasnya tercapai, deployment baru ditolak sampai deployment paling lama di 60 menit terakhir keluar dari hitungan. Push yang seharusnya memicu deploy otomatis pada saat itu dilewati, dan kamu mendapat notifikasi.
 
 ## Batas per container
 
@@ -49,8 +50,9 @@ Aplikasimu dihentikan saat tidur dan dijalankan lagi saat bangun, jadi apa pun y
 ## Yang belum ada selama pilot
 
 - Jaminan uptime, SLA, atau pemulihan data.
-- Penyimpanan tetap di dalam container. Berkas yang ditulis aplikasi, termasuk SQLite dan hasil upload, hilang setiap kali deploy baru selesai. Untuk data, pakai [database eksternal](/docs/database-eksternal).
-- Database terkelola, custom domain, worker, dan cron.
+- Penyimpanan tetap di dalam container. Berkas yang ditulis aplikasi, termasuk SQLite dan hasil upload, hilang setiap kali deploy baru selesai. Untuk data, pakai database, yaitu [database eksternal](/docs/database-eksternal) atau [database terkelola](/docs/database-terkelola) kalau workspace-mu sudah mendapat kuotanya.
+- Database terkelola untuk semua workspace. Database PostgreSQL baru dibuka sebagai pilot terbatas, lihat [Database Terkelola](/docs/database-terkelola).
+- Custom domain, worker, dan cron.
 - Pembatasan lalu lintas keluar dari container. Pembatasan ini sedang ditambahkan. Aplikasi sudah berjalan di sandbox gVisor, tetapi selama pilot jangan menyimpan data sensitif di Sakala.
 
 ## Aturan yang mengikat

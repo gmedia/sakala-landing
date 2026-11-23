@@ -1,6 +1,6 @@
 ---
 title: Menghubungkan Database Eksternal
-description: Sakala belum menyediakan database. Begini cara menghubungkan aplikasimu ke database di luar Sakala lewat environment variable, tanpa membocorkan password.
+description: Cara menghubungkan aplikasimu ke database di luar Sakala lewat environment variable, tanpa membocorkan password.
 track: panduan
 section: Panduan deploy
 order: 4
@@ -8,9 +8,11 @@ order: 4
 
 # Menghubungkan Database Eksternal
 
-Sakala MVP tidak menyediakan database. Kalau aplikasimu butuh database, kamu menyewa atau menyiapkannya sendiri di luar Sakala, lalu memberikan alamatnya ke aplikasi lewat environment variable `DATABASE_URL`.
+Panduan ini untuk database yang kamu sewa atau siapkan sendiri di luar Sakala. Alamatnya diberikan ke aplikasi lewat environment variable `DATABASE_URL`.
 
-Artinya backup, migration, dan pemulihan data menjadi tanggung jawabmu. Sakala hanya menjalankan aplikasinya. Container juga tidak punya penyimpanan tetap, jadi berkas SQLite atau hasil upload yang ditulis ke dalam container hilang setiap kali deploy baru selesai.
+Sakala juga punya [database terkelola](/docs/database-terkelola), tetapi per 23 November 2026 masih pilot terbatas: kuota bawaannya 0 di `sakala.dev`, jadi kebanyakan workspace belum bisa membuatnya. Selama itu, database eksternal adalah jalannya.
+
+Dengan database eksternal, backup, migration, dan pemulihan data menjadi tanggung jawabmu. Sakala hanya menjalankan aplikasinya. Container juga tidak punya penyimpanan tetap, jadi berkas SQLite atau hasil upload yang ditulis ke dalam container hilang setiap kali deploy baru selesai.
 
 > Sakala sedang dalam pilot terbuka sejak 19 November 2026: siapa pun bisa mendaftar dan memakainya tanpa biaya, dengan [batas pemakaian](/docs/batas-pilot).
 >
@@ -23,7 +25,7 @@ Panduan ini untuk peserta pilot yang aplikasinya perlu menyimpan data, dan untuk
 ## Yang perlu disiapkan
 
 - Aplikasi yang sudah lolos [Menyiapkan Dockerfile](/docs/dockerfile) atau bisa dibangun oleh Railpack.
-- Project di Console, dengan akses ke tab **Environment Variables**.
+- Project di Console, dengan akses ke tab **Variabel**.
 - Database di provider pilihanmu.
 
 ## Memilih provider
@@ -51,9 +53,9 @@ Jangan menaruh nilai ini di repository, di `.env` yang ter-commit, di Dockerfile
 
 ## Langkah 2: isi di Console
 
-Kamu bisa mengisinya saat membuat proyek, atau nanti: buka project, masuk ke tab **Environment Variables**, tekan **Tambah Variabel**, lalu isi nama `DATABASE_URL` dengan connection string tadi. Biarkan **Simpan sebagai rahasia** tercentang. Nama variabel harus huruf besar, angka, dan garis bawah.
+Kamu bisa mengisinya saat membuat proyek, atau nanti: buka project, masuk ke tab **Variabel**, tekan **Tambah variabel**, lalu isi nama `DATABASE_URL` dengan connection string tadi. Centang **Simpan sebagai secret**. Nama variabel harus huruf besar, angka, dan garis bawah. Penjelasan lengkap soal variabel ada di [Variabel dan Secret](/docs/variabel-dan-secret).
 
-Variabel baru dibaca aplikasi setelah deployment berikutnya, jadi tekan **Redeploy** setelah menyimpan. Setiap deployment memakai salinan variabel saat ia dibuat.
+Variabel baru dibaca aplikasi setelah deployment berikutnya, jadi tekan **Redeploy** setelah menyimpan. Setiap deployment memakai salinan variabel saat ia dibuat. Untuk aplikasi server biasa, mengganti `DATABASE_URL` cukup [redeploy tanpa build](/docs/variabel-dan-secret#redeploy-tanpa-build).
 
 ## Langkah 3: baca di kode
 
@@ -181,7 +183,7 @@ Selama kamu memperbaiki, versi yang terakhir berhasil tetap melayani pengunjung.
 Lakukan ini secara berkala, dan segera kalau password mungkin bocor.
 
 1. Buat user atau password baru di provider. Kalau bisa, biarkan yang lama aktif dulu.
-2. Di tab **Environment Variables**, tekan **Ubah** pada baris `DATABASE_URL`, lalu simpan nilai baru.
+2. Di tab **Variabel**, tekan **Ubah** pada baris `DATABASE_URL`, lalu simpan nilai baru.
 3. Tekan **Redeploy**. Versi yang sedang berjalan tetap memakai nilai lama sampai deploy baru berhasil.
 4. Cek `/db` di versi baru.
 5. Matikan password lama di provider.
