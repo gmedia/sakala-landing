@@ -752,7 +752,7 @@ export const en: Dictionary = {
   },
   legal: {
     eyebrow: "Legal document",
-    effectiveSince: "In effect since",
+    effectiveFrom: "In effect from",
     version: "Version",
     governingNote:
       "Written in Indonesian and deliberately not translated, so there is a single source. The Indonesian text below is the one that governs.",

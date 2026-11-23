@@ -760,7 +760,7 @@ export const id = {
   },
   legal: {
     eyebrow: "Dokumen hukum",
-    effectiveSince: "Berlaku sejak",
+    effectiveFrom: "Berlaku mulai",
     version: "Versi",
     governingNote: "",
     documents: {

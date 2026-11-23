@@ -43,13 +43,17 @@ const changelog = defineCollection({
   }),
 });
 
-/** Dokumen hukum. Judul ada di kamus i18n, dan tanggal berlaku ada di
- *  src/data/legal.ts supaya ketiganya berubah dari satu tempat. */
+/** Dokumen hukum. Judul ada di kamus i18n. Versi dan tanggal berlakunya
+ *  ada di frontmatter tiap dokumen, karena setiap dokumen berganti versi
+ *  sendiri-sendiri. */
 const legal = defineCollection({
   loader: glob({ pattern: "*.md", base: "./src/content/legal" }),
   schema: z.object({
     /** Harus sama dengan versi yang disimpan API saat pengguna menyetujui. */
     version: z.string(),
+    /** Tanggal versi ini mulai berlaku, `YYYY-MM-DD`. Versi baru boleh
+     *  terbit sebelum tanggal ini, karena perubahan diumumkan lebih dulu. */
+    effectiveDate: z.coerce.date(),
   }),
 });
 
