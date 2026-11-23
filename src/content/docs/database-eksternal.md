@@ -12,7 +12,7 @@ Panduan ini untuk database yang kamu sewa atau siapkan sendiri di luar Sakala. A
 
 Sakala juga punya [database terkelola](/docs/database-terkelola), tetapi per 23 November 2026 masih pilot terbatas: kuota bawaannya 0 di `sakala.dev`, jadi kebanyakan workspace belum bisa membuatnya. Selama itu, database eksternal adalah jalannya.
 
-Dengan database eksternal, backup, migration, dan pemulihan data menjadi tanggung jawabmu. Sakala hanya menjalankan aplikasinya. Container juga tidak punya penyimpanan tetap, jadi berkas SQLite atau hasil upload yang ditulis ke dalam container hilang setiap kali deploy baru selesai.
+Dengan database eksternal, backup, migration, dan pemulihan data menjadi tanggung jawabmu. Sakala hanya menjalankan aplikasinya. Container juga tidak punya penyimpanan tetap, jadi berkas SQLite atau hasil upload yang ditulis ke dalam container hilang setiap kali deploy baru selesai. Tempat menyimpan berkas dibahas di [Penyimpanan File](/docs/penyimpanan-file).
 
 > Sakala sedang dalam pilot terbuka sejak 19 November 2026: siapa pun bisa mendaftar dan memakainya tanpa biaya, dengan [batas pemakaian](/docs/batas-pilot).
 >

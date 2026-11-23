@@ -13,7 +13,7 @@ This guide is for a database you rent or set up yourself outside Sakala. Your ap
 
 Sakala also has [managed databases](/en/docs/database-terkelola), but as of 23 November 2026 they are a limited pilot: the default quota on `sakala.dev` is 0, so most workspaces cannot create one yet. Until then, an external database is the way.
 
-With an external database, backups, migrations, and data recovery are your responsibility. Sakala only runs the application. Containers have no persistent storage either, so a SQLite file or an upload written inside the container is gone each time a new deploy finishes.
+With an external database, backups, migrations, and data recovery are your responsibility. Sakala only runs the application. Containers have no persistent storage either, so a SQLite file or an upload written inside the container is gone each time a new deploy finishes. Where to keep files instead is covered in [File Storage](/en/docs/penyimpanan-file).
 
 > Sakala has been in an open pilot since 19 November 2026: anyone can sign up and use it at no cost, within the [usage limits](/en/docs/batas-pilot).
 >
