@@ -972,10 +972,13 @@ Sakala has no file storage for projects. Every deployment creates a new
 container, and the runtime never mounts host volumes into workloads
 (sakala-agent `docs/DOCKER_RUNTIME.md`), so anything an application writes to
 its filesystem, such as uploaded images, Laravel's `storage/app`, or a SQLite
-file, is lost on every redeploy and rollback. Files survive only while the
-same container is stopped and started again: idle sleep (ADR-015) and
-**Restart**. Each replica (ADR-019) has its own filesystem, so replicas do not
-even see each other's files.
+file, is lost on every redeploy and rollback. On hosted Sakala it is lost even
+sooner: workloads run under gVisor (ADR-014) with its root overlay inside the
+sandbox, so writes disappear whenever the container stops, including idle
+sleep (ADR-015), **Restart**, and an automatic restart after a crash (tested
+on the staging runtime node on 2026-11-23; under plain runc the same file
+survives a stop and start). Each replica (ADR-019) has its own filesystem, so
+replicas do not even see each other's files.
 
 Today users are told to use an S3-compatible provider outside Sakala
 ([File Storage guide](/docs/penyimpanan-file)): one more account and keys to

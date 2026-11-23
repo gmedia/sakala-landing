@@ -45,7 +45,7 @@ Untuk batas build per jam, setiap deployment yang mem-build image dihitung, term
 
 Proyek yang tidak dikunjungi selama 30 menit ditidurkan supaya kapasitas pilot bisa dipakai bersama. Alamatnya tetap sama. Pengunjung berikutnya melihat halaman **Proyek sedang dinyalakan**, dan aplikasinya terbuka sendiri begitu siap. Kamu juga bisa membangunkannya dari Console.
 
-Aplikasimu dihentikan saat tidur dan dijalankan lagi saat bangun, jadi apa pun yang hanya tersimpan di memory aplikasi, misalnya sesi login yang tidak disimpan di database, ikut hilang.
+Aplikasimu dihentikan saat tidur dan dijalankan lagi saat bangun, jadi apa pun yang hanya tersimpan di memory aplikasi, misalnya sesi login yang tidak disimpan di database, ikut hilang. Berkas yang ditulis ke dalam container juga hilang, lihat [Penyimpanan File](/docs/penyimpanan-file).
 
 ## Yang belum ada selama pilot
 

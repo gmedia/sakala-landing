@@ -1,6 +1,6 @@
 ---
 title: Penyimpanan File
-description: Berkas yang ditulis aplikasi ke dalam container hilang setiap kali deploy. Simpan upload dan berkas lain di object storage S3-compatible, dan data di database.
+description: Berkas yang ditulis aplikasi ke dalam container hilang begitu container berhenti, termasuk saat proyek tidur dan setiap kali deploy. Simpan upload dan berkas lain di object storage S3-compatible, dan data di database.
 track: panduan
 section: Panduan deploy
 order: 4.1
@@ -8,25 +8,25 @@ order: 4.1
 
 # Penyimpanan File
 
-Sakala belum menyediakan penyimpanan file untuk proyek. Berkas yang ditulis aplikasimu ke dalam container, misalnya gambar yang di-upload pengguna, isi `storage/app` Laravel, atau berkas SQLite, hilang setiap kali deploy baru selesai. Simpan berkas seperti itu di object storage S3-compatible di luar Sakala, dan simpan data terstruktur di database.
+Sakala belum menyediakan penyimpanan file untuk proyek. Berkas yang ditulis aplikasimu ke dalam container, misalnya gambar yang di-upload pengguna, isi `storage/app` Laravel, atau berkas SQLite, hanya bertahan selama container itu terus berjalan. Begitu container berhenti, termasuk saat proyek tidur dan setiap kali deploy, berkasnya hilang. Simpan berkas seperti itu di object storage S3-compatible di luar Sakala, dan simpan data terstruktur di database.
 
 > **Status panduan ini per 23 November 2026.** Contoh kode di halaman ini sudah dijalankan secara lokal terhadap dua object storage S3-compatible di Docker, Garage 2.5.0 dan RustFS 1.0.6: Laravel 13 dengan `league/flysystem-aws-s3-v3` 3.35, dan Node 24 dengan AWS SDK for JavaScript v3. Ia belum dicoba terhadap provider sungguhan atau lewat Sakala di production.
 
 ## Kenapa berkas hilang
 
-Setiap deployment membuat container baru dari image aplikasimu. Container lama, beserta semua berkas yang ditulis ke dalamnya, dihapus setelah versi baru berjalan. Sakala juga tidak memasang folder dari server ke container aplikasi, jadi tidak ada tempat di luar container yang ikut bertahan.
+Di Sakala, aplikasimu berjalan di dalam sandbox gVisor, yaitu lapisan isolasi yang memisahkan aplikasi dari server. Berkas yang ditulis ke filesystem container disimpan di dalam sandbox itu, dan ikut hilang begitu container berhenti, walaupun container yang sama dinyalakan lagi. Sakala juga tidak memasang folder dari server ke container aplikasi, jadi tidak ada tempat di luar container yang ikut bertahan.
 
-| Kejadian                                                       | Berkas yang ditulis ke container                       |
-| -------------------------------------------------------------- | ------------------------------------------------------ |
-| Proyek tidur, lalu bangun lagi karena ada pengunjung           | Tetap ada, karena container yang sama dinyalakan lagi  |
-| **Restart** di Console                                         | Tetap ada, karena container yang sama dinyalakan ulang |
-| Deploy dari push baru, **Redeploy**, atau redeploy tanpa build | Hilang, karena deployment membuat container baru       |
-| **Kembalikan ke versi ini** (rollback)                         | Hilang, karena kembali ke versi lama juga deployment   |
-| Proyek dihapus                                                 | Hilang                                                 |
+Container berhenti lebih sering daripada yang mungkin kamu kira. Berkas di dalamnya hilang saat:
 
-Kalau proyekmu berjalan dengan beberapa replika, setiap replika punya filesystem sendiri. Berkas yang di-upload lewat replika pertama tidak terlihat oleh replika kedua, jadi pengunjung bisa melihat gambar muncul lalu hilang tergantung replika mana yang melayaninya.
+- proyek tidur setelah 30 menit tanpa pengunjung, lalu bangun lagi;
+- kamu menekan **Restart** di Console;
+- aplikasi crash lalu dinyalakan ulang otomatis;
+- ada deploy dari push baru, **Redeploy** (termasuk redeploy tanpa build), atau **Kembalikan ke versi ini** (rollback), karena setiap deployment membuat container baru;
+- proyek dihapus.
 
-Walaupun berkas bertahan saat tidur dan saat **Restart**, jangan mengandalkannya. Deploy berikutnya tetap menghapusnya.
+Jadi anggap filesystem container sebagai tempat sementara. Kalau proyekmu berjalan dengan beberapa replika, setiap replika juga punya filesystem sendiri. Berkas yang di-upload lewat replika pertama tidak terlihat oleh replika kedua, jadi pengunjung bisa melihat gambar muncul lalu hilang tergantung replika mana yang melayaninya.
+
+Di Sakala yang kamu jalankan sendiri (self-host) dengan runtime `runc` biasa, tanpa gVisor, berkas bertahan saat tidur dan **Restart**, tetapi tetap hilang setiap kali deploy.
 
 ## Yang dipakai sebagai gantinya
 
@@ -82,7 +82,7 @@ $path = $request->file('foto')->store('avatars');
 $url = Storage::temporaryUrl($path, now()->addMinutes(10));
 ```
 
-Kode yang menyebut disk `local` atau `public`, misalnya `->store('avatars', 'public')`, tetap menulis ke dalam container dan berkasnya tetap hilang saat deploy. Ganti disk-nya menjadi `s3`, atau hapus argumen itu. `php artisan storage:link` juga tidak membantu di Sakala, karena folder yang ditautkannya ada di dalam container.
+Kode yang menyebut disk `local` atau `public`, misalnya `->store('avatars', 'public')`, tetap menulis ke dalam container, jadi berkasnya tetap hilang begitu container berhenti. Ganti disk-nya menjadi `s3`, atau hapus argumen itu. `php artisan storage:link` juga tidak membantu di Sakala, karena folder yang ditautkannya ada di dalam container.
 
 `Storage::url($path)` hanya berguna kalau bucket-nya publik. Ia menyusun alamat dari `AWS_URL`, yaitu alamat publik bucket yang diberikan provider. Untuk bucket privat, pakai `Storage::temporaryUrl`.
 
@@ -143,9 +143,9 @@ Di route upload, panggil `saveFile("avatars/" + namaBerkas, isiBerkas, tipeBerka
 
 ## Berkas SQLite
 
-SQLite menyimpan seluruh database di satu berkas, jadi di Sakala berkas itu hilang setiap kali deploy, beserta semua datanya. Kalau proyekmu punya beberapa replika, setiap replika juga punya database SQLite sendiri yang isinya berbeda.
+SQLite menyimpan seluruh database di satu berkas di dalam container. Di Sakala, berkas itu beserta semua datanya hilang begitu container berhenti, bahkan saat proyek hanya tidur karena 30 menit tidak dikunjungi. Ini alasan kuat untuk memakai database sungguhan. Kalau proyekmu punya beberapa replika, setiap replika juga punya database SQLite sendiri yang isinya berbeda.
 
-Laravel 11 ke atas memakai SQLite secara bawaan (`DB_CONNECTION=sqlite`), dan menyimpan session, cache, serta antrean job di database yang sama. Artinya, tanpa diganti, pengguna juga logout setiap kali deploy. Pindahkan ke PostgreSQL lewat [database terkelola](/docs/database-terkelola) atau [database eksternal](/docs/database-eksternal).
+Laravel 11 ke atas memakai SQLite secara bawaan (`DB_CONNECTION=sqlite`), dan menyimpan session, cache, serta antrean job di database yang sama. Artinya, tanpa diganti, pengguna juga logout setiap kali proyek tidur atau di-deploy. Pindahkan ke PostgreSQL lewat [database terkelola](/docs/database-terkelola) atau [database eksternal](/docs/database-eksternal).
 
 ## Ke depan
 

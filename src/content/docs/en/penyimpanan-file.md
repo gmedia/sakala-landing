@@ -1,6 +1,6 @@
 ---
 title: File Storage
-description: Files your application writes inside its container are lost on every deploy. Keep uploads and other files in S3-compatible object storage, and data in a database.
+description: Files your application writes inside its container are lost when the container stops, including when the project sleeps and on every deploy. Keep uploads and other files in S3-compatible object storage, and data in a database.
 track: panduan
 section: Deploy guides
 order: 4.1
@@ -9,25 +9,25 @@ lang: en
 
 # File Storage
 
-Sakala does not provide file storage for projects yet. Files your application writes inside its container, such as images uploaded by users, Laravel's `storage/app`, or a SQLite file, are gone each time a new deploy finishes. Keep files like these in S3-compatible object storage outside Sakala, and keep structured data in a database.
+Sakala does not provide file storage for projects yet. Files your application writes inside its container, such as images uploaded by users, Laravel's `storage/app`, or a SQLite file, last only as long as that container keeps running. When the container stops, including when the project sleeps and on every deploy, they are gone. Keep files like these in S3-compatible object storage outside Sakala, and keep structured data in a database.
 
 > **Status of this guide as of 23 November 2026.** The code on this page has been run locally against two S3-compatible object stores in Docker, Garage 2.5.0 and RustFS 1.0.6: Laravel 13 with `league/flysystem-aws-s3-v3` 3.35, and Node 24 with the AWS SDK for JavaScript v3. It has not been tried against a real provider or through Sakala in production.
 
 ## Why files are lost
 
-Every deployment creates a new container from your application's image. The old container, with every file written into it, is removed once the new version is running. Sakala does not mount folders from the server into application containers either, so nothing outside the container survives with it.
+On Sakala, your application runs inside a gVisor sandbox, an isolation layer that separates the application from the server. Files written to the container's filesystem are kept inside that sandbox, and they disappear as soon as the container stops, even if the same container is started again. Sakala does not mount folders from the server into application containers either, so nothing outside the container survives with it.
 
-| Event                                                               | Files written inside the container                 |
-| ------------------------------------------------------------------- | -------------------------------------------------- |
-| The project sleeps, then wakes for a visitor                        | Kept, because the same container starts again      |
-| **Restart** in the Console                                          | Kept, because the same container is restarted      |
-| A deploy from a new push, **Redeploy**, or redeploy without a build | Lost, because a deployment creates a new container |
-| **Kembalikan ke versi ini** (go back to this version)               | Lost, because going back is a deployment too       |
-| The project is deleted                                              | Lost                                               |
+Containers stop more often than you might expect. Files inside are lost when:
 
-If your project runs with several replicas, each replica has its own filesystem. A file uploaded through the first replica is not visible to the second, so visitors may see an image appear and then disappear depending on which replica serves them.
+- the project sleeps after 30 minutes without visitors, then wakes again;
+- you press **Restart** in the Console;
+- the application crashes and is restarted automatically;
+- there is a deploy from a new push, a **Redeploy** (including a redeploy without a build), or **Kembalikan ke versi ini** (go back to this version, a rollback), because every deployment creates a new container;
+- the project is deleted.
 
-Even though files survive sleep and **Restart**, do not rely on it. The next deploy removes them anyway.
+So treat the container's filesystem as temporary. If your project runs with several replicas, each replica also has its own filesystem. A file uploaded through the first replica is not visible to the second, so visitors may see an image appear and then disappear depending on which replica serves them.
+
+On a Sakala you run yourself (self-host) with the plain `runc` runtime, without gVisor, files survive sleep and **Restart**, but are still lost on every deploy.
 
 ## What to use instead
 
@@ -83,7 +83,7 @@ $path = $request->file('photo')->store('avatars');
 $url = Storage::temporaryUrl($path, now()->addMinutes(10));
 ```
 
-Code that names the `local` or `public` disk, for example `->store('avatars', 'public')`, still writes inside the container, and those files are still lost on deploy. Change the disk to `s3`, or drop that argument. `php artisan storage:link` does not help on Sakala either, because the folder it links to lives inside the container.
+Code that names the `local` or `public` disk, for example `->store('avatars', 'public')`, still writes inside the container, so those files are still lost when the container stops. Change the disk to `s3`, or drop that argument. `php artisan storage:link` does not help on Sakala either, because the folder it links to lives inside the container.
 
 `Storage::url($path)` is only useful for a public bucket. It builds the address from `AWS_URL`, the bucket's public address given by the provider. For a private bucket, use `Storage::temporaryUrl`.
 
@@ -144,9 +144,9 @@ In your upload route, call `saveFile("avatars/" + fileName, fileBody, fileType)`
 
 ## SQLite files
 
-SQLite keeps the whole database in one file, so on Sakala that file, with all its data, is lost on every deploy. If your project has several replicas, each replica also has its own SQLite database with different contents.
+SQLite keeps the whole database in one file inside the container. On Sakala, that file and all its data are lost when the container stops, even when the project only sleeps after 30 minutes without visitors. That alone is a strong reason to use a real database. If your project has several replicas, each replica also has its own SQLite database with different contents.
 
-Laravel 11 and later use SQLite by default (`DB_CONNECTION=sqlite`) and keep sessions, cache, and the job queue in that same database. Unless you change it, users are also logged out on every deploy. Move to PostgreSQL with a [managed database](/en/docs/database-terkelola) or an [external database](/en/docs/database-eksternal).
+Laravel 11 and later use SQLite by default (`DB_CONNECTION=sqlite`) and keep sessions, cache, and the job queue in that same database. Unless you change it, users are also logged out every time the project sleeps or is deployed. Move to PostgreSQL with a [managed database](/en/docs/database-terkelola) or an [external database](/en/docs/database-eksternal).
 
 ## What comes next
 
