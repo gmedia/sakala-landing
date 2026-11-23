@@ -19,6 +19,30 @@ versinya di file ini.
 
 ## [Unreleased]
 
+### Added
+
+- Halaman panduan "Rollback dan Restart" (id dan en) di
+  `/docs/rollback-dan-restart`: empat cara menjalankan ulang proyek
+  (**Redeploy**, **Build ulang dari awal**, **Restart**, **Kembalikan ke versi
+  ini**), membaca tab **Riwayat** (**Sedang melayani**, **Tanpa build**, baris
+  pemicu bernama di workspace tim), Restart tanpa build dan tanpa deployment
+  baru, rollback yang memakai commit dan pengaturan build versi lama dengan
+  variabel sekarang, image live dan previous yang disimpan node, auto-deploy
+  yang dijeda setelah rollback, isi database yang tidak ikut kembali, dan
+  berkas yang hilang saat Restart, tidur, dan deploy. Hub docs dan Variabel
+  dan Secret menautkannya.
+- Dua entri changelog situs (id dan en) bertanggal 23 November 2026:
+  rollback, Restart, dan riwayat dengan pemicu; serta halaman tidur yang
+  ditulis ulang, halaman 404 untuk alamat `sakala.app` yang kosong, dan
+  panduan Penyimpanan File.
+
+### Changed
+
+- Status produk dan roadmap per 23 November 2026: rollback dan Restart
+  tersedia (Horizon D tidak lagi mencantumkannya sebagai arah), pembatasan
+  lalu lintas keluar dari container pengguna berjalan sejak 19 November 2026,
+  dan object storage terkelola tercatat masih rancangan (ADR-021, Proposed).
+
 ## [0.3.11] - 2026-11-23
 
 ### Changed

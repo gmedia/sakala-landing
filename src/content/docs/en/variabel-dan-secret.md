@@ -97,4 +97,4 @@ Builds on Sakala do not reuse an old build step when a variable's value changes,
 
 ## Next steps
 
-For an application that needs a database, read [Managed Databases](/en/docs/database-terkelola) or [Connecting an External Database](/en/docs/database-eksternal). To run migrations once per deployment, read [Databases and the Release Command](/en/docs/perintah-rilis).
+For an application that needs a database, read [Managed Databases](/en/docs/database-terkelola) or [Connecting an External Database](/en/docs/database-eksternal). To run migrations once per deployment, read [Databases and the Release Command](/en/docs/perintah-rilis). To go back to an earlier version or start the application again without a build, read [Rollback and Restart](/en/docs/rollback-dan-restart).

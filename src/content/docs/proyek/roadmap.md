@@ -53,11 +53,12 @@ Syarat sebelum pendaftaran dibuka untuk umum, dirinci di
 otomatis dan batas build ([ADR-015](/docs/proyek/adr)), dokumen hukum,
 penanganan abuse, bukti dari pilot, dan estimasi biaya.
 
-**Status per 19 November 2026:** maintainer membuka pendaftaran pilot untuk
-siapa saja. Sandbox gVisor, runtime yang terpisah dari control plane, sleep
-setelah 30 menit tanpa pengunjung, batas build per jam, dokumen hukum, dan
-penangguhan project sudah berjalan. Pembatasan lalu lintas keluar dari
-container pengguna, bukti dari pilot, dan estimasi biaya masih dikerjakan.
+**Status per 23 November 2026:** maintainer membuka pendaftaran pilot untuk
+siapa saja sejak 19 November 2026. Sandbox gVisor, runtime yang terpisah dari
+control plane, sleep setelah 30 menit tanpa pengunjung, batas build per jam,
+dokumen hukum, penangguhan project, dan pembatasan lalu lintas keluar dari
+container pengguna (sejak 19 November 2026) sudah berjalan. Bukti dari pilot
+dan estimasi biaya masih dikerjakan.
 
 ### Horizon B — Learn minimal
 
@@ -93,8 +94,11 @@ dicoba di server sungguhan.
 - visibilitas pemakaian dan kuota.
 
 **Status per 23 November 2026:** auto-deploy dari push, repository privat
-lewat GitHub App, dan metrik dasar per proyek (CPU, memori, replika, dan
-restart, sejak 19 November 2026) sudah tersedia. Sisanya belum.
+lewat GitHub App, metrik dasar per proyek (CPU, memori, replika, dan restart,
+sejak 19 November 2026), serta rollback ke versi sebelumnya dan Restart tanpa
+build (sejak 23 November 2026, lihat
+[Rollback dan Restart](/docs/rollback-dan-restart)) sudah tersedia. Custom
+domain dan visibilitas pemakaian yang lebih lengkap belum.
 
 ### Horizon E — Explore dan ekosistem
 
@@ -120,8 +124,11 @@ Rancangan PostgreSQL terkelola diusulkan di
 **Status per 23 November 2026:** PostgreSQL terkelola tahap pertama sedang
 diuji sebagai pilot terbatas sejak 23 November 2026, hanya untuk workspace
 yang diberi kuota oleh admin. Backup malam berjalan, dan pemulihannya
-dilakukan maintainer. Layanan lain belum. Panduannya ada di
-[Database Terkelola](/docs/database-terkelola).
+dilakukan maintainer. Panduannya ada di
+[Database Terkelola](/docs/database-terkelola). Object storage terkelola baru
+dirancang di
+[ADR-021](/docs/proyek/adr#adr-021--managed-object-storage-for-projects)
+(Proposed), belum dibangun. Layanan lain belum.
 
 ### Horizon H — Platformisasi
 
@@ -130,7 +137,7 @@ dan router.
 
 ## 2. Roadmap engineering
 
-| Fase | Isi                                                                                       | Status per 19 Nov 2026                                                                          |
+| Fase | Isi                                                                                       | Status per 23 Nov 2026                                                                          |
 | ---- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
 | 0    | Pemisahan repository, CI dasar, branch protection, fondasi design system                  | selesai                                                                                         |
 | 1    | Kontrak auth, GitHub OAuth, email dan verifikasi, sesi, onboarding                        | berjalan di production sejak 12 Nov                                                             |
@@ -140,7 +147,7 @@ dan router.
 | 5    | Runtime nyata: checkout, Dockerfile, Railpack, container, batas, Caddy, health, cleanup   | berjalan di production sejak 12 Nov; variabel build Railpack belum diuji dengan build sungguhan |
 | 6    | MVP end-to-end: browser, API, agent, runtime, URL publik                                  | berjalan di production sejak 12 Nov                                                             |
 | 7    | Penguatan pilot: kategori kegagalan, dokumentasi, pengaman, metrik validasi, alat operasi | sedang dikerjakan; pilot terbuka sejak 19 Nov                                                   |
-| 8    | Gate pilot publik: isolasi, sleep, batas build, dokumen hukum, abuse                      | sebagian besar berjalan; egress container, bukti, dan biaya belum                               |
+| 8    | Gate pilot publik: isolasi, sleep, batas build, dokumen hukum, abuse                      | sebagian besar berjalan, termasuk egress container sejak 19 Nov; bukti dan biaya belum          |
 | 9    | Learn minimal                                                                             | berikutnya                                                                                      |
 | 10   | Installer self-host satu node                                                             | sedang diuji, belum dirilis                                                                     |
 

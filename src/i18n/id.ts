@@ -367,7 +367,7 @@ export const id = {
       "Sakala sedang dalam tahap pilot. Siapa pun bisa mendaftar dan memakainya tanpa biaya, dengan batas proyek, container, dan build per jam. Belum ada jaminan uptime, jadi belum cocok untuk aplikasi penting.",
     disclaimerLink: "Lihat batas pilot",
     pillarsTitle: "Perjalanan produk",
-    pillarsStatusDate: "Status per 19 November 2026.",
+    pillarsStatusDate: "Status per 23 November 2026.",
     pillars: [
       {
         name: "Create",
@@ -443,8 +443,16 @@ export const id = {
             status: "available",
           },
           {
+            label: "rollback ke versi sebelumnya, dan Restart tanpa build",
+            status: "available",
+          },
+          {
             label: "database PostgreSQL terkelola, pilot terbatas",
             status: "testing",
+          },
+          {
+            label: "object storage terkelola, masih rancangan",
+            status: "direction",
           },
           { label: "custom domain", status: "direction" },
         ],
@@ -543,6 +551,7 @@ export const id = {
       "Variabel dan secret, dengan saran dari .env.example saat membuat proyek",
       "Log build dan runtime, serta kode kegagalan yang menunjuk tahapnya",
       "Metrik dasar per proyek: CPU, memori, replika, dan restart, sampai 30 hari ke belakang",
+      "Rollback ke versi sebelumnya dari tab Riwayat, dan Restart tanpa build",
       "Domain bawaan di *.sakala.app",
       "Workspace pribadi dan tim, undangan, serta peran Owner, Member, dan Viewer",
       "Kuota per workspace, batas build per jam, dan sleep setelah 30 menit tanpa pengunjung",
@@ -558,7 +567,7 @@ export const id = {
         label: "Gate",
         name: "Pilot publik",
         status: "testing",
-        text: "Pendaftaran dibuka untuk siapa saja sejak 19 November 2026. Yang masih dikerjakan: pembatasan lalu lintas keluar dari container pengguna, serta bukti pemakaian dan biaya dari pilot.",
+        text: "Pendaftaran dibuka untuk siapa saja sejak 19 November 2026. Pembatasan lalu lintas keluar dari container pengguna berjalan sejak hari yang sama. Yang masih dikerjakan: bukti pemakaian dan biaya dari pilot.",
       },
       {
         label: "Horizon B",
@@ -576,7 +585,7 @@ export const id = {
         label: "Horizon D",
         name: "Operasi yang andal",
         status: "direction",
-        text: "Custom domain, pemulihan dan rollback ke versi sebelumnya, dan visibilitas pemakaian yang lebih lengkap dari metrik dasar.",
+        text: "Custom domain, dan visibilitas pemakaian yang lebih lengkap dari metrik dasar. Rollback ke versi sebelumnya dan Restart sudah tersedia sejak 23 November 2026.",
       },
       {
         label: "Horizon E",
@@ -588,7 +597,7 @@ export const id = {
         label: "Horizon G–H",
         name: "Layanan dan platform",
         status: "direction",
-        text: "PostgreSQL terkelola sedang diuji sebagai pilot terbatas sejak 23 November 2026, hanya untuk workspace yang diberi kuota. Setelahnya worker dan cron, CLI, API publik, dan runtime multi-node.",
+        text: "PostgreSQL terkelola sedang diuji sebagai pilot terbatas sejak 23 November 2026, hanya untuk workspace yang diberi kuota. Object storage terkelola baru dirancang di ADR-021. Setelahnya worker dan cron, CLI, API publik, dan runtime multi-node.",
       },
     ],
     designTitle: "Status desain dan engineering dipisah",

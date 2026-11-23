@@ -96,4 +96,4 @@ Build di Sakala tidak memakai ulang langkah build yang lama saat nilai variabeln
 
 ## Langkah berikutnya
 
-Untuk aplikasi yang butuh database, baca [Database Terkelola](/docs/database-terkelola) atau [Menghubungkan Database Eksternal](/docs/database-eksternal). Untuk menjalankan migration sekali setiap deployment, baca [Database dan Perintah Rilis](/docs/perintah-rilis).
+Untuk aplikasi yang butuh database, baca [Database Terkelola](/docs/database-terkelola) atau [Menghubungkan Database Eksternal](/docs/database-eksternal). Untuk menjalankan migration sekali setiap deployment, baca [Database dan Perintah Rilis](/docs/perintah-rilis). Untuk kembali ke versi sebelumnya atau menyalakan ulang aplikasi tanpa build, baca [Rollback dan Restart](/docs/rollback-dan-restart).
