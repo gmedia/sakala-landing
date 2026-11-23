@@ -19,6 +19,15 @@ versinya di file ini.
 
 ## [Unreleased]
 
+### Changed
+
+- ADR-020 mendapat bagian "Update 2026-11-23": nama variabel koneksi yang
+  dipakai, penguncian kuota lewat `NOLOGIN` (bukan `ALLOW_CONNECTIONS
+false`), instance pilot production yang sementara berjalan di runtime node,
+  backup dan drill restore dari salinan off-host, yang belum dibangun (unduh
+  dump, restore oleh pemilik, copy database), dan aturan bahwa dump tenant
+  tidak pernah di-restore sebagai superuser beserta alasannya.
+
 ## [0.3.10] - 2026-11-19
 
 ### Changed

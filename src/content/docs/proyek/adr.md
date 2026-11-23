@@ -913,3 +913,50 @@ No dates; each phase starts after the previous one.
    environment view, values hidden, with the cross-region warning.
 5. The "copy database" action and the optional self-host component in
    `gmedia/sakala`.
+
+### Update 2026-11-23: phase 1 and the production pilot
+
+Phase 1 shipped in sakala-api v0.9.0 (the `databases` resource, attachments,
+injection, quotas, rotation), sakala-agent v0.12.0 (the database role), and
+Console v0.10.0 (the Database page); the wizard's database choice followed
+in Console v0.11.0. What changed against the decision above:
+
+- **Variable names.** Attached projects receive `DATABASE_URL`
+  (`postgresql://...?sslmode=require`), `DB_CONNECTION=pgsql`, `DB_HOST`,
+  `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, and `DB_PASSWORD`, built at
+  deployment time and never stored as project variables. A project variable
+  with the same name wins.
+- **Locking at the quota.** A full workspace gets its roles set to
+  `NOLOGIN` and their sessions terminated, not `ALLOW_CONNECTIONS false`,
+  because the latter also blocks the superuser and would stop the nightly
+  backup exactly when the data matters most.
+- **Production host.** The production pilot instance runs on the runtime
+  node, with a 512 MB memory cap and 50 connections, until a dedicated
+  database VM exists (maintainer decision of 2026-11-20). This is the
+  exception the "Database host" bullet reserves for single-node installs,
+  accepted for a small pilot: the default quota on production is 0, and
+  workspaces are opened one by one through limit profiles, starting
+  2026-11-23.
+- **Backups.** Nightly `pg_dump -Fc` per database, encrypted with age, 7
+  sets kept on the database host; in production a copy is pulled nightly to
+  the control-plane host and kept for 14 sets. A restore drill from that
+  off-host copy on 2026-11-23 matched the live database.
+- **Not built yet.** Dump download in the Console, restore by the owner, and
+  "copy database". Restores are done by a maintainer, and the Managed Databases user
+  guide on this site says so, together with the RPO of up to one day.
+
+**Tenant dumps are never restored as a superuser.** A dump holds objects the
+tenant defined, and restoring it runs some of them: functions called by
+`CHECK` constraints, index expressions, column defaults, and triggers. They
+run with the privileges of the restoring session. Under a superuser session
+that tenant code runs as superuser, and `pg_restore --role` does not contain
+it, because `SET ROLE` can be undone with `RESET ROLE` while the session user
+is a superuser
+([PostgreSQL](https://www.postgresql.org/docs/current/sql-set-role.html)).
+From there it could, for example, make its own role a superuser or read
+other tenants' databases. So a restore logs in as a role without superuser:
+the tenant's own role for a real restore, or for a drill a throwaway role
+with no other privileges in a scratch database, which is what
+`restore-database.sh` in `sakala-deployment` does. Extensions on the
+allow-list, which need the superuser, are created first and left out of what
+that role restores.
