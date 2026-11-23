@@ -9,7 +9,7 @@ lang: en
 
 # File Storage
 
-Sakala does not provide file storage for projects yet. Files your application writes inside its container, such as images uploaded by users, Laravel's `storage/app`, or a SQLite file, last only as long as that container keeps running. When the container stops, including when the project sleeps and on every deploy, they are gone. Keep files like these in S3-compatible object storage outside Sakala, and keep structured data in a database.
+Files your application writes inside its container, such as images uploaded by users, Laravel's `storage/app`, or a SQLite file, last only as long as that container keeps running. When the container stops, including when the project sleeps and on every deploy, they are gone. Keep files like these in S3-compatible object storage, and keep structured data in a database. Sakala's own object storage, [managed buckets](/en/docs/bucket-terkelola), is still a limited pilot opened per workspace, so this guide uses a provider outside Sakala.
 
 > **Status of this guide as of 23 November 2026.** The code on this page has been run locally against two S3-compatible object stores in Docker, Garage 2.5.0 and RustFS 1.0.6: Laravel 13 with `league/flysystem-aws-s3-v3` 3.35, and Node 24 with the AWS SDK for JavaScript v3. It has not been tried against a real provider or through Sakala in production.
 
@@ -37,7 +37,7 @@ On a Sakala you run yourself (self-host) with the plain `runc` runtime, without 
 
 ## Choosing a provider
 
-For now, object storage for a project on Sakala means a provider outside Sakala, for example Cloudflare R2, Amazon S3, or Backblaze B2. These names are only examples. Sakala has no official integration with them and has not been tested with them.
+Until your workspace gets a [managed bucket](/en/docs/bucket-terkelola) quota, object storage for a project on Sakala means a provider outside Sakala, for example Cloudflare R2, Amazon S3, or Backblaze B2. These names are only examples. Sakala has no official integration with them and has not been tested with them.
 
 What to check before choosing:
 
@@ -148,9 +148,9 @@ SQLite keeps the whole database in one file inside the container. On Sakala, tha
 
 Laravel 11 and later use SQLite by default (`DB_CONNECTION=sqlite`) and keep sessions, cache, and the job queue in that same database. Unless you change it, users are also logged out every time the project sleeps or is deployed. Move to PostgreSQL with a [managed database](/en/docs/database-terkelola) or an [external database](/en/docs/database-eksternal).
 
-## What comes next
+## Managed buckets
 
-Managed object storage, meaning buckets that Sakala creates and runs and that you attach to projects like a managed database, is being designed in [ADR-021](/en/docs/proyek/adr#adr-021--managed-object-storage-for-projects). It is still a proposal and has no date. The design uses the same `AWS_*` variable names as this guide, but that is not final.
+[Managed buckets](/en/docs/bucket-terkelola) are S3 buckets that Sakala creates and runs and that you attach to projects like a managed database. They are a limited pilot: the default quota is 0, and a Sakala admin opens workspaces one at a time. Sakala fills in the same `AWS_*` variables as this guide, plus `AWS_ENDPOINT_URL_S3` and `AWS_REGION`, so the Laravel and Node examples above can be used unchanged when you move to a managed bucket. You still set `FILESYSTEM_DISK=s3` yourself. Before moving, delete the old `AWS_*` variables from the **Variabel** tab, because a project variable with the same name overrides the bucket's value.
 
 ## Next steps
 

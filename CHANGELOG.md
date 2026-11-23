@@ -19,8 +19,27 @@ versinya di file ini.
 
 ## [Unreleased]
 
+### Added
+
+- Halaman panduan "Bucket Terkelola" (id dan en) di `/docs/bucket-terkelola`
+  untuk pilot bucket S3 (ADR-021): kuota bawaan 0 dan cara memintanya lewat
+  GitHub Discussions (`#meminta-kuota`, ditautkan Console), membuat dan
+  memasang bucket, variabel `AWS_*` yang diisi Sakala beserta alasan
+  `AWS_ENDPOINT_URL` tidak diisi, `FILESYSTEM_DISK=s3` untuk Laravel
+  (`#laravel`), link sementara karena bucket selalu privat, secret key yang
+  hanya bisa dilihat pemilik, penggantian secret key dan jendela
+  `BUCKET_KEY_ROTATING`, kuota keras dan `503 SlowDown` setelah kuota
+  diubah, backup malam sekitar 14 hari dengan risiko kehilangan sampai 24
+  jam, serta yang belum didukung.
+
 ### Changed
 
+- Penyimpanan File (id dan en) menautkan bucket terkelola sebagai pilot
+  terbatas, menggantikan bagian "Ke depan". Hub docs dan Batas Pilot
+  mencantumkan bucket terkelola (kuota bawaan 0).
+- ADR-021 mendapat bagian pembaruan tentang tahap 1 yang sudah dibangun
+  (statusnya tetap Proposed). Produk dan roadmap mencatat bucket S3
+  terkelola sedang dibangun sebagai pilot terbatas.
 - Pemberitahuan Privasi `privasi-v3`, berlaku 7 Desember 2026 dan diumumkan
   30 November 2026: bagian baru **Bucket terkelola**
   (isi bucket sebagai data pengguna dan data pengguna aplikasinya, disimpan

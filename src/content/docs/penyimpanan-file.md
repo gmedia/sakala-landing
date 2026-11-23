@@ -8,7 +8,7 @@ order: 4.1
 
 # Penyimpanan File
 
-Sakala belum menyediakan penyimpanan file untuk proyek. Berkas yang ditulis aplikasimu ke dalam container, misalnya gambar yang di-upload pengguna, isi `storage/app` Laravel, atau berkas SQLite, hanya bertahan selama container itu terus berjalan. Begitu container berhenti, termasuk saat proyek tidur dan setiap kali deploy, berkasnya hilang. Simpan berkas seperti itu di object storage S3-compatible di luar Sakala, dan simpan data terstruktur di database.
+Berkas yang ditulis aplikasimu ke dalam container, misalnya gambar yang di-upload pengguna, isi `storage/app` Laravel, atau berkas SQLite, hanya bertahan selama container itu terus berjalan. Begitu container berhenti, termasuk saat proyek tidur dan setiap kali deploy, berkasnya hilang. Simpan berkas seperti itu di object storage S3-compatible, dan simpan data terstruktur di database. Object storage dari Sakala sendiri, [bucket terkelola](/docs/bucket-terkelola), masih pilot terbatas yang dibuka per workspace, jadi panduan ini memakai provider di luar Sakala.
 
 > **Status panduan ini per 23 November 2026.** Contoh kode di halaman ini sudah dijalankan secara lokal terhadap dua object storage S3-compatible di Docker, Garage 2.5.0 dan RustFS 1.0.6: Laravel 13 dengan `league/flysystem-aws-s3-v3` 3.35, dan Node 24 dengan AWS SDK for JavaScript v3. Ia belum dicoba terhadap provider sungguhan atau lewat Sakala di production.
 
@@ -36,7 +36,7 @@ Di Sakala yang kamu jalankan sendiri (self-host) dengan runtime `runc` biasa, ta
 
 ## Memilih provider
 
-Saat ini object storage untuk proyek di Sakala berarti provider di luar Sakala, misalnya Cloudflare R2, Amazon S3, atau Backblaze B2. Nama-nama ini hanya contoh. Sakala belum punya integrasi resmi dengan mereka dan belum diuji bersama mereka.
+Selama workspace-mu belum mendapat kuota [bucket terkelola](/docs/bucket-terkelola), object storage untuk proyek di Sakala berarti provider di luar Sakala, misalnya Cloudflare R2, Amazon S3, atau Backblaze B2. Nama-nama ini hanya contoh. Sakala belum punya integrasi resmi dengan mereka dan belum diuji bersama mereka.
 
 Yang perlu kamu cek sebelum memilih:
 
@@ -147,9 +147,9 @@ SQLite menyimpan seluruh database di satu berkas di dalam container. Di Sakala, 
 
 Laravel 11 ke atas memakai SQLite secara bawaan (`DB_CONNECTION=sqlite`), dan menyimpan session, cache, serta antrean job di database yang sama. Artinya, tanpa diganti, pengguna juga logout setiap kali proyek tidur atau di-deploy. Pindahkan ke PostgreSQL lewat [database terkelola](/docs/database-terkelola) atau [database eksternal](/docs/database-eksternal).
 
-## Ke depan
+## Bucket terkelola
 
-Object storage terkelola, yaitu bucket yang dibuat dan dijalankan Sakala lalu dipasang ke proyek seperti database terkelola, sedang dirancang di [ADR-021](/docs/proyek/adr#adr-021--managed-object-storage-for-projects). Statusnya masih usulan dan belum ada tanggalnya. Rancangannya memakai nama variabel `AWS_*` yang sama dengan panduan ini, tetapi itu belum keputusan final.
+[Bucket terkelola](/docs/bucket-terkelola) adalah bucket S3 yang dibuat dan dijalankan Sakala lalu dipasang ke proyek seperti database terkelola. Statusnya pilot terbatas: kuota bawaannya 0, dan workspace dibuka satu per satu oleh admin Sakala. Sakala mengisi variabel `AWS_*` yang sama dengan panduan ini, ditambah `AWS_ENDPOINT_URL_S3` dan `AWS_REGION`, jadi contoh Laravel dan Node di atas bisa dipakai tanpa diubah saat kamu pindah ke bucket terkelola. `FILESYSTEM_DISK=s3` tetap kamu isi sendiri. Sebelum pindah, hapus variabel `AWS_*` lama dari tab **Variabel**, karena variabel proyek dengan nama yang sama menimpa nilai dari bucket.
 
 ## Langkah berikutnya
 

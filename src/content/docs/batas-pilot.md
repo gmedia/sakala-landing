@@ -24,8 +24,9 @@ Setiap akun mendapat satu workspace pribadi saat mendaftar. Workspace adalah tem
 | Build per jam (dihitung 60 menit ke belakang) | 20                | 20            |
 | Replika per proyek                            | 1                 | 1             |
 | Database terkelola                            | 0                 | 0             |
+| Bucket terkelola                              | 0                 | 0             |
 
-Satu akun bisa memiliki sampai 2 workspace tim. Admin Sakala bisa memberi workspace tertentu batas yang berbeda lewat profil batas, misalnya replika lebih dari satu, atau kuota [database terkelola](/docs/database-terkelola) yang sedang dalam pilot terbatas.
+Satu akun bisa memiliki sampai 2 workspace tim. Admin Sakala bisa memberi workspace tertentu batas yang berbeda lewat profil batas, misalnya replika lebih dari satu, atau kuota [database terkelola](/docs/database-terkelola) dan [bucket terkelola](/docs/bucket-terkelola) yang sedang dalam pilot terbatas.
 
 Untuk batas build per jam, setiap deployment yang mem-build image dihitung, termasuk yang gagal. [Redeploy tanpa build](/docs/variabel-dan-secret#redeploy-tanpa-build), yang memakai ulang image yang sedang dipakai, tidak dihitung. Kalau batasnya tercapai, deployment baru ditolak sampai deployment paling lama di 60 menit terakhir keluar dari hitungan. Push yang seharusnya memicu deploy otomatis pada saat itu dilewati, dan kamu mendapat notifikasi.
 
@@ -52,6 +53,7 @@ Aplikasimu dihentikan saat tidur dan dijalankan lagi saat bangun, jadi apa pun y
 - Jaminan uptime, SLA, atau pemulihan data.
 - Penyimpanan tetap di dalam container. Berkas yang ditulis aplikasi, termasuk SQLite dan hasil upload, hilang setiap kali deploy baru selesai. Untuk data, pakai database, yaitu [database eksternal](/docs/database-eksternal) atau [database terkelola](/docs/database-terkelola) kalau workspace-mu sudah mendapat kuotanya.
 - Database terkelola untuk semua workspace. Database PostgreSQL baru dibuka sebagai pilot terbatas, lihat [Database Terkelola](/docs/database-terkelola).
+- Bucket terkelola untuk semua workspace. Bucket S3 untuk berkas baru dibuka sebagai pilot terbatas, lihat [Bucket Terkelola](/docs/bucket-terkelola). Sampai itu, simpan berkas di object storage di luar Sakala seperti di [Penyimpanan File](/docs/penyimpanan-file).
 - Custom domain, worker, dan cron.
 - Pembatasan lalu lintas keluar dari container. Pembatasan ini sedang ditambahkan. Aplikasi sudah berjalan di sandbox gVisor, tetapi selama pilot jangan menyimpan data sensitif di Sakala.
 

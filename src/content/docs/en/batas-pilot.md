@@ -25,8 +25,9 @@ Every account gets one personal workspace when it signs up. A workspace is where
 | Builds per hour (counted over the last 60 minutes) | 20                 | 20             |
 | Replicas per project                               | 1                  | 1              |
 | Managed databases                                  | 0                  | 0              |
+| Managed buckets                                    | 0                  | 0              |
 
-One account can own up to 2 team workspaces. Sakala admins can give a specific workspace different limits through a limit profile, for example more than one replica, or a quota for [managed databases](/en/docs/database-terkelola), which are in a limited pilot.
+One account can own up to 2 team workspaces. Sakala admins can give a specific workspace different limits through a limit profile, for example more than one replica, or a quota for [managed databases](/en/docs/database-terkelola) and [managed buckets](/en/docs/bucket-terkelola), which are in a limited pilot.
 
 For the builds-per-hour limit, every deployment that builds an image counts, including failed ones. A [redeploy without a build](/en/docs/variabel-dan-secret#redeploy-without-a-build), which reuses the image in use, does not count. Once the limit is reached, new deployments are refused until the oldest deployment in the last 60 minutes drops out of the count. A push that would trigger an automatic deploy during that time is skipped, and you get a notification.
 
@@ -53,6 +54,7 @@ Your application is stopped while it sleeps and started again when it wakes, so 
 - An uptime guarantee, an SLA, or data recovery.
 - Persistent storage inside the container. Files the application writes, including SQLite and uploads, are lost every time a new deploy finishes. For data, use a database: an [external database](/en/docs/database-eksternal), or a [managed database](/en/docs/database-terkelola) once your workspace has a quota for it.
 - Managed databases for every workspace. PostgreSQL databases are open only as a limited pilot; see [Managed Databases](/en/docs/database-terkelola).
+- Managed buckets for every workspace. S3 buckets for files are open only as a limited pilot; see [Managed Buckets](/en/docs/bucket-terkelola). Until then, keep files in object storage outside Sakala as described in [File Storage](/en/docs/penyimpanan-file).
 - Custom domains, workers, and cron.
 - Limits on outgoing traffic from containers. These limits are being added. Applications already run in a gVisor sandbox, but do not keep sensitive data on Sakala during the pilot.
 
