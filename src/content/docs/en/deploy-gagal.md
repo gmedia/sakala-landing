@@ -168,7 +168,7 @@ The codes in this section only appear if your project sets a release command, th
 - **What you see:** "Aplikasi berhenti sendiri sesaat setelah dijalankan." (the application stopped by itself shortly after starting)
 - **Cause:** The application process stopped during the start stage, and a single restart already counts as a crash. Common ones: an environment variable is not set, the database connection failed on start, the image needs permissions Sakala restricts, like the regular `nginx` image, or a start command is used on an image without `sh`.
 - **Check:** Read the last line in the Logs panel. On your laptop, run `docker inspect --format '{{.State.ExitCode}}' coba-sakala` before removing the container.
-- **Fix:** Fill in the variables in the **Environment Variables** tab, do not let the application exit just because the database is not connected yet, or clear **Start command** in the **Pengaturan** tab if your image has no `sh`. Then deploy again. See [Connecting an external database](/en/docs/database-eksternal).
+- **Fix:** Fill in the variables in the **Variabel** (variables) tab, do not let the application exit just because the database is not connected yet, or clear **Start command** in the **Pengaturan** tab if your image has no `sh`. Then deploy again. See [Connecting an external database](/en/docs/database-eksternal).
 
 #### `runtime_app_exec_denied`
 
@@ -181,7 +181,7 @@ The codes in this section only appear if your project sets a release command, th
 
 - **What you see:** "Environment variable `PORT` di proyek ini berbeda dengan port yang dipakai Sakala untuk aplikasimu." (the project's `PORT` variable differs from the port Sakala uses for your application)
 - **Cause:** The project has a `PORT` variable whose value differs from the port Sakala chose, or whose value is not a port number.
-- **Check:** Look at the **Environment Variables** tab and **Detail error**, which names both values. Sakala's port is the **Port** field in the **Pengaturan** tab. If that field is empty, Sakala uses the port from `EXPOSE` in the Dockerfile when there is exactly one, and 3000 otherwise. The project page shows the port in use, and a new one if it only applies from the next deploy.
+- **Check:** Look at the **Variabel** tab and **Detail error**, which names both values. Sakala's port is the **Port** field in the **Pengaturan** tab. If that field is empty, Sakala uses the port from `EXPOSE` in the Dockerfile when there is exactly one, and 3000 otherwise. The project page shows the port in use, and a new one if it only applies from the next deploy.
 - **Fix:** Delete the `PORT` variable, since Sakala already sets it. If your application really needs another port, fill in the **Port** field in the **Pengaturan** tab. Then deploy again.
 
 ### The application does not answer

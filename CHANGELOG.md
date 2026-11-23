@@ -19,6 +19,56 @@ versinya di file ini.
 
 ## [Unreleased]
 
+### Added
+
+- Halaman panduan "Variabel dan Secret" (id dan en) di `/docs/variabel-dan-secret`,
+  yang sebelumnya dialihkan ke hub: cara mengisi variabel saat membuat proyek
+  dan di tab Variabel, saran dari `.env.example` di tahap Persiapan, secret
+  dan audit saat nilainya ditampilkan, variabel waktu-build dan runtime
+  (situs statis dan framework prerender selalu build, server biasa mengikuti
+  awalan seperti `VITE_` dan `NEXT_PUBLIC_`, variabel database tidak pernah
+  memicu build), redeploy tanpa build, dan "Build ulang dari awal". Redirect
+  lama di `astro.config.mjs` dihapus.
+- Halaman panduan "Database Terkelola" (id dan en) di `/docs/database-terkelola`:
+  status pilot terbatas (kuota bawaan 0 di `sakala.dev`), ketersediaan yang
+  bergantung pada server, membuat database dari wizard atau halaman Database,
+  variabel `DATABASE_URL` dan `DB_*`, migration lewat perintah rilis, detail
+  koneksi, ganti password dengan redeploy otomatis, extension, batas koneksi
+  dan penyimpanan, melepas dan menghapus, serta backup yang pemulihannya
+  dilakukan maintainer dan tidak pernah sebagai superuser.
+- Pertanyaan Umum (id dan en) mendapat jawaban untuk dosen: memakai Sakala
+  untuk kelas hari ini (akun per mahasiswa, URL dikumpulkan lewat sistem
+  kampus, dosen sebagai Pengamat di workspace tim), fitur kelas yang belum
+  ada, batas workspace tim, sleep dan cadangan untuk demo, dan pertanyaan
+  lewat GitHub Discussions kategori Q&A di `gmedia/sakala`.
+- Empat entri changelog situs (id dan en): metrik dasar per proyek, push
+  selektif di monorepo, redeploy tanpa build dengan saran variabel dari
+  `.env.example`, dan pilot terbatas database terkelola.
+
+### Changed
+
+- Status di halaman Produk dan Roadmap per 23 November 2026: metrik dasar kini
+  tersedia, redeploy tanpa build, push selektif di monorepo, dan saran
+  `.env.example` masuk daftar yang sudah tersedia, dan database PostgreSQL
+  terkelola tertulis sebagai pilot terbatas yang sedang diuji. Status Horizon D
+  dan G di roadmap kanonik ikut diperbarui.
+- Panduan yang menulis Sakala belum menyediakan database (Perintah Rilis,
+  Database Eksternal, Deploy Pertamamu, Pengantar, Batas Pilot) kini menyebut
+  pilot terbatas database terkelola. Batas Pilot mendapat baris kuota database
+  (0) dan menjelaskan bahwa redeploy tanpa build tidak dihitung dalam batas
+  build per jam. Perintah Rilis menjelaskan bahwa perintahnya tetap berjalan
+  saat image dipakai ulang.
+- Nama tab dan label Console di panduan disamakan dengan Console v0.11.0: tab
+  **Variabel** (bukan Environment Variables), **Tambah variabel**, dan
+  **Simpan sebagai secret**.
+- Menyiapkan Dockerfile tidak lagi menulis bahwa langkah build ter-cache
+  memakai nilai lama, karena build Dockerfile di Sakala berjalan tanpa cache
+  layer sejak sakala-agent v0.3.0. Sebagai gantinya, halaman itu menjelaskan
+  kapan memakai "Build ulang dari awal".
+- Judul halaman hub dokumentasi kini sama dengan H1-nya ("Pengantar Sakala",
+  "Understanding Sakala"), dan navigasi mobile docs tidak lagi menulis judul
+  jalur dua kali di hub.
+
 ## [0.3.10] - 2026-11-19
 
 ### Changed

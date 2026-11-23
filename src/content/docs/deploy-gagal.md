@@ -167,7 +167,7 @@ Kode di bagian ini hanya muncul kalau project-mu mengisi perintah rilis, yaitu f
 - **Yang terlihat:** "Aplikasi berhenti sendiri sesaat setelah dijalankan."
 - **Penyebab:** Proses aplikasi berhenti selama tahap start, dan satu kali restart saja sudah dihitung crash. Yang sering terjadi: environment variable belum diisi, koneksi ke database gagal saat mulai, image butuh izin yang dibatasi Sakala seperti image `nginx` biasa, atau start command dipakai pada image tanpa `sh`.
 - **Cek:** Baca baris terakhir di panel Logs. Di laptop, jalankan `docker inspect --format '{{.State.ExitCode}}' coba-sakala` sebelum menghapus container.
-- **Perbaiki:** Lengkapi variabel di tab **Environment Variables**, jangan biarkan aplikasi berhenti hanya karena database belum tersambung, atau kosongkan **Start command** di tab **Pengaturan** kalau image-mu tidak punya `sh`. Lalu deploy ulang. Lihat [Menghubungkan database eksternal](/docs/database-eksternal).
+- **Perbaiki:** Lengkapi variabel di tab **Variabel**, jangan biarkan aplikasi berhenti hanya karena database belum tersambung, atau kosongkan **Start command** di tab **Pengaturan** kalau image-mu tidak punya `sh`. Lalu deploy ulang. Lihat [Menghubungkan database eksternal](/docs/database-eksternal).
 
 #### `runtime_app_exec_denied`
 
@@ -180,7 +180,7 @@ Kode di bagian ini hanya muncul kalau project-mu mengisi perintah rilis, yaitu f
 
 - **Yang terlihat:** "Environment variable `PORT` di proyek ini berbeda dengan port yang dipakai Sakala untuk aplikasimu."
 - **Penyebab:** Ada variabel `PORT` di project yang nilainya tidak sama dengan port pilihan Sakala, atau nilainya bukan nomor port.
-- **Cek:** Lihat tab **Environment Variables** dan **Detail error**, yang menyebut kedua nilainya. Port pilihan Sakala adalah kolom **Port** di tab **Pengaturan**. Kalau kolom itu kosong, Sakala memakai port dari `EXPOSE` di Dockerfile bila hanya ada satu, dan 3000 kalau tidak ada. Halaman proyek menampilkan port yang sedang dipakai, dan port baru kalau baru berlaku di deploy berikutnya.
+- **Cek:** Lihat tab **Variabel** dan **Detail error**, yang menyebut kedua nilainya. Port pilihan Sakala adalah kolom **Port** di tab **Pengaturan**. Kalau kolom itu kosong, Sakala memakai port dari `EXPOSE` di Dockerfile bila hanya ada satu, dan 3000 kalau tidak ada. Halaman proyek menampilkan port yang sedang dipakai, dan port baru kalau baru berlaku di deploy berikutnya.
 - **Perbaiki:** Hapus variabel `PORT`, karena Sakala sudah mengisinya. Kalau aplikasimu memang butuh port lain, isi kolom **Port** di tab **Pengaturan**. Lalu deploy ulang.
 
 ### Aplikasi tidak menjawab

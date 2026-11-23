@@ -1,6 +1,6 @@
 ---
 title: Database dan Perintah Rilis
-description: Sakala belum menyediakan database. Begini cara memakai database dari layanan lain, lalu menjalankan migration sekali setiap deployment lewat perintah rilis.
+description: Cara menjalankan migration database sekali setiap deployment lewat perintah rilis, untuk database terkelola Sakala maupun database dari layanan lain.
 track: panduan
 section: Panduan deploy
 order: 4.2
@@ -8,17 +8,17 @@ order: 4.2
 
 # Database dan Perintah Rilis
 
-Sakala belum menyediakan database terkelola. Kalau aplikasimu butuh database, pakai database dari layanan lain, lalu jalankan migration-nya lewat perintah rilis: satu perintah yang Sakala jalankan sekali setiap deployment, setelah build dan sebelum versi baru menerima trafik.
+Perintah rilis adalah satu perintah yang Sakala jalankan sekali setiap deployment, setelah build dan sebelum versi baru menerima trafik. Biasanya dipakai untuk migration database.
 
-Halaman ini menjelaskan cara kerja perintah rilis dan cara menulis migration yang aman untuknya. Langkah menghubungkan database, termasuk mengisi `DATABASE_URL` dan memeriksa koneksinya, ada di [Menghubungkan Database Eksternal](/docs/database-eksternal).
+Halaman ini menjelaskan cara kerja perintah rilis dan cara menulis migration yang aman untuknya. Database-nya bisa [database terkelola Sakala](/docs/database-terkelola), yang masih pilot terbatas, atau database dari layanan lain lewat [Menghubungkan Database Eksternal](/docs/database-eksternal).
 
 > **Status per 18 November 2026.** Perintah rilis butuh `sakala-api` v0.7.0 atau lebih baru, Console v0.8.0 atau lebih baru, dan `sakala-agent` v0.10.0 atau lebih baru di node yang menjalankan project-mu. Kalau field **Release command** belum ada di tab **Pengaturan**, Console yang kamu pakai belum sampai versi itu. Contoh perintah di halaman ini belum dicoba lewat Sakala di production.
 
 ## Database hari ini
 
-Database terkelola ada di roadmap Sakala, di [Horizon G](/docs/proyek/roadmap#horizon-g--layanan-developer), dan rancangannya sedang ditulis. Sampai itu tersedia, database-nya berasal dari layanan database lain, dan backup serta pemulihan datanya menjadi tanggung jawabmu.
+Ada dua pilihan. [Database terkelola](/docs/database-terkelola) adalah PostgreSQL yang dijalankan Sakala dan dipasang ke proyek, dengan `DATABASE_URL` dan `DB_*` yang diisi otomatis. Per 23 November 2026 fitur ini masih pilot terbatas: kuota bawaannya 0 di `sakala.dev`, jadi hanya workspace yang diberi kuota oleh admin Sakala yang bisa membuatnya.
 
-Aplikasi di Sakala bisa menghubungi internet, jadi database yang terbuka di internet bisa dipakai. Simpan alamat dan password-nya sebagai environment variable project, misalnya `DATABASE_URL`, di tab **Environment Variables**. Nilainya disimpan terenkripsi dan disamarkan di log, walau [penyamarannya tidak sempurna](/docs/database-eksternal#mengganti-password), jadi tetap jangan mencetaknya.
+Pilihan lainnya database dari layanan lain. Aplikasi di Sakala bisa menghubungi internet, jadi database yang terbuka di internet bisa dipakai. Simpan alamat dan password-nya sebagai variabel proyek, misalnya `DATABASE_URL`, di tab **Variabel**. Nilainya disimpan terenkripsi dan disamarkan di log, walau [penyamarannya tidak sempurna](/docs/database-eksternal#mengganti-password), jadi tetap jangan mencetaknya. Untuk database seperti ini, backup dan pemulihan datanya menjadi tanggung jawabmu.
 
 ## Mengisi perintah rilis
 
@@ -43,7 +43,7 @@ Kosongkan field-nya kalau kamu tidak lagi membutuhkannya.
 
 ## Yang terjadi saat deployment
 
-Setelah image selesai dibangun, Sakala menjalankan perintah rilis di container sementara. Container itu memakai image, environment variable, dan jaringan yang sama dengan aplikasimu, lalu dihapus setelah perintahnya selesai. Output-nya masuk ke panel **Logs** di detail deployment, dengan awalan `[release]` di setiap baris.
+Setelah image siap, Sakala menjalankan perintah rilis di container sementara. Ini juga berlaku untuk [redeploy tanpa build](/docs/variabel-dan-secret#redeploy-tanpa-build): image-nya dipakai ulang, tetapi perintah rilisnya tetap dijalankan, misalnya supaya migration berjalan di database yang baru dipasang. Container itu memakai image, environment variable, dan jaringan yang sama dengan aplikasimu, lalu dihapus setelah perintahnya selesai. Output-nya masuk ke panel **Logs** di detail deployment, dengan awalan `[release]` di setiap baris.
 
 Kalau perintahnya selesai dengan exit code 0, Sakala lanjut menjalankan versi baru seperti biasa. Kalau exit code-nya selain 0, deployment gagal dengan kode `release_command_failed`, dan exit code-nya tertulis di **Detail error**. Versi baru tidak dijalankan, dan versi sebelumnya, kalau ada, tetap melayani pengunjung.
 
@@ -74,7 +74,7 @@ Sebelum migration yang menghapus atau mengubah data, buat backup dan pastikan ba
 
 ## Seeder tidak ditaruh di perintah rilis
 
-Perintah rilis berjalan di setiap deployment, jadi seeder di sana akan mengisi data yang sama berulang kali. Jalankan seeder sekali dari laptopmu, langsung ke database di layanan lain itu. `read -rs` membuat nilainya tidak tampil di layar dan tidak tersimpan di riwayat shell:
+Perintah rilis berjalan di setiap deployment, jadi seeder di sana akan mengisi data yang sama berulang kali. Untuk database dari layanan lain, jalankan seeder sekali dari laptopmu, langsung ke database itu. `read -rs` membuat nilainya tidak tampil di layar dan tidak tersimpan di riwayat shell:
 
 ```bash
 read -rs DATABASE_URL && export DATABASE_URL
@@ -84,6 +84,8 @@ unset DATABASE_URL
 
 Contoh di atas untuk Prisma yang membaca `DATABASE_URL` dari schema-nya. Untuk Laravel, jalankan `php artisan db:seed` dengan variabel koneksi seperti di [contoh migration monorepo](/docs/monorepo#langkah-2-jalankan-migration-dengan-sengaja). Database-nya harus bisa dihubungi dari laptopmu.
 
+Database terkelola tidak bisa dihubungi dari laptop, karena alamatnya hanya terjangkau aplikasi yang berjalan di Sakala. Kalau butuh data awal di sana, tulis seeder yang aman dijalankan berulang, misalnya hanya mengisi kalau tabelnya masih kosong.
+
 ## Langkah berikutnya
 
-Kalau deployment gagal di perintah rilis, buka [Saat Deploy Gagal](/docs/deploy-gagal#perintah-rilis). Untuk menghubungkan database dari awal, ikuti [Menghubungkan Database Eksternal](/docs/database-eksternal). Untuk contoh project Laravel di monorepo, lihat [Men-deploy monorepo](/docs/monorepo).
+Kalau deployment gagal di perintah rilis, buka [Saat Deploy Gagal](/docs/deploy-gagal#perintah-rilis). Untuk menyiapkan database dari awal, baca [Database Terkelola](/docs/database-terkelola) atau [Menghubungkan Database Eksternal](/docs/database-eksternal). Untuk contoh project Laravel di monorepo, lihat [Men-deploy monorepo](/docs/monorepo).

@@ -20,16 +20,27 @@ const groups = await getTrackGroups(track, lang);
 const sequence = await getTrackSequence(track, lang);
 const current = sequence.find((item) => item.href === currentPath);
 const index = sequence.findIndex((item) => item.href === currentPath);
+const currentTitle = current?.title ?? trackMeta.title;
+// Di hub sebuah jalur, judul halamannya sama dengan judul jalur, jadi label
+// kecil di atasnya hanya akan mengulang kata yang sama.
+const showTrackLabel = currentTitle !== trackMeta.title;
 ---
 
 <details class="group mb-8 rounded-2xl border border-border-strong bg-surface p-2 lg:hidden">
   <summary class="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 rounded-xl px-3 py-2 hover:bg-background-soft">
     <span class="min-w-0">
-      <span class="block font-mono text-[0.7rem] uppercase tracking-[0.16em] text-muted-2">
-        {trackMeta.title}
-      </span>
-      <span class="mt-1 block truncate font-display font-semibold text-ink">
-        {current?.title ?? trackMeta.title}
+      {showTrackLabel && (
+        <span class="block font-mono text-[0.7rem] uppercase tracking-[0.16em] text-muted-2">
+          {trackMeta.title}
+        </span>
+      )}
+      <span
+        class:list={[
+          "block truncate font-display font-semibold text-ink",
+          showTrackLabel && "mt-1",
+        ]}
+      >
+        {currentTitle}
       </span>
     </span>
     <span class="flex shrink-0 items-center gap-2">

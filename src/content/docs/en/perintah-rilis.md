@@ -1,6 +1,6 @@
 ---
 title: Databases and the Release Command
-description: Sakala does not provide a database yet. Here is how to use a database from another service, then run migrations once per deployment with the release command.
+description: How to run database migrations once per deployment with the release command, for a Sakala managed database or one from another service.
 track: panduan
 section: Deploy guides
 order: 4.2
@@ -9,17 +9,17 @@ lang: en
 
 # Databases and the Release Command
 
-Sakala does not provide a managed database yet. If your application needs a database, use one from another service, then run its migrations with the release command: a single command Sakala runs once per deployment, after the build and before the new version receives traffic.
+The release command is a single command Sakala runs once per deployment, after the build and before the new version receives traffic. It is usually used for database migrations.
 
-This page explains how the release command works and how to write migrations that are safe with it. The steps for connecting a database, including setting `DATABASE_URL` and checking the connection, are in [Connecting an External Database](/en/docs/database-eksternal).
+This page explains how the release command works and how to write migrations that are safe with it. The database can be a [Sakala managed database](/en/docs/database-terkelola), which is still a limited pilot, or one from another service through [Connecting an External Database](/en/docs/database-eksternal).
 
 > **Status as of 18 November 2026.** The release command needs `sakala-api` v0.7.0 or later, Console v0.8.0 or later, and `sakala-agent` v0.10.0 or later on the node that runs your project. If the **Release command** field is not in the **Pengaturan** (settings) tab yet, the Console you use has not reached that version. The example commands on this page have not been tried through Sakala in production.
 
 ## Databases today
 
-A managed database is on the Sakala roadmap, under [Horizon G](/en/docs/proyek/roadmap#horizon-g--layanan-developer), and its design is being written. Until it is available, the database comes from another database service, and backups and data recovery are your responsibility.
+There are two options. A [managed database](/en/docs/database-terkelola) is PostgreSQL run by Sakala and attached to a project, with `DATABASE_URL` and `DB_*` filled in automatically. As of 23 November 2026 it is still a limited pilot: the default quota on `sakala.dev` is 0, so only workspaces that a Sakala admin has given a quota can create one.
 
-Applications on Sakala can reach the internet, so a database that is open on the internet can be used. Store its address and password as project environment variables, for example `DATABASE_URL`, in the **Environment Variables** tab. The values are stored encrypted and masked in logs, although [the masking is not perfect](/en/docs/database-eksternal#changing-the-password), so still do not print them.
+The other option is a database from another service. Applications on Sakala can reach the internet, so a database that is open on the internet can be used. Store its address and password as project variables, for example `DATABASE_URL`, in the **Variabel** (variables) tab. The values are stored encrypted and masked in logs, although [the masking is not perfect](/en/docs/database-eksternal#changing-the-password), so still do not print them. For a database like this, backups and data recovery are your responsibility.
 
 ## Setting the release command
 
@@ -44,7 +44,7 @@ Clear the field when you no longer need it.
 
 ## What happens during a deployment
 
-After the image is built, Sakala runs the release command in a temporary container. That container uses the same image, environment variables, and network as your application, and is removed once the command finishes. Its output goes to the **Logs** panel on the deployment detail page, with `[release]` at the start of each line.
+Once the image is ready, Sakala runs the release command in a temporary container. This also applies to a [redeploy without a build](/en/docs/variabel-dan-secret#redeploy-without-a-build): the image is reused, but the release command still runs, for example so migrations run on a database that was just attached. That container uses the same image, environment variables, and network as your application, and is removed once the command finishes. Its output goes to the **Logs** panel on the deployment detail page, with `[release]` at the start of each line.
 
 If the command finishes with exit code 0, Sakala goes on to start the new version as usual. If the exit code is anything else, the deployment fails with the code `release_command_failed`, and the exit code is shown in **Detail error**. The new version is not started, and the previous version, if there is one, keeps serving visitors.
 
@@ -85,6 +85,8 @@ unset DATABASE_URL
 
 The example above is for Prisma reading `DATABASE_URL` from its schema. For Laravel, run `php artisan db:seed` with connection variables like the ones in the [monorepo migration example](/en/docs/monorepo#step-2-run-migrations-deliberately). The database must be reachable from your laptop.
 
+A managed database cannot be reached from a laptop, because its address is only reachable from applications running on Sakala. If you need seed data there, write a seeder that is safe to run repeatedly, for example one that only inserts when the table is still empty.
+
 ## Next steps
 
-If a deployment fails in the release command, open [When a Deploy Fails](/en/docs/deploy-gagal#release-command). To connect a database from the start, follow [Connecting an External Database](/en/docs/database-eksternal). For a Laravel project in a monorepo, see [Deploying a Monorepo](/en/docs/monorepo).
+If a deployment fails in the release command, open [When a Deploy Fails](/en/docs/deploy-gagal#release-command). To set up a database from the start, read [Managed Databases](/en/docs/database-terkelola) or [Connecting an External Database](/en/docs/database-eksternal). For a Laravel project in a monorepo, see [Deploying a Monorepo](/en/docs/monorepo).
