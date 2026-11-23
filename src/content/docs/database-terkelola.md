@@ -92,7 +92,7 @@ Database yang masih terpasang ke proyek tidak bisa dihapus. Lepas dulu dari semu
 
 Operator Sakala mem-backup setiap database setiap malam dalam bentuk terenkripsi. Di `sakala.dev`, salinannya disimpan sekitar satu minggu di server database, dan salinan lain sekitar dua minggu di server terpisah. Artinya, data yang ditulis setelah backup terakhir, sampai sekitar satu hari, bisa hilang. Data yang kamu hapus juga bisa masih ada di backup selama masa simpan itu.
 
-Belum ada tombol unduh dump atau pemulihan di Console. Kalau datamu perlu dipulihkan dari backup, maintainer yang melakukannya, dan selama pilot pemulihan belum dijamin. Pertanyaan soal ini bisa dikirim lewat kontak di [Batas Pilot](/docs/batas-pilot#aturan-yang-mengikat).
+Belum ada tombol unduh dump atau pemulihan di Console. Kalau datamu perlu dipulihkan dari backup, maintainer yang melakukannya, dan selama pilot pemulihan belum dijamin. Pertanyaan soal ini bisa diajukan di [GitHub Discussions, kategori Q&A](https://github.com/gmedia/sakala/discussions/categories/q-a). Discussions bisa dibaca publik, jadi jangan menulis password, `DATABASE_URL`, atau isi datamu di sana.
 
 Pemulihan selalu dijalankan dengan user database milikmu sendiri, tidak pernah sebagai superuser. Isi dump, seperti fungsi, trigger, dan nilai default, ikut dijalankan saat dipulihkan dengan hak user yang memulihkannya. Kalau pemulihan berjalan sebagai superuser, kode di dalam satu database ikut berjalan sebagai superuser, dan dari situ bisa membaca atau mengubah database milik orang lain di server yang sama. Alasan lengkapnya ada di [ADR-020](/docs/proyek/adr#adr-020--managed-postgresql-for-projects).
 

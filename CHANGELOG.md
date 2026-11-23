@@ -36,6 +36,11 @@ versinya di file ini.
   koneksi, ganti password dengan redeploy otomatis, extension, batas koneksi
   dan penyimpanan, melepas dan menghapus, serta backup yang pemulihannya
   dilakukan maintainer dan tidak pernah sebagai superuser.
+- Pertanyaan Umum (id dan en) mendapat jawaban untuk dosen: memakai Sakala
+  untuk kelas hari ini (akun per mahasiswa, URL dikumpulkan lewat sistem
+  kampus, dosen sebagai Pengamat di workspace tim), fitur kelas yang belum
+  ada, batas workspace tim, sleep dan cadangan untuk demo, dan pertanyaan
+  lewat GitHub Discussions kategori Q&A di `gmedia/sakala`.
 - Empat entri changelog situs (id dan en): metrik dasar per proyek, push
   selektif di monorepo, redeploy tanpa build dengan saran variabel dari
   `.env.example`, dan pilot terbatas database terkelola.

@@ -93,7 +93,7 @@ A database that is still attached to a project cannot be deleted. Detach it from
 
 Sakala's operators back up every database each night, encrypted. On `sakala.dev`, copies are kept for about one week on the database server, and another set for about two weeks on a separate server. So data written after the last backup, up to about one day, can be lost. Data you delete can also remain in the backups for that long.
 
-The Console has no dump download or restore button yet. If your data needs to be restored from a backup, a maintainer does it, and recovery is not guaranteed during the pilot. Questions about this can go to the contact in [Pilot Limits](/en/docs/batas-pilot#the-binding-rules).
+The Console has no dump download or restore button yet. If your data needs to be restored from a backup, a maintainer does it, and recovery is not guaranteed during the pilot. Questions about this can be asked in [GitHub Discussions, Q&A category](https://github.com/gmedia/sakala/discussions/categories/q-a). Discussions are public, so do not post a password, `DATABASE_URL`, or your data there.
 
 A restore always runs as your own database user, never as a superuser. What a dump contains, such as functions, triggers, and default values, runs during the restore with the privileges of the user doing it. If a restore ran as a superuser, code from one database would run as a superuser too, and could read or change other people's databases on the same server. The full reasoning is in [ADR-020](/en/docs/proyek/adr#adr-020--managed-postgresql-for-projects).
 
