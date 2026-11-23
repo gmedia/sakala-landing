@@ -1,14 +1,11 @@
 ---
-# TODO(maintainer): judul, `publishedAt`, dan tanggal di bawah masih
-# placeholder. Isi dengan tanggal pengumuman dan tanggal berlaku sungguhan
-# (paling cepat 7 hari setelah pengumuman) sebelum PR ini keluar dari draft.
-title: Pemberitahuan Privasi versi 3 berlaku TODO
-description: Versi baru Pemberitahuan Privasi menjelaskan bucket terkelola, tempat menyimpan berkas yang dipasang ke proyek. Mulai berlaku TODO.
-publishedAt: 2099-12-31
+title: Pemberitahuan Privasi versi 3 berlaku 7 Desember 2026
+description: Versi baru Pemberitahuan Privasi menjelaskan bucket terkelola, tempat menyimpan berkas yang dipasang ke proyek. Mulai berlaku 7 Desember 2026.
+publishedAt: 2026-11-30
 lang: id
 ---
 
-[Pemberitahuan Privasi](/privasi) versi `privasi-v3` mulai berlaku TODO. Sampai
+[Pemberitahuan Privasi](/privasi) versi `privasi-v3` mulai berlaku 7 Desember 2026. Sampai
 tanggal itu, yang berlaku masih `privasi-v2`. Pemberitahuan ini tidak meminta
 persetujuanmu, dan kamu tidak perlu melakukan apa pun.
 

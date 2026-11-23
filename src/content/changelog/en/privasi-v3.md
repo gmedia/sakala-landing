@@ -1,15 +1,12 @@
 ---
-# TODO(maintainer): the title, `publishedAt`, and the dates below are
-# placeholders. Fill in the real announcement date and effective date (at
-# least 7 days after the announcement) before this PR leaves draft.
-title: Privacy Notice version 3 takes effect on TODO
-description: A new version of the Privacy Notice covers managed buckets, file storage you attach to projects. It takes effect on TODO.
-publishedAt: 2099-12-31
+title: Privacy Notice version 3 takes effect on December 7, 2026
+description: A new version of the Privacy Notice covers managed buckets, file storage you attach to projects. It takes effect on December 7, 2026.
+publishedAt: 2026-11-30
 lang: en
 ---
 
-Version `privasi-v3` of the [Privacy Notice](/en/privasi) takes effect on TODO.
-Until then, `privasi-v2` still applies. The notice does not ask for your
+Version `privasi-v3` of the [Privacy Notice](/en/privasi) takes effect on
+December 7, 2026. Until then, `privasi-v2` still applies. The notice does not ask for your
 consent, and you do not need to do anything. The notice is written in
 Indonesian, and the Indonesian text is the one that governs.
 

@@ -21,13 +21,13 @@ versinya di file ini.
 
 ### Changed
 
-- DRAF Pemberitahuan Privasi `privasi-v3`: bagian baru **Bucket terkelola**
+- Pemberitahuan Privasi `privasi-v3`, berlaku 7 Desember 2026 dan diumumkan
+  30 November 2026: bagian baru **Bucket terkelola**
   (isi bucket sebagai data pengguna dan data pengguna aplikasinya, disimpan
   di server Sakala, secret key yang hanya dibuka pemilik dan admin dan
   dicatat, penghapusan seperti database), backup isi bucket sekitar 14 hari,
-  dan bucket saat proyek atau akun dihapus. Tanggal berlaku dan tanggal
-  entri changelog situs (id dan en) masih placeholder `2099-12-31` dan
-  ditandai TODO sampai maintainer menentukannya.
+  dan bucket saat proyek atau akun dihapus. `privasi-v2` berlaku 30 November
+  sampai 6 Desember 2026.
 
 ## [0.3.12] - 2026-11-23
 

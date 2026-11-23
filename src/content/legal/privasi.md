@@ -1,10 +1,6 @@
 ---
 version: privasi-v3
-# TODO(maintainer): tanggal berlaku belum ditentukan. 2099-12-31 hanya
-# placeholder supaya build lolos. Isi tanggal sungguhan, paling cepat 7 hari
-# setelah pengumuman lewat `legal:announce-change privasi-v3`, dan ganti juga
-# kedua TODO di "Riwayat versi".
-effectiveDate: 2099-12-31
+effectiveDate: 2026-12-07
 ---
 
 Halaman ini menjelaskan data pribadi yang diproses layanan Sakala, untuk apa, berapa lama disimpan, siapa saja yang ikut memprosesnya, dan apa hakmu. Sakala masih tahap pilot, jadi hal yang belum ada kami tulis apa adanya.
@@ -272,6 +268,6 @@ Setiap perubahan mendapat versi baru. Perubahan yang berarti kami umumkan lebih 
 
 ## Riwayat versi
 
-- `privasi-v3`, berlaku mulai TODO(maintainer: tanggal berlaku). Menambahkan bagian "Bucket terkelola": isi bucket sebagai datamu dan data pengguna aplikasimu, tempat penyimpanannya, siapa yang bisa melihat secret key-nya, backup isi bucket sekitar 14 hari, dan apa yang terjadi pada bucket saat bucket, proyek, atau akun dihapus. Sampai sehari sebelum tanggal itu, yang berlaku adalah `privasi-v2`.
-- `privasi-v2`, berlaku 30 November 2026 sampai TODO(maintainer: sehari sebelum tanggal berlaku `privasi-v3`). Menambahkan bagian "Database terkelola", backup database terkelola, salinan backup di server kedua, dan apa yang terjadi pada database saat proyek atau akun dihapus. Juga melengkapi daftar email (undangan workspace dan email notifikasi proyek) dan menyebut pembatasan lalu lintas keluar dari container pengguna yang sudah berjalan. [Teks terakhirnya](https://github.com/gmedia/sakala-landing/blob/144508b6b13ca8ca79d00dc0ce9f8a5fd32f316f/src/content/legal/privasi.md) tetap bisa dibaca di repository situs ini.
+- `privasi-v3`, berlaku mulai 7 Desember 2026. Menambahkan bagian "Bucket terkelola": isi bucket sebagai datamu dan data pengguna aplikasimu, tempat penyimpanannya, siapa yang bisa melihat secret key-nya, backup isi bucket sekitar 14 hari, dan apa yang terjadi pada bucket saat bucket, proyek, atau akun dihapus. Sampai sehari sebelum tanggal itu, yang berlaku adalah `privasi-v2`.
+- `privasi-v2`, berlaku 30 November 2026 sampai 6 Desember 2026. Menambahkan bagian "Database terkelola", backup database terkelola, salinan backup di server kedua, dan apa yang terjadi pada database saat proyek atau akun dihapus. Juga melengkapi daftar email (undangan workspace dan email notifikasi proyek) dan menyebut pembatasan lalu lintas keluar dari container pengguna yang sudah berjalan. [Teks terakhirnya](https://github.com/gmedia/sakala-landing/blob/144508b6b13ca8ca79d00dc0ce9f8a5fd32f316f/src/content/legal/privasi.md) tetap bisa dibaca di repository situs ini.
 - `privasi-v1`, berlaku 7 November 2026 sampai 29 November 2026. [Teks terakhirnya](https://github.com/gmedia/sakala-landing/blob/22134aea9afa772c0ad49f2ab36f70b59492de77/src/content/legal/privasi.md) tetap bisa dibaca di repository situs ini.
