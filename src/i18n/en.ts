@@ -363,7 +363,7 @@ export const en: Dictionary = {
       "Sakala is in its pilot. Anyone can sign up and use it at no cost, within limits on projects, containers, and builds per hour. There is no uptime guarantee yet, so it is not a fit for important applications.",
     disclaimerLink: "See the pilot limits",
     pillarsTitle: "The product journey",
-    pillarsStatusDate: "Status as of 19 November 2026.",
+    pillarsStatusDate: "Status as of 23 November 2026.",
     pillars: [
       {
         name: "Create",
@@ -435,8 +435,17 @@ export const en: Dictionary = {
             status: "available",
           },
           {
+            label:
+              "rollback to an earlier version, and Restart without a build",
+            status: "available",
+          },
+          {
             label: "managed PostgreSQL databases, limited pilot",
             status: "testing",
+          },
+          {
+            label: "managed object storage, still a design",
+            status: "direction",
           },
           { label: "custom domains", status: "direction" },
         ],
@@ -535,6 +544,7 @@ export const en: Dictionary = {
       "Variables and secrets, with suggestions from .env.example when creating a project",
       "Build and runtime logs, and failure codes that point at their stage",
       "Basic per-project metrics: CPU, memory, replicas, and restarts, up to 30 days back",
+      "Rollback to an earlier version from the History tab, and Restart without a build",
       "A generated domain on *.sakala.app",
       "Personal and team workspaces, invitations, and Owner, Member, and Viewer roles",
       "Quotas per workspace, a build limit per hour, and sleep after 30 minutes without visitors",
@@ -550,7 +560,7 @@ export const en: Dictionary = {
         label: "Gate",
         name: "Public pilot",
         status: "testing",
-        text: "Registration has been open to anyone since 19 November 2026. Still in progress: limiting outgoing traffic from user containers, and evidence of usage and costs from the pilot.",
+        text: "Registration has been open to anyone since 19 November 2026. Outgoing traffic from user containers has been limited since the same day. Still in progress: evidence of usage and costs from the pilot.",
       },
       {
         label: "Horizon B",
@@ -568,7 +578,7 @@ export const en: Dictionary = {
         label: "Horizon D",
         name: "Reliable operation",
         status: "direction",
-        text: "Custom domains, recovery and rollback to a previous version, and usage visibility beyond the basic metrics.",
+        text: "Custom domains, and usage visibility beyond the basic metrics. Rollback to an earlier version and Restart have been available since 23 November 2026.",
       },
       {
         label: "Horizon E",
@@ -580,7 +590,7 @@ export const en: Dictionary = {
         label: "Horizon G–H",
         name: "Services and platform",
         status: "direction",
-        text: "Managed PostgreSQL has been in a limited pilot since 23 November 2026, only for workspaces given a quota. After that, workers and cron, CLI, public API, and multi-node runtime.",
+        text: "Managed PostgreSQL has been in a limited pilot since 23 November 2026, only for workspaces given a quota. Managed object storage is only a design so far, in ADR-021. After that, workers and cron, CLI, public API, and multi-node runtime.",
       },
     ],
     designTitle: "Design and engineering status stay separate",
