@@ -19,6 +19,8 @@ versinya di file ini.
 
 ## [Unreleased]
 
+## [0.3.11] - 2026-11-23
+
 ### Changed
 
 - Pemberitahuan Privasi `privasi-v2`, berlaku mulai 30 November 2026:
@@ -470,7 +472,8 @@ sampai workflow release (#1 sampai #21).
   Source (#19).
 - Dependency diperbarui ke versi terbaru (#13).
 
-[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.3.10...HEAD
+[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.3.11...HEAD
+[0.3.11]: https://github.com/gmedia/sakala-landing/compare/v0.3.10...v0.3.11
 [0.3.10]: https://github.com/gmedia/sakala-landing/compare/v0.3.9...v0.3.10
 [0.3.9]: https://github.com/gmedia/sakala-landing/compare/v0.3.8...v0.3.9
 [0.3.8]: https://github.com/gmedia/sakala-landing/compare/v0.3.7...v0.3.8
