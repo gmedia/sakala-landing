@@ -1,6 +1,6 @@
 ---
 title: "Architecture Decision Records"
-description: "Architecture and product decisions with their status, context, alternatives, and consequences — from separating console and API to workload isolation, quotas, the shared public domain, the hosted plus self-host model, workspace ownership, the edge routing tier with replicas and regions, and the proposed managed PostgreSQL for projects."
+description: "Architecture and product decisions with their status, context, alternatives, and consequences — from separating console and API to workload isolation, quotas, the shared public domain, the hosted plus self-host model, workspace ownership, the edge routing tier with replicas and regions, managed PostgreSQL for projects, and proposed managed object storage."
 track: proyek
 section: sistem
 order: 6
@@ -960,3 +960,151 @@ with no other privileges in a scratch database, which is what
 `restore-database.sh` in `sakala-deployment` does. Extensions on the
 allow-list, which need the superuser, are created first and left out of what
 that role restores.
+
+## ADR-021 — Managed Object Storage for Projects
+
+**Status:** Proposed (direction set by the maintainer on 2026-11-23; becomes
+Accepted when the first managed bucket serves a project)
+
+### Context
+
+Sakala has no file storage for projects. Every deployment creates a new
+container, and the runtime never mounts host volumes into workloads
+(sakala-agent `docs/DOCKER_RUNTIME.md`), so anything an application writes to
+its filesystem, such as uploaded images, Laravel's `storage/app`, or a SQLite
+file, is lost on every redeploy and rollback. Files survive only while the
+same container is stopped and started again: idle sleep (ADR-015) and
+**Restart**. Each replica (ADR-019) has its own filesystem, so replicas do not
+even see each other's files.
+
+Today users are told to use an S3-compatible provider outside Sakala
+([File Storage guide](/docs/penyimpanan-file)): one more account and keys to
+copy. A first application that accepts uploads works until its next deploy,
+then loses them. The roadmap, PRD, and vision already list managed object
+storage as a direction.
+
+Users need a bucket inside Sakala, credentials they never copy, and a clear
+size limit. The platform needs tenant isolation, an enforceable quota,
+protection of the shared domain's reputation (ADR-016), and a footprint one
+person can run when self-hosted (ADR-017).
+
+### Options considered
+
+1. **Garage** ([deuxfleurs](https://garagehq.deuxfleurs.fr/)), AGPLv3, an
+   S3-compatible store built for self-hosting on modest hardware: a single
+   dependency-free binary, 1 GB RAM and 16 GB disk as its stated minimum. It
+   has per-key permissions on each bucket (read, write, owner) and bucket
+   quotas on size and object count (`garage bucket set-quotas`), and supports
+   path-style addresses and presigned URLs. It runs as a separate service and
+   Sakala talks to it over the S3 and admin HTTP APIs, so Sakala's own Apache
+   2.0 license is unaffected.
+2. **MinIO Community.** Its README declared maintenance mode on 2025-12-03 and
+   "no longer maintained" on 2026-02-12, pointing to the commercial AIStor
+   editions, and the `minio/minio` repository is archived on GitHub (checked
+   2026-11-23). Rejected: no security fixes can be expected for a service
+   exposed to the internet.
+3. **RustFS**, Apache 2.0, already running inside the control plane as
+   internal avatar storage reachable only by the API (`sakala-deployment`).
+   Familiar to operate; see the open questions.
+4. **SeaweedFS.** Viable and mature, but more moving parts for a pilot: a
+   master, volume servers, a filer, and the S3 gateway.
+5. **Ceph RGW.** Proven at scale, but far too heavy for the pilot's hardware:
+   monitors, managers, OSDs, and the gateway.
+6. **Per-project host volumes.** Rejected: a volume pins a project to one
+   node, conflicts with replicas, with the edge tier moving traffic between
+   nodes (ADR-019), and with rollback to a deployment whose files no longer
+   match, and every volume becomes a separate backup and restore problem.
+7. **External providers only** (status quo): no operations, no user need met.
+
+### Decision
+
+Option 1, Garage, for v1.
+
+- **A bucket belongs to a workspace**, personal or team (ADR-018), like a
+  managed database (ADR-020). It has its own place in the Console, can exist
+  without a project, survives project deletion, and attaches to zero, one, or
+  several projects of the same workspace. Attaching injects the connection
+  variables; detaching removes them and keeps the objects.
+- **Quotas** live in limit profiles as new fields, for example `max_buckets`
+  and `max_bucket_storage_mb` (names decided at implementation), enforced
+  through Garage bucket quotas. The default on hosted is 0, and workspaces are
+  opened one by one through limit profiles, as in the database pilot.
+- **Credentials.** One access key per bucket, with read and write on that
+  bucket only and no owner permission, so a tenant cannot change bucket
+  settings or grant other keys. Keys are created by Sakala, encrypted,
+  redacted from logs, and rotatable like a database password, with an
+  automatic redeploy of attached projects.
+- **Injected variables** use the names AWS SDKs and Laravel already read:
+  `AWS_ENDPOINT_URL` (read by AWS SDKs, including JavaScript v3 and PHP)
+  and `AWS_ENDPOINT` (read by Laravel's `s3` disk), `AWS_ACCESS_KEY_ID`,
+  `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`, `AWS_BUCKET`, and
+  `AWS_USE_PATH_STYLE_ENDPOINT=true`. The JavaScript SDK reads the region
+  from `AWS_REGION`, not `AWS_DEFAULT_REGION`, so injecting both is to be
+  settled at implementation. As with databases, a project variable with the
+  same name wins.
+- **Endpoint.** One public HTTPS endpoint on the user-content domain, never
+  on `sakala.dev` (ADR-016): `s3.sakala.app` in production and
+  `s3.staging.sakala.app` on staging, path-style only, so no per-bucket
+  subdomains or certificates are needed. The slug `s3` joins the reserved
+  slugs. It is public because browsers must reach presigned URLs.
+- **Private by default.** Buckets do not allow anonymous reads. Browsers get
+  files through presigned URLs that the application creates.
+- **Placement.** The pilot runs Garage on the runtime node, as the database
+  pilot does, with tight quotas. The agent's disk guard marks the node
+  degraded and refuses new builds under critical disk pressure, but it does
+  not stop Garage from filling the disk, so the sum of bucket quotas must stay
+  below the node's free space. Garage moves to a dedicated storage or
+  database VM when GMEDIA provides one (WP-14).
+- **Deletion.** A bucket attached to a project cannot be deleted; it is
+  detached first, as with databases. Whether objects are removed at once
+  like a managed database, or after a purge window like projects (30 days),
+  is to be aligned with ADR-020's deletion when the API is built.
+
+### Consequences
+
+- The runtime node carries a second stateful service during the pilot. A
+  full disk or a node failure affects applications, databases, and buckets
+  together.
+- A public S3 endpoint is a new internet-facing surface on `sakala.app`; its
+  abuse handling joins the process in PLATFORM_OPERATIONS.
+- The boundary between tenants is the access key and its bucket permission,
+  not the network.
+- Applications that follow the [File Storage guide](/docs/penyimpanan-file)
+  with an external provider can move by changing variables, as long as the
+  injected names stay as above.
+- Storing user files is a new data category, so the privacy notice needs a
+  new version (after `privasi-v2`) before buckets open to users.
+
+### Open questions (owner: maintainer)
+
+- **Garage or RustFS for tenant buckets.** RustFS is already operated for
+  avatars. A short side-by-side run on staging in step 2 (per-key bucket
+  permissions, quotas, memory at idle, restore from backup) confirms Garage
+  or reverses this choice. Tenant buckets stay off the control plane's
+  instance either way, so a tenant's load cannot reach control-plane data.
+- **Public-read buckets and static website hosting.** Garage can serve a
+  bucket as a static website, but anonymous hosting under `sakala.app`
+  invites malware and phishing and harms the domain's reputation (ADR-016).
+  Not offered in v1.
+- **Backup.** Recommended: a nightly encrypted copy of bucket contents off
+  the host, kept 14 days, matching the roughly 14 days of backup the privacy
+  notice (`privasi-v2`) states for other data. Not decided yet, and until it
+  is, the user guide must say that objects have no backup.
+- The concrete storage host per region, which depends on GMEDIA
+  infrastructure.
+- Whether self-host ships Garage as an optional component in
+  `gmedia/sakala`, off by default, as planned for managed databases.
+
+### Plan
+
+No dates; each step starts after the previous one.
+
+1. Docs and a Console warning: the [File Storage guide](/docs/penyimpanan-file)
+   and this ADR, then a Console notice that container files are temporary.
+2. Garage on staging, operated by hand: buckets, keys, quotas, the public
+   endpoint, and the RustFS comparison above.
+3. API, agent, and Console integration: a workspace-scoped `buckets`
+   resource with attachments, variable injection, key rotation, quotas in
+   limit profiles, and a Console page next to Database.
+4. A production pilot behind limit profiles, after the privacy notice update
+   and the backup decision.
