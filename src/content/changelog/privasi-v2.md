@@ -25,6 +25,9 @@ Yang berubah:
   oleh semua anggota workspace.
 - Backup data akun dan proyek kini juga disalin, tetap terenkripsi, ke server
   kedua di pusat data yang sama.
+- Daftar email kini lengkap, termasuk undangan workspace dan email notifikasi
+  proyek yang bisa kamu atur sendiri. Pembatasan lalu lintas keluar dari
+  container pengguna kini disebut sebagai pengaman yang sudah berjalan.
 
 Kami juga mengirim ringkasan ini ke email setiap akun yang sudah terverifikasi.
 Pertanyaan bisa dikirim ke [`privacy@sakala.dev`](mailto:privacy@sakala.dev).

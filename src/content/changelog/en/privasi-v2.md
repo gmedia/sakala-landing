@@ -27,6 +27,9 @@ What changes:
   visible to every workspace member.
 - Backups of account and project data are now also copied, still encrypted,
   to a second server in the same data center.
+- The list of emails is now complete, including workspace invitations and the
+  project notification emails you control. The restriction on outbound
+  traffic from user containers is now listed as a safeguard already in place.
 
 We are also sending this summary to the email of every verified account.
 Questions can go to [`privacy@sakala.dev`](mailto:privacy@sakala.dev).

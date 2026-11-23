@@ -23,7 +23,9 @@ versinya di file ini.
 
 - Pemberitahuan Privasi `privasi-v2`, berlaku mulai 30 November 2026:
   bagian baru **Database terkelola**, backup database terkelola dan salinan
-  backup di server kedua, database saat proyek atau akun dihapus, serta
+  backup di server kedua, database saat proyek atau akun dihapus, daftar
+  email yang lengkap (undangan workspace dan email notifikasi proyek),
+  pembatasan egress yang sudah aktif di production, serta
   **Riwayat versi** yang menautkan teks terakhir `privasi-v1`. Entri
   changelog situs (id dan en) mengumumkannya.
 - Tanggal berlaku dokumen hukum kini per dokumen, di frontmatter
