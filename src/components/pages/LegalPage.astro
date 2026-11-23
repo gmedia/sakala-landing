@@ -5,7 +5,7 @@ import PageHeader from "../ui/PageHeader.astro";
 import LandingLayout from "../../layouts/LandingLayout.astro";
 import {
   formatLegalDate,
-  legalEffectiveDate,
+  legalDateAttribute,
   type LegalId,
 } from "../../data/legal";
 import { localizePath, useTranslations, type Lang } from "../../i18n";
@@ -39,9 +39,11 @@ const breadcrumbs = [
   <PageHeader eyebrow={copy.eyebrow} title={heading} {breadcrumbs}>
     <dl class="mt-8 flex flex-wrap gap-x-10 gap-y-4">
       <div>
-        <dt class="artifact-label text-muted-2">{copy.effectiveSince}</dt>
+        <dt class="artifact-label text-muted-2">{copy.effectiveFrom}</dt>
         <dd class="mt-1 text-sm font-semibold text-ink">
-          <time datetime={legalEffectiveDate}>{formatLegalDate(lang)}</time>
+          <time datetime={legalDateAttribute(entry.data.effectiveDate)}>
+            {formatLegalDate(entry.data.effectiveDate, lang)}
+          </time>
         </dd>
       </div>
       <div>

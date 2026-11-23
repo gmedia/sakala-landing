@@ -21,6 +21,15 @@ versinya di file ini.
 
 ### Changed
 
+- Pemberitahuan Privasi `privasi-v2`, berlaku mulai 30 November 2026:
+  bagian baru **Database terkelola**, backup database terkelola dan salinan
+  backup di server kedua, database saat proyek atau akun dihapus, serta
+  **Riwayat versi** yang menautkan teks terakhir `privasi-v1`. Entri
+  changelog situs (id dan en) mengumumkannya.
+- Tanggal berlaku dokumen hukum kini per dokumen, di frontmatter
+  `effectiveDate`, menggantikan `legalEffectiveDate` yang berlaku untuk
+  ketiganya. Label halaman menjadi **Berlaku mulai** (**In effect from**),
+  karena versi baru terbit sebelum tanggal berlakunya.
 - Deploy Pertamamu (id dan en) mengikuti wizard Console v0.11.0: layar
   **Selamat datang di Sakala**, tahap Repository, Konfigurasi, dan Deploy,
   tab **URL GitHub publik** dan contoh siap pakai, **Pengaturan lanjutan**,

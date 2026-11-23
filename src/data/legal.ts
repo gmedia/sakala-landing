@@ -1,19 +1,19 @@
 import { languages, type Lang } from "../i18n";
 
-/**
- * Tanggal mulai berlaku ketiga dokumen hukum. Ini satu-satunya tempatnya:
- * kalau tanggal terbit bergeser, cukup ubah baris ini.
- */
-export const legalEffectiveDate = "2026-11-07";
-
 /** Id sama dengan nama berkas di src/content/legal dan route publiknya. */
 export const legalIds = ["privasi", "syarat", "penggunaan-wajar"] as const;
 
 export type LegalId = (typeof legalIds)[number];
 
-export function formatLegalDate(lang: Lang): string {
+/** Tanggal berlaku dari frontmatter dokumen (`effectiveDate`), untuk dibaca. */
+export function formatLegalDate(date: Date, lang: Lang): string {
   return new Intl.DateTimeFormat(languages[lang].htmlLang, {
     dateStyle: "long",
     timeZone: "UTC",
-  }).format(new Date(`${legalEffectiveDate}T00:00:00Z`));
+  }).format(date);
+}
+
+/** Nilai atribut `datetime`, misalnya `2026-11-30`. */
+export function legalDateAttribute(date: Date): string {
+  return date.toISOString().slice(0, 10);
 }

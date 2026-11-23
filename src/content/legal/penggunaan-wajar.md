@@ -1,5 +1,6 @@
 ---
 version: penggunaan-wajar-v1
+effectiveDate: 2026-11-07
 ---
 
 Sakala adalah layanan gratis untuk belajar dan membawa project kecil sampai punya URL publik. Jangan memakainya untuk merugikan orang lain atau menghabiskan kapasitas bersama. Kalau kamu melanggar, proyekmu bisa ditangguhkan. Kebijakan ini adalah bagian dari [Syarat Layanan](/syarat).

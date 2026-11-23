@@ -1,5 +1,6 @@
 ---
 version: syarat-v1
+effectiveDate: 2026-11-07
 ---
 
 Dengan menyetujui syarat ini saat mendaftar, atau saat pertama kali masuk lewat GitHub atau Google, kamu boleh memakai layanan Sakala di `sakala.dev`, `app.sakala.dev`, dan `*.sakala.app`. Sakala masih tahap pilot, gratis, dan belum siap menjadi tempat aplikasi yang penting. Syarat ini ditulis supaya kamu tahu persis apa yang bisa dan tidak bisa kamu harapkan.
