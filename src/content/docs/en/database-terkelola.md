@@ -11,9 +11,13 @@ lang: en
 
 A managed database is a PostgreSQL database that Sakala creates and runs for you. You attach it to a project, and Sakala fills in `DATABASE_URL` and the `DB_*` variables in your application at deploy time, so you never copy a password.
 
-> **Status as of 23 November 2026: limited pilot.** On `sakala.dev`, the default database quota of every workspace is 0, so most workspaces cannot create a database yet. Databases are open only to a few workspaces that a Sakala admin has given a quota. Other workspaces see **Workspace ini belum bisa membuat database** (this workspace cannot create databases yet) when they try to create one. Until then, use an [external database](/en/docs/database-eksternal).
+> **Status as of 23 November 2026: limited pilot.** On `sakala.dev`, the default database quota of every workspace is 0, so most workspaces cannot create a database yet. Databases are open only to a few workspaces that a Sakala admin has given a quota. Other workspaces see **Workspace ini belum bisa membuat database** (this workspace cannot create databases yet) when they try to create one. How to ask for it is in [Asking for a database quota](#asking-for-a-database-quota). Until then, use an [external database](/en/docs/database-eksternal).
 
 The feature also depends on the Sakala server you use. If that server is not connected to a database server, the **Database** page shows **Database terkelola belum tersedia di server ini** (managed databases are not available on this server yet). During the pilot on `sakala.dev`, the database server runs on the same machine as the applications until a dedicated database server is available, so a problem on that machine affects both. There is no uptime guarantee yet, and do not store sensitive data here during the pilot.
+
+## Asking for a database quota
+
+A Sakala admin grants database quota through the workspace's limit profile. To ask for it, start a new discussion in [GitHub Discussions, Q&A category](https://github.com/gmedia/sakala/discussions/categories/q-a) on the `gmedia/sakala` repository. Name your workspace, whether it is personal or a team, and what the database is for. Discussions are public, so do not post passwords, tokens, or other secrets there. During the limited pilot, not every request can be granted.
 
 ## What you get
 

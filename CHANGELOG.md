@@ -19,6 +19,19 @@ versinya di file ini.
 
 ## [Unreleased]
 
+### Changed
+
+- Deploy Pertamamu (id dan en) mengikuti wizard Console v0.11.0: layar
+  **Selamat datang di Sakala**, tahap Repository, Konfigurasi, dan Deploy,
+  tab **URL GitHub publik** dan contoh siap pakai, **Pengaturan lanjutan**,
+  tombol **Buat dan deploy** dan **Buat tanpa deploy** (menggantikan **Buat
+  Proyek** dan **Lewati**), tahap Persiapan dengan saran variabel dan kartu
+  database, layar **sudah live** dengan **Bagikan** dan **Kode QR**, serta
+  tombol gagal **Lihat error di log** dan **Salin ringkasan error**.
+- Database Terkelola (id dan en) menjelaskan cara meminta kuota database:
+  diskusi baru di GitHub Discussions kategori Q&A di `gmedia/sakala`, yang
+  diberikan admin lewat profil batas.
+
 ### Added
 
 - Halaman panduan "Variabel dan Secret" (id dan en) di `/docs/variabel-dan-secret`,

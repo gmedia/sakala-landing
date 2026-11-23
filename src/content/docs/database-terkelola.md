@@ -10,9 +10,13 @@ order: 3.8
 
 Database terkelola adalah database PostgreSQL yang dibuat dan dijalankan Sakala untukmu. Kamu memasangnya ke proyek, lalu Sakala mengisi `DATABASE_URL` dan variabel `DB_*` di aplikasimu saat deploy, tanpa perlu menyalin password.
 
-> **Status per 23 November 2026: pilot terbatas.** Di `sakala.dev`, kuota database bawaan setiap workspace adalah 0, jadi kebanyakan workspace belum bisa membuat database. Database baru dibuka untuk beberapa workspace yang diberi kuota oleh admin Sakala. Workspace lain melihat pesan **Workspace ini belum bisa membuat database** saat mencoba membuat database. Sampai dibuka, pakai [database eksternal](/docs/database-eksternal).
+> **Status per 23 November 2026: pilot terbatas.** Di `sakala.dev`, kuota database bawaan setiap workspace adalah 0, jadi kebanyakan workspace belum bisa membuat database. Database baru dibuka untuk beberapa workspace yang diberi kuota oleh admin Sakala. Workspace lain melihat pesan **Workspace ini belum bisa membuat database** saat mencoba membuat database. Cara memintanya ada di [Meminta kuota database](#meminta-kuota-database). Sampai dibuka, pakai [database eksternal](/docs/database-eksternal).
 
 Fitur ini juga bergantung pada server Sakala yang kamu pakai. Kalau server itu belum terhubung ke server database, halaman **Database** menampilkan **Database terkelola belum tersedia di server ini**. Selama pilot di `sakala.dev`, server database berjalan di mesin yang sama dengan aplikasi sampai ada server database tersendiri, jadi gangguan di mesin itu mengenai keduanya. Belum ada jaminan uptime, dan jangan menyimpan data sensitif di sini selama pilot.
+
+## Meminta kuota database
+
+Kuota database diberikan admin Sakala lewat profil batas workspace. Untuk memintanya, buka diskusi baru di [GitHub Discussions, kategori Q&A](https://github.com/gmedia/sakala/discussions/categories/q-a) di repository `gmedia/sakala`. Sebutkan nama workspace-mu, apakah workspace pribadi atau tim, dan untuk apa database-nya dipakai. Discussions bisa dibaca publik, jadi jangan menulis password, token, atau data lain yang rahasia di sana. Selama pilot terbatas, belum tentu setiap permintaan bisa dipenuhi.
 
 ## Yang kamu dapat
 
