@@ -1,6 +1,6 @@
 ---
 title: "Architecture Decision Records"
-description: "Architecture and product decisions with their status, context, alternatives, and consequences — from separating console and API to workload isolation, quotas, the shared public domain, the hosted plus self-host model, workspace ownership, the edge routing tier with replicas and regions, managed PostgreSQL for projects, and proposed managed object storage."
+description: "Architecture and product decisions with their status, context, alternatives, and consequences — from separating console and API to workload isolation, quotas, the shared public domain, the hosted plus self-host model, workspace ownership, the edge routing tier with replicas and regions, managed PostgreSQL for projects, proposed managed object storage, and proposed worker processes and scheduled jobs."
 track: proyek
 section: sistem
 order: 6
@@ -1179,3 +1179,359 @@ sandbox`, so HTML served through a presigned URL cannot run scripts.
 
 The production pilot still waits for a privacy notice version that covers
 bucket contents, a backup restore drill, and the pilot runbook.
+
+## ADR-022 — Worker Processes and Scheduled Jobs for Projects
+
+**Status:** Proposed (drafted 2026-11-24 for stage 1 of the roadmap; whether
+workers and schedules belong to the free quota is still open; becomes
+Accepted when a project runs a worker and a schedule in production)
+
+### Context
+
+A project on Sakala is one process: the `web` container, or several replicas
+of it (ADR-019), behind the node's router. The Agent starts it with a restart
+policy of `unless-stopped`, proves it answers HTTP before switching the route,
+and puts it to sleep when nobody visits (ADR-015). A Laravel or Node
+application that is more than a site also needs work outside a request: a
+queue worker such as `php artisan queue:work`, and jobs on a timetable such
+as a nightly report or a cleanup. Today users can only start the worker in
+the background of the web container, where nobody sees it crash and it
+competes with the web server for the same memory limit, or call a URL of
+their app from an outside cron service, which wakes the project and is
+bounded by a request timeout.
+
+Most of the building blocks exist:
+
+- **One image, several uses.** A deployment can reuse the live image without
+  a build, and that reuse does not count against builds per hour. The release
+  command already runs once per deployment as its own container of the new
+  image, with the deployment's variables, project network, resources, gVisor
+  runtime, and security options, and no route.
+- **Recorded settings.** A rollback runs with the settings its target
+  recorded in its `DeployProject` payload, on the target's image.
+- **Quotas.** Every replica counts against the workspace's
+  `max_active_containers` on deploy and on wake, and the Agent refuses work
+  past `SAKALA_MAX_ACTIVE_CONTAINERS` on the node.
+- **Protocol.** New behaviour ships inside protocol revision 4 behind a node
+  capability, such as `replicas`, `release-command`, and `image-reuse`. A new
+  command type also stays in revision 4 when the API only assigns it to nodes
+  that advertise it, as the database and bucket commands do.
+
+Two constraints shape the design. The production runtime node has 2 vCPU and
+3,910 MB of RAM and also hosts the managed PostgreSQL pilot (memory limit
+512 MB), with the bucket pilot (384 MB) planned from 7 December 2026; staging
+has 2 vCPU and 1,962 MB for everything. And the Agent runs at most
+`SAKALA_MAX_CONCURRENT_COMMANDS` commands at once (default 4), one at a time
+per project, so a job that runs as an ordinary command for ten minutes would
+hold back a deploy or restart of the same project.
+
+### Options considered
+
+Process model:
+
+1. **Status quo: everything in the web container** (`&`, supervisord).
+   Rejected: no logs or restart per process, no separate memory, and a dead
+   worker never fails anything.
+2. **Worker processes as extra containers of the same deployment**, from the
+   same image with another command. This is the Procfile model: on Heroku,
+   `web` is "the only process type that can receive external HTTP traffic",
+   and other process types run next to it from the same build
+   ([Heroku](https://devcenter.heroku.com/articles/procfile)).
+3. **A worker as a separate project** on the same repository. Rejected:
+   variables are copied by hand, each project builds its own image, and the
+   two drift to different commits after a deploy.
+
+Who triggers a scheduled job:
+
+1. **The API scheduler** records each due run and sends the node a command
+   that runs one container from the live image.
+2. **A scheduler inside the Agent**, fed with the schedules of the projects on
+   its node. It keeps firing while the API is down, but the schedule table
+   and the run history must then be synchronised both ways, a project that
+   moves between nodes can run twice or not at all, every node clock becomes
+   a source of truth, and quotas and suspension would be enforced in two
+   places.
+3. **Crontab or a scheduler process inside a container**, such as
+   supercronic or `php artisan schedule:work`. No history, no timeout, no
+   failure notice, and it sleeps with the project. It remains possible as a
+   worker command, but is not the platform mechanism.
+4. **An outside service calling a URL** of the app. Wakes the project, is
+   bounded by a request timeout, and needs a public endpoint guarded by a
+   secret.
+
+Idle sleep for a project with workers:
+
+1. **Never sleep.** Simple, but every worker becomes permanent load on a node
+   that only fits a handful of awake containers (see Capacity below).
+2. **Sleep as one unit**: web and workers stop together under the existing
+   rule (no HTTP request within the window) and start together on wake.
+3. **Only the web process sleeps** while workers keep running. Saves little,
+   and a sleeping project would still hold most of its slots.
+4. **Wake on queue depth.** Needs Sakala to read the application's queue,
+   which only becomes possible with a managed queue store such as the Valkey
+   service planned next in the roadmap.
+
+### Decision
+
+Process option 2, trigger option 1, and sleep option 2.
+
+#### Processes
+
+- **A project has one `web` process and zero or more worker processes**, at
+  most 5 definitions per project (configuration, not a quota). A worker has a
+  name (lowercase letters, digits, and dashes, starting with a letter, up to
+  30 characters; `web`, `release`, and `job` are reserved), a command (1 to
+  1000 characters, no control characters, the rule for the start and release
+  commands), a replica count from 0 to the workspace's `max_replicas` (0
+  keeps the definition and runs nothing), and memory and CPU within the
+  workspace's per-container caps, by default the project's.
+- **Same image, same variables.** A deployment builds once. Every process
+  starts from that image with `sh -c <command>`, as the release command does,
+  with the same variables, project network, runtime, security options,
+  resource limits, and egress filter. A worker has no route, no published
+  port, and no HTTP check, and is never in the route table or the traffic
+  report.
+- **Changes apply from the next deployment**, as replicas do. A deployment
+  that only changes processes reuses the live image: no build, and no build
+  counted.
+- **Deployment order.** Build, then the release command once, then the web
+  and worker candidates. Web replicas pass the HTTP readiness check as today;
+  a worker is ready when it is still running `SAKALA_WORKER_STARTUP_SECONDS`
+  after it started (starting value 10 seconds). Then the route switches,
+  which stays the commit point, and the old web and worker containers get
+  `SIGTERM` and `SAKALA_WORKER_STOP_GRACE_SECONDS` (starting value 30 seconds)
+  before `SIGKILL`. A worker that exits before the commit point fails the
+  deployment with `worker_start_failed`, and the previous version keeps
+  serving with its own workers. For a few seconds both versions can take
+  queue jobs, so jobs, like migrations under a release command, must
+  tolerate the previous version running next to the new one.
+- **Restarts.** Workers keep `unless-stopped`. An exit with code 0 is
+  expected (Laravel's `--max-time` and `--max-jobs` end a worker on purpose)
+  and is not a crash. Other exits follow the existing crash-loop rule. A
+  crashing worker is shown on its process and notified; it does not mark the
+  project as crashed and does not touch the web route.
+- **Identity.** Worker containers carry `dev.sakala.workload-kind=worker`
+  (web keeps `web`) and `dev.sakala.process=<name>`. Everything that reads
+  workloads for routing, readiness, traffic, or replica restore filters on
+  the kind.
+- **Logs.** Each log line carries the process it came from (`web`, a worker
+  name, `release`, or `job`), and the Console filters by it. Each process has
+  its own log byte budget, so a chatty worker cannot use up the budget the
+  web process needs.
+- **Lifecycle.** `RestartProject` restarts every process of the live
+  deployment, `SleepProject` and `StopProject` stop all of them, and
+  `WakeProject` starts all of them after the capacity check. The release
+  command still never runs on these commands.
+- **Rollback** runs the processes recorded by the target deployment, on the
+  target's image, like its commands and port today. A worker added after the
+  target does not run after the rollback; the Console says so before
+  confirming.
+- **Protocol.** Still revision 4. `DeployProject` gains an optional
+  `processes` list. Nodes that can run it advertise `worker-processes`; the
+  API sends the field and places a deployment with workers only on such a
+  node, as it does for `release-command`. Heartbeat metrics and crash
+  details gain an optional `process` key.
+
+#### Scheduled jobs
+
+- **A schedule belongs to a project** and has a name, a command (the same
+  rule as above), a standard five-field cron expression, a timezone
+  (default `Asia/Jakarta`, so the Console shows WIB; slots are computed and
+  stored in UTC), a timeout (default 300 seconds, at most 600, the release
+  command's node deadline), and an enabled flag. Expressions are parsed with
+  `dragonmantank/cron-expression`, which Laravel's own scheduler already
+  depends on.
+- **The API is the only scheduler.** A Laravel scheduler command,
+  `schedules:dispatch`, runs every minute on one server like the existing
+  sweeps. For each due slot it records a run, unique per schedule and slot,
+  and creates a `RunJob` command pinned to the node that serves the project.
+  The payload carries the command and timeout, and copies the image
+  identity, variables, and resources from the live deployment's
+  `DeployProject` payload, so a run uses exactly what the live version runs.
+- **The Agent runs a job** as one container of the live image with
+  `sh -c <command>`, with the isolation of the release container, no route,
+  and no restart. It carries `dev.sakala.role=job` and the project and
+  deployment labels, so image GC keeps the image while it runs. Jobs use
+  their own pool, `SAKALA_MAX_CONCURRENT_JOBS` (starting value 2), outside
+  the per-project command queue, so a long job never delays a deploy or
+  restart of the same project. Each job is admitted under the node's
+  capacity guard as one container. Output goes to the existing logs endpoint
+  of the command; completion reports `exit_code`, `duration_ms`, and
+  `oom_killed`; failures are `job_failed`, `job_timeout`,
+  `job_image_missing`, and the existing `runtime_capacity_exceeded` and
+  `runtime_cancelled`. **Stop run** in the Console uses the existing
+  `cancel_requested`. Nodes advertise `scheduled-jobs`, and because an older
+  Agent fails to read a poll response that holds an unknown command type,
+  the API only assigns `RunJob` to nodes that advertise it.
+- **Timing.** A run starts within about a minute of its slot: the scheduler
+  interval, the Agent's poll (3 seconds by default), and the container start.
+  Schedules are for "about this time", not for the exact second.
+- **At most once per slot.** A slot that has not started 10 minutes after
+  its time (or within the interval, if that is shorter) is recorded as
+  `missed` with the reason: API down, node offline, no live deployment, or
+  no capacity. Missed slots are recorded once and never run late in a burst.
+  When the Agent disappears during a run, the command lease expires and the
+  run is recorded as `lost`; the Agent removes leftover job containers when
+  it starts again. Nothing is retried automatically, so a job must be safe to
+  skip and safe to run again by hand. Kubernetes gives CronJobs the same
+  advice and the same `startingDeadlineSeconds` idea
+  ([Kubernetes](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/)).
+- **No overlap.** When a slot comes while the previous run is still open,
+  the new slot is recorded as `skipped` with reason `overlap`, as Railway
+  does ([Railway](https://docs.railway.com/reference/cron-jobs)). Other
+  policies can come later.
+- **Workspace concurrency.** A workspace runs at most
+  `max_concurrent_job_runs` jobs at once. A due run beyond that waits in the
+  API until a run finishes or its deadline passes.
+- **History and notice.** The last 100 runs of a schedule are kept with
+  status, exit code, start, and duration; their logs follow
+  `SAKALA_LOG_RETENTION_DAYS` (7 days). Project members are notified when a
+  schedule starts failing and when it recovers, not on every failure. After
+  10 consecutive failures the schedule is paused, with a notice. Both
+  numbers are starting values.
+- **Run now** starts a run by hand under the same rules and is recorded in
+  the audit log.
+- **Suspended and deleted projects.** `RunJob` is blocked for a suspended
+  project like `DeployProject`. Deleting a project deletes its schedules and
+  cancels open runs.
+
+#### Idle sleep
+
+- A project sleeps as one unit, web and workers, under the existing rule:
+  no HTTP request within the workspace's window. A worker that is busy does
+  not keep the project awake, because the Agent cannot see an application's
+  queue. A workspace that needs workers running all the time gets a limit
+  profile with `idle_sleep_minutes` set to 0.
+- A scheduled run does not wake the project. It needs only the image, which
+  a sleeping project keeps, so it runs while web and workers sleep and does
+  not count as traffic. A job that only pushes work onto a queue waits for
+  the next wake; the guide says to do the work in the scheduled command
+  itself.
+
+#### Quotas
+
+- **Workers count as containers.** Each worker container counts against
+  `max_active_containers` like a replica, on deploy and on wake. A worker
+  does not add capacity beyond the workspace's existing container quota; it
+  uses one of its slots.
+- **Job runs do not count as containers**, because they are short. They are
+  bounded per workspace by `max_concurrent_job_runs` and per node by
+  `SAKALA_MAX_CONCURRENT_JOBS` and the node's capacity guard.
+- **New limit profile fields**, empty meaning "follow the global setting",
+  as for the existing fields: `max_worker_containers`, `max_schedules`
+  (enabled schedules per workspace), `min_schedule_interval_minutes`, and
+  `max_concurrent_job_runs`. An expression is refused when two of its next
+  1,000 slots are closer than the minimum interval.
+- **Hosted defaults wait for the maintainer** (see the open questions):
+
+  | Field                           | Option A: small free quota | Option B: closed by default | Option C: workers free, schedules closed |
+  | ------------------------------- | -------------------------- | --------------------------- | ---------------------------------------- |
+  | `max_worker_containers`         | 1                          | 0                           | 1                                        |
+  | `max_schedules`                 | 2                          | 0                           | 0                                        |
+  | `min_schedule_interval_minutes` | 15                         | 15                          | 15                                       |
+  | `max_concurrent_job_runs`       | 1                          | 0                           | 0                                        |
+
+  Option A is recommended: a queue is a basic need of a Laravel app, a
+  worker spends a container slot the workspace already has, and the
+  arithmetic below keeps 15-minute schedules small on today's node.
+
+#### Laravel and Node
+
+- Project inspection reports process suggestions from a closed set, as it
+  already suggests a release command. With `artisan` in the project: a
+  worker `php artisan queue:work --sleep=3 --tries=3 --max-time=3600`; in a
+  workspace that never sleeps, also a worker `php artisan schedule:work`;
+  in one that sleeps, a schedule `php artisan schedule:run` at the
+  workspace's minimum interval, with the note that Laravel only runs tasks
+  due in that minute. With a `worker` script in `package.json`: a worker
+  `npm run worker`. The Console fills its forms from these; commands stay
+  free text.
+- For hourly and daily presets the Console picks a random minute, so
+  schedules do not all start at minute 0.
+
+#### Capacity on the current node
+
+These figures are estimates to be replaced by workload metrics from staging
+before release.
+
+| Item                                                         | Memory (MB) | Basis                                        |
+| ------------------------------------------------------------ | ----------- | -------------------------------------------- |
+| Runtime node RAM                                             | 3,910       | measured                                     |
+| Managed PostgreSQL limit                                     | −512        | production setting                           |
+| Bucket pilot limit (from 7 December)                         | −384        | production setting                           |
+| Operating system, Docker, Agent, router                      | −500        | assumed                                      |
+| One build at a time                                          | −1,024      | assumed                                      |
+| Left for project containers                                  | 1,490       |                                              |
+| Laravel web container, idle, including about 45 MB of gVisor | 200         | assumed; gVisor overhead measured in ADR-020 |
+| Laravel queue worker, idle                                   | 110         | assumed                                      |
+
+About 1,490 MB fits roughly four Laravel projects with one worker each
+(310 MB a pair), or seven without, awake at the same time; with every
+container at its 512 MB cap, only two. Containers are capped, not reserved,
+so the node relies on idle sleep to keep most of them stopped. For jobs, by
+Little's law, 40 schedules every 15 minutes with runs of about 20 seconds
+average 40 / 15 × 20 / 60 ≈ 0.9 running jobs; the same 40 all at minute 0
+with 2 job slots drain in 40 × 20 / 2 = 400 seconds, inside the 10-minute
+start deadline. A 1-minute interval for the same 40 schedules would average
+13 running jobs, which this node cannot hold; hence 15 minutes on the free
+quota. CPU limits throttle instead of killing, but two busy workers at
+1,000 millicores each already fill both vCPUs.
+
+#### Security
+
+Workers and jobs add no privilege. They run user code in the same gVisor
+sandbox, with the same dropped capabilities, `no-new-privileges`, resource
+limits, project network, and host egress filter as the web container, which
+matches every project bridge network without a change. Their commands run
+inside the user's own container, never on the node. Variables travel
+encrypted in the command payload and are decrypted only for the pinned
+node, and log lines pass the same redaction. The new exposure is compute
+that runs without visitors: it is bounded by the container quota, CPU
+limits, idle sleep, and the concurrency limits on jobs, and outgoing mail on
+TCP 25 stays blocked.
+
+### Consequences
+
+- The runtime node runs more kinds of containers, and its health and crash
+  reports need a process dimension. The Agent, the API's command and quota
+  code, and the Console change together, so this work stays with
+  maintainers.
+- Every reader of workload labels in the Agent must learn the worker kind.
+  An Agent rolled back to a release without `worker-processes` must not meet
+  worker containers: projects with workers are redeployed without them, or
+  stopped, before such a rollback.
+- Scheduled jobs depend on the API. While the API is down, running projects
+  keep serving and running jobs finish, but no new run starts, and slots
+  past their deadline are recorded as missed.
+- Users get at-most-once runs and a start within about a minute, which suits
+  reports, cleanups, and reminders, not tasks that need the exact second.
+- Rollback and sleep keep their meaning: one deployment, one set of
+  processes, one image.
+
+### Open questions (owner: maintainer)
+
+- **Workers and schedules on the free quota**: options A, B, or C above.
+  Recommended: A.
+- **Projects without a web process**, such as a chat bot that only polls.
+  They would never receive the traffic that keeps a project awake, and they
+  are the easiest shape for abuse. Not in v1.
+- **A schedule that wakes the project first**, for jobs that only dispatch
+  to a queue. Deferred until users ask for it.
+- **A lower minimum interval** for paid or partner workspaces, decided with
+  billing (stage 4 of the roadmap).
+
+### Plan
+
+No dates; each step starts after the previous one.
+
+1. Agent: the `processes` payload and worker containers, the `RunJob` command
+   with its own pool, process labels and log tagging, and the
+   `worker-processes` and `scheduled-jobs` capabilities.
+2. API: process definitions, schedules and runs, the dispatcher, quotas and
+   profile fields, and capability-aware placement.
+3. Console: "Proses" and "Jadwal" in project settings, logs per process, and
+   run history.
+4. Guides and a Laravel example with a queue and a schedule in
+   `gmedia/sakala-examples`.
+5. Staging, with memory measured per process to replace the estimates above,
+   then production after stage 0 of the roadmap is closed.

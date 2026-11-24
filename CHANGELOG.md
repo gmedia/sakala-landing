@@ -19,6 +19,18 @@ versinya di file ini.
 
 ## [Unreleased]
 
+### Added
+
+- ADR-022 (Proposed): worker dan jadwal (cron) per project. Worker adalah
+  container tambahan dari image yang sama dengan `web`, dengan perintah,
+  replika, dan resource sendiri, tanpa route, dihitung ke kuota container,
+  dan ikut tidur bersama project. Jadwal disimpan di API, dijalankan sebagai
+  container sekali jalan dari image yang live (command Agent `RunJob`),
+  paling banyak sekali per slot, tanpa tumpang tindih, dengan batas waktu,
+  riwayat, dan pemberitahuan gagal. ADR ini juga memuat hitungan kapasitas
+  node production, field profil batas baru, dan pilihan kuota gratis yang
+  masih menunggu keputusan maintainer. Roadmap menautkannya.
+
 ## [0.3.13] - 2026-11-24
 
 ### Added
