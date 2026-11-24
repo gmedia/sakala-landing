@@ -21,6 +21,10 @@ versinya di file ini.
 
 ### Added
 
+- Entri changelog situs "Bucket terkelola" (id dan en), bertanggal 7 Desember
+  2026 pukul 10.00 WIB untuk pembukaan pilot bucket. Merge saat pilot benar-benar
+  dibuka, dan sesuaikan `publishedAt` kalau waktunya berbeda.
+
 - Halaman panduan "Bucket Terkelola" (id dan en) di `/docs/bucket-terkelola`
   untuk pilot bucket S3 (ADR-021): kuota bawaan 0 dan cara memintanya lewat
   GitHub Discussions (`#meminta-kuota`, ditautkan Console), membuat dan
