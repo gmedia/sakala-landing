@@ -19,6 +19,20 @@ versinya di file ini.
 
 ## [Unreleased]
 
+### Added
+
+- ADR-023 (Proposed): Valkey terkelola untuk project. Setiap Valkey milik
+  workspace dan berjalan di container sendiri di bawah gVisor, di network
+  internal dengan alamat tetap yang diikuti semua container project yang
+  memasangnya, tanpa port di host dan tanpa pengecualian egress baru. Mode
+  dipilih saat membuat: cache (tanpa persistensi, `allkeys-lru`) atau
+  persisten untuk antrean dan sesi (AOF, `noeviction`, backup malam).
+  `REDIS_URL`, `REDIS_HOST`, `REDIS_PORT`, dan `REDIS_PASSWORD` disuntik saat
+  deploy; kuota `max_valkeys` dan `max_valkey_memory_mb` default 0. ADR ini
+  memuat hitungan kapasitas node production dan pertanyaan terbuka untuk
+  maintainer (kuota gratis, versi pemberitahuan privasi, anggaran memori
+  node). Roadmap menautkannya.
+
 ## [0.3.13] - 2026-11-24
 
 ### Added
