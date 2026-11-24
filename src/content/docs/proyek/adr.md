@@ -1,6 +1,6 @@
 ---
 title: "Architecture Decision Records"
-description: "Architecture and product decisions with their status, context, alternatives, and consequences — from separating console and API to workload isolation, quotas, the shared public domain, the hosted plus self-host model, workspace ownership, the edge routing tier with replicas and regions, managed PostgreSQL for projects, and proposed managed object storage."
+description: "Architecture and product decisions with their status, context, alternatives, and consequences — from separating console and API to workload isolation, quotas, the shared public domain, the hosted plus self-host model, workspace ownership, the edge routing tier with replicas and regions, managed PostgreSQL for projects, proposed managed object storage, and proposed managed Valkey."
 track: proyek
 section: sistem
 order: 6
@@ -1179,3 +1179,285 @@ sandbox`, so HTML served through a presigned URL cannot run scripts.
 
 The production pilot still waits for a privacy notice version that covers
 bucket contents, a backup restore drill, and the pilot runbook.
+
+## ADR-023 — Managed Valkey for Projects
+
+**Status:** Proposed (drafted 2026-11-24 for stage 1 of the roadmap; the free
+quota, the privacy notice version, and the node memory budget await the
+maintainer; becomes Accepted when the first managed Valkey serves a project
+in production)
+
+### Context
+
+Laravel and Node applications that are more than a site often need a Redis
+protocol store: for queues (Laravel's `redis` queue, Horizon, BullMQ), for
+cache, and for sessions. Worker processes (ADR-022) make queues run on
+Sakala; the store behind them is still missing. Today users either point
+`REDIS_URL` at an outside provider, with one more account and connections
+across the internet, or use Laravel's `database` driver on a managed
+PostgreSQL database (ADR-020), which covers simple queues but not BullMQ,
+Horizon, or applications already written for Redis.
+
+The roadmap sets the frame: follow ADR-020 and ADR-021 (a resource owned by a
+workspace, a quota in limit profiles defaulting to 0, connection variables
+injected into attached projects, a pilot first), use Valkey for its
+BSD-3-Clause license, let a cache be lost, and keep queues with AOF and a
+nightly backup.
+
+Facts that shape the design (observed on 2026-11-24 unless marked):
+
+- **One small node.** The production runtime node has 2 vCPU and 3,910 MB
+  of RAM and also hosts the managed PostgreSQL pilot (memory limit 512 MB)
+  and, from 7 December 2026, the bucket pilot (384 MB). ADR-022 estimates
+  about 1,490 MB left for project containers. Staging has 1,962 MB for
+  everything.
+- **No source address filter.** PostgreSQL is reached at `172.17.0.1:5432`
+  on the runtime node, and `pg_hba.conf` admits only the project bridges, so
+  image builds on `docker0` cannot log in. Valkey has no equivalent: anything
+  that reaches its port can try to authenticate.
+- **No container DNS under gVisor.** Workloads use the resolvers in
+  `SAKALA_CONTAINER_DNS`, because Docker's embedded DNS is not reachable from
+  runsc. A container name or network alias cannot be the host a project
+  connects to; it has to be a stable IP address.
+- **Same-network traffic is allowed.** The host egress filter treats every
+  bridge network as workload traffic but lets bridged traffic between
+  containers of the same network through.
+- **Tenants run Lua.** Laravel's Redis queue and BullMQ both depend on
+  `EVAL`, so scripting cannot be turned off for tenants. Lua inside the
+  server has a history of serious bugs, most recently CVE-2025-49844, a
+  use-after-free that lets an authenticated user run code through a script
+  ([NVD](https://nvd.nist.gov/vuln/detail/CVE-2025-49844); fixed in Valkey
+  7.2.11, 8.0.6, and 8.1.4).
+- **Database-level ACLs exist, memory limits per tenant do not.** Valkey
+  9.1.0 (May 2026) can restrict a user to some numbered databases (`db=0,1`)
+  ([Valkey](https://valkey.io/blog/valkey-9-1-delivers-improvements-in-security-performance-and-more/)),
+  but memory, eviction policy, and persistence remain settings of the whole
+  instance.
+- **The control plane already runs Valkey** (`valkey/valkey:9` with AOF) for
+  the API's own cache and queue, so operators know the engine. It is not
+  shared with tenants.
+
+### Options considered
+
+Deployment shape:
+
+1. **One shared instance per environment, one ACL user per store with a key
+   prefix** (`~<prefix>*`), placed like managed PostgreSQL. Cheapest in
+   memory. No memory limit per tenant, one eviction and persistence policy
+   for everyone, `SCAN` and `KEYS` reveal other tenants' key names unless
+   refused, Laravel needs a prefix and loses `FLUSHDB` (so `cache:clear`
+   fails), and a Lua escape exposes every tenant from a runc process on the
+   host network.
+2. **One shared instance, one numbered database per store**, guarded by
+   Valkey 9.1's `db=` ACL. Fixes key visibility, but Laravel's default
+   configuration uses two databases (0 for queue and sessions, 1 for cache),
+   `FLUSHALL` fails, and memory, policy, and the Lua blast radius stay
+   shared.
+3. **One instance per workspace.** Memory and blast radius bounded per
+   workspace, but a workspace with a cache store and a queue store needs two
+   policies in one instance.
+4. **One container per store.** Memory, policy, persistence, and blast
+   radius per store, at the cost of a container and its overhead each.
+5. **No managed store**: users keep Laravel's `database` driver or an
+   outside provider.
+
+Network path:
+
+1. **Like PostgreSQL:** each store on the host network at `172.17.0.1` with
+   its own port. Needs a port per store, an egress exception per port, and an
+   nftables rule to keep builds out, and runs tenant Lua in a host-network
+   process.
+2. **The store joins each attached project's network**, as the runtime
+   router does. No port on the host, but the address comes from Docker's
+   automatic allocation and can change when the container is recreated;
+   Docker only accepts a fixed `--ip` on networks with a configured subnet.
+3. **A private internal network per store** with a fixed subnet, the store at
+   a fixed address, and every container of an attached project joining that
+   network.
+
+Persistence:
+
+1. Persistent only. 2. Cache only. 3. **Both, chosen per store at creation.**
+
+### Decision
+
+Deployment option 4, network option 3, and persistence option 3. Option 5
+stays the path for workspaces without a Valkey quota.
+
+- **A Valkey store belongs to a workspace**, personal or team (ADR-018), like
+  a managed database or bucket: its own place in the Console, it can exist
+  without a project, survives project deletion, and attaches to zero, one, or
+  several projects of the same workspace. A project has at most one store,
+  because the variable names are fixed. A store cannot be deleted while
+  attached.
+- **One container per store, under gVisor.** The Agent runs
+  `valkey/valkey` 9.x, pinned by digest, with the runtime and hardening of
+  workloads: runsc, read-only root filesystem, a non-root user, all
+  capabilities dropped, `no-new-privileges`, and limits on memory, CPU
+  (starting at 250 millicores), and PIDs. Security releases are applied
+  within days.
+- **A private network per store.** The Agent creates
+  `sakala-valkey-<id>` as an internal bridge (no route out) with a /27 taken
+  from an operator-set pool (`SAKALA_VALKEY_NETWORK_POOL`, checked at start
+  against host routes and Docker's address pools), and starts the store at
+  the subnet's `.2`. `DeployProject` gains an optional `valkey` field with the
+  network and address; the Agent connects every container of the deployment
+  to it before its process starts: web replicas, workers (ADR-022), the
+  release command, and scheduled jobs, which copy the field from the live
+  deployment. No port is opened on the host, the egress filter needs no new
+  exception, builds on `docker0` and other workspaces are not on the
+  network, and the store itself cannot reach anything outside it. Containers
+  of several projects of one workspace that share a store can reach each
+  other on that network; across workspaces this never happens.
+- **Modes**, chosen at creation and fixed in v1:
+
+  | Mode       | Use                        | Persistence                 | `maxmemory-policy` | Backup                                 |
+  | ---------- | -------------------------- | --------------------------- | ------------------ | -------------------------------------- |
+  | Cache      | cache that may be lost     | none (`save ""`, AOF off)   | `allkeys-lru`      | none                                   |
+  | Persistent | queues, sessions, anything | AOF, `appendfsync everysec` | `noeviction`       | nightly, encrypted, about 14 days kept |
+
+  `noeviction` is what BullMQ requires
+  ([BullMQ](https://docs.bullmq.io/guide/going-to-production)) and keeps a
+  queue job from vanishing under memory pressure; a full persistent store
+  refuses writes instead. A full cache store evicts least recently used keys.
+  Persistent data survives a container restart and loses at most about one
+  second of writes when the process crashes, and up to 24 hours when the node
+  or its disk is lost.
+
+- **Credentials.** Applications use the `default` user with a random
+  32-character password and `+@all -@admin`: everything except configuration,
+  persistence, replication, monitoring, and ACL changes, so a tenant cannot
+  raise its own memory or switch off persistence. `FLUSHDB`, `FLUSHALL`,
+  `KEYS`, `SCAN`, and `INFO` stay allowed because the instance holds only
+  that store's data. A separate admin user, whose password sits in a secret
+  file mounted into the container, serves the Agent and backups. Passwords
+  are encrypted in the API, redacted from logs, rotatable with an automatic
+  redeploy of attached projects, and every reveal in the Console is audited.
+  Rotation also closes existing connections, which otherwise stay logged in.
+  No TLS in v1: the traffic never leaves a bridge on one node.
+- **Injected variables**, built at deployment time and never stored as
+  project variables; a project variable with the same name wins:
+  `REDIS_URL` (`redis://:<password>@<address>:6379`), `REDIS_HOST`,
+  `REDIS_PORT`, and `REDIS_PASSWORD`. The URL deliberately has no database
+  number: Laravel would apply it to both its default and cache connections,
+  and `cache:clear` would then flush queued jobs. `REDIS_CLIENT`,
+  `QUEUE_CONNECTION`, `CACHE_STORE`, and `SESSION_DRIVER` are not injected,
+  because they change how the application behaves; the Console suggests them.
+- **Quotas.** Limit profiles gain `max_valkeys` and `max_valkey_memory_mb`
+  (the sum of the workspace's store sizes), defaulting to 0 on hosted and
+  opened per workspace, as for buckets. A store is 32, 64, or 128 MB of
+  `maxmemory` (default 64), resizable within the quota. Each node also has a
+  budget, `SAKALA_VALKEY_TOTAL_MEMORY_MB`, that the sum of `maxmemory` plus a
+  fixed 64 MB per store must stay within; the Agent refuses a store past it.
+  Owners are notified at 80 % of a store's memory. Stores do not count
+  against `max_active_containers`.
+- **Sleep.** A store does not sleep in v1. Queued jobs wait in a persistent
+  store while a project sleeps and are processed when its workers wake.
+- **Lock.** For abuse or suspension an admin disables the `default` user and
+  closes its connections; the data stays and backups keep running.
+- **Backups (persistent mode).** A nightly RDB snapshot per store through the
+  admin user, encrypted with age to the same recipients as the other
+  backups, 7 sets kept on the node and 14 pulled to the control-plane host,
+  with a scheduled restore drill. **A snapshot is never loaded outside a
+  sandbox:** an RDB file carries the tenant's Lua function libraries, which
+  run when it is loaded, so restores and drills load it in a runsc container
+  with no network, the counterpart of ADR-020's rule that tenant dumps are
+  never restored as a superuser.
+- **Agent role and protocol.** Still revision 4. Nodes that can run stores
+  advertise `managed-valkey` (the role requires the Docker runtime driver,
+  because stores share bridge networks with workloads). New commands:
+  `CreateValkey`, `DeleteValkey`, `RotateValkeyPassword`, `LockValkey`,
+  `UnlockValkey`, and `ResizeValkey`, sent only to such nodes. Heartbeats
+  report memory used, evictions, out-of-memory errors, connected clients,
+  and AOF write status per store. Attached projects are placed on their
+  store's node. Names are final at implementation.
+- **Self-host.** An optional component, off by default.
+
+#### Capacity on the current node
+
+These figures are estimates until measured under runsc on staging; the gVisor
+overhead is the one measured in ADR-020.
+
+| Item                                                     | Memory (MB) | Basis                         |
+| -------------------------------------------------------- | ----------- | ----------------------------- |
+| Left for project containers before Valkey (ADR-022)      | 1,490       | partly assumed                |
+| One idle store: gVisor about 43, empty Valkey about 8    | about 55    | 43 measured, 8 assumed        |
+| Container limit, cache store of 64 MB                    | 128         | `maxmemory` + 64              |
+| Container limit, persistent store of 64 MB               | 192         | 2 × `maxmemory` + 64 for fork |
+| Proposed production budget: 3 stores × (64 + 64)         | 384         | proposal                      |
+| Three stores, idle to full                               | 165 to 357  |                               |
+| Left for project containers with the budget used         | 1,106       |                               |
+| Same three stores in one shared instance, for comparison | about 202   | option 1 or 2                 |
+
+Per-store isolation costs about 155 MB against a shared instance, roughly one
+Laravel web plus worker pair (310 MB in ADR-022's estimate) of the node's
+capacity. With the free quota at 0 and one store per opened workspace, the
+budget fits the pilot. A persistent 64 MB store needs up to about 640 MB of
+disk (AOF growth, rewrite, and seven local backup sets), well inside the free
+space the bucket pilot keeps.
+
+### Consequences
+
+- Every store is a container the node must keep running and a stateful
+  directory in persistent mode. The Agent, the API, the Console, and the
+  deployment's backup scripts change together, so this work stays with
+  maintainers.
+- Workloads with an attached store sit on two networks. The project network
+  keeps the only route out, so the egress filter applies unchanged.
+- A tenant's Lua escape reaches only that store's data, inside a sandbox with
+  no network path out. A store is still co-located with applications, like
+  the database and bucket pilots, until a separate machine exists.
+- Store memory is permanent load: stores do not sleep in v1, and the node
+  budget, not only workspace quotas, bounds them.
+- Users get Redis-compatible behaviour with Laravel's and BullMQ's defaults
+  (two databases, `FLUSHDB`, `INFO`, Lua), and a clear choice between "may be
+  lost" and "kept and backed up".
+- Valkey contents are a new category of user data (sessions, queue payloads,
+  cached records), so the privacy notice needs a new version before stores
+  open to users.
+
+### Decided on 24 November 2026 (maintainer)
+
+- **Free quota:** 0, as the roadmap says. Stores open per limit profile,
+  starting with one 64 MB store each for the GMEDIA workspace and the
+  interns' team. Laravel apps without a quota keep the `database` driver.
+- **Privacy notice:** a separate version after `privasi-v3` takes effect on
+  7 December 2026, so the earliest production pilot follows it (about
+  14 December with a seven-day notice). Code and staging do not wait for it.
+- **Node memory budget** on production: 384 MB, revisited after measuring
+  stores under runsc on staging.
+- Pricing for paid workspaces belongs to stage 4 of the roadmap.
+- Not in v1: changing a store's mode, stores that sleep with their projects,
+  access from outside Sakala, stores above 512 MB, and replicas.
+
+### Revisit triggers
+
+- The node budget is used up and more workspaces ask for stores: stores that
+  sleep when every attached project sleeps, or option 2 for cache-only
+  stores.
+- A second runtime node (stage 6): attaching across nodes needs a private
+  network between them and TLS.
+- Staging shows that runsc workloads on two networks, or fixed addresses on
+  the store network, do not work: network option 2 with addresses refreshed
+  on each deployment.
+
+### Plan
+
+No dates; each step starts after the previous one.
+
+1. A staging spike without code: an internal network with a fixed subnet, a
+   store under runsc at a fixed address, a workload on two networks reaching
+   it, builds and other projects not reaching it, and memory measured idle
+   and during an AOF rewrite.
+2. Agent: the `managed-valkey` role, the six commands, the `valkey` field in
+   `DeployProject` and `RunJob`, and heartbeat usage.
+3. API: the workspace-scoped resource with attachments, quotas in limit
+   profiles, variable injection, rotation, and locking, behind a flag that is
+   off by default.
+4. Console: a Valkey page next to Database and Bucket for workspaces with a
+   quota, and wizard suggestions when a Redis client is detected.
+5. Deployment: backup, pull, restore, and runbooks; then a user guide, the
+   privacy notice version, and a Laravel example with a queue on Valkey,
+   workers, and a schedule in `gmedia/sakala-examples`.
+6. Staging end to end, then a production pilot for one workspace after stage
+   0 of the roadmap is closed and the privacy notice version is in force.

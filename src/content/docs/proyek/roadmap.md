@@ -155,8 +155,10 @@ dilakukan maintainer. Panduannya ada di
 Proposed) sudah dibangun dan menunggu rilis serta pilot terbatas, dengan
 panduan di [Bucket Terkelola](/docs/bucket-terkelola). Kuota pertamanya baru
 dibuka setelah pemberitahuan privasi versi baru berlaku. Worker dan cron per
-project serta Redis atau Valkey terkelola dikerjakan berikutnya, sebagai bagian
-dari layanan aplikasi. Layanan lain belum.
+project serta Valkey terkelola
+([ADR-023](/docs/proyek/adr#adr-023--managed-valkey-for-projects), Proposed)
+dikerjakan berikutnya, sebagai bagian dari layanan aplikasi. Layanan lain
+belum.
 
 ### Horizon H — Platformisasi
 
