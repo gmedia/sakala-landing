@@ -40,6 +40,16 @@ versinya di file ini.
 - ADR-021 mendapat bagian pembaruan tentang tahap 1 yang sudah dibangun
   (statusnya tetap Proposed). Produk dan roadmap mencatat bucket S3
   terkelola sedang dibangun sebagai pilot terbatas.
+- Roadmap per 24 November 2026: layanan aplikasi (worker dan cron per
+  project, Redis atau Valkey terkelola, custom domain) dikerjakan sebelum
+  Learn minimal. Dokumen roadmap mendapat bagian "Urutan setelah pilot
+  publik" dan entri perubahan bertanggal beserta alasannya; huruf horizon
+  tetap supaya tautan `roadmap#horizon-b--learn-minimal` tidak putus. Tabel
+  engineering mendapat fase 9 untuk layanan aplikasi (Learn menjadi fase 10,
+  installer self-host fase 11). Bucket S3 terkelola tercatat sudah dibangun
+  dan menunggu rilis serta pilot, dan installer self-host tercatat punya
+  versi bertag tetapi belum dicoba di server sungguhan. Halaman Roadmap dan
+  Produk (id dan en), PRD §9.4, Visi, dan Sakala Learn mengikuti urutan baru.
 
 ## [0.3.12] - 2026-11-23
 

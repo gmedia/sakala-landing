@@ -10,7 +10,7 @@ canonical: true
 
 # Sakala Learn
 
-> **Status:** pilar prioritas setelah MVP ([Roadmap Horizon B](/docs/proyek/roadmap))
+> **Status:** dikerjakan setelah layanan aplikasi (worker dan cron, Redis atau Valkey, custom domain), lihat [Roadmap Horizon B](/docs/proyek/roadmap#horizon-b--learn-minimal)
 > **Prinsip:** belajar deployment, bukan LMS
 
 ## 1. Tesis

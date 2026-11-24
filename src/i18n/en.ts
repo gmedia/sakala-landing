@@ -363,7 +363,7 @@ export const en: Dictionary = {
       "Sakala is in its pilot. Anyone can sign up and use it at no cost, within limits on projects, containers, and builds per hour. There is no uptime guarantee yet, so it is not a fit for important applications.",
     disclaimerLink: "See the pilot limits",
     pillarsTitle: "The product journey",
-    pillarsStatusDate: "Status as of 23 November 2026.",
+    pillarsStatusDate: "Status as of 24 November 2026.",
     pillars: [
       {
         name: "Create",
@@ -447,7 +447,7 @@ export const en: Dictionary = {
             label: "managed S3 buckets, a limited pilot being prepared",
             status: "building",
           },
-          { label: "custom domains", status: "direction" },
+          { label: "custom domains", status: "next" },
         ],
       },
       {
@@ -464,8 +464,8 @@ export const en: Dictionary = {
         name: "Learn",
         question: "How do people learn to ship software for real?",
         items: [
-          { label: "classes and workshops", status: "next" },
-          { label: "assignments", status: "next" },
+          { label: "classes and workshops", status: "direction" },
+          { label: "assignments", status: "direction" },
           { label: "internship flow", status: "direction" },
           { label: "mentor review", status: "direction" },
         ],
@@ -563,22 +563,28 @@ export const en: Dictionary = {
         text: "Registration has been open to anyone since 19 November 2026. Outgoing traffic from user containers has been limited since the same day. Still in progress: evidence of usage and costs from the pilot.",
       },
       {
+        label: "Horizon G and D",
+        name: "App services",
+        status: "next",
+        text: "Workers and cron per project, managed Redis or Valkey, and custom domains. Apps that are more than a simple site need queues, a cache, schedules, and their own domain, so this comes before Learn.",
+      },
+      {
         label: "Horizon B",
         name: "Minimal Learn",
-        status: "next",
-        text: "Classes, participants via CSV, assignments with deadlines, an overview for instructors, and what happens to projects after a class ends.",
+        status: "direction",
+        text: "Classes, participants via CSV, assignments with deadlines, an overview for instructors, and what happens to projects after a class ends. It comes after app services, because a class brings dozens of users at once who need those services to be stable.",
       },
       {
         label: "Horizon C",
         name: "Single-node self-host",
         status: "testing",
-        text: "The installer in the gmedia/sakala repository exists and is tested on clean machines, but it has not been released or tried on a real server.",
+        text: "The installer in the gmedia/sakala repository has tagged versions and is tested on clean machines, but it has not been tried on a real server.",
       },
       {
         label: "Horizon D",
         name: "Reliable operation",
         status: "direction",
-        text: "Custom domains, and usage visibility beyond the basic metrics. Rollback to an earlier version and Restart have been available since 23 November 2026.",
+        text: "Usage visibility beyond the basic metrics. Custom domains now come first, as part of app services. Rollback to an earlier version and Restart have been available since 23 November 2026.",
       },
       {
         label: "Horizon E",
@@ -590,7 +596,7 @@ export const en: Dictionary = {
         label: "Horizon G–H",
         name: "Services and platform",
         status: "direction",
-        text: "Managed PostgreSQL has been in a limited pilot since 23 November 2026, only for workspaces given a quota. Managed S3 buckets (ADR-021) are being built as a limited pilot, and open only after a new version of the privacy notice takes effect. After that, workers and cron, CLI, public API, and multi-node runtime.",
+        text: "Managed PostgreSQL has been in a limited pilot since 23 November 2026, only for workspaces given a quota. Managed S3 buckets (ADR-021) are built and waiting for a release and a limited pilot, and open only after a new version of the privacy notice takes effect. After that, CLI, public API, and multi-node runtime.",
       },
     ],
     designTitle: "Design and engineering status stay separate",

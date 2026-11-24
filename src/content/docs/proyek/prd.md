@@ -325,7 +325,8 @@ Kemampuan minimal yang dituju lebih dulu:
   mulai;
 - satu tampilan per peserta: repository, URL, deployment terakhir, log.
 
-Status: arah, dengan prioritas tertinggi setelah MVP. Detail di
+Status: arah, dikerjakan setelah layanan aplikasi (worker dan cron, Redis atau
+Valkey, custom domain) sesuai [Roadmap](/docs/proyek/roadmap). Detail di
 [Sakala Learn](/docs/proyek/feature-education).
 
 ### 9.5 Explore — karya yang dilihat, dipelajari, dan dilanjutkan
