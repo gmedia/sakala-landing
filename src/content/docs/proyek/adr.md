@@ -1422,7 +1422,8 @@ Process option 2, trigger option 1, and sleep option 2.
   (enabled schedules per workspace), `min_schedule_interval_minutes`, and
   `max_concurrent_job_runs`. An expression is refused when two of its next
   1,000 slots are closer than the minimum interval.
-- **Hosted defaults wait for the maintainer** (see the open questions):
+- **Hosted defaults: option A**, chosen by the maintainer on 24 November 2026
+  over the two alternatives below:
 
   | Field                           | Option A: small free quota | Option B: closed by default | Option C: workers free, schedules closed |
   | ------------------------------- | -------------------------- | --------------------------- | ---------------------------------------- |
@@ -1431,9 +1432,9 @@ Process option 2, trigger option 1, and sleep option 2.
   | `min_schedule_interval_minutes` | 15                         | 15                          | 15                                       |
   | `max_concurrent_job_runs`       | 1                          | 0                           | 0                                        |
 
-  Option A is recommended: a queue is a basic need of a Laravel app, a
-  worker spends a container slot the workspace already has, and the
-  arithmetic below keeps 15-minute schedules small on today's node.
+  Option A: a queue is a basic need of a Laravel app, a worker spends a
+  container slot the workspace already has, and the arithmetic below keeps
+  15-minute schedules small on today's node.
 
 #### Laravel and Node
 
@@ -1508,17 +1509,20 @@ TCP 25 stays blocked.
 - Rollback and sleep keep their meaning: one deployment, one set of
   processes, one image.
 
-### Open questions (owner: maintainer)
+### Decided on 24 November 2026 (maintainer)
 
-- **Workers and schedules on the free quota**: options A, B, or C above.
-  Recommended: A.
-- **Projects without a web process**, such as a chat bot that only polls.
-  They would never receive the traffic that keeps a project awake, and they
-  are the easiest shape for abuse. Not in v1.
+- **Workers and schedules on the free quota**: option A.
+- **Projects without a web process**, such as a chat bot that only polls:
+  not in v1. They would never receive the traffic that keeps a project
+  awake, and they are the easiest shape for abuse.
 - **A schedule that wakes the project first**, for jobs that only dispatch
-  to a queue. Deferred until users ask for it.
-- **A lower minimum interval** for paid or partner workspaces, decided with
+  to a queue: deferred until users ask for it.
+- **A lower minimum interval** for paid or partner workspaces: decided with
   billing (stage 4 of the roadmap).
+- **Starting values** in this ADR (10-minute late window, 100 runs kept per
+  schedule, pause after 10 consecutive failures, a worker is ready when it
+  is still running 10 seconds after start, 30-second stop grace) stand for
+  v1 and are revisited after measuring on staging.
 
 ### Plan
 
