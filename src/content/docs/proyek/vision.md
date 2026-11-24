@@ -57,7 +57,7 @@ perubahan dokumen ini, dan setiap perubahan disertai alasannya.
 | 1   | Manifest    | Bagaimana source ini menjadi sesuatu yang hidup? | Inti Sakala. Tanpa ini, tidak ada yang lain.                                        |
 | 2   | Create      | Dari mana karya ini dimulai?                     | Repository publik dan privat adalah pintu masuk setiap project.                     |
 | 3   | Operate     | Setelah hidup, bagaimana aplikasi ini dijaga?    | Log, health, dan secret dibutuhkan sejak project pertama.                           |
-| 4   | Learn       | Bagaimana orang belajar mengirim software?       | Pasar pertama. Dikerjakan segera setelah MVP.                                       |
+| 4   | Learn       | Bagaimana orang belajar mengirim software?       | Pasar pertama. Dikerjakan setelah worker, cron, cache, dan custom domain tersedia.  |
 | 5   | Platform    | Bagaimana institusi menjalankan Sakala sendiri?  | Self-host satu node adalah jawaban biaya jangka panjang dan jaminan bagi institusi. |
 | 6   | Explore     | Apa yang lahir dari karya yang sudah hidup?      | Pembeda Sakala, tetapi mahal dimoderasi. Dimulai dari koleksi terkurasi.            |
 | 7   | Collaborate | Bagaimana karya dikelola bersama?                | Bagian yang dibutuhkan Learn dibangun lebih dulu di dalam Learn.                    |
