@@ -19,6 +19,8 @@ versinya di file ini.
 
 ## [Unreleased]
 
+## [0.3.13] - 2026-11-24
+
 ### Added
 
 - Halaman panduan "Bucket Terkelola" (id dan en) di `/docs/bucket-terkelola`
@@ -530,7 +532,8 @@ sampai workflow release (#1 sampai #21).
   Source (#19).
 - Dependency diperbarui ke versi terbaru (#13).
 
-[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.3.12...HEAD
+[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.3.13...HEAD
+[0.3.13]: https://github.com/gmedia/sakala-landing/compare/v0.3.12...v0.3.13
 [0.3.12]: https://github.com/gmedia/sakala-landing/compare/v0.3.11...v0.3.12
 [0.3.11]: https://github.com/gmedia/sakala-landing/compare/v0.3.10...v0.3.11
 [0.3.10]: https://github.com/gmedia/sakala-landing/compare/v0.3.9...v0.3.10
