@@ -1416,18 +1416,16 @@ space the bucket pilot keeps.
   cached records), so the privacy notice needs a new version before stores
   open to users.
 
-### Open questions (owner: maintainer)
+### Decided on 24 November 2026 (maintainer)
 
-- **Free quota.** Proposed: keep 0, as the roadmap says, and open stores per
-  limit profile, starting with one 64 MB store each for the GMEDIA workspace
-  and the interns' team. Laravel apps without a quota keep the `database`
-  driver.
-- **Privacy notice.** Proposed: a separate version after `privasi-v3` takes
-  effect on 7 December 2026, so the earliest production pilot would follow it
-  (about 14 December with a seven-day notice), rather than adding Valkey to
-  the v3 text before it is announced.
-- **Node memory budget** on production: proposed 384 MB, revisited after
-  measuring stores under runsc on staging.
+- **Free quota:** 0, as the roadmap says. Stores open per limit profile,
+  starting with one 64 MB store each for the GMEDIA workspace and the
+  interns' team. Laravel apps without a quota keep the `database` driver.
+- **Privacy notice:** a separate version after `privasi-v3` takes effect on
+  7 December 2026, so the earliest production pilot follows it (about
+  14 December with a seven-day notice). Code and staging do not wait for it.
+- **Node memory budget** on production: 384 MB, revisited after measuring
+  stores under runsc on staging.
 - Pricing for paid workspaces belongs to stage 4 of the roadmap.
 - Not in v1: changing a store's mode, stores that sleep with their projects,
   access from outside Sakala, stores above 512 MB, and replicas.
