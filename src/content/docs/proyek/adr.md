@@ -1371,6 +1371,20 @@ Certificate option 3, host option 2, target option 4, with TXT ownership.
   only through CNAME flattening, ALIAS, or ANAME, verified by the resolved
   addresses; otherwise `www` with a redirect at the user's provider. The TXT
   token stays required.
+- **Default quota:** 1 domain per workspace on hosted; an admin can set 0
+  per limit profile.
+- **TXT record:** stays required and is re-checked with the CNAME every 6
+  hours.
+- **Grace period:** warn at 24 hours, disable at 72 hours, reactivate
+  automatically for 30 days; never deleted automatically.
+- **Certificate path:** explicit sites per domain at the Edge (option 3), not
+  on-demand TLS with an `ask` endpoint.
+- **Privacy notice:** the Let's Encrypt recipient joins the version planned
+  for managed Valkey; production custom domains wait for it to take effect.
+- **Port 80:** checked on 25 November 2026; both the staging and the
+  production origin answer on port 80 from the internet.
+- **Slug `edge`:** `edge.sakala.app` and `edge.staging.sakala.app` already
+  have A records, so the API reserves the project slug `edge`.
 
 ### Consequences
 
@@ -1395,24 +1409,6 @@ Certificate option 3, host option 2, target option 4, with TXT ownership.
   domain in v1; the check reports the addresses as pointing elsewhere.
 - Self-host stays as it is in v1. Its existing `ask` site would cover custom
   domains once the router knows them, through one catch-all on-demand site.
-
-### Open questions (owner: maintainer)
-
-- **Default quota.** Proposed: 1 domain per workspace on hosted, 0 per
-  profile when an admin wants none. A certificate and a route cost almost
-  nothing, and the issue is written for ordinary students.
-- **Must the TXT record stay?** Proposed: yes, re-checked with the CNAME. It
-  is the only proof of ownership; it is how a domain that changes hands is
-  noticed.
-- **Grace period.** Proposed: warn at 24 hours, disable at 72 hours,
-  reactivate automatically for 30 days.
-- **Certificate path.** Proposed: explicit sites (option 3) rather than the
-  on-demand `ask` named in the issue.
-- **Privacy notice.** Proposed: fold the Let's Encrypt recipient into the
-  version planned for managed Valkey, so users get one announcement;
-  production custom domains wait for it to take effect.
-- **Port 80** on the Edge host must be reachable for the HTTP to HTTPS
-  redirect and HTTP-01; to be checked with the server operator.
 
 ### Plan
 
