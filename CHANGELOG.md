@@ -19,6 +19,20 @@ versinya di file ini.
 
 ## [Unreleased]
 
+### Added
+
+- ADR-024 (Proposed): custom domain untuk project. Kepemilikan dibuktikan
+  dengan record TXT berisi token acak per klaim, dan domain diarahkan hanya
+  dengan CNAME ke `edge.sakala.app` (apex lewat CNAME flattening, ALIAS, atau
+  ANAME), sesuai keputusan maintainer 25 November 2026. Domain baru aktif
+  setelah TXT, arah DNS, dan CAA cocok; diperiksa ulang setiap 6 jam dan
+  dinonaktifkan dengan email setelah 72 jam gagal, tidak pernah dihapus
+  otomatis. Sakala Edge menulis satu site per domain dan Caddy mengurus
+  sertifikat Let's Encrypt-nya, tanpa on-demand TLS. ADR ini memuat
+  pertanyaan terbuka untuk maintainer (kuota bawaan, TXT tetap wajib, masa
+  tenggang, jalur sertifikat, versi pemberitahuan privasi). Roadmap
+  menautkannya.
+
 ## [0.3.13] - 2026-11-24
 
 ### Added

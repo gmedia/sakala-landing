@@ -122,8 +122,9 @@ sejak 19 November 2026), serta rollback ke versi sebelumnya dan Restart tanpa
 build (sejak 23 November 2026, lihat
 [Rollback dan Restart](/docs/rollback-dan-restart)) sudah tersedia. Custom
 domain belum ada, dan sekarang direncanakan sebagai bagian dari layanan
-aplikasi yang dikerjakan berikutnya. Visibilitas pemakaian yang lebih lengkap
-belum.
+aplikasi yang dikerjakan berikutnya
+([ADR-024](/docs/proyek/adr#adr-024--custom-domains-for-projects),
+Proposed). Visibilitas pemakaian yang lebih lengkap belum.
 
 ### Horizon E — Explore dan ekosistem
 

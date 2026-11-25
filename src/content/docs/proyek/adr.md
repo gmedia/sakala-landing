@@ -1,6 +1,6 @@
 ---
 title: "Architecture Decision Records"
-description: "Architecture and product decisions with their status, context, alternatives, and consequences — from separating console and API to workload isolation, quotas, the shared public domain, the hosted plus self-host model, workspace ownership, the edge routing tier with replicas and regions, managed PostgreSQL for projects, and proposed managed object storage."
+description: "Architecture and product decisions with their status, context, alternatives, and consequences — from separating console and API to workload isolation, quotas, the shared public domain, the hosted plus self-host model, workspace ownership, the edge routing tier with replicas and regions, managed PostgreSQL for projects, proposed managed object storage, and proposed custom domains for projects."
 track: proyek
 section: sistem
 order: 6
@@ -1179,3 +1179,257 @@ sandbox`, so HTML served through a presigned URL cannot run scripts.
 
 The production pilot still waits for a privacy notice version that covers
 bucket contents, a backup restore drill, and the pilot runbook.
+
+## ADR-024 — Custom Domains for Projects
+
+**Status:** Proposed (drafted 2026-11-25 for stage 1 of the roadmap; the
+maintainer decided that day that domains are pointed with CNAME only; the
+default quota, whether the TXT record must stay, the grace period, the
+certificate path, and the privacy notice version await the maintainer;
+becomes Accepted when the first custom domain serves a project in
+production)
+
+### Context
+
+Every project is reachable at `<slug>.sakala.app` and nowhere else. Students
+with a domain of their own, for a portfolio for example, cannot use it
+([sakala-api#120](https://github.com/gmedia/sakala-api/issues/120)). The
+roadmap sets the frame: ownership proven with a TXT record holding a random
+token before any route is active, a domain verified on one project refused
+for another, a CNAME to Sakala Edge, automatic TLS through ACME at the edge,
+a per-workspace limit in limit profiles, and periodic re-checks that disable
+(never silently delete) a domain that loses verification.
+
+Facts that shape the design (observed on 2026-11-25 unless marked):
+
+- **TLS today is one wildcard.** Host Caddy on the app node holds
+  `*.sakala.app` through a Cloudflare DNS-01 challenge, and `sakala-edge`
+  renders one host matcher per project inside that wildcard site (ADR-019).
+  A matcher for an outside name inside that site never matches.
+- **The edge contract rejects whole tables.** `sakala-edge` refuses the
+  entire route table when one host is not exactly one label under the
+  project domain, and ignores fields it does not know. Custom domains cannot
+  join the existing `routes` array without taking every route down on an
+  older Edge.
+- **A global DNS challenge.** The production host Caddy sets the global
+  option `acme_dns cloudflare`, which Caddy documents as applying to all
+  ACME transactions. Certificates for outside domains would most likely be
+  attempted through DNS-01 at Cloudflare and always fail. DNS-01 is not
+  possible for a zone Sakala does not control.
+- **The node router picks a project by `Host`.** The Agent writes one route
+  file per project with the project domain as the site address, and rebuilds
+  it on wake and restart from a container label. The idle-sleep traffic
+  count is keyed by host through the same label, and the sleeping page calls
+  the wake endpoint with the slug taken from the project domain.
+- **Self-host already guards issuance.** The single-node installer issues
+  on-demand certificates only for names the router has a route for, through
+  Caddy's `ask`, and proposes an API endpoint that would also answer for
+  verified custom domains later.
+- **Let's Encrypt limits** (documentation checked 2026-11-25): 300 new
+  orders per account per 3 hours, 50 new certificates per registered domain
+  per 7 days across all accounts, 5 per exact set of names per 7 days, 5
+  authorization failures per name per account per hour; renewals through
+  ARI are exempt. Default lifetime drops to 64 days in February 2027 and 45
+  days in February 2028.
+
+### Options considered
+
+Who issues certificates:
+
+1. **On-demand TLS with `ask` answered by the API.** One static catch-all
+   site; certificates only for names that are visited. Every handshake with
+   an unknown server name calls the API, the first visitor waits for
+   issuance and gets a TLS error if it fails, and Caddy does not document
+   whether `ask` is consulted again before a renewal.
+2. **On-demand TLS with `ask` answered by `sakala-edge` from its table.** No
+   API load and works during an API outage, but adds a listening port to a
+   service that has none, and keeps the first-visitor wait.
+3. **One explicit site per verified domain, rendered by `sakala-edge`, with
+   certificates managed by Caddy.** The Edge already reloads Caddy whenever
+   the table changes and knows the exact list. No issuance oracle;
+   certificates are obtained when a domain becomes active; a removed domain
+   stops being renewed because its site is gone. Costs a larger reload.
+4. **DNS-01 through a delegated `_acme-challenge` CNAME** into a Sakala
+   zone. The only way to wildcard custom domains or a certificate before
+   the DNS switch, at the cost of one more record per user and the
+   Cloudflare token answering for tenant names.
+5. **A managed product** such as Cloudflare for SaaS. Little to operate, but
+   proprietary, unavailable to self-host operators (ADR-017), priced per
+   hostname, and it would make Cloudflare a processor of project traffic.
+
+How the application sees the host:
+
+1. **The Edge rewrites `Host` to `<slug>.sakala.app`** and passes the
+   original in `X-Forwarded-Host`. No Agent change, but applications that
+   build URLs from `Host` redirect visitors to the Sakala address, and
+   frameworks that compare `Origin` with `Host` for CSRF reject forms.
+2. **The node router knows custom domains as extra site addresses** of the
+   project, so the application receives the original `Host`.
+
+What the user points at Sakala:
+
+1. **A and AAAA records with the edge addresses.** Every address change or
+   added Edge would require every user to edit DNS, and a record left on a
+   reused address is a takeover path.
+2. **A CNAME to `<slug>.sakala.app`.** Resolves today, but breaks when the
+   project domain moves, as it did from `run.sakala.dev` in November 2026.
+3. **A CNAME to a per-project target** such as `<id>.edge.sakala.app`.
+   Allows steering each project to a region later without user changes;
+   random names are harder to support over chat, and there are no regions
+   yet.
+4. **A CNAME to one stable name, `edge.sakala.app`.**
+
+### Decision
+
+Certificate option 3, host option 2, target option 4, with TXT ownership.
+
+- **Ownership.** A custom domain belongs to a project. Adding one creates a
+  `pending` claim with a 128-bit random token for that claim only. The user
+  publishes `_sakala.<domain>` TXT `sakala-verify=<token>`. The TXT record
+  sits on its own label because a CNAME cannot share a name with any other
+  record. Several claims for the same name may be pending at once, so
+  nobody can lock a domain by claiming it first; the first to verify wins,
+  enforced by a partial unique index on verified names. A name verified on
+  any project is refused with `409`.
+- **Pointing.** CNAME only, as decided by the maintainer. A subdomain needs a
+  CNAME chain that reaches `edge.sakala.app` (staging:
+  `edge.staging.sakala.app`); an `A` record with the edge address is
+  refused, because it breaks when the address changes. An apex domain needs
+  a DNS provider with CNAME flattening, ALIAS, or ANAME: the check accepts a
+  CNAME to the target or, for a flattened answer, every A and AAAA address
+  of the domain being one of the addresses `edge.sakala.app` resolves to at
+  that moment. A literal `A` record with the same address cannot be told
+  apart and is accepted with a warning in the Console. Users whose provider
+  cannot flatten use `www` and redirect the apex at their provider. The
+  Console never shows Sakala's IP addresses.
+- **Why a CNAME.** It does not hide the edge address; the target resolves to
+  it, as `*.sakala.app` does today. The reasons are that Sakala can move or
+  add Edge hosts by changing one record it controls, users make fewer
+  mistakes copying a name than an address, and no user DNS points at an
+  address Sakala may give up. `edge.sakala.app` gets an explicit DNS-only
+  record rather than relying on the wildcard, and `edge` joins the reserved
+  project slugs.
+- **Readiness.** A domain becomes `verified` only when ownership (TXT),
+  pointing (CNAME or flattened addresses), and CAA (no record forbidding
+  Let's Encrypt) pass together. Checking the pointing before the route goes
+  live keeps Caddy from requesting certificates for names whose traffic
+  still goes elsewhere, which would only fail validation. Checks query the
+  domain's authoritative name servers, so a cached negative answer does not
+  delay a user who checks too early. Pending claims are checked every minute
+  for 30 minutes and on demand, then every 15 minutes, and become `failed`
+  with a reason after 72 hours.
+- **Re-checks and disabling.** Verified domains are re-checked every 6
+  hours. Any result other than a pass starts a clock; a pass clears it. At
+  24 hours the workspace owners and the person who added the domain get an
+  email; at 72 hours the domain becomes `disabled`, its routes are removed,
+  and they get a second email. Disabled domains are re-checked daily for 30
+  days and return to `verified` on their own when DNS is right again. A
+  domain is never deleted automatically. Another project may claim a
+  disabled name with its own token; the old claim then becomes `released`
+  and its owners are told. All durations are configurable.
+- **Edge.** The route table gains a separate `custom_routes` array (with its
+  own expected minimum) that older `sakala-edge` versions ignore. A domain
+  is listed while verified and its project is not deleted; without a
+  workload its upstream list is empty and the site answers with the same
+  not-found page as the wildcard. `sakala-edge` renders one site per domain
+  into its own include file, validated separately so a bad custom route
+  never holds back project routes. The site trusts no proxy, so forwarded
+  headers are overwritten as on `*.sakala.app`.
+- **TLS.** Caddy on the Edge host manages each custom site's certificate
+  through HTTP-01 or TLS-ALPN-01, with Let's Encrypt as the only, explicit,
+  issuer. Certificates live in Caddy's storage on that host and are not
+  backed up, because reissuing is cheaper than restoring. The global
+  `acme_dns` option is replaced with explicit `tls { dns cloudflare ... }`
+  blocks in the sites that use it before any custom domain is served. Sakala
+  adds no HSTS header to custom domains; an application's own HSTS passes
+  through unchanged.
+- **Node router.** Every command that writes a project route (`DeployProject`,
+  `WakeProject`, `RestartProject`, `SleepProject`) carries the project's
+  current `custom_domains`, and a new `UpdateProjectDomains` rewrites the
+  route without a redeploy. The Agent refuses a custom domain under a
+  platform suffix or already present in another project's route file, and
+  counts requests to custom hosts toward the project's idle-sleep traffic.
+  Nodes advertise the `custom-domains` capability; the protocol revision is
+  unchanged.
+- **Removal.** Deleting a domain or its project removes the Edge site within
+  about 10 seconds and the router entry on the next command. The name can
+  then be claimed elsewhere, again only with TXT. `<slug>.sakala.app` keeps
+  working throughout.
+- **Quota.** A new limit profile field, `max_custom_domains`, counts every
+  claim that is not deleted, pending included. Null follows a global
+  default.
+- **Who may change domains.** The roles that may update the project; viewers
+  can read the records. Sakala admins can disable a domain with a reason,
+  recorded in the audit log.
+
+### Maintainer decisions (2026-11-25)
+
+- The core team implements custom domains in full; the issue is no longer
+  open to outside contributors.
+- CNAME only in v1. Sakala never asks users to publish A or AAAA records
+  with its addresses. Subdomains use a CNAME to a stable target; apex domains
+  only through CNAME flattening, ALIAS, or ANAME, verified by the resolved
+  addresses; otherwise `www` with a redirect at the user's provider. The TXT
+  token stays required.
+
+### Consequences
+
+- One more strong dependency for visitors of a custom domain: the user's own
+  DNS. Let's Encrypt, the API, and the DNS checker are weak dependencies,
+  because issued certificates and the Edge snapshot keep serving.
+- The domain name goes to Let's Encrypt and appears in public Certificate
+  Transparency logs. That is a new recipient outside Indonesia, so the
+  privacy notice needs a new version before production.
+- Many custom subdomains under one registered domain share Let's Encrypt's
+  50 new certificates per week, including the owner's own certificates.
+  Classes using campus subdomains should keep `<slug>.sakala.app`.
+- Each table change reloads Caddy with one site per custom domain. The
+  reload time is measured on staging; a sustained reload above about 2
+  seconds, or more than about 1,000 domains, reopens certificate option 2.
+- A second Edge (stage 6 of the roadmap) needs shared certificate storage,
+  because an ACME challenge can reach an Edge that did not start the order.
+- No wildcard custom domains and no certificate before the DNS switch; a
+  move from another host has a short gap of the old record's TTL plus up to
+  about a minute.
+- Users behind Cloudflare's proxy (orange cloud) must switch it off for the
+  domain in v1; the check reports the addresses as pointing elsewhere.
+- Self-host stays as it is in v1. Its existing `ask` site would cover custom
+  domains once the router knows them, through one catch-all on-demand site.
+
+### Open questions (owner: maintainer)
+
+- **Default quota.** Proposed: 1 domain per workspace on hosted, 0 per
+  profile when an admin wants none. A certificate and a route cost almost
+  nothing, and the issue is written for ordinary students.
+- **Must the TXT record stay?** Proposed: yes, re-checked with the CNAME. It
+  is the only proof of ownership; it is how a domain that changes hands is
+  noticed.
+- **Grace period.** Proposed: warn at 24 hours, disable at 72 hours,
+  reactivate automatically for 30 days.
+- **Certificate path.** Proposed: explicit sites (option 3) rather than the
+  on-demand `ask` named in the issue.
+- **Privacy notice.** Proposed: fold the Let's Encrypt recipient into the
+  version planned for managed Valkey, so users get one announcement;
+  production custom domains wait for it to take effect.
+- **Port 80** on the Edge host must be reachable for the HTTP to HTTPS
+  redirect and HTTP-01; to be checked with the server operator.
+
+### Plan
+
+1. **Deployment.** Replace the global `acme_dns` with per-site `tls` blocks
+   and prove on staging that existing certificates are reused; add the
+   static custom-domain site file and the empty include; create
+   `edge.sakala.app` and `edge.staging.sakala.app`.
+2. **Agent.** `custom_routes` rendering in `sakala-edge`; the
+   `custom-domains` capability, `custom_domains` on route-writing commands,
+   `UpdateProjectDomains`, and traffic counting in the Agent.
+3. **API.** Domain claims, checks, re-checks, notices, quota, admin disable,
+   and `custom_routes`, behind `SAKALA_CUSTOM_DOMAINS_ENABLED`, off by
+   default.
+4. **Console.** A Domains panel in project settings that explains apex and
+   subdomains differently, with copyable records, status, and reasons.
+5. **Landing.** A user guide for two or three DNS providers common among
+   students, and the privacy notice.
+6. **Staging** with a real test domain (subdomain, flattened apex, removed
+   TXT and CNAME, sleep and wake, replicas, deletion, API outage), then
+   production after stage 0 of the roadmap and the privacy notice.
