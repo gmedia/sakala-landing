@@ -19,6 +19,18 @@ versinya di file ini.
 
 ## [Unreleased]
 
+### Changed
+
+- Pemberitahuan Privasi `privasi-v3`, berlaku 7 Desember 2026 dan diumumkan
+  30 November 2026: bagian baru **Bucket terkelola**
+  (isi bucket sebagai data pengguna dan data pengguna aplikasinya, disimpan
+  di server Sakala, secret key yang hanya dibuka pemilik dan admin dan
+  dicatat, penghapusan seperti database), backup isi bucket sekitar 14 hari,
+  dan bucket saat proyek atau akun dihapus. `privasi-v2` berlaku 30 November
+  sampai 6 Desember 2026.
+
+## [0.3.13] - 2026-11-24
+
 ### Added
 
 - Halaman panduan "Bucket Terkelola" (id dan en) di `/docs/bucket-terkelola`
@@ -40,13 +52,16 @@ versinya di file ini.
 - ADR-021 mendapat bagian pembaruan tentang tahap 1 yang sudah dibangun
   (statusnya tetap Proposed). Produk dan roadmap mencatat bucket S3
   terkelola sedang dibangun sebagai pilot terbatas.
-- Pemberitahuan Privasi `privasi-v3`, berlaku 7 Desember 2026 dan diumumkan
-  30 November 2026: bagian baru **Bucket terkelola**
-  (isi bucket sebagai data pengguna dan data pengguna aplikasinya, disimpan
-  di server Sakala, secret key yang hanya dibuka pemilik dan admin dan
-  dicatat, penghapusan seperti database), backup isi bucket sekitar 14 hari,
-  dan bucket saat proyek atau akun dihapus. `privasi-v2` berlaku 30 November
-  sampai 6 Desember 2026.
+- Roadmap per 24 November 2026: layanan aplikasi (worker dan cron per
+  project, Redis atau Valkey terkelola, custom domain) dikerjakan sebelum
+  Learn minimal. Dokumen roadmap mendapat bagian "Urutan setelah pilot
+  publik" dan entri perubahan bertanggal beserta alasannya; huruf horizon
+  tetap supaya tautan `roadmap#horizon-b--learn-minimal` tidak putus. Tabel
+  engineering mendapat fase 9 untuk layanan aplikasi (Learn menjadi fase 10,
+  installer self-host fase 11). Bucket S3 terkelola tercatat sudah dibangun
+  dan menunggu rilis serta pilot, dan installer self-host tercatat punya
+  versi bertag tetapi belum dicoba di server sungguhan. Halaman Roadmap dan
+  Produk (id dan en), PRD §9.4, Visi, dan Sakala Learn mengikuti urutan baru.
 
 ## [0.3.12] - 2026-11-23
 
@@ -527,7 +542,8 @@ sampai workflow release (#1 sampai #21).
   Source (#19).
 - Dependency diperbarui ke versi terbaru (#13).
 
-[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.3.12...HEAD
+[Unreleased]: https://github.com/gmedia/sakala-landing/compare/v0.3.13...HEAD
+[0.3.13]: https://github.com/gmedia/sakala-landing/compare/v0.3.12...v0.3.13
 [0.3.12]: https://github.com/gmedia/sakala-landing/compare/v0.3.11...v0.3.12
 [0.3.11]: https://github.com/gmedia/sakala-landing/compare/v0.3.10...v0.3.11
 [0.3.10]: https://github.com/gmedia/sakala-landing/compare/v0.3.9...v0.3.10

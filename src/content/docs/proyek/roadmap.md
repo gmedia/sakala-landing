@@ -15,7 +15,27 @@ canonical: true
 Sakala memakai tiga pandangan yang berjalan paralel dan tidak selalu sinkron:
 produk, desain, dan engineering. Nama pilar mengikuti [Visi](/docs/proyek/vision).
 
+## Urutan setelah pilot publik
+
+Setelah gate pilot publik, urutan kerja produk per 24 November 2026:
+
+1. **Layanan aplikasi**: worker dan cron per project, Redis atau Valkey
+   terkelola, dan custom domain. Isinya diambil dari
+   [Horizon G](#horizon-g--layanan-developer) dan
+   [Horizon D](#horizon-d--operasi-yang-andal).
+2. **Learn minimal** ([Horizon B](#horizon-b--learn-minimal)).
+
+Self-host satu node ([Horizon C](#horizon-c--self-host-satu-node)) terus diuji
+di samping keduanya. Huruf horizon di bawah tetap seperti sebelumnya, jadi
+urutan kerja dibaca dari daftar ini, bukan dari hurufnya.
+
 ## Perubahan dari versi sebelumnya
+
+Per 24 November 2026, layanan aplikasi dikerjakan sebelum Learn minimal.
+Aplikasi yang lebih dari sekadar situs, misalnya Laravel atau Node dengan
+antrean, butuh worker, cache, jadwal, dan domain sendiri lebih dulu. Kelas
+membawa puluhan pengguna sekaligus, dan tugas mereka butuh layanan itu dalam
+keadaan stabil.
 
 Per 1 Oktober 2026, urutan horizon diubah mengikuti keputusan pasar pertama
 ([PRD §3](/docs/proyek/prd)):
@@ -71,6 +91,9 @@ dan estimasi biaya masih dikerjakan.
 
 Detail di [Sakala Learn](/docs/proyek/feature-education).
 
+**Status per 24 November 2026:** belum dibangun. Dikerjakan setelah layanan
+aplikasi (lihat [urutan setelah pilot publik](#urutan-setelah-pilot-publik)).
+
 ### Horizon C — Self-host satu node
 
 - installer satu node yang bisa diulang, dengan versi yang di-pin dan
@@ -80,9 +103,9 @@ Detail di [Sakala Learn](/docs/proyek/feature-education).
 - panduan untuk pengelola lab institusi;
 - repository distribusi `sakala` ([ADR-013](/docs/proyek/adr)).
 
-**Status per 19 November 2026:** sedang diuji. Installer di `gmedia/sakala`
-sudah ada dan lolos uji di mesin bersih, tetapi belum dirilis dan belum
-dicoba di server sungguhan.
+**Status per 24 November 2026:** sedang diuji. Installer di `gmedia/sakala`
+sudah punya versi bertag (terbaru v0.2.0) dan lolos uji di mesin bersih,
+tetapi belum dicoba di server sungguhan.
 
 ### Horizon D — Operasi yang andal
 
@@ -93,12 +116,14 @@ dicoba di server sungguhan.
 - repository privat lewat GitHub App;
 - visibilitas pemakaian dan kuota.
 
-**Status per 23 November 2026:** auto-deploy dari push, repository privat
+**Status per 24 November 2026:** auto-deploy dari push, repository privat
 lewat GitHub App, metrik dasar per proyek (CPU, memori, replika, dan restart,
 sejak 19 November 2026), serta rollback ke versi sebelumnya dan Restart tanpa
 build (sejak 23 November 2026, lihat
 [Rollback dan Restart](/docs/rollback-dan-restart)) sudah tersedia. Custom
-domain dan visibilitas pemakaian yang lebih lengkap belum.
+domain belum ada, dan sekarang direncanakan sebagai bagian dari layanan
+aplikasi yang dikerjakan berikutnya. Visibilitas pemakaian yang lebih lengkap
+belum.
 
 ### Horizon E — Explore dan ekosistem
 
@@ -121,15 +146,17 @@ backup dan restore, observability yang lebih kaya.
 Rancangan PostgreSQL terkelola diusulkan di
 [ADR-020](/docs/proyek/adr#adr-020--managed-postgresql-for-projects).
 
-**Status per 23 November 2026:** PostgreSQL terkelola tahap pertama sedang
+**Status per 24 November 2026:** PostgreSQL terkelola tahap pertama sedang
 diuji sebagai pilot terbatas sejak 23 November 2026, hanya untuk workspace
 yang diberi kuota oleh admin. Backup malam berjalan, dan pemulihannya
 dilakukan maintainer. Panduannya ada di
 [Database Terkelola](/docs/database-terkelola). Bucket S3 terkelola
 ([ADR-021](/docs/proyek/adr#adr-021--managed-object-storage-for-projects),
-Proposed) sedang dibangun sebagai pilot terbatas, dengan panduan di
-[Bucket Terkelola](/docs/bucket-terkelola). Kuota pertamanya baru dibuka
-setelah pemberitahuan privasi versi baru berlaku. Layanan lain belum.
+Proposed) sudah dibangun dan menunggu rilis serta pilot terbatas, dengan
+panduan di [Bucket Terkelola](/docs/bucket-terkelola). Kuota pertamanya baru
+dibuka setelah pemberitahuan privasi versi baru berlaku. Worker dan cron per
+project serta Redis atau Valkey terkelola dikerjakan berikutnya, sebagai bagian
+dari layanan aplikasi. Layanan lain belum.
 
 ### Horizon H — Platformisasi
 
@@ -138,7 +165,7 @@ dan router.
 
 ## 2. Roadmap engineering
 
-| Fase | Isi                                                                                       | Status per 23 Nov 2026                                                                          |
+| Fase | Isi                                                                                       | Status per 24 Nov 2026                                                                          |
 | ---- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
 | 0    | Pemisahan repository, CI dasar, branch protection, fondasi design system                  | selesai                                                                                         |
 | 1    | Kontrak auth, GitHub OAuth, email dan verifikasi, sesi, onboarding                        | berjalan di production sejak 12 Nov                                                             |
@@ -149,8 +176,9 @@ dan router.
 | 6    | MVP end-to-end: browser, API, agent, runtime, URL publik                                  | berjalan di production sejak 12 Nov                                                             |
 | 7    | Penguatan pilot: kategori kegagalan, dokumentasi, pengaman, metrik validasi, alat operasi | sedang dikerjakan; pilot terbuka sejak 19 Nov                                                   |
 | 8    | Gate pilot publik: isolasi, sleep, batas build, dokumen hukum, abuse                      | sebagian besar berjalan, termasuk egress container sejak 19 Nov; bukti dan biaya belum          |
-| 9    | Learn minimal                                                                             | berikutnya                                                                                      |
-| 10   | Installer self-host satu node                                                             | sedang diuji, belum dirilis                                                                     |
+| 9    | Layanan aplikasi: worker dan cron per project, Redis atau Valkey terkelola, custom domain | berikutnya                                                                                      |
+| 10   | Learn minimal                                                                             | setelah layanan aplikasi                                                                        |
+| 11   | Installer self-host satu node                                                             | sedang diuji; versi bertag ada, belum dicoba di server sungguhan                                |
 
 ## 3. Roadmap desain
 
@@ -159,10 +187,10 @@ dan router.
 | 1         | Perjalanan produk inti: login, OAuth, verifikasi, onboarding, dashboard, buat project, detail deployment, log build, detail project, variabel, profil, pengaturan, notifikasi | desain selesai dan dibangun di Console                                                              |
 | 2         | Platform Console: overview, pengguna, project, deployment, node, kegagalan, abuse, masukan                                                                                    | dibangun sebagian di area admin Console: overview, pengguna, workspace, profil batas, node, masukan |
 | 3         | Pilot publik: halaman sleep dan bangun, kuota, suspend dan banding, persetujuan syarat layanan                                                                                | dibangun di Console                                                                                 |
-| 4         | Learn: kelas, penugasan, ringkasan pengajar, tampilan peserta, masuknya peserta lewat CSV                                                                                     | berikutnya                                                                                          |
-| 5         | Domain dan operasi: custom domain, DNS, TLS, health runtime, error yang lebih kaya                                                                                            | nanti                                                                                               |
+| 4         | Learn: kelas, penugasan, ringkasan pengajar, tampilan peserta, masuknya peserta lewat CSV                                                                                     | setelah layanan aplikasi                                                                            |
+| 5         | Domain dan operasi: custom domain, DNS, TLS, health runtime, error yang lebih kaya                                                                                            | custom domain berikutnya, bersama layanan aplikasi; sisanya nanti                                   |
 | 6         | Explore: koleksi terkurasi, showcase, template, profil creator                                                                                                                | nanti                                                                                               |
-| 7         | Layanan terkelola                                                                                                                                                             | nanti                                                                                               |
+| 7         | Layanan terkelola                                                                                                                                                             | worker, cron, dan Valkey berikutnya, bersama layanan aplikasi; sisanya nanti                        |
 
 Rincian per gelombang ada di [Design Strategy](/docs/proyek/design-strategy).
 
@@ -180,8 +208,9 @@ Kebutuhan pengguna yang terbukti
 
 Contoh:
 
-- Learn dimulai setelah gate pilot publik, karena kelas membawa puluhan
-  pengguna sekaligus.
+- Learn dimulai setelah gate pilot publik dan layanan aplikasi, karena kelas
+  membawa puluhan pengguna sekaligus, dan tugas mereka butuh antrean, cache,
+  dan domain yang sudah stabil.
 - Self-host dimulai setelah ADR-014 berjalan di hosted, supaya installer
   membawa isolasi yang sama.
 - Layanan data terkelola menunggu model operasional, backup, keamanan,

@@ -367,7 +367,7 @@ export const id = {
       "Sakala sedang dalam tahap pilot. Siapa pun bisa mendaftar dan memakainya tanpa biaya, dengan batas proyek, container, dan build per jam. Belum ada jaminan uptime, jadi belum cocok untuk aplikasi penting.",
     disclaimerLink: "Lihat batas pilot",
     pillarsTitle: "Perjalanan produk",
-    pillarsStatusDate: "Status per 23 November 2026.",
+    pillarsStatusDate: "Status per 24 November 2026.",
     pillars: [
       {
         name: "Create",
@@ -454,7 +454,7 @@ export const id = {
             label: "bucket S3 terkelola, pilot terbatas yang sedang disiapkan",
             status: "building",
           },
-          { label: "custom domain", status: "direction" },
+          { label: "custom domain", status: "next" },
         ],
       },
       {
@@ -471,8 +471,8 @@ export const id = {
         name: "Learn",
         question: "Bagaimana orang belajar mengirim software sungguhan?",
         items: [
-          { label: "kelas dan workshop", status: "next" },
-          { label: "penugasan", status: "next" },
+          { label: "kelas dan workshop", status: "direction" },
+          { label: "penugasan", status: "direction" },
           { label: "alur magang", status: "direction" },
           { label: "tinjauan mentor", status: "direction" },
         ],
@@ -570,22 +570,28 @@ export const id = {
         text: "Pendaftaran dibuka untuk siapa saja sejak 19 November 2026. Pembatasan lalu lintas keluar dari container pengguna berjalan sejak hari yang sama. Yang masih dikerjakan: bukti pemakaian dan biaya dari pilot.",
       },
       {
+        label: "Horizon G dan D",
+        name: "Layanan aplikasi",
+        status: "next",
+        text: "Worker dan cron per project, Redis atau Valkey terkelola, dan custom domain. Aplikasi yang lebih dari sekadar situs butuh antrean, cache, jadwal, dan domain sendiri, jadi ini dikerjakan sebelum Learn.",
+      },
+      {
         label: "Horizon B",
         name: "Learn minimal",
-        status: "next",
-        text: "Kelas, peserta lewat CSV, penugasan dengan tenggat, ringkasan untuk pengajar, dan siklus hidup project setelah kelas selesai.",
+        status: "direction",
+        text: "Kelas, peserta lewat CSV, penugasan dengan tenggat, ringkasan untuk pengajar, dan siklus hidup project setelah kelas selesai. Dikerjakan setelah layanan aplikasi, karena kelas membawa puluhan pengguna sekaligus yang butuh layanan itu dalam keadaan stabil.",
       },
       {
         label: "Horizon C",
         name: "Self-host satu node",
         status: "testing",
-        text: "Installer di repository gmedia/sakala sudah ada dan diuji di mesin bersih, tetapi belum dirilis dan belum dicoba di server sungguhan.",
+        text: "Installer di repository gmedia/sakala sudah punya versi bertag dan diuji di mesin bersih, tetapi belum dicoba di server sungguhan.",
       },
       {
         label: "Horizon D",
         name: "Operasi yang andal",
         status: "direction",
-        text: "Custom domain, dan visibilitas pemakaian yang lebih lengkap dari metrik dasar. Rollback ke versi sebelumnya dan Restart sudah tersedia sejak 23 November 2026.",
+        text: "Visibilitas pemakaian yang lebih lengkap dari metrik dasar. Custom domain kini dikerjakan lebih dulu sebagai bagian dari layanan aplikasi. Rollback ke versi sebelumnya dan Restart sudah tersedia sejak 23 November 2026.",
       },
       {
         label: "Horizon E",
@@ -597,7 +603,7 @@ export const id = {
         label: "Horizon G–H",
         name: "Layanan dan platform",
         status: "direction",
-        text: "PostgreSQL terkelola sedang diuji sebagai pilot terbatas sejak 23 November 2026, hanya untuk workspace yang diberi kuota. Bucket S3 terkelola (ADR-021) sedang dibangun sebagai pilot terbatas, dan baru dibuka setelah pemberitahuan privasi versi baru berlaku. Setelahnya worker dan cron, CLI, API publik, dan runtime multi-node.",
+        text: "PostgreSQL terkelola sedang diuji sebagai pilot terbatas sejak 23 November 2026, hanya untuk workspace yang diberi kuota. Bucket S3 terkelola (ADR-021) sudah dibangun dan menunggu rilis serta pilot terbatas, dan baru dibuka setelah pemberitahuan privasi versi baru berlaku. Setelahnya CLI, API publik, dan runtime multi-node.",
       },
     ],
     designTitle: "Status desain dan engineering dipisah",
