@@ -55,7 +55,7 @@ The store can be reached only from attached projects, over a private network on 
 ## Laravel
 
 1. Add the project variables `QUEUE_CONNECTION=redis` and `CACHE_STORE=redis`. The **Variabel** tab offers a button that adds both. For sessions, add `SESSION_DRIVER=redis` yourself.
-2. Laravel uses the phpredis extension by default. If your image does not have it, install predis, commit `composer.json` and `composer.lock`, then add the variable `REDIS_CLIENT=predis`:
+2. Laravel uses the phpredis extension by default, but many PHP images do not ship it, including the FrankenPHP Alpine image of the `laravel-queue` example. The simplest fix: install predis, commit `composer.json` and `composer.lock`, then add the variable `REDIS_CLIENT=predis`:
 
    ```bash
    composer require predis/predis

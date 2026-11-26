@@ -54,7 +54,7 @@ Valkey hanya bisa dijangkau dari proyek yang terpasang, lewat network privat di 
 ## Laravel
 
 1. Tambahkan variabel proyek `QUEUE_CONNECTION=redis` dan `CACHE_STORE=redis`. Tab **Variabel** menawarkan tombol untuk menambahkan keduanya. Untuk sesi, tambahkan `SESSION_DRIVER=redis` sendiri.
-2. Laravel memakai ekstensi phpredis secara bawaan. Kalau image-mu tidak punya ekstensi itu, pasang predis, commit `composer.json` dan `composer.lock`, lalu tambahkan variabel `REDIS_CLIENT=predis`:
+2. Laravel memakai ekstensi phpredis secara bawaan, padahal banyak image PHP tidak memasangnya, termasuk image FrankenPHP Alpine di contoh `laravel-queue`. Cara paling mudah: pasang predis, commit `composer.json` dan `composer.lock`, lalu tambahkan variabel `REDIS_CLIENT=predis`:
 
    ```bash
    composer require predis/predis
