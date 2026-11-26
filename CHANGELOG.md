@@ -19,6 +19,27 @@ versinya di file ini.
 
 ## [Unreleased]
 
+### Added
+
+- Halaman panduan "Worker dan Jadwal" (id dan en) di `/docs/worker-dan-jadwal`
+  untuk ADR-022: menambah worker di Pengaturan > Proses, saran
+  `queue:work` untuk Laravel, `worker_start_failed`, tidur sebagai satu
+  kesatuan, membuat jadwal cron di Pengaturan > Jadwal, status run
+  (dilewati, terlewat, menunggu giliran, melewati batas waktu), riwayat 100
+  run dan log 7 hari, jeda otomatis setelah 10 gagal, catatan Laravel
+  `schedule:run`, dan tabel batas bawaan. Ditandai belum aktif di
+  `sakala.dev`.
+- Halaman panduan "Valkey Terkelola" (id dan en) di `/docs/valkey-terkelola`
+  untuk ADR-023: mode persisten dan cache, membuat dan memasang, variabel
+  `REDIS_URL` tanpa nomor database dan `REDIS_*`, Laravel (phpredis atau
+  predis) dan Node (ioredis, BullMQ), password dan rotasi, ukuran 32/64/128
+  MB, backup malam, serta cara meminta kuota. Ditandai pilot terbatas yang
+  belum dibuka di `sakala.dev`.
+
+### Changed
+
+- Hub docs (id dan en) menautkan kedua panduan baru beserta statusnya.
+
 ## [0.3.13] - 2026-11-24
 
 ### Added

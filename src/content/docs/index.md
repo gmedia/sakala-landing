@@ -27,6 +27,8 @@ Panduan pakai:
 - [Database dan perintah rilis](/docs/perintah-rilis), untuk menjalankan migration sekali setiap deployment;
 - [Penyimpanan file](/docs/penyimpanan-file), karena berkas di dalam container hilang begitu container berhenti;
 - [Bucket terkelola](/docs/bucket-terkelola), object storage S3 dari Sakala yang masih pilot terbatas;
+- [Valkey terkelola](/docs/valkey-terkelola), penyimpanan kompatibel Redis untuk antrean dan cache, pilot terbatas yang belum dibuka di `sakala.dev`;
+- [Worker dan jadwal](/docs/worker-dan-jadwal), untuk antrean dan perintah terjadwal, belum aktif di `sakala.dev`;
 - [Rollback dan Restart](/docs/rollback-dan-restart), untuk kembali ke versi sebelumnya atau menyalakan ulang container tanpa build;
 - [Saat deploy gagal](/docs/deploy-gagal), untuk membaca kode kegagalan dan memperbaikinya.
 

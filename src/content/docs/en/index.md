@@ -28,6 +28,8 @@ Usage guides:
 - [Databases and the release command](/en/docs/perintah-rilis), to run migrations once per deployment;
 - [File storage](/en/docs/penyimpanan-file), because files inside a container are lost when it stops;
 - [Managed buckets](/en/docs/bucket-terkelola), S3 object storage from Sakala, still a limited pilot;
+- [Managed Valkey](/en/docs/valkey-terkelola), a Redis-compatible store for queues and cache, a limited pilot not open on `sakala.dev` yet;
+- [Workers and schedules](/en/docs/worker-dan-jadwal), for queues and scheduled commands, not enabled on `sakala.dev` yet;
 - [Rollback and Restart](/en/docs/rollback-dan-restart), to go back to an earlier version or start containers again without a build;
 - [When a deploy fails](/en/docs/deploy-gagal), to read failure codes and fix them.
 
